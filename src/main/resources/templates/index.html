@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layoutV1 :: template(~{this :: title}, ~{this :: script}, ~{this :: content})}">
+
+
+<title th:fragment="title">홈페이지 방문을 환영합니다..</title>
+
+<th:block th:fragment="script">
+    <script src="xxx.js"></script>
+    <script src="yyy.js"></script>
+    <script src="zzz.js"></script>
+</th:block>
+
+<div th:fragment="content">
+    <h1>홈페이지 내용입니다....</h1>
+    <h1>홈페이지 내용입니다....</h1>
+    <h1>홈페이지 내용입니다....</h1>
+    <h1>홈페이지 내용입니다....</h1>
+    <h1>홈페이지 내용입니다....</h1>
+    <h1>홈페이지 내용입니다....</h1>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
