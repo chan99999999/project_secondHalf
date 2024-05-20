@@ -384,7 +384,7 @@ nav{
     border: 10px solid tomato;
 }
 
-#signup-gender >span{
+#signup-gender >label{
     margin-right: 20px
 }
 
@@ -398,11 +398,16 @@ nav{
 #signup-birth select{
     height: 70px;
     width: 160px;
-    font-size: 25px;
+    font-size: 30px;
     text-align: center;
 }
 
-
+#passwd-hint{
+    font-size: 25px;
+    color: red;
+    padding-left: 310px;
+    margin-top: -15px;
+}
 
 /*---------------------------MAP---------------------------------*/
 #map-wrap{

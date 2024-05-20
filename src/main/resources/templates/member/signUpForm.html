@@ -29,7 +29,7 @@
                             <label for="signup-nickname">별명</label>
                             <input class="signup-input" name="nickname" type="text" id="signup-nickname" size="20"
                                    autofocus
-                                   required placeholder="별명을 입력해주세요.">
+                                   required placeholder="별명(닉네임)을 입력해주세요.">
                         </li>
                         <li class="signup-info">
                             <label for="signup-pw">비밀번호</label>
@@ -42,10 +42,20 @@
                                    placeholder="비밀번호를 한번 더 입력해주세요.">
                         </li>
                         <li class="signup-info">
+                            <label for="signup-email">비밀번호 힌트</label>
+                            <input class="signup-input" name="email" type="email" id="signup-email"
+                                   placeholder="내 보물 1호는?">
+                        </li>
+                        <p id="passwd-hint">비밀번호 분실 시 필요한 힌트입니다.</p>
+                        <li class="signup-info">
                             <label for="signup-gender">성별</label>
                             <div id="signup-gender">
-                                <input class="signup-gender-radio" type="radio" name="gender" value="women"><span>여성</span>
-                                <input class="signup-gender-radio" type="radio" name="gender" value="men"><span>남성</span>
+                                <input class="signup-gender-radio" type="radio" name="gender" id="signup-women"
+                                       value="women">
+                                <label for="signup-women">여성</label>
+                                <input class="signup-gender-radio" type="radio" name="gender" id="signup-men"
+                                       value="men">
+                                <label for="signup-men">남성</label>
                             </div>
                         </li>
                         <li class="signup-info">
@@ -53,20 +63,23 @@
                             <div id="signup-birth">
                                 <select>
                                     <option selected>출생년도</option>
-                                    <option value="1999">1999</option>
+                                    <th:block th:each="num : ${#numbers.sequence(1900, 1975)}">
+                                        <option value="${num}" th:text="${num}+년"></option>
+                                    </th:block>
                                 </select>
                                 <select>
                                     <option selected>월</option>
+                                    <th:block th:each="num : ${#numbers.sequence(1, 12)}">
+                                        <option value="${num}" th:text="${num}+월"></option>
+                                    </th:block>
                                 </select>
                                 <select>
                                     <option selected>일</option>
+                                    <th:block th:each="num : ${#numbers.sequence(1, 31)}">
+                                        <option value="${num}" th:text="${num}+일"></option>
+                                    </th:block>
                                 </select>
                             </div>
-                        </li>
-                        <li class="signup-info">
-                            <label for="signup-email">이메일</label>
-                            <input class="signup-input" name="email" type="email" id="signup-email"
-                                   placeholder="이메일">
                         </li>
                     </ul>
                 </div>
