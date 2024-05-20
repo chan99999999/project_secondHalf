@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 우리동네 상세정보 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div id="place-wrap">
+        <h1 class="title-text">이젠 아카데미</h1>
+        <div id="place-detail-wrap">
+            <div id="place-map">
+                <img src="/img/map-sample.png">
+            </div>
+            <div id="place-info">
+                <ul class="place-info-text">
+                    <li class="place-info-title">주소</li>
+                    <li>서울시 노원구 동일로 성동일</li>
+                </ul>
+                <ul class="place-info-text">
+                    <li class="place-info-title">운영시간</li>
+                    <li>09:00~18:00</li>
+                </ul>
+                <ul class="place-info-text">
+                    <li class="place-info-title">아무거나</li>
+                    <li>넣으세요</li>
+                </ul>
+            </div>
+        </div>
+        <div class="review-wrap">
+            <h1>업체후기(10)</h1>
+            <div id="place-review">
+                <div class="write-review">
+                    <p>작성자 : 김순자최고</p>
+                    <div id="review-text">
+                        <textarea cols="77" rows="2"></textarea>
+                        <button type="submit" id="write-review-btn">등록</button>
+                    </div>
+                </div>
+                <div class="review">
+                    <div>
+                        <img src="/img/profile.png">
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="review-writer">작성자명</li>
+                            <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="review">
+                    <div>
+                        <img src="/img/profile.png">
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="review-writer">작성자명</li>
+                            <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="review">
+                    <div>
+                        <img src="/img/profile.png">
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="review-writer">작성자명</li>
+                            <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+

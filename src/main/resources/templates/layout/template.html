@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="kor" xmlns:th="http://www.thymeleaf.org" th:fragment="template(title, script, css, content)">
+<head>
+    <meta charset="UTF-8">
+    <!-- 동적으로 바뀌는 부분-->
+    <title th:replace="${title}"></title>
+    <th:block th:replace="${script}"></th:block>
+    <th:block th:insert="${css}">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+</head>
+<body>
+<nav>
+    <div class="nav-bar">
+        <div id="nav-menu">
+            <a href="/">처음으로</a>
+            <p>ㅣ</p>
+            <a href="/map">우리동네</a>
+            <p>ㅣ</p>
+            <a href="/daily">일상공유</a>
+            <p>ㅣ</p>
+            <a href="/meet">동네친구</a>
+        </div>
+        <div id="nav-member">
+            <a class="nav-signup" href="/member/signup">무료 회원가입</a>
+            <a class="nav-login" href="/member/login">로그인</a>
+        </div>
+    </div>
+</nav>
+
+<div id="wrapper" th:replace="${content}">
+</div>
+
+<footer>
+</footer>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 동네친구 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div id="meet-wrap">
+        <h1 class="title-text">동네친구</h1>
+        <div id="write-meet-wrap">
+            <div id="write-meet"><a href="/meet/register">모임 등록하기</a></div>
+        </div>
+        <div id="daily-list-wrap">
+            <div id="daily-search-bar">
+                <div>
+                    <input type="search">
+                    <button type="submit">검색</button>
+                </div>
+                <div>
+                    <ul class="daily-tag">
+                        <li><a>#건강</a></li>
+                        <li><a>#명언</a></li>
+                        <li><a>#가나다</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="meet-list">
+               <div class="meet-post">
+                   <div>
+                       <h1 class="meet-post-title"><a href="/meet/read">둘레길 같이 가실 분</a></h1>
+                       <p>-장소 : 노원구 수락산 둘레길</p>
+                       <p>-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
+                       <ul class="meet-tag">
+                           <li>건강</li>
+                           <li>취미</li>
+                       </ul>
+                   </div>
+                   <div class="meet-join">
+                       <a href="meet/read">
+                           <p>참여하기</p>
+                           <p>(1/5)</p>
+                       </a>
+                   </div>
+               </div>
+                <div class="meet-post">
+                    <div>
+                        <h1 class="meet-post-title"><a href="/meet/read">둘레길 같이 가실 분</a></h1>
+                        <p>-장소 : 노원구 수락산 둘레길</p>
+                        <p>-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
+                        <ul class="meet-tag">
+                            <li>건강</li>
+                            <li>취미</li>
+                        </ul>
+                    </div>
+                    <div class="meet-join">
+                        <a href="meet/read">
+                            <p>참여하기</p>
+                            <p>(1/5)</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="meet-post">
+                    <div>
+                        <h1 class="meet-post-title"><a href="/meet/read">둘레길 같이 가실 분</a></h1>
+                        <p>-장소 : 노원구 수락산 둘레길</p>
+                        <p>-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
+                        <ul class="meet-tag">
+                            <li>건강</li>
+                            <li>취미</li>
+                        </ul>
+                    </div>
+                    <div class="meet-join">
+                        <a href="meet/read">
+                            <p>참여하기</p>
+                            <p>(1/5)</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

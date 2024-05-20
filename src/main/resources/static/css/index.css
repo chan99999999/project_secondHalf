@@ -1,0 +1,1023 @@
+/*--------------------폰트--------------------------*/
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NPSfontBold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+
+/*-----------------------------------------------------*/
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Pretendard-Regular';
+    text-decoration: none;
+    color: black;
+}
+
+ul, li{
+    list-style: none;
+}
+
+:visited{
+    color: black;
+}
+
+.title-text{
+    font-size: 100px;
+    font-family: 'Cafe24Ssurround';
+    text-align: center;
+    margin: 50px 0;
+}
+
+form, fieldset{
+    outline: none;
+    border: none;
+}
+
+#main-intro h1{
+    font-family: 'NPSfontBold';
+}
+
+/*-------------------------BTN---------------------*/
+.register-btn-wrap{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.back-btn{
+    width: 200px;
+    height: 70px;
+    margin: 20px;
+    font-size: 30px;
+}
+
+.register-btn{
+    width: 200px;
+    height: 70px;
+    margin: 20px;
+    font-size: 30px;
+    background-color: #fd8b18;
+    border: none;
+}
+
+
+/*-------------------------------NAV--------------------------*/
+
+nav{
+    height: 70px;
+    /*background-color: #ffcd07;*/
+    background-color: #ff8c18;
+    /*background-color: #02239a;*/
+}
+
+
+.nav-bar{
+    margin: 0px auto;
+    width: 1400px;
+    min-width: 1400px;
+    height: 70px;
+    align-content: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+#nav-bar{
+    margin: 0px auto;
+    width: 1400px;
+    min-width: 1400px;
+    height: 70px;
+    align-content: center;
+    display: flex;
+    justify-content: end;
+}
+
+
+#nav-menu{
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+#nav-menu a{
+    font-family: 'Cafe24Ssurround';
+    font-size: 30px;
+    margin: 0px 10px;
+}
+
+#nav-menu a:visited{
+    color: black;
+}
+
+#nav-menu a:hover{
+    color: white;
+}
+
+
+#nav-member{
+    align-content: center;
+}
+
+
+.nav-signup{
+    align-content: center;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    width: 230px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.91);
+    margin: 10px;
+    padding: 8px 35px;
+    border-radius: 10px;
+}
+
+.nav-signup:visited, #nav-login:visited{
+    color: black;
+}
+
+.nav-login{
+    align-content: center;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    width: 100px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.91);
+    margin: 10px;
+    padding: 8px 25px;
+    border-radius: 10px;
+}
+
+#nav-signup{
+    align-content: center;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    width: 230px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.91);
+    margin: 10px;
+    padding: 0px 10px;
+    border-radius: 10px;
+}
+
+#nav-signup:visited, #nav-login:visited{
+    color: black;
+}
+
+#nav-login{
+    align-content: center;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    width: 100px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.91);
+    margin: 10px;
+    padding: 0px 10px;
+    border-radius: 10px;
+}
+
+.member-nav{
+    list-style: none;
+    display: flex;
+    /*color: black;*/
+    color: white;
+    justify-content: end;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.member-nav li{
+    width: 220px;
+    height: 50px;
+    text-align: end;
+}
+
+#main-intro{
+    height: 400px;
+    text-align: center;
+    align-content: center;
+    font-size: 70px;
+}
+
+#main-category{
+    display: flex;
+    margin: 0px auto;
+    width: 1400px;
+    height: 500px;
+    min-width: 1400px;
+    background-color: #eaeaea;
+}
+
+.category-btn{
+    margin: auto;
+    height: 400px;
+    width: 450px;
+    background-color: rgba(202, 202, 202, 0.62);
+    align-content: center;
+}
+
+.category-btn:hover{
+    background-color: rgb(253, 180, 107);
+}
+
+.category-btn a:visited{
+    color: black;
+}
+
+.category-content{
+    text-align: center;
+
+}
+
+.category-content img{
+    width: 250px;
+    height: 250px;
+}
+
+.category-title{
+    font-family: 'Cafe24Ssurround';
+    font-size: 50px;
+}
+
+.category-subtitle{
+    font-size: 20px;
+}
+
+
+/*----------------------------loginForm----------------------------*/
+#login-wrap{
+    margin: auto;
+    width: 1400px;
+    min-width: 1400px;
+    outline: none;
+    height: 750px;
+}
+
+#login-fieldset{
+    border: none;
+}
+
+#login-div{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 100px auto;
+}
+
+.login-input{
+    height: 80px;
+    font-size: 40px;
+    padding: 0px 20px;
+}
+
+#user-id{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#user-password{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#logCheckbox{
+    width: 25px;
+    height: 25px;
+}
+
+#login-function{
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    margin: 20px 0;
+}
+
+#login-btn{
+    background-color: #fd8b18;
+    border: none;
+    font-weight: bolder;
+}
+
+/*----------------------------SignUp---------------------------------*/
+#signup-wrap{
+    margin: 0px auto;
+    width: 1400px;
+    min-width: 1400px;
+}
+
+#signup-content{
+    margin: 0px auto;
+    width: 850px;
+    font-size: 50px;
+    padding: 30px 0;
+}
+
+#signup-fieldset{
+    margin: 0px auto;
+    border: 1px solid lightgray;
+    width: 1200px;
+}
+
+#signup-list{
+    list-style: none;
+}
+
+.signup-info{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
+}
+
+.signup-input{
+    width: 500px;
+    font-size: 30px;
+    padding: 0px 20px;
+}
+
+#signup-gender{
+    display: flex;
+    width: 540px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#signup-gender{
+    font-size: 25px;
+}
+
+#signup-birth{
+    width: 540px;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+#signup-birth select{
+    height: 70px;
+    width: 160px;
+    font-size: 25px;
+    text-align: center;
+}
+
+
+
+/*---------------------------MAP---------------------------------*/
+#map-wrap{
+    margin: 0px auto;
+    display: flex;
+    height: 850px;
+    min-height: 850px;
+    width: 1400px;
+    min-width: 1400px;
+}
+
+#search-map-wrap{
+    width: 400px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#map{
+    background-color: rgba(253, 139, 24, 0.19);
+    width: 1000px;
+}
+
+#map >img{
+    width: 1000px;
+    height: 850px;
+}
+
+#search-map-title{
+    font-family: 'Cafe24Ssurround';
+    font-size: 50px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#search-bar-map{
+    height: 60px;
+    align-content: center;
+}
+
+#search-text-map{
+    height: 50px;
+    width: 270px;
+    font-size: 25px;
+    padding: 0px 10px;
+}
+
+#search-btn-map{
+    height: 45px;
+    width: 70px;
+    font-size: 20px;
+}
+
+#search-map-tagbox{
+    width: 350px;
+    background-color: #ff8c18;
+    margin: 10px 0;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.map-tag{
+    height: 40px;
+    background-color: white;
+    border-radius: 10px;
+    align-content: center;
+    color: black;
+    font-size: 20px;
+    padding: 5px 10px;
+}
+
+#search-map-result{
+    width: 370px;
+    background-color: rgba(253, 139, 24, 0.19);
+    padding: 10px 0px;
+}
+
+.search-map-box{
+    width: 330px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: white;
+    font-size: 20px;
+}
+
+.search-map-detail{
+    list-style: none;
+}
+
+.search-map-detail ul{
+    display: flex;
+}
+
+.search-map-detail-title{
+    font-size: 30px;
+    margin: 10px 0px;
+    font-weight: bolder;
+}
+
+.search-map-detail-subtitle{
+    width: 90px;
+    font-weight: bolder;
+}
+
+/*-----------------------------PLACE--------------------------------*/
+#place-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    margin: 30px auto;
+
+}
+
+#place-detail-wrap{
+    width: 1200px;
+    display: flex;
+}
+
+#place-map{
+    width: 500px;
+    height: 500px;
+    background-color: #ff8c18;
+}
+
+#place-map >img{
+    width: 500px;
+    height: 500px;
+}
+
+#place-info{
+    width: 700px;
+    background-color: rgba(253, 139, 24, 0.19);
+    padding: 20px;
+}
+
+.place-info-text{
+    display: flex;
+    font-size: 30px;
+    margin: 20px 0px;
+}
+
+.place-info-title{
+    width: 150px;
+    font-weight: bolder;
+}
+
+.review-wrap{
+    margin: 20px 0px;
+    padding: 0px 20px;
+}
+
+#place-review{
+    width: 1160px;
+    background-color: rgba(211, 211, 211, 0.57);
+    padding: 10px 0px;
+    margin: 10px 0px;
+}
+
+.write-review{
+    padding: 10px 10px;
+    align-content: center;
+}
+
+#write-review p{
+    font-size: 20px;
+}
+
+#write-review-btn{
+    height: 80px;
+    width: 90px;
+    font-size: 25px;
+    font-weight: bolder;
+    background-color: #ff8c18;
+    border: none;
+}
+
+#review-text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#review-text textarea{
+    font-size: 25px;
+    padding: 10px;
+    margin: 5px 0px;
+}
+
+.review{
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: lightgray;
+}
+
+.review-writer{
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.review-content{
+    font-size: 25px;
+}
+
+.review img{
+    width: 55px;
+    height: 55px;
+    margin-right: 20px;
+}
+
+/*------------------------------Daily--------------------------*/
+#daily-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    margin: 0px auto;
+}
+
+#write-daily{
+    width: 200px;
+    height: 60px;
+    background-color: #ff8c18;
+    text-align: center;
+    justify-content: end;
+    align-content: center;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+#write-daily a{
+    color: white;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#write-daily-wrap{
+    display: flex;
+    justify-content: end;
+}
+
+#daily-list-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    background-color: #e6e6e6;
+    margin-bottom: 20px;
+    padding: 20px 0px;
+}
+
+#daily-search-bar{
+    width: 1100px;
+    margin: 0px auto;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#daily-search-bar input{
+    height: 60px;
+    width: 500px;
+    border-radius: 10px;
+    font-size: 25px;
+    padding: 0px 10px;
+}
+
+#daily-search-bar button{
+    height: 60px;
+    width: 70px;
+    font-size: 20px;
+}
+
+.daily-tag{
+    display: flex;
+    font-size: 35px;
+}
+
+.daily-tag li{
+    margin: 0px 10px;
+}
+
+.daily-list{
+    text-align: left;
+    align-items: center;
+    margin: 20px auto;
+    padding: 20px 0px;
+    width: 1100px;
+    background-color: rgba(255, 140, 24, 0.44);
+}
+
+.daily-list-title{
+    padding: 0px 20px;
+    font-weight: bolder;
+}
+
+.daily-post{
+    display: inline-block;
+    width: 330px;
+    height: 370px;
+    margin: 16px;
+    background-color: #eaeaea;
+}
+
+.daily-writer{
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.daily-writer-img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.daily-writer-name{
+    font-size: 20px;
+}
+
+.daily-post-img{
+    width: 300px;
+    height: 250px;
+    padding: 0px 15px;
+    background-size: cover;
+}
+
+.daily-like-wrap{
+    display: flex;
+    align-items: center;
+}
+
+.daily-like{
+    padding-left: 18px;
+    width: 25px;
+    height: 25px;
+}
+
+.daily-like-amount{
+    padding: 0px 5px;
+}
+
+.daily-post-title{
+    padding-left: 18px;
+    font-size: 20px;
+    margin: 5px 0px;
+}
+
+/*-----------------------------Daily-register------------------*/
+#daily-register-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 0px auto;
+}
+
+#daily-register-form{
+    background-color: #eaeaea;
+    padding: 50px 50px 0px 50px;
+    margin-bottom: 50px;
+}
+
+#daily-register-title{
+    height: 50px;
+    width: 850px;
+    font-size: 25px;
+    padding: 0px 20px;
+}
+
+#daily-tag-wrap{
+    width: 850px;
+    margin: 10px 0px;
+    padding: 20px;
+    background-color: lightgray;
+    font-size: 25px;
+}
+
+#daily-register-img-wrap{
+    display: flex;
+    margin: 10px 0;
+}
+
+.daily-register-img{
+    width: 300px;
+    height: 200px;
+    margin: 5px;
+}
+
+#daily-register-img-upload{
+    padding: 0px 5px;
+    margin: 5px;
+}
+
+#daily-register-textarea{
+    font-size: 25px;
+    padding: 10px;
+}
+
+/*-----------------------Daily-READ-----------------*/
+#daily-read-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 50px auto;
+    background-color: #eaeaea;
+    padding: 50px;
+}
+
+#daily-read-writer-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+#daily-read-writer{
+    display: flex;
+}
+
+#daily-read-writer-name{
+    align-content: center;
+    padding: 0px 10px;
+    font-size: 20px;
+}
+
+#daily-read-date{
+    align-content: center;
+    font-size: 20px;
+}
+
+.profile-img{
+    width: 40px;
+    height: 40px;
+}
+
+#daily-read-content-wrap{
+    background-color: white;
+    padding: 40px;
+    margin: 10px 0;
+}
+
+#daily-read-title{
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Cafe24Ssurround';
+    margin: 20px 0;
+}
+
+#daily-read-content{
+    font-size: 30px;
+}
+
+#daily-read-img{
+    width: 920px;
+    margin: 20px auto;
+}
+
+#like-wrap{
+    padding: 0px 20px;
+    font-size: 25px;
+    display: flex;
+}
+
+#like{
+    width: 30px;
+    height: 30px;
+}
+
+
+/*--------------------------MEET----------------------*/
+#meet-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    margin: 0px auto;
+}
+
+#write-meet-wrap{
+    display: flex;
+    justify-content: end;
+}
+
+#write-meet{
+    width: 200px;
+    height: 60px;
+    background-color: #ff8c18;
+    text-align: center;
+    justify-content: end;
+    align-content: center;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+#write-meet a{
+    color: white;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.meet-post{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 20px 40px;
+    background-color: white;
+}
+
+.meet-post p{
+    font-size: 25px;
+}
+
+.meet-post-title{
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.meet-tag{
+    display: flex;
+}
+
+.meet-tag li{
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #ffd5ab;
+    margin: 10px;
+}
+
+.meet-join{
+    text-align: center;
+    align-content: center;
+    background-color: #ff8c18;
+    border-radius: 10px;
+    padding: 0px 10px;
+    font-weight: bolder;
+}
+
+/*----------------------MEET_REG------------------*/
+#meet-register-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 0px auto;
+}
+
+#meet-register-form{
+    background-color: #eaeaea;
+    padding: 50px 50px 0px 50px;
+    margin-bottom: 50px;
+}
+
+#meet-register-title{
+    height: 50px;
+    width: 850px;
+    font-size: 25px;
+    padding: 0px 20px;
+}
+
+#meet-tag-wrap{
+    width: 850px;
+    margin: 10px 0px;
+    padding: 20px;
+    background-color: lightgray;
+    font-size: 25px;
+}
+
+#meet-info{
+    font-size: 25px;
+}
+
+.meet-info > input {
+    height: 40px;
+    margin: 5px 10px;
+    padding: 0px 10px;
+    font-size: 25px;
+}
+
+#meet-register-textarea{
+    margin: 10px 0;
+    font-size: 25px;
+    padding: 10px;
+}
+
+/*----------------------------MEET-READ-----------------------*/
+#meet-read-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 50px auto;
+    background-color: #eaeaea;
+    padding: 50px;
+}
+
+#meet-read-writer-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+#meet-read-writer{
+    display: flex;
+}
+
+#meet-read-writer-name{
+    align-content: center;
+    padding: 0px 10px;
+    font-size: 20px;
+}
+
+#meet-read-date{
+    align-content: center;
+    font-size: 20px;
+}
+
+.profile-img{
+    width: 40px;
+    height: 40px;
+}
+
+#meet-read-content-wrap{
+    background-color: white;
+    padding: 40px;
+    margin: 10px 0;
+}
+
+#meet-read-title{
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Cafe24Ssurround';
+    margin: 20px 0;
+}
+
+.meet-read-content{
+    font-size: 30px;
+    margin: 5px 0;
+}
+
+#meet-read-content-wrap >img{
+    width: 920px;
+    height: 500px;
+    background-size: cover;
+    margin: 10px 0;
+}
+
+
+
+/*-----------------------------FOOTER-------------------------------*/
+footer{
+    height: 250px;
+    background-color: #303030;
+}

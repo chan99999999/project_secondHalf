@@ -9,8 +9,8 @@ import lombok.*;
 @ToString
 @Builder
 public class MemberDto {
-    private String id;
-    private String passwd;
+    private String memberId;
+    private String password;
     private String name;
     private String email;
     private String regdate;

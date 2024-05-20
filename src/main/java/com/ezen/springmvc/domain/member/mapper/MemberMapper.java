@@ -12,7 +12,7 @@ import java.util.List;
 public interface MemberMapper {
     public List<MemberDto> findByAll();
     public MemberDto findById(String id);
-    public MemberDto findByIdAndPasswd(@Param("id") String id, @Param("passwd") String passwd);
+    public MemberDto findByIdAndPasswd(@Param("memberId") String id, @Param("password") String passwd);
     public List<MemberDto> findByAgeRange(@Param("begin") int begin, @Param("end") int end);
     public List<MemberDto> findByNameLike(String name);
     public void create(MemberDto member);

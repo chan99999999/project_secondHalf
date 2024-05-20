@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 일상공유 작성하기 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div id="daily-register-wrap">
+        <h1 class="title-text">일상 공유하기</h1>
+        <form id="daily-register-form">
+            <fieldset>
+                <input id="daily-register-title" type="text" placeholder="게시글 제목" />
+                <div id="daily-tag-wrap">
+                    <h3>카테고리</h3>
+                    <input class="daily-tag-list" id="1" type="checkbox" name="tag">
+                    <label for="1">일상</label>
+                    <input class="daily-tag-list" id="2" type="checkbox" name="tag">
+                    <label for="2">이상</label>
+                    <input class="daily-tag-list" id="3" type="checkbox" name="tag">
+                    <label for="3">삼상</label>
+                </div>
+                <div id="daily-register-img-wrap">
+                    <img class="daily-register-img" src="/img/sample1.jpg">
+                    <img class="daily-register-img" src="/img/sample1.jpg">
+                    <div id="daily-register-img-upload">
+                        <input type="file">
+                    </div>
+                </div>
+                <div>
+                    <textarea id="daily-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
+                </div>
+                <div class="register-btn-wrap">
+                    <button class="back-btn" type="reset">취소하기</button>
+                    <button class="register-btn" type="submit">등록하기</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

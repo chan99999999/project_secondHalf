@@ -1,24 +1,69 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/layout/layoutV1 :: template(~{this :: title}, ~{this :: script}, ~{this :: content})}">
+<html lang="kor" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <title th:fragment="title">후반전 메인페이지</title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+</head>
 
-<title th:fragment="title">홈페이지 방문을 환영합니다..</title>
+<body>
+<nav>
+    <div id="nav-bar">
+        <a id="nav-signup" href="/member/signup" >무료 회원가입</a>
+        <a id="nav-login" href="/member/login" >로그인</a>
+    </div>
+</nav>
+<div class="container">
+    <div id="main-intro">
+        <h1> 홈페이지 소개 </h1>
+    </div>
 
-<th:block th:fragment="script">
-    <script src="xxx.js"></script>
-    <script src="yyy.js"></script>
-    <script src="zzz.js"></script>
-</th:block>
-
-<div th:fragment="content">
-    <h1>홈페이지 내용입니다....</h1>
-    <h1>홈페이지 내용입니다....</h1>
-    <h1>홈페이지 내용입니다....</h1>
-    <h1>홈페이지 내용입니다....</h1>
-    <h1>홈페이지 내용입니다....</h1>
-    <h1>홈페이지 내용입니다....</h1>
+    <div id="main-category">
+        <div class="category-btn">
+            <a href="/map">
+                <div class="category-content">
+                    <img src="/img/category_map.png">
+                    <div class="category-title">우리동네</div>
+                    <p class="category-subtitle">산책로, 병원 등 동네 지도보기</p>
+                </div>
+            </a>
+        </div>
+        <div class="category-btn">
+            <a href="/daily">
+                <div class="category-content">
+                    <img src="/img/category_share.png">
+                    <div class="category-title">일상공유</div>
+                    <p class="category-subtitle">일상, 지역정보 구경하기</p>
+                </div>
+            </a>
+        </div>
+        <div class="category-btn">
+            <a href="/meet">
+                <div class="category-content">
+                    <img src="/img/category_meet.png">
+                    <div class="category-title">동네친구</div>
+                    <p class="category-subtitle">동네 번개모임 참여하기</p>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
+<footer>
+    <div>
+        <ul>
+            <li>
+
+            </li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+
 
 </html>
 

@@ -1,101 +1,113 @@
 package com.ezen.springmvc.web.member.controller;
 
+import com.ezen.springmvc.domain.common.encription.EzenUtil;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
+import com.ezen.springmvc.domain.member.mapper.MemberMapper;
+import com.ezen.springmvc.domain.member.service.MemberService;
+import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.reflect.Member;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+// REST API 서비스 전용 컨트롤러
 @Controller
 @RequestMapping("/member")
+@Slf4j
 public class MemberController {
 
-    private static final Logger log = LoggerFactory.getLogger(MemberController.class);
+    private final MemberMapper memberMapper;
+    private final MemberServiceImpl memberServiceImpl;
 
-    // 회원 가입 화면
-    @GetMapping("/signup")
-    public String registerForm(){
-        return "/member/registerForm";
+    public MemberController(MemberMapper memberMapper, MemberServiceImpl memberServiceImpl) {
+        this.memberMapper = memberMapper;
+        this.memberServiceImpl = memberServiceImpl;
     }
-    
+
+    // 회원가입 화면 이동
+    @GetMapping("/signup")
+    public String signup() {
+        return "/member/signUpForm";
+    }
+
     // 회원 가입 처리
     @PostMapping("/signup")
-    public String registerAction(@ModelAttribute("memberDto") MemberDto memberDto, Model model, RedirectAttributes redirectAttributes){
+    public String registerAction(@ModelAttribute("MemberDto") MemberDto memberDto, Model model, RedirectAttributes redirectAttributes) {
         log.info("수신한 사용자 정보: {}", memberDto.toString());
-        // 서비스 객체를 이용해서 가입 처리
-        //model.addAttribute("memberDto", memberDto);
+        MemberDto registerMember = memberServiceImpl.register(memberDto);
 
-        redirectAttributes.addFlashAttribute("memberDto", memberDto);
-        redirectAttributes.addFlashAttribute("message", "조금 쉬었다 합시다..");
-
-        // 가입 결과를 보여주는 뷰로 리다이렉트
-        return "redirect:/member/signup/result";
+        redirectAttributes.addFlashAttribute("registerMember", registerMember);
+        return "redirect:/member/result";
     }
 
-    // 회원 가입 결과 처리
-    @GetMapping("/signup/result")
-    public String registerResult(){
-        return "/member/registerResult";
+    @GetMapping("/result")
+    public String result() {
+        return "/member/result";
     }
-    
+
+    // 회워 로그인 화면
+    @GetMapping("/login")
+    public String login() {
+        return "/member/loginForm";
+    }
+
     // 회원 로그인 처리
-    @PostMapping("/signin")
-    public String loginAction(@RequestParam(value="id", required = false, defaultValue = "guest") String id,
-                              @RequestParam(value="passwd") String passwd,
-                              HttpServletResponse response){
-        log.info("수신된 아이디: {}, 비번: {}", id, passwd);
-//        session.setAttribute("LoginId", id);
-        Cookie loginCookie = new Cookie("LoginId", id);
-        loginCookie.setPath("/");
-        response.addCookie(loginCookie);
-        // 임시 이동
-        return "redirect:/member";
-    }
-    
-    // 회원 로그아웃 처리
-    
-    // 회원 목록 처리
-    @GetMapping
-//    public String list(@SessionAttribute("LoginId") String loginId){
-    public String list(@CookieValue("LoginId") String loginId){
-        if(loginId != null){
-            return "/member/list";
-        }else{
-          return  "redirect:/member/signup";
+    @PostMapping("/login")
+    public String loginAction(@RequestParam("loginId") String id, @RequestParam("loginPw") String pw, @RequestParam("saveId") String saveId, HttpServletResponse response, HttpSession session) {
+        MemberService memberService = new MemberServiceImpl(memberMapper);
+        MemberDto loginMember = memberService.isMember(id, pw);
+        log.info("아이디 : {}, 비밀번호 :  {}", id, pw);
+
+        if (loginMember != null) {
+            if (saveId != null) {
+                Cookie saveIdCookie = new Cookie("cookieId", EzenUtil.encription(id));
+                saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
+                saveIdCookie.setPath("/");
+                response.addCookie(saveIdCookie);
+            } else {
+                Cookie saveIdCookie = new Cookie("cookieId", EzenUtil.encription(id));
+                saveIdCookie.setMaxAge(0);
+                saveIdCookie.setPath("/");
+                response.addCookie(saveIdCookie);
+            }
+            session.setAttribute("loginMember", loginMember);
         }
+            return "redirect:/";
+        }
+
+        //
+
+        // 회원 로그아웃 처리
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loginMember");
+        return "redirect:/";
     }
 
-    // 회원 상세 정보 처리
-    // REST URL 설계
-    // /member/bangry
-    @GetMapping("/{memberId}")
-    public String read(@PathVariable("memberId") String memberId, Model model){
-//        MemberDto memberDto = memberService.read(memberId);
-        log.info("수신한 사용자 아이디 : {}", memberId);
-        model.addAttribute("memberId", memberId);
-        return "/member/read";
-    }
+        // 회원 상세 정보 처리
+        // REST URL 설계
 
-    // 회원 정보 수정 처리
-    
-    // 회원 정보 삭제 처리
 
-    // 하나의 파라미터 이름에 여러개의 값을 수신할 때
-    // /params?hobby=sports&hobby=sleep
-//    @PostMapping("/params")
-//    public String params (MultiValueMap<String, String> hobby){
-//
-//        log.info("{}", hobby.toString());
-////        log.info("{}", hobby.get("hobby"));
-//        return "/member/list";
+        // /member/bangry
+//    @GetMapping("/{memberId}")
+//    public MemberDto read(@PathVariable("memberId") String memberId){
+//        log.info("수신한 사용자 아이디 : {}", memberId);
+////        MemberDto memberDto = MemberDto.builder().id("bangry").name("김기정").build();
+////        return memberDto;
+//        return null;
 //    }
 
-
-}
+    }
 
 
 

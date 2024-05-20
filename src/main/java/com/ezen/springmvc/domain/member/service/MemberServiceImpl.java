@@ -16,8 +16,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	@Transactional
-	public void register(MemberDto memberDto) {
+	public MemberDto register(MemberDto memberDto) {
 		memberMapper.create(memberDto);
+		return memberMapper.findById(memberDto.getMemberId());
 	}
 
 	@Override
@@ -40,5 +41,4 @@ public class MemberServiceImpl implements MemberService{
 	public void editMember(MemberDto memberDto) {
 		memberMapper.update(memberDto);
 	}
-
 }
