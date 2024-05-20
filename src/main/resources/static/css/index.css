@@ -51,8 +51,9 @@ form, fieldset{
     border: none;
 }
 
-#main-intro h1{
-    font-family: 'NPSfontBold';
+#main-banner-img{
+    display: flex;
+    margin: 0px auto;
 }
 
 /*-------------------------BTN---------------------*/
