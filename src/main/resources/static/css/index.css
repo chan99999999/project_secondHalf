@@ -359,11 +359,33 @@ nav{
     display: flex;
     width: 540px;
     align-items: center;
-    justify-content: space-around;
 }
 
 #signup-gender{
-    font-size: 25px;
+    font-size: 30px;
+}
+
+
+
+#signup-gender >input{
+    margin-right: 20px;
+}
+
+.signup-gender-radio{
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.signup-gender-radio:checked{
+    border: 10px solid tomato;
+}
+
+#signup-gender >span{
+    margin-right: 20px
 }
 
 #signup-birth{
