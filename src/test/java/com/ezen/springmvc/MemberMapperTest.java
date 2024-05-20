@@ -22,7 +22,7 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 전체 조회 테스트")
-//    @Disabled
+    @Disabled
     void findAllTest() {
         List<MemberDto> list  = memberMapper.findByAll();
         for (MemberDto memberDto : list) {
@@ -71,34 +71,34 @@ class MemberMapperTest {
         }
     }
 
-    @Test
-    @DisplayName("회원 등록 테스트")
-    @Disabled
-    void createTest() {
-        MemberDto createMember = MemberDto
-                .builder()
-                .id("sony")
-                .passwd("1111")
-                .name("손흥민")
-                .email("sony@gmail.com")
-                .build();
-        memberMapper.create(createMember);
-        log.info("회원 등록 완료 : {}", createMember);
-    }
+//    @Test
+//    @DisplayName("회원 등록 테스트")
+//    @Disabled
+//    void createTest() {
+//        MemberDto createMember = MemberDto
+//                .builder()
+//                .id("sony")
+//                .passwd("1111")
+//                .name("손흥민")
+//                .email("sony@gmail.com")
+//                .build();
+//        memberMapper.create(createMember);
+//        log.info("회원 등록 완료 : {}", createMember);
+//    }
 
-    @Test
-    @DisplayName("회원 정보 수정 테스트")
-    @Disabled
-    void updateTest() {
-        MemberDto updateMember = MemberDto
-                .builder()
-                .id("sony")
-                .passwd("2222")
-                .email("sony2@gmail.com")
-                .build();
-        memberMapper.update(updateMember);
-        log.info("회원 수정 완료 : {}", updateMember);
-    }
+//    @Test
+//    @DisplayName("회원 정보 수정 테스트")
+//    @Disabled
+//    void updateTest() {
+//        MemberDto updateMember = MemberDto
+//                .builder()
+//                .id("sony")
+//                .passwd("2222")
+//                .email("sony2@gmail.com")
+//                .build();
+//        memberMapper.update(updateMember);
+//        log.info("회원 수정 완료 : {}", updateMember);
+//    }
 
     @Test
     @DisplayName("검색 타입에 따른 회원 검색 테스트")

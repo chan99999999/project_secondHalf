@@ -33,18 +33,18 @@
                 </div>
             </div>
             <div class="daily-list">
-                <h1 class="daily-list-title">타이틀</h1>
-                <div class="daily-post">
+                <h1 class="daily-list-title">소통 공간</h1>
+                <div class="daily-post" th:each="dailyArticle : ${dailyArticleList}">
                     <div class="daily-writer">
                         <img class="daily-writer-img" src="/img/profile.png">
-                        <p class="daily-writer-name">김순자 최고</p>
+                        <p class="daily-writer-name" th:text="${dailyArticle.memberId}">김순자 최고</p>
                     </div>
                     <img class="daily-post-img" src="/img/sample1.jpg">
                     <div class="daily-like-wrap">
                         <img class="daily-like" src="/img/heart.png">
                         <p class="daily-like-amount">3,000</p>
                     </div>
-                    <p class="daily-post-title"><a href="/daily/read">게시글 제목이 들어갑네다</a></p>
+                    <p class="daily-post-title" th:text="${dailyArticle.title}"><a href="/daily/read">게시글 제목이 들어갑네다</a></p>
                 </div>
                 <div class="daily-post">
                     <div class="daily-writer">

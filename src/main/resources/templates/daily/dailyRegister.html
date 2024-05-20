@@ -15,9 +15,9 @@
 <div class="wrapper" th:fragment="content">
     <div id="daily-register-wrap">
         <h1 class="title-text">일상 공유하기</h1>
-        <form id="daily-register-form">
+        <form id="daily-register-form" th:object="${createDailyArticleDto}" method="post">
             <fieldset>
-                <input id="daily-register-title" type="text" placeholder="게시글 제목" />
+                <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목" />
                 <div id="daily-tag-wrap">
                     <h3>카테고리</h3>
                     <input class="daily-tag-list" id="1" type="checkbox" name="tag">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div>
-                    <textarea id="daily-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
+                    <textarea name="content" id="daily-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
                 </div>
                 <div class="register-btn-wrap">
                     <button class="back-btn" type="reset">취소하기</button>

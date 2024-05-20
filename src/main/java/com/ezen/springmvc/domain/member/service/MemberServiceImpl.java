@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 	
 	private final MemberMapper memberMapper;
