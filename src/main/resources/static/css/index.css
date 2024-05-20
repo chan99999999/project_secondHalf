@@ -402,13 +402,6 @@ nav{
     text-align: center;
 }
 
-#passwd-hint{
-    font-size: 25px;
-    color: red;
-    padding-left: 310px;
-    margin-top: -15px;
-}
-
 /*---------------------------MAP---------------------------------*/
 #map-wrap{
     margin: 0px auto;
