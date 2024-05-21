@@ -14,14 +14,42 @@
 
 
 <section id="section" th:fragment="content">
+<!--    <div id="result-wrap">-->
+<!--        <h1><span id="result-member-id" th:text="${registerMember.getMemberId()}"></span>님의 가입을 축하합니다!</h1>-->
+<!--        <fieldset id="result-fieldset">-->
+<!--            <ul id="result-info">-->
+<!--                <li class="result-list" th:text="${registerMember.getMemberId()}"><span class="result-list-color" ></span></li>-->
+<!--                <li class="result-list" th:text="${registerMember.getName()}"><span class="result-list-color">이름</span></li>-->
+<!--                <li class="result-list" th:text="${registerMember.getEmail()}"><span class="result-list-color">이메일</span></li>-->
+<!--                <li class="result-list" th:text="${registerMember.getRegdate()}"><span class="result-list-color">가입일자</span></li>-->
+<!--            </ul>-->
+<!--        </fieldset>-->
+<!--        <a href="/" id="result-btn">홈으로</a>-->
+<!--    </div>-->
     <div id="result-wrap">
-        <h1><span id="result-member-id" th:text="${registerMember.getMemberId()}"></span>님의 가입을 축하합니다!</h1>
+        <h1 id="result-text"><span id="result-member-id" th:text="${registerMember.getMemberId()}"></span>님의 가입을 축하합니다!</h1>
         <fieldset id="result-fieldset">
             <ul id="result-info">
-                <li class="result-list" th:text="${registerMember.getMemberId()}"><span class="result-list-color" ></span></li>
-                <li class="result-list" th:text="${registerMember.getName()}"><span class="result-list-color">이름</span></li>
-                <li class="result-list" th:text="${registerMember.getEmail()}"><span class="result-list-color">이메일</span></li>
-                <li class="result-list" th:text="${registerMember.getRegdate()}"><span class="result-list-color">가입일자</span></li>
+                <li class="result-list">
+                    <div class="result-list-title">아이디</div>
+                    <div th:text="${registerMember.getMemberId()}"></div>
+                </li>
+                <li class="result-list">
+                    <div class="result-list-title">닉네임</div>
+                    <div th:text="${registerMember.getNickname()}"></div>
+                </li>
+                <li class="result-list">
+                    <div class="result-list-title">이름</div>
+                    <div th:text="${registerMember.getName()}"></div>
+                </li>
+                <li class="result-list">
+                    <div class="result-list-title">이메일</div>
+                    <div th:text="${registerMember.getEmail()}"></div>
+                </li>
+                <li class="result-list">
+                    <div class="result-list-title">가입일자</div>
+                    <div th:text="${registerMember.getRegdate()}"></div>
+                </li>
             </ul>
         </fieldset>
         <a href="/" id="result-btn">홈으로</a>

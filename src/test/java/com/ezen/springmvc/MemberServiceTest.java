@@ -20,10 +20,16 @@ public class MemberServiceTest {
 
 	@Test
 	@DisplayName("회원 전체 조회 테스트")
-//	@Disabled
+	@Disabled
 	void getMembersTest(){
 		List<MemberDto> list =  memberService.getMembers();
 		log.info("회원 전체 목록 : {}", list);
+	}
+
+	@Test
+	@DisplayName("회원 가입 테스트")
+//	@Disabled
+	void registerMemberTest(){
 	}
 	
 	@Test

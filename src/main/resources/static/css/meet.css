@@ -27,6 +27,46 @@
     font-weight: bolder;
 }
 
+#meet-list-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    background-color: #e6e6e6;
+    margin-bottom: 20px;
+    padding: 20px 0px;
+}
+
+#meet-search-bar{
+    width: 1100px;
+    margin: 0px auto;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#meet-search-bar input{
+    height: 60px;
+    width: 500px;
+    border-radius: 10px;
+    font-size: 25px;
+    padding: 0px 10px;
+}
+
+#meet-search-bar button{
+    height: 60px;
+    width: 70px;
+    font-size: 20px;
+}
+
+.meet-tag{
+    display: flex;
+    font-size: 35px;
+}
+
+.meet-tag li{
+    margin: 0px 10px;
+}
+
 .meet-post{
     display: flex;
     justify-content: space-between;

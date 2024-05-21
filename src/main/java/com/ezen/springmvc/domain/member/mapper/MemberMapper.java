@@ -10,17 +10,30 @@ import java.util.List;
 //@Repository
 @Mapper
 public interface MemberMapper {
-    public List<MemberDto> findByAll();
-    public MemberDto findById(String id);
-    public MemberDto findByIdAndPasswd(@Param("memberId") String id, @Param("password") String passwd);
-    public List<MemberDto> findByAgeRange(@Param("begin") int begin, @Param("end") int end);
-    public List<MemberDto> findByNameLike(String name);
+    //회원 생성
     public void create(MemberDto member);
+
+    //회원 수정
     public void update(MemberDto member);
+
+    //아이디로 회원찾기
+    public MemberDto findById(String id);
+
+    //회원목록 조회
+    public List<MemberDto> findByAll();
+
+    //로그인
+    public MemberDto findByIdAndPasswd(@Param("memberId") String id, @Param("password") String passwd);
+
+    //이름으로 회원찾기
+    public List<MemberDto> findByNameLike(String name);
+
     // 검색 타입별 회원 검색
     public List<MemberDto> findBySearchType(@Param("type") String type, @Param("value") String value);
+
     // 통합 검색
     public List<MemberDto> findBySearchAll(String value);
+
     // 통합 검색
     public List<MemberDto> findBySearchAllOption(MemberSearchCondition searchCondition);
 }

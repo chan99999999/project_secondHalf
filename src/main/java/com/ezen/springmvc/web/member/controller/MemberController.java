@@ -5,6 +5,7 @@ import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
+import com.ezen.springmvc.web.member.form.MemberForm;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -42,11 +43,22 @@ public class MemberController {
 
     // 회원 가입 처리
     @PostMapping("/signup")
-    public String registerAction(@ModelAttribute("MemberDto") MemberDto memberDto, Model model, RedirectAttributes redirectAttributes) {
-        log.info("수신한 사용자 정보: {}", memberDto.toString());
-        MemberDto registerMember = memberServiceImpl.register(memberDto);
+    public String registerAction(@ModelAttribute MemberForm memberForm, Model model, RedirectAttributes redirectAttributes) {
+        log.info("수신한 사용자 정보: {}", memberForm.toString());
 
-        redirectAttributes.addFlashAttribute("registerMember", registerMember);
+        MemberDto memberDto = MemberDto.builder()
+                .memberId(memberForm.getMemberId())
+                .name(memberForm.getName())
+                .nickname(memberForm.getNickname())
+                .memberPasswd(memberForm.getMemberPasswd())
+                .memberAddress(memberForm.getMemberAddress())
+                .gender(memberForm.getGender())
+                .birthDate(memberForm.getBirthDate())
+                .email(memberForm.getEmail())
+                .build();
+        memberServiceImpl.register(memberDto);
+
+        redirectAttributes.addFlashAttribute("registerMember", memberDto);
         return "redirect:/member/result";
     }
 
@@ -82,23 +94,23 @@ public class MemberController {
             }
             session.setAttribute("loginMember", loginMember);
         }
-            return "redirect:/";
-        }
+        return "redirect:/";
+    }
 
-        //
+    //
 
-        // 회원 로그아웃 처리
+    // 회원 로그아웃 처리
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginMember");
         return "redirect:/";
     }
 
-        // 회원 상세 정보 처리
-        // REST URL 설계
+    // 회원 상세 정보 처리
+    // REST URL 설계
 
 
-        // /member/bangry
+    // /member/bangry
 //    @GetMapping("/{memberId}")
 //    public MemberDto read(@PathVariable("memberId") String memberId){
 //        log.info("수신한 사용자 아이디 : {}", memberId);
@@ -106,7 +118,7 @@ public class MemberController {
 ////        return memberDto;
 //        return null;
 //    }
-    }
+}
 
 
 

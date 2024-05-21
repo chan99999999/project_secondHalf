@@ -16,7 +16,7 @@
 <div class="wrapper" th:fragment="content">
     <div id="signup-wrap">
         <h1 class="title-text">회원 가입</h1>
-        <form name="register-form" method="post" action="/member/signup">
+        <form name="register-form" method="post" th:object="${memberForm}">
             <fieldset id="signup-fieldset">
                 <div id="signup-content">
                     <ul id="signup-list">
@@ -27,6 +27,12 @@
                                    maxlength="10" autofocus required>
                         </li>
                         <li class="signup-info">
+                            <label for="signup-name">이름</label>
+                            <input class="signup-input" name="name" type="text" id="signup-name" size="20"
+                                   placeholder="이름을 입력해주세요." minlength="2"
+                                   maxlength="10" autofocus required>
+                        </li>
+                        <li class="signup-info">
                             <label for="signup-nickname">별명</label>
                             <input class="signup-input" name="nickname" type="text" id="signup-nickname" size="20"
                                    autofocus
@@ -34,7 +40,7 @@
                         </li>
                         <li class="signup-info">
                             <label for="signup-pw">비밀번호</label>
-                            <input class="signup-input" name="password" type="password" id="signup-pw"
+                            <input class="signup-input" name="memberPasswd" type="password" id="signup-pw"
                                    placeholder="비밀번호를 입력해주세요." required o>
                         </li>
                         <li class="signup-info">
@@ -43,38 +49,39 @@
                                    placeholder="비밀번호를 한번 더 입력해주세요.">
                         </li>
                         <li class="signup-info">
+                            <label for="signup-address">주소</label>
+                            <div id="signup-address">
+                                <input class="signup-radio" type="radio" name="memberAddress" id="signup-hagye"
+                                       value="하계동">
+                                <label for="signup-hagye">하계동</label>
+                                <input class="signup-radio" type="radio" name="memberAddress" id="signup-junggye"
+                                       value="중계동">
+                                <label for="signup-junggye">중계동</label>
+                                <input class="signup-radio" type="radio" name="memberAddress" id="signup-sanggye"
+                                       value="상계동">
+                                <label for="signup-sanggye">상계동</label>
+                                <input class="signup-radio" type="radio" name="memberAddress" id="signup-wolgye"
+                                       value="월계동">
+                                <label for="signup-wolgye">월계동</label>
+                                <input class="signup-radio" type="radio" name="memberAddress" id="signup-gongneung"
+                                       value="공릉동">
+                                <label for="signup-gongneung">공릉동</label>
+                            </div>
+                        </li>
+                        <li class="signup-info">
                             <label for="signup-gender">성별</label>
                             <div id="signup-gender">
-                                <input class="signup-gender-radio" type="radio" name="gender" id="signup-women"
-                                       value="women">
+                                <input class="signup-radio" type="radio" name="gender" id="signup-women"
+                                       value="W">
                                 <label for="signup-women">여성</label>
-                                <input class="signup-gender-radio" type="radio" name="gender" id="signup-men"
-                                       value="men">
+                                <input class="signup-radio" type="radio" name="gender" id="signup-men"
+                                       value="M">
                                 <label for="signup-men">남성</label>
                             </div>
                         </li>
                         <li class="signup-info">
                             <label for="signup-pw-confirm">생년월일</label>
-                            <div id="signup-birth">
-                                <select>
-                                    <option selected>출생년도</option>
-                                    <th:block th:each="num : ${#numbers.sequence(1900, 1975)}">
-                                        <option value="${num}" th:text="${num}+년"></option>
-                                    </th:block>
-                                </select>
-                                <select>
-                                    <option selected>월</option>
-                                    <th:block th:each="num : ${#numbers.sequence(1, 12)}">
-                                        <option value="${num}" th:text="${num}+월"></option>
-                                    </th:block>
-                                </select>
-                                <select>
-                                    <option selected>일</option>
-                                    <th:block th:each="num : ${#numbers.sequence(1, 31)}">
-                                        <option value="${num}" th:text="${num}+일"></option>
-                                    </th:block>
-                                </select>
-                            </div>
+                            <input class="signup-input" type="date" name="birthDate">
                         </li>
                         <li class="signup-info">
                             <label for="signup-email">이메일</label>

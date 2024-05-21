@@ -73,32 +73,36 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 등록 테스트")
-    @Disabled
+//    @Disabled
     void createTest() {
         MemberDto createMember = MemberDto
                 .builder()
-                .id("sony")
-                .passwd("1111")
-                .name("손흥민")
-                .email("sony@gmail.com")
+                .memberId("chan999")
+                .name("김찬규")
+                .nickname("찬찬")
+                .memberPasswd("1111")
+                .memberAddress("wolgye")
+                .gender("M")
+                .birthDate("20/05/14")
+                .email("chan999@gmail.com")
                 .build();
         memberMapper.create(createMember);
         log.info("회원 등록 완료 : {}", createMember);
     }
 
-    @Test
-    @DisplayName("회원 정보 수정 테스트")
-    @Disabled
-    void updateTest() {
-        MemberDto updateMember = MemberDto
-                .builder()
-                .id("sony")
-                .passwd("2222")
-                .email("sony2@gmail.com")
-                .build();
-        memberMapper.update(updateMember);
-        log.info("회원 수정 완료 : {}", updateMember);
-    }
+//    @Test
+//    @DisplayName("회원 정보 수정 테스트")
+//    @Disabled
+//    void updateTest() {
+//        MemberDto updateMember = MemberDto
+//                .builder()
+//                .id("sony")
+//                .passwd("2222")
+//                .email("sony2@gmail.com")
+//                .build();
+//        memberMapper.update(updateMember);
+//        log.info("회원 수정 완료 : {}", updateMember);
+//    }
 
     @Test
     @DisplayName("검색 타입에 따른 회원 검색 테스트")
