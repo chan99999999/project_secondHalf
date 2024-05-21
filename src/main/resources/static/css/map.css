@@ -1,0 +1,209 @@
+/*---------------------------MAP---------------------------------*/
+#map-wrap{
+    margin: 0px auto;
+    display: flex;
+    height: 850px;
+    min-height: 850px;
+    width: 1400px;
+    min-width: 1400px;
+}
+
+#search-map-wrap{
+    width: 400px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#map{
+    background-color: rgba(253, 139, 24, 0.19);
+    width: 1000px;
+}
+
+#map >img{
+    width: 1000px;
+    height: 850px;
+}
+
+#search-map-title{
+    font-family: 'Cafe24Ssurround';
+    font-size: 50px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#search-bar-map{
+    height: 60px;
+    align-content: center;
+}
+
+#search-text-map{
+    height: 50px;
+    width: 270px;
+    font-size: 25px;
+    padding: 0px 10px;
+}
+
+#search-btn-map{
+    height: 45px;
+    width: 70px;
+    font-size: 20px;
+}
+
+#search-map-tagbox{
+    width: 350px;
+    background-color: #ff8c18;
+    margin: 10px 0;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.map-tag{
+    height: 40px;
+    background-color: white;
+    border-radius: 10px;
+    align-content: center;
+    color: black;
+    font-size: 20px;
+    padding: 5px 10px;
+}
+
+#search-map-result{
+    width: 370px;
+    background-color: rgba(253, 139, 24, 0.19);
+    padding: 10px 0px;
+}
+
+.search-map-box{
+    width: 330px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: white;
+    font-size: 20px;
+}
+
+.search-map-detail{
+    list-style: none;
+}
+
+.search-map-detail ul{
+    display: flex;
+}
+
+.search-map-detail-title{
+    font-size: 30px;
+    margin: 10px 0px;
+    font-weight: bolder;
+}
+
+.search-map-detail-subtitle{
+    width: 90px;
+    font-weight: bolder;
+}
+
+/*-----------------------------PLACE--------------------------------*/
+#place-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    margin: 30px auto;
+
+}
+
+#place-detail-wrap{
+    width: 1200px;
+    display: flex;
+}
+
+#place-map{
+    width: 500px;
+    height: 500px;
+    background-color: #ff8c18;
+}
+
+#place-map >img{
+    width: 500px;
+    height: 500px;
+}
+
+#place-info{
+    width: 700px;
+    background-color: rgba(253, 139, 24, 0.19);
+    padding: 20px;
+}
+
+.place-info-text{
+    display: flex;
+    font-size: 30px;
+    margin: 20px 0px;
+}
+
+.place-info-title{
+    width: 150px;
+    font-weight: bolder;
+}
+
+.review-wrap{
+    margin: 20px 0px;
+    padding: 0px 20px;
+}
+
+#place-review{
+    width: 1160px;
+    background-color: rgba(211, 211, 211, 0.57);
+    padding: 10px 0px;
+    margin: 10px 0px;
+}
+
+.write-review{
+    padding: 10px 10px;
+    align-content: center;
+}
+
+#write-review p{
+    font-size: 20px;
+}
+
+#write-review-btn{
+    height: 80px;
+    width: 90px;
+    font-size: 25px;
+    font-weight: bolder;
+    background-color: #ff8c18;
+    border: none;
+}
+
+#review-text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#review-text textarea{
+    font-size: 25px;
+    padding: 10px;
+    margin: 5px 0px;
+}
+
+.review{
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: lightgray;
+}
+
+.review-writer{
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.review-content{
+    font-size: 25px;
+}
+
+.review img{
+    width: 55px;
+    height: 55px;
+    margin-right: 20px;
+}
