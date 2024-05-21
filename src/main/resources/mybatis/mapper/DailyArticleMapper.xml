@@ -16,11 +16,24 @@
 
     <!-- 일상 게시글 목록 조회 -->
     <select id="findByAllDailyArticle" parameterType="int" resultType="DailyArticleDto">
-        SELECT title, member_id
+        SELECT d_article_id "dailyArticleId", title, member_id
         FROM daily_article
         WHERE category_id = #{categoryId}
         ORDER BY d_article_id DESC
     </select>
+
+    <!-- 일상 게시글 상세 보기 -->
+    <select id="readDailyArticle" parameterType="int" resultType="DailyArticleDto">
+        SELECT d.title, d.content, d.member_id, TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') regdate, f.file_name
+        FROM daily_article d
+                 JOIN attach_file f
+                      ON d.d_article_id = f.d_article_id
+        WHERE d.category_id = #{categoryId}
+          AND d.d_article_id = #{dailyArticleId}
+    </select>
+
+
+
 
 </mapper>
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.FileMapper">
+    <!-- 파일 등록 -->
+    <insert id="createFileDto" parameterType="FileDto">
+        INSERT INTO attach_file (file_id, file_name, encrypted_name, d_article_id)
+        VALUES (FILE_ID_SEQ.nextval, #{fileName}, #{encryptedName}, D_ARTICLE_ID_SEQ.currval)
+    </insert>
+
+    <!-- 파일 번호로 파일 조회 -->
+    <select id="findByFileId" parameterType="int" resultType="FileDto">
+        SELECT file_id, file_name, encrypted_name, file_path, D_ARTICLE_ID
+        FROM attach_file
+        WHERE file_id = #{fileId}
+    </select>
+
+</mapper>
+

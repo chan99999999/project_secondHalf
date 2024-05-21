@@ -15,7 +15,7 @@
 <div class="wrapper" th:fragment="content">
     <div id="daily-register-wrap">
         <h1 class="title-text">일상 공유하기</h1>
-        <form id="daily-register-form" th:object="${createDailyArticleDto}" method="post">
+        <form id="daily-register-form" method="post" enctype="multipart/form-data">
             <fieldset>
                 <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목" />
                 <div id="daily-tag-wrap">
@@ -31,7 +31,7 @@
                     <img class="daily-register-img" src="/img/sample1.jpg">
                     <img class="daily-register-img" src="/img/sample1.jpg">
                     <div id="daily-register-img-upload">
-                        <input type="file">
+                        <input name="attachImage" type="file">
                     </div>
                 </div>
                 <div>

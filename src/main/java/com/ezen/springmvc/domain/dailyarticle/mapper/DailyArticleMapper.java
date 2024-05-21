@@ -32,4 +32,12 @@ public interface DailyArticleMapper {
      * @return 일상 게시글 목록
      */
     public List<DailyArticleDto> findByAllDailyArticle(@Param("categoryId") int categoryId);
+
+    /**
+     * 일상 게시글 상세보기
+     * @param categoryId 카테고리 번호
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 일상 게시글
+     */
+    public DailyArticleDto readDailyArticle(@Param("categoryId") int categoryId, @Param("dailyArticleId") int dailyArticleId);
 }

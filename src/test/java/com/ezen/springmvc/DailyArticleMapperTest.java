@@ -1,7 +1,9 @@
 package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.dailyarticle.dto.DailyArticleDto;
+import com.ezen.springmvc.domain.dailyarticle.dto.FileDto;
 import com.ezen.springmvc.domain.dailyarticle.mapper.DailyArticleMapper;
+import com.ezen.springmvc.domain.dailyarticle.mapper.FileMapper;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
@@ -22,6 +24,8 @@ public class DailyArticleMapperTest {
 
     @Autowired
     DailyArticleMapper dailyArticleMapper;
+    @Autowired
+    FileMapper fileMapper;
     @Autowired
     private DailyArticleServiceImpl dailyArticleServiceImpl;
 
@@ -63,5 +67,21 @@ public class DailyArticleMapperTest {
         for (DailyArticleDto dailyArticleDto : list) {
             log.info("조회된 게시글 목록 : {}", dailyArticleDto);
         }
+    }
+
+    @Test
+    @DisplayName("일상 게시글 상세 보기 테스트")
+//    @Disabled
+    void readDailyArticleTest() {
+        DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 11);
+        log.info("조회된 게시글 : {}", dailyArticleDto);
+    }
+
+    @Test
+    @DisplayName("파일 번호로 파일 조회 테스트")
+    @Disabled
+    void findByFileIdTest() {
+        FileDto fileDto = fileMapper.findByFileId(2);
+        log.info("조회된 파일 : {}", fileDto);
     }
 }
