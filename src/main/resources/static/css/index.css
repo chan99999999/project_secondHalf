@@ -132,7 +132,7 @@ nav{
 }
 
 
-#nav-member{
+.nav-member{
     align-content: center;
 }
 
@@ -150,11 +150,35 @@ nav{
     border-radius: 10px;
 }
 
+.nav-login-info{
+    align-content: center;
+    text-align: end;
+    font-size: 30px;
+    font-weight: bolder;
+    width: 230px;
+    height: 50px;
+    margin: 10px;
+    padding: 8px;
+}
+
 .nav-signup:visited, #nav-login:visited{
     color: black;
 }
 
 .nav-login{
+    align-content: center;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    width: 100px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.91);
+    margin: 10px;
+    padding: 8px 25px;
+    border-radius: 10px;
+}
+
+.nav-logout{
     align-content: center;
     text-align: center;
     font-size: 30px;

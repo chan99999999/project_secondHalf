@@ -82,12 +82,12 @@ public class MemberController {
 
         if (loginMember != null) {
             if (saveId != null) {
-                Cookie saveIdCookie = new Cookie("cookieId", EzenUtil.encription(id));
+                Cookie saveIdCookie = new Cookie("cookieId", id);
                 saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
                 saveIdCookie.setPath("/");
                 response.addCookie(saveIdCookie);
             } else {
-                Cookie saveIdCookie = new Cookie("cookieId", EzenUtil.encription(id));
+                Cookie saveIdCookie = new Cookie("cookieId", id);
                 saveIdCookie.setMaxAge(0);
                 saveIdCookie.setPath("/");
                 response.addCookie(saveIdCookie);

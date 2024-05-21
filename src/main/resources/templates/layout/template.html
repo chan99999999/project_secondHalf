@@ -20,11 +20,21 @@
             <a href="/daily">일상공유</a>
             <p>ㅣ</p>
             <a href="/meet">동네친구</a>
+            <p>ㅣ</p>
+            <a href="/chat">대화하기</a>
         </div>
-        <div id="nav-member">
-            <a class="nav-signup" href="/member/signup">무료 회원가입</a>
-            <a class="nav-login" href="/member/login">로그인</a>
-        </div>
+        <th:block th:if="${session.loginMember == null}">
+            <div class="nav-member">
+                <a class="nav-signup" href="/member/signup">무료 회원가입</a>
+                <a class="nav-login" href="/member/login">로그인</a>
+            </div>
+        </th:block>
+        <th:block th:if="${session.loginMember != null}">
+            <div class="nav-member">
+                <a class="nav-login-info" href="/member/signup">[김찬규]님</a>
+                <a class="nav-logout" href="/member/logout">로그아웃</a>
+            </div>
+        </th:block>
     </div>
 </nav>
 
