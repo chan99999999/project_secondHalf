@@ -67,31 +67,32 @@ public class MemberController {
 
     // 회워 로그인 화면
     @GetMapping("/login")
-    public String login() {
+    public String login(@ModelAttribute LoginForm loginForm) {
         return "/member/loginForm";
     }
 
     // 회원 로그인 처리
     @PostMapping("/login")
     public String loginAction(@ModelAttribute LoginForm loginForm, HttpServletResponse response, HttpServletRequest request) {
+        log.info("로그인 폼 {}", loginForm);
         MemberDto loginMember = memberService.isMember(loginForm.getLoginId(), loginForm.getLoginPasswd());
+        log.info("{}", loginMember);
 
-        if (loginMember == null) {
-            return "/member/signupForm";
-        }
-        if (loginForm.isRememberLoginId()) {
-            Cookie saveIdCookie = new Cookie("saveId", loginForm.getLoginId());
-            saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
-            saveIdCookie.setPath("/");
-            response.addCookie(saveIdCookie);
-        } else {
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("saveId")) {
-                        cookie.setMaxAge(0);
-                        cookie.setPath("/");
-                        response.addCookie(cookie);
+        if (loginMember != null) {
+            if (loginForm.isRememberLoginId()) {
+                Cookie saveIdCookie = new Cookie("saveId", loginMember.getMemberId());
+                saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
+                saveIdCookie.setPath("/");
+                response.addCookie(saveIdCookie);
+            } else {
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("saveId")) {
+                            cookie.setPath("/");
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                        }
                     }
                 }
             }
@@ -113,7 +114,12 @@ public class MemberController {
         return "redirect:/";
     }
 
-// 회원 상세 정보 처리
+    // 마이페이지 페이징
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "/member/mypage";
+    }
+
 // REST URL 설계
 
 

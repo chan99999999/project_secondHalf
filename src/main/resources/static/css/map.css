@@ -1,209 +1,86 @@
-/*---------------------------MAP---------------------------------*/
-#map-wrap{
-    margin: 0px auto;
-    display: flex;
-    height: 850px;
-    min-height: 850px;
-    width: 1400px;
-    min-width: 1400px;
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:20px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:370px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.8);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 100px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+/* 스크롤바 스타일 */
+#menu_wrap::-webkit-scrollbar {
+    width: 20px;  /* 세로 스크롤바 너비 */
+    height: 20px; /* 가로 스크롤바 높이 */
+}
+#menu_wrap::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.7); /* 트랙 배경색과 50% 투명도 */
+    border-radius: 10px;
+}
+#menu_wrap::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 140, 24, 0.7); /* 핸들 색상과 50% 투명도 */
+    border-radius: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.7); /* 핸들 주위의 여백 색상과 50% 투명도 */
+}
+#menu_wrap::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 140, 24, 0.7); /* 마우스를 올렸을 때 핸들 색상과 50% 투명도 */
 }
 
-#search-map-wrap{
-    width: 400px;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#map{
-    background-color: rgba(253, 139, 24, 0.19);
-    width: 1000px;
-}
-
-#map >img{
-    width: 1000px;
-    height: 850px;
-}
-
-#search-map-title{
-    font-family: 'Cafe24Ssurround';
-    font-size: 50px;
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-#search-bar-map{
-    height: 60px;
-    align-content: center;
-}
-
-#search-text-map{
-    height: 50px;
-    width: 270px;
-    font-size: 25px;
-    padding: 0px 10px;
-}
-
-#search-btn-map{
-    height: 45px;
-    width: 70px;
-    font-size: 20px;
-}
 
 #search-map-tagbox{
-    width: 350px;
-    background-color: #ff8c18;
+    width: 330px;
+    background-color: #white;
     margin: 10px 0;
     border-radius: 10px;
     padding: 10px;
 }
 
-.map-tag{
+#map-tag{
     height: 40px;
-    background-color: white;
-    border-radius: 10px;
-    align-content: center;
-    color: black;
-    font-size: 20px;
-    padding: 5px 10px;
-}
-
-#search-map-result{
-    width: 370px;
-    background-color: rgba(253, 139, 24, 0.19);
-    padding: 10px 0px;
-}
-
-.search-map-box{
-    width: 330px;
-    margin: 10px auto;
-    padding: 10px;
-    background-color: white;
-    font-size: 20px;
-}
-
-.search-map-detail{
-    list-style: none;
-}
-
-.search-map-detail ul{
-    display: flex;
-}
-
-.search-map-detail-title{
-    font-size: 30px;
-    margin: 10px 0px;
-    font-weight: bolder;
-}
-
-.search-map-detail-subtitle{
-    width: 90px;
-    font-weight: bolder;
-}
-
-/*-----------------------------PLACE--------------------------------*/
-#place-wrap{
-    width: 1200px;
-    min-width: 1200px;
-    margin: 30px auto;
-
-}
-
-#place-detail-wrap{
-    width: 1200px;
-    display: flex;
-}
-
-#place-map{
-    width: 500px;
-    height: 500px;
     background-color: #ff8c18;
-}
-
-#place-map >img{
-    width: 500px;
-    height: 500px;
-}
-
-#place-info{
-    width: 700px;
-    background-color: rgba(253, 139, 24, 0.19);
-    padding: 20px;
-}
-
-.place-info-text{
-    display: flex;
-    font-size: 30px;
-    margin: 20px 0px;
-}
-
-.place-info-title{
-    width: 150px;
-    font-weight: bolder;
-}
-
-.review-wrap{
-    margin: 20px 0px;
-    padding: 0px 20px;
-}
-
-#place-review{
-    width: 1160px;
-    background-color: rgba(211, 211, 211, 0.57);
-    padding: 10px 0px;
-    margin: 10px 0px;
-}
-
-.write-review{
-    padding: 10px 10px;
+    /*border-radius: 10px;*/
     align-content: center;
-}
-
-#write-review p{
+    color: #ffffff;
     font-size: 20px;
+    padding: 5px 5px;
 }
 
-#write-review-btn{
-    height: 80px;
-    width: 90px;
-    font-size: 25px;
-    font-weight: bolder;
-    background-color: #ff8c18;
-    border: none;
-}
-
-#review-text{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#review-text textarea{
-    font-size: 25px;
-    padding: 10px;
-    margin: 5px 0px;
-}
-
-.review{
-    display: flex;
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: lightgray;
-}
-
-.review-writer{
+#keyword{
+    height: 50px;
+    width: 200px;
     font-size: 20px;
-    font-weight: bolder;
+    padding: 0px 10px;
 }
 
-.review-content{
-    font-size: 25px;
-}
-
-.review img{
-    width: 55px;
-    height: 55px;
-    margin-right: 20px;
+#btn{
+    height: 50px;
+    width: 100px;
+    font-size: 20px;
 }

@@ -21,7 +21,7 @@
         </th:block>
         <th:block th:if="${session.loginMember != null}">
             <div class="nav-member">
-                <a class="nav-login-info" href="/member/signup" th:text="|[${session.loginMember.name}]님|"></a>
+                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.name}]님|"></a>
                 <a class="nav-logout" href="/member/logout">로그아웃</a>
             </div>
         </th:block>
