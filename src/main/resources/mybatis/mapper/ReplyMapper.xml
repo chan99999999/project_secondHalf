@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.ReplyMapper">
+    <!-- 신규 일상 게시글 생성 -->
+    <insert id="createReply" parameterType="ReplyDto">
+        INSERT INTO reply (reply_id, content, d_article_id, writer)
+        VALUES (REPLY_ID_SEQ.nextval, #{content}, #{dailyArticleId}, #{writer})
+    </insert>
+
+    <select id="findByReplyAll" parameterType="int" resultType="ReplyDto">
+        SELECT reply_id, d_article_id "dailyArticleId", writer, content
+        FROM reply
+        WHERE d_article_id = #{dailyArticleId}
+        ORDER BY reply_id DESC
+    </select>
+
+
+</mapper>
+

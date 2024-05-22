@@ -16,16 +16,19 @@ import java.util.UUID;
 @Slf4j
 public class FileServiceImpl implements FileService {
 
-    private boolean existUploadDirectory(String directoryName){
+    private boolean existUploadDirectory(String directoryName) {
         return new File(directoryName).exists();
     }
+
     private void makeUploadDirectory(String directoryName) {
         new File(directoryName).mkdirs();
     }
 
-    /** 단일 업로드 파일 저장 */
+    /**
+     * 단일 업로드 파일 저장
+     */
     public UploadFile storeFile(MultipartFile multipartFile, String storePath) {
-        if(!existUploadDirectory(storePath)){
+        if (!existUploadDirectory(storePath)) {
             makeUploadDirectory(storePath);
         }
 
@@ -39,7 +42,9 @@ public class FileServiceImpl implements FileService {
         return new UploadFile(uploadFileName, storeFileName);
     }
 
-    /** 다중 업로드 파일 저장 */
+    /**
+     * 다중 업로드 파일 저장
+     */
     public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles, String storePath) {
         List<UploadFile> storeFileResult = new ArrayList<UploadFile>();
         for (MultipartFile multipartFile : multipartFiles) {
@@ -73,4 +78,9 @@ public class FileServiceImpl implements FileService {
 		String uuid = UUID.randomUUID().toString();
 		return prefix + "-" + uuid + "." + suffix;
 	}
+
+
+
+
 }
+

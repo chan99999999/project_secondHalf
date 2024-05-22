@@ -1,7 +1,6 @@
 package com.ezen.springmvc.domain.dailyarticle.service;
 
-import com.ezen.springmvc.domain.dailyarticle.dto.DailyArticleDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.FileDto;
+import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 
 import java.util.List;
@@ -10,6 +9,13 @@ import java.util.List;
  * 일상 게시글 관련 비즈니스 로직 처리 및 트랜잭션 관리
  */
 public interface DailyArticleService {
+
+    /**
+     * 카테고리 목록 반환
+     * @return 카테고리 목록
+     */
+    public List<CategoryDto> getCategoryList();
+
     /**
      * 일상 게시글 등록
      * @param dailyArticleDto 일상 게시글
@@ -31,4 +37,36 @@ public interface DailyArticleService {
      * @return 일상 게시글
      */
     public DailyArticleDto getDailyArticle(int categoryId, int dailyArticleId);
+
+    /**
+     * 일상 게시글 번호로 파일 조회
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 파일
+     */
+    public FileDto getFile(int dailyArticleId);
+
+    /**
+     * 파일 목록 조회
+     * @return 파일 목록
+     */
+    public List<FileDto> getFiles();
+
+    /**
+     * 댓글 등록
+     * @param replyDto 댓글
+     */
+    public void writeReply(ReplyDto replyDto);
+
+    /**
+     * 댓글 목록 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 댓글 목록
+     */
+    public List<ReplyDto> getReplyList(int dailyArticleId);
+
+    /**
+     * 좋아요 등록
+     * @param heartDto 좋아요
+     */
+    public void clickHeart(HeartDto heartDto);
 }

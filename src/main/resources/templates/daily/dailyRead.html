@@ -9,6 +9,7 @@
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
     </th:block>
+
 </head>
 
 
@@ -16,69 +17,54 @@
     <div id="daily-read-wrap">
         <div id="daily-read-writer-wrap">
             <div id="daily-read-writer">
-                <img class="profile-img" src="/img/profile.png" >
-                <p id="daily-read-writer-name">김순자 최고</p>
+                <img class="profile-img" src="/img/profile.png">
+                <p id="daily-read-writer-name" th:text="${dailyArticle.memberId}">김순자 최고</p>
             </div>
-            <p id="daily-read-date">2024. 05. 14.(화) 17:31 작성</p>
+            <p id="daily-read-date" th:text="${dailyArticle.regdate}">2024. 05. 14.(화) 17:31 작성</p>
         </div>
         <div id="daily-read-content-wrap">
-            <h1 id="daily-read-title">게시글 제목 들어가유</h1>
-            <p id="daily-read-content">게시글 본문 들어가유</p>
-            <img id="daily-read-img" src="/img/sample1.jpg">
+            <h1 id="daily-read-title" th:text="${dailyArticle.title}">게시글 제목 들어가유</h1>
+            <p id="daily-read-content" th:text="${dailyArticle.content}">게시글 본문 들어가유</p>
+            <img id="daily-read-img" th:src="@{/daily/image/{fileName}(fileName=${file.encryptedName})}">
         </div>
         <div class="register-btn-wrap">
-            <button class="back-btn">돌아가기</button>
+            <button class="back-btn" th:onclick="|location.href='@{/daily}'|">돌아가기</button>
         </div>
         <div id="like-wrap">
-            <img src="/img/heart.png" id="like">
+            <img src="/img/heart.png" id="like" onclick="toggleLike()">
             <label for="like">좋아요</label>
             <p> ㅣ </p>
             <p>댓글(3)</p>
         </div>
         <div class="review-wrap">
-            <div id="write-review">
-                <p>작성자 : 김순자최고</p>
-                <div id="review-text">
-                    <textarea cols="62" rows="2"></textarea>
-                    <button type="submit" id="write-review-btn">등록</button>
+            <form method="post">
+                <div id="write-review">
+                    <p name="writer">작성자 : 김순자최고</p>
+                    <div id="review-text">
+                        <textarea name="content" cols="62" rows="2"></textarea>
+                        <button type="submit" id="write-review-btn">등록</button>
+                    </div>
                 </div>
-            </div>
-            <div class="review">
+            </form>
+            <div class="review" th:each="reply : ${replyList}">
                 <div>
                     <img src="/img/profile.png">
                 </div>
                 <div>
                     <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
+                        <li class="review-writer" th:text="${reply.writer}">작성자명</li>
+                        <li class="review-content" th:text="${reply.content}">시간이 너무 빨리 지나가는 것 같아요...</li>
                     </ul>
                 </div>
             </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
+
+<th:block th:fragment="script">
+    <script src="/js/like.js"></script>
+</th:block>
 
 </html>
 

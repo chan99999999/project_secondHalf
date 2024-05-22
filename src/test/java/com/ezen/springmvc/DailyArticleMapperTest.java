@@ -2,8 +2,11 @@ package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.dailyarticle.dto.DailyArticleDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.FileDto;
+import com.ezen.springmvc.domain.dailyarticle.dto.HeartDto;
+import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.dailyarticle.mapper.DailyArticleMapper;
 import com.ezen.springmvc.domain.dailyarticle.mapper.FileMapper;
+import com.ezen.springmvc.domain.dailyarticle.mapper.ReplyMapper;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
@@ -26,6 +29,8 @@ public class DailyArticleMapperTest {
     DailyArticleMapper dailyArticleMapper;
     @Autowired
     FileMapper fileMapper;
+    @Autowired
+    ReplyMapper replyMapper;
     @Autowired
     private DailyArticleServiceImpl dailyArticleServiceImpl;
 
@@ -71,17 +76,65 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("일상 게시글 상세 보기 테스트")
-//    @Disabled
+    @Disabled
     void readDailyArticleTest() {
         DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 11);
         log.info("조회된 게시글 : {}", dailyArticleDto);
     }
 
     @Test
-    @DisplayName("파일 번호로 파일 조회 테스트")
+    @DisplayName("일상 게시글 번호로 파일 조회 테스트")
     @Disabled
     void findByFileIdTest() {
-        FileDto fileDto = fileMapper.findByFileId(2);
+        FileDto fileDto = fileMapper.findByFileId(17);
         log.info("조회된 파일 : {}", fileDto);
+    }
+
+    @Test
+    @DisplayName("파일 목록 조회 테스트")
+    @Disabled
+    void findByAllFileTest() {
+        List<FileDto> list = fileMapper.findByAllFile();
+        for (FileDto fileDto : list) {
+            log.info("조회된 파일 : {}", fileDto);
+        }
+    }
+
+    @Test
+    @DisplayName("댓글 등록 테스트")
+    @Disabled
+    void createReplyTest() {
+        ReplyDto replyDto = ReplyDto.builder()
+                .replyId(2)
+                .dailyArticleId(22)
+                .content("댓글 냉요요용")
+                .writer("monday")
+                .build();
+        replyMapper.createReply(replyDto);
+        log.info("댓글 등록 완료");
+    }
+
+    @Test
+    @DisplayName("댓글 목록 반환 테스트")
+    @Disabled
+    void findByReplyAllTest() {
+        List<ReplyDto> list = replyMapper.findByReplyAll(20);
+        for (ReplyDto replyDto : list) {
+            log.info("조회된 댓글 목록 : {}", replyDto);
+        }
+    }
+
+    @Test
+    @DisplayName("좋아요 등록 테스트")
+//    @Disabled
+    void clickHeartTest() {
+        HeartDto heartDto = HeartDto.builder()
+                .heartCount(2)
+                .dailyArticleId(20)
+                .memberId("승아")
+                .build();
+
+        dailyArticleServiceImpl.clickHeart(heartDto);
+        log.info("좋아요 등록 완료");
     }
 }

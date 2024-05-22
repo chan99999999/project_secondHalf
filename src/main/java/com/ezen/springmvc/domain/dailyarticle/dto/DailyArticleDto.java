@@ -2,6 +2,7 @@ package com.ezen.springmvc.domain.dailyarticle.dto;
 
 import lombok.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,4 +20,5 @@ public class DailyArticleDto {
     private int hitCount;
     private int categoryId;
     private String memberId;
+    private String encryptedName;
 }
