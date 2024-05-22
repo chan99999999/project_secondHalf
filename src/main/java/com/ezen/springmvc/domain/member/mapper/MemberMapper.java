@@ -23,7 +23,7 @@ public interface MemberMapper {
     public List<MemberDto> findByAll();
 
     //로그인
-    public MemberDto findByIdAndPasswd(@Param("memberId") String id, @Param("password") String passwd);
+    public MemberDto findByIdAndPasswd(@Param("memberId") String id, @Param("memberPasswd") String passwd);
 
     //이름으로 회원찾기
     public List<MemberDto> findByNameLike(String name);

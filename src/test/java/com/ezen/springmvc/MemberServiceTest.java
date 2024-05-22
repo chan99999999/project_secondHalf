@@ -28,15 +28,15 @@ public class MemberServiceTest {
 
 	@Test
 	@DisplayName("회원 가입 테스트")
-//	@Disabled
+	@Disabled
 	void registerMemberTest(){
 	}
 	
 	@Test
 	@DisplayName("회원 인증 테스트")
-	@Disabled
+//	@Disabled
 	void isMemberTest() {
-		String id = "bangry", passwd = "1111";
+		String id = "chan999", passwd = "1111";
 		MemberDto isMember = memberService.isMember(id, passwd);
 		log.info("인증 사용자 정보 : {}", isMember);
 	}

@@ -35,9 +35,9 @@
 
 	<!-- 회원 인증 -->
 	<select id="findByIdAndPasswd" resultType="MemberDto">
-		SELECT member_id "id", name, email, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') regdate
+		SELECT member_id, name, email, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') regdate
 		FROM member
-		WHERE member_id = #{id} AND password = #{passwd}
+		WHERE member_id = #{memberId} AND member_passwd = #{memberPasswd}
 	</select>
 
 	<!-- 회원 이름으로 Like 검색 -->

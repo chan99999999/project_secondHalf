@@ -5,10 +5,13 @@ import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
+import com.ezen.springmvc.web.member.form.LoginForm;
 import com.ezen.springmvc.web.member.form.MemberForm;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
@@ -25,15 +28,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/member")
 @Slf4j
+@RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberMapper memberMapper;
-    private final MemberServiceImpl memberServiceImpl;
-
-    public MemberController(MemberMapper memberMapper, MemberServiceImpl memberServiceImpl) {
-        this.memberMapper = memberMapper;
-        this.memberServiceImpl = memberServiceImpl;
-    }
+    private final MemberService memberService;
 
     // 회원가입 화면 이동
     @GetMapping("/signup")
@@ -56,7 +54,7 @@ public class MemberController {
                 .birthDate(memberForm.getBirthDate())
                 .email(memberForm.getEmail())
                 .build();
-        memberServiceImpl.register(memberDto);
+        memberService.register(memberDto);
 
         redirectAttributes.addFlashAttribute("registerMember", memberDto);
         return "redirect:/member/result";
@@ -75,42 +73,51 @@ public class MemberController {
 
     // 회원 로그인 처리
     @PostMapping("/login")
-    public String loginAction(@RequestParam("loginId") String id, @RequestParam("loginPw") String pw, @RequestParam("saveId") String saveId, HttpServletResponse response, HttpSession session) {
-        MemberService memberService = new MemberServiceImpl(memberMapper);
-        MemberDto loginMember = memberService.isMember(id, pw);
-        log.info("아이디 : {}, 비밀번호 :  {}", id, pw);
+    public String loginAction(@ModelAttribute LoginForm loginForm, HttpServletResponse response, HttpServletRequest request) {
+        MemberDto loginMember = memberService.isMember(loginForm.getLoginId(), loginForm.getLoginPasswd());
 
-        if (loginMember != null) {
-            if (saveId != null) {
-                Cookie saveIdCookie = new Cookie("cookieId", id);
-                saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
-                saveIdCookie.setPath("/");
-                response.addCookie(saveIdCookie);
-            } else {
-                Cookie saveIdCookie = new Cookie("cookieId", id);
-                saveIdCookie.setMaxAge(0);
-                saveIdCookie.setPath("/");
-                response.addCookie(saveIdCookie);
+        if (loginMember == null) {
+            return "/member/signupForm";
+        }
+        if (loginForm.isRememberLoginId()) {
+            Cookie saveIdCookie = new Cookie("saveId", loginForm.getLoginId());
+            saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
+            saveIdCookie.setPath("/");
+            response.addCookie(saveIdCookie);
+        } else {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("saveId")) {
+                        cookie.setMaxAge(0);
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                    }
+                }
             }
-            session.setAttribute("loginMember", loginMember);
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", loginMember);
+        return "redirect:/";
+    }
+
+//
+
+    // 회원 로그아웃 처리
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
         }
         return "redirect:/";
     }
 
-    //
-
-    // 회원 로그아웃 처리
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("loginMember");
-        return "redirect:/";
-    }
-
-    // 회원 상세 정보 처리
-    // REST URL 설계
+// 회원 상세 정보 처리
+// REST URL 설계
 
 
-    // /member/bangry
+// /member/bangry
 //    @GetMapping("/{memberId}")
 //    public MemberDto read(@PathVariable("memberId") String memberId){
 //        log.info("수신한 사용자 아이디 : {}", memberId);

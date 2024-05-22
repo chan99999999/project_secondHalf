@@ -100,7 +100,9 @@ nav{
     justify-content: space-between;
 }
 
-#nav-bar{
+
+
+.index-nav-bar{
     margin: 0px auto;
     width: 1400px;
     min-width: 1400px;
