@@ -18,12 +18,12 @@
         <form class="edit-form" name="editForm" method="post">
             <div class="mypage-edit-wrap">
                 <label for="nickname">별명</label>
-                <input id="nickname" class="mypage-edit-text" type="text" placeholder="현재 별명 : 찬찬">
+                <input id="nickname" class="mypage-edit-text" type="text" th:placeholder="|현재 별명 : ${session.loginMember.nickname}|">
             </div>
             <hr>
             <div class="mypage-edit-wrap">
                 <label for="email">이메일</label>
-                <input id="email" class="mypage-edit-text" type="text" placeholder="현재 이메일 : chan999@gmail.com">
+                <input id="email" class="mypage-edit-text" type="text" th:placeholder="|현재 별명 : ${session.loginMember.email}|">
             </div>
             <hr>
             <div class="mypage-edit-wrap">

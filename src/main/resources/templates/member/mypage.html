@@ -18,49 +18,45 @@
         <div class="mypage-title">내 정보</div>
         <div class="mypage-basic-wrap">
             <div class="mypage-basic-title">아이디</div>
-            <div class="mypage-basic-content">chan999</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.memberId}"></div>
         </div>
         <hr>
         <div class="mypage-basic-wrap">
-            <div class="mypage-basic-title">별명</div>
-            <div class="mypage-basic-content">찬찬</div>
+            <div class="mypage-basic-title">이름</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.name}"></div>
         </div>
         <hr>
         <div class="mypage-basic-wrap">
             <div class="mypage-basic-title">이메일</div>
-            <div class="mypage-basic-content">chan999@gmail.com</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.email}"></div>
         </div>
         <hr>
         <div class="mypage-basic-wrap">
             <div class="mypage-basic-title">생년월일</div>
-            <div class="mypage-basic-content">1993. 12. 23.</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.birthDate}"></div>
         </div>
         <hr>
         <div class="mypage-basic-wrap">
             <div class="mypage-basic-title">주소</div>
-            <div class="mypage-basic-content">서울시 노원구 월계동</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.memberAddress}"></div>
         </div>
         <hr>
         <div class="mypage-basic-wrap">
             <div class="mypage-basic-title">취미</div>
-            <div class="mypage-basic-content">캠핑</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.hobby}"></div>
         </div>
         <hr>
         <div class="mypage-basic-wrap">
             <div class="mypage-basic-title">관심사</div>
-            <div class="mypage-basic-content">#건강 #취미</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.interest}"></div>
         </div>
         <hr>
         <div class="mypage-basic-wrap">
             <div class="mypage-basic-title">자기소개</div>
-            <div class="mypage-basic-content">안녕하세요 저는 어쩌고 저쩌고 길게 쓰는 이유는 줄바뀜을 보려고 이러고 있습니다만. 세줄 이상 넘어가서 페이지를 넘어가면 이건 어떻게
-                될지 궁금하군요. 조금 더 자기소개글을 넣어야 겠어요.
+            <div class="mypage-basic-content" th:text="${session.loginMember.introduce}">
             </div>
         </div>
         <hr>
-    </div>
-    <div>
-
     </div>
 </div>
 </html>

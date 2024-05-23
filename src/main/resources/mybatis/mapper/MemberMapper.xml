@@ -4,7 +4,7 @@
 	<!-- 회원 등록 -->
 	<insert id="create" parameterType="MemberDto" >
 		INSERT INTO member(member_id, name, nickname, member_passwd, member_address, gender, birth_date, email)
-		VALUES(#{memberId}, #{name}, #{nickname},  #{memberPasswd}, #{memberAddress}, #{gender}, #{birthDate}, #{email})
+		VALUES(#{memberId}, #{name}, #{nickname}, #{memberPasswd}, #{memberAddress}, #{gender}, #{birthDate}, #{email})
 		<!-- INSERT 후 등록일자 SELECT -->
 		<selectKey keyProperty="regdate" resultType="string" order="AFTER">
 			SELECT TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI')
@@ -35,7 +35,7 @@
 
 	<!-- 회원 인증 -->
 	<select id="findByIdAndPasswd" resultType="MemberDto">
-		SELECT member_id, name, email, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') regdate
+		SELECT member_id, name, nickname, hobby, interest, member_address, gender, birth_date, introduce, picture, member_passwd, email, TO_CHAR(regdate, 'YYYY-MM-DD') regdate
 		FROM member
 		WHERE member_id = #{memberId} AND member_passwd = #{memberPasswd}
 	</select>

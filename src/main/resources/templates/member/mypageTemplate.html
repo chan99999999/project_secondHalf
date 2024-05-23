@@ -31,7 +31,7 @@
         </th:block>
         <th:block th:if="${session.loginMember != null}">
             <div class="nav-member">
-                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.name}]님|"></a>
+                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.nickname}]님|"></a>
                 <a class="nav-logout" href="/member/logout">로그아웃</a>
             </div>
         </th:block>
@@ -44,7 +44,7 @@
             <div id="mypage-member">
                 <img id="mypage-member-img" src="/img/profile.png">
                 <div th:text="|[${session.loginMember.nickname}]님|"></div>
-                <div id="mypage-member-email" th:text="'chan999@gmail.com'"></div>
+                <div id="mypage-member-email" th:text="${session.loginMember.email}"></div>
             </div>
             <ul class="mypage-menu-list">
                 <li><a href="/member/mypage">내 정보</a></li>

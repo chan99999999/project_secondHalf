@@ -102,8 +102,6 @@ public class MemberController {
         return "redirect:/";
     }
 
-//
-
     // 회원 로그아웃 처리
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
