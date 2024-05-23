@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 로그인 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/member.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div id="login-wrap">
+        <form action="/member/login" name="loginForm" method="post" th:object="${loginForm}">
+            <input type="hidden" name="referer" value="${referer}">
+            <fieldset>
+                <div id="login-div">
+                    <h1 class="title-text">로그인</h1>
+<!--                    <P>${message}</P>-->
+                    <input class="login-input" type="text" placeholder="아이디" required autofocus th:field="*{loginId}">
+                    <input class="login-input" type="password" placeholder="비밀번호" required th:field="*{loginPasswd}">
+                    <div id="login-function">
+                        <label id="login-label"><input type="checkbox" th:checked="true" th:field="*{rememberLoginId}"> 아이디 저장</label>
+                        <a href="#">아이디/비밀번호 찾기</a>
+                    </div>
+                    <button class="login-input" id="login-btn" type="submit">로그인 하기</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+

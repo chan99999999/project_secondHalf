@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.TagMapper">
+    <!-- 태그 등록 -->
+    <insert id="createTag" parameterType="map">
+        INSERT INTO tag_article (m_article_id, tag_id)
+        VALUES (#{mArticleId},
+                (SELECT tag_id
+                 FROM tag
+                 WHERE tag_name = #{tag}))
+    </insert>
+    <!-- 태그별 게시글 조회 -->
+    <select id="findByTagId" parameterType="String" resultType="TagDto">
+        SELECT m.title, m.content, m.member_id, TO_CHAR(m.regdate, 'YYYY-MM-DD HH24:MI') regdate, t.tag_name
+        FROM meet_article m
+                 JOIN tag t
+                      ON m.m_article_id = t.tag_id
+        WHERE m.category_id = #{categoryId}
+          AND m.m_article_id = #{meetArticleId}
+    </select>
+
+</mapper>

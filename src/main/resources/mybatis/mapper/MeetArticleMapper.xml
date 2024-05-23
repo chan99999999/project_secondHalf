@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper	namespace="com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper">
+    <!-- 게시글 전체 조회 -->
+    <select id="findByAllMeetArticle" parameterType="int" resultType="MeetArticleDto">
+        SELECT *
+        FROM meet_article
+        WHERE category_id = #{categoryId}
+          <!-- AND (title LIKE CONCAT('%', #{value}, '%')
+            OR content LIKE CONCAT('%', #{value}, '%')) -->
+    </select>
+    <!-- 게시글 등록 -->
+    <insert id="createMeetArticle" parameterType="MeetArticleDto">
+        INSERT INTO meet_article (m_article_id,
+                                  title,
+                                  content,
+                                  regdate,
+                                  time,
+                                  enter,
+                                  hitcount,
+                                  category_id,
+                                  member_id,
+                                  place_id)
+        VALUES (m_article_id_seq.NEXTVAL,
+                #{title},
+                #{content},
+                SYSDATE,
+                SYSDATE,
+                #{enter},
+                0,
+                3,
+                #{memberId},
+                #{placeId})
+    </insert>
+    <!-- 게시글 번호 조회 -->
+<!--    <select id="findByMeetArticleId" parameterType="int" resultType="MeetArticleDto">-->
+<!--        SELECT title, regdate, hitcount, category_id, member_id-->
+<!--        FROM meet_article-->
+<!--        WHERE m_article_id = #{meetArticleId}-->
+<!--    </select>-->
+    <!-- 게시글 상세 보기 -->
+    <select id="readMeetArticle" parameterType="int" resultType="MeetArticleDto">
+        SELECT title,
+               content,
+               member_id,
+               TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate
+        FROM meet_article
+        WHERE m_article_id = #{meetArticleId}
+        AND category_id = #{categoryId}
+    </select>
+    <!-- 게시글 제목, 내용 수정 -->
+    <update id="updateMeetArticle" parameterType="MeetArticleDto">
+        UPDATE meet_article
+        SET title   = #{title},
+            content = #{content}
+        WHERE m_article_id = #{meetArticleId}
+    </update>
+    <!-- 게시글 삭제 -->
+    <delete id="deleteMeetArticle" parameterType="MeetArticleDto">
+        DELETE FROM meet_article
+        WHERE m_article_id = #{meetArticleId}
+    </delete>
+<!--    &lt;!&ndash; 조회수 &ndash;&gt;-->
+<!--    <update id="hitcount" parameterType="MeetArticleDto">-->
+<!--        UPDATE meet_article-->
+<!--        SET hitcount = hitcount + 1-->
+<!--        WHERE m_article_id = #{meetArticleId}-->
+<!--    </update>-->
+</mapper>

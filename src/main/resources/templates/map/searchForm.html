@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 우리동네 검색 ::: </title>
+    <th:block th:fragment="script">
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a091d5d3ac1b6ffddf41488f1e545f78&libraries=services"></script>
+        <script defer type="text/javascript" th:src="@{/js/apiMap.js}"></script>
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <!-- apiMap.css를 Thymeleaf의 th:href 속성을 사용하여 로드합니다. -->
+        <link rel="stylesheet" href="/css/map.css">
+    </th:block>
+</head>
+
+<body>
+<div class="wrapper" th:fragment="content">
+    <div class="map_wrap">
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+        <div id="menu_wrap" class="bg_white">
+            <div class="option">
+                <div>
+                    <form onsubmit="searchPlaces(); return false;">
+                        <input type="text" value="노원구" id="keyword" size="15">
+                        <button id="btn" type="submit">검색하기</button>
+                    </form>
+                </div>
+                <div id="search-map-tagbox">
+                    <a class="map-tag" id="map-tag">#산책</a>
+                    <a class="map-tag" id="map-tag">#병원</a>
+                    <a class="map-tag" id="map-tag">#노인정</a>
+                    <a class="map-tag" id="map-tag">#복지관</a>
+                </div>
+            </div>
+            <hr>
+            <ul id="placesList"></ul>
+            <div id="pagination"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

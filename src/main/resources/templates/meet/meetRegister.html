@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 모임 만들기 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/meet.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div id="meet-register-wrap">
+        <h1 class="title-text">모임 만들기</h1>
+        <form id="meet-register-form">
+            <fieldset>
+                <input id="meet-register-title" type="text" placeholder="모임 제목"/>
+                <div id="meet-tag-wrap">
+                    <h3>카테고리</h3>
+                    <input class="daily-tag-list" type="radio" name="tag" value="partner"/>짝꿍
+                    <input class="daily-tag-list" type="radio" name="tag" value="hobbit"/>취미
+                    <input class="daily-tag-list" type="radio" name="tag" value="health"/>건강
+                    <input class="daily-tag-list" type="radio" name="tag" value="etc"/>기타
+                </div>
+                <div id="meet-info">
+                    <div class="meet-info">
+                        <label for="meet-date">시간</label>
+                        <input id="meet-date" type="datetime-local">
+                    </div>
+                    <div class="meet-info">
+                        <label for="meet-place">장소</label>
+                        <input id="meet-place" type="text" placeholder="카카오 맵 API">
+                    </div>
+                    <div class="meet-info">
+                        <label for="meet-count">인원</label>
+                        <input id="meet-count" type="text" placeholder="최대인원 설정"><span>명</span>
+                    </div>
+                </div>
+                <div>
+                    <textarea id="meet-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
+                </div>
+                <div class="register-btn-wrap">
+                    <button class="back-btn" type="reset">취소하기</button>
+                    <button class="register-btn" type="submit">등록하기</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

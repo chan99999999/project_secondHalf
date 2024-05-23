@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="kor" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:fragment="title">후반전 메인페이지</title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+</head>
+
+<body>
+<nav>
+    <div class="index-nav-bar">
+        <th:block th:if="${session.loginMember == null}">
+            <div class="nav-member">
+                <a class="nav-signup" href="/member/signup">무료 회원가입</a>
+                <a class="nav-login" href="/member/login">로그인</a>
+            </div>
+        </th:block>
+        <th:block th:if="${session.loginMember != null}">
+            <div class="nav-member">
+                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.name}]님|"></a>
+                <a class="nav-logout" href="/member/logout">로그아웃</a>
+            </div>
+        </th:block>
+    </div>
+</nav>
+<div class="container">
+    <div id="main-banner">
+        <img id="main-banner-img" src="/img/index_banner.png">
+    </div>
+
+    <div id="main-category">
+        <div class="category-btn">
+            <a href="/map">
+                <div class="category-content">
+                    <img src="/img/category_map.png">
+                    <div class="category-title">우리동네</div>
+                    <p class="category-subtitle">산책로, 병원 등 동네 지도보기</p>
+                </div>
+            </a>
+        </div>
+        <div class="category-btn">
+            <a href="/daily">
+                <div class="category-content">
+                    <img src="/img/category_share.png">
+                    <div class="category-title">일상공유</div>
+                    <p class="category-subtitle">일상, 지역정보 구경하기</p>
+                </div>
+            </a>
+        </div>
+        <div class="category-btn">
+            <a href="/meet">
+                <div class="category-content">
+                    <img src="/img/category_meet.png">
+                    <div class="category-title">동네친구</div>
+                    <p class="category-subtitle">동네 번개모임 참여하기</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<footer>
+    <div>
+        <ul>
+            <li>
+
+            </li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
