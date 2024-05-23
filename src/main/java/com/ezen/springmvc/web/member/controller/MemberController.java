@@ -120,6 +120,21 @@ public class MemberController {
         return "/member/mypage";
     }
 
+    @GetMapping("/editInfo")
+    public String editInfo(@ModelAttribute MemberForm memberForm, Model model) {
+        return "/member/editInfo";
+    }
+
+    @GetMapping("/editPicture")
+    public String editPicture(@ModelAttribute MemberForm memberForm, Model model) {
+        return "/member/editPicture";
+    }
+
+    @GetMapping("/editPasswd")
+    public String editPasswd(@ModelAttribute MemberForm memberForm, Model model) {
+        return "/member/editPasswd";
+    }
+
 // REST URL 설계
 
 

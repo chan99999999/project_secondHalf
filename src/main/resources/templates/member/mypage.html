@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+      th:replace="~{/member/mypageTemplate :: mypageTemplate(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
 
 <head>
     <title th:fragment="title"> ::: 마이페이지 ::: </title>
@@ -13,78 +13,56 @@
 </head>
 
 
-<div class="wrapper" th:fragment="content">
-    <div id="mypage-wrap">
-        <div class="mypage-aside-container">
-            <div id="mypage-member">
-                <img id="mypage-member-img" src="/img/profile.png">
-                <div th:text="|[김찬규]님|"></div>
-                <div id="mypage-member-email" th:text="'chan999@gmail.com'"></div>
-            </div>
-            <ul class="mypage-menu-list">
-                <li><a href="/member/mypage">내 정보</a></li>
-                <li><a href="#">회원정보 수정</a></li>
-                <li>
-                    작성 게시글
-                    <ul class="mypage-sub-list">
-                        <li><a href="#">일상공유</a></li>
-                        <li><a href="#">동네친구</a></li>
-                        <li><a href="#">댓글</a></li>
-                    </ul>
-                </li>
-            </ul>
+<div class="mypage-container" th:fragment="content">
+    <div class="mypage-info-wrap">
+        <div class="mypage-title">내 정보</div>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">아이디</div>
+            <div class="mypage-basic-content">chan999</div>
         </div>
-        <div class="mypage-container">
-            <div class="mypage-info-wrap">
-                <div id="mypage-title">내 정보</div>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">아이디</div>
-                    <div class="mypage-basic-content">chan999</div>
-                </div>
-                <hr>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">별명</div>
-                    <div class="mypage-basic-content">찬찬</div>
-                </div>
-                <hr>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">이메일</div>
-                    <div class="mypage-basic-content">chan999@gmail.com</div>
-                </div>
-                <hr>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">생년월일</div>
-                    <div class="mypage-basic-content">1993. 12. 23.</div>
-                </div>
-                <hr>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">주소</div>
-                    <div class="mypage-basic-content">서울시 노원구 월계동</div>
-                </div>
-                <hr>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">취미</div>
-                    <div class="mypage-basic-content">캠핑</div>
-                </div>
-                <hr>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">관심사</div>
-                    <div class="mypage-basic-content">#건강 #취미</div>
-                </div>
-                <hr>
-                <div class="mypage-basic-wrap">
-                    <div class="mypage-basic-title">자기소개</div>
-                    <div class="mypage-basic-content">안녕하세요 저는 어쩌고 저쩌고 길게 쓰는 이유는 줄바뀜을 보려고 이러고 있습니다만. 세줄 이상 넘어가서 페이지를 넘어가면 이건 어떻게 될지 궁금하군요. 조금 더 자기소개글을 넣어야 겠어요.</div>
-                </div>
-                <hr>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">별명</div>
+            <div class="mypage-basic-content">찬찬</div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">이메일</div>
+            <div class="mypage-basic-content">chan999@gmail.com</div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">생년월일</div>
+            <div class="mypage-basic-content">1993. 12. 23.</div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">주소</div>
+            <div class="mypage-basic-content">서울시 노원구 월계동</div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">취미</div>
+            <div class="mypage-basic-content">캠핑</div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">관심사</div>
+            <div class="mypage-basic-content">#건강 #취미</div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">자기소개</div>
+            <div class="mypage-basic-content">안녕하세요 저는 어쩌고 저쩌고 길게 쓰는 이유는 줄바뀜을 보려고 이러고 있습니다만. 세줄 이상 넘어가서 페이지를 넘어가면 이건 어떻게
+                될지 궁금하군요. 조금 더 자기소개글을 넣어야 겠어요.
             </div>
-            <div>
+        </div>
+        <hr>
+    </div>
+    <div>
 
-            </div>
-        </div>
     </div>
 </div>
-
 </html>
 
 
