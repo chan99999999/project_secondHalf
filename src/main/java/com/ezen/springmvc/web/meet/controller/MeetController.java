@@ -27,6 +27,9 @@ public class MeetController {
         return "/meet/meetRegister";
     }
 
+
+
+
     @GetMapping("/read")
     public String meetRead(){
         return "/meet/meetRead";
