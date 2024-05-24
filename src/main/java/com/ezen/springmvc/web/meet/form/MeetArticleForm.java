@@ -15,7 +15,7 @@ public class MeetArticleForm {
     private String regdate;
     private String time;
     private int enter;
-//    private int hitcount;
+    private int hitcount;
     private int categoryId;
     private String memberId;
     private int placeId;
