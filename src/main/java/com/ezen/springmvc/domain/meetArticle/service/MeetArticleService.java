@@ -11,23 +11,23 @@ public interface MeetArticleService {
 //    카테고리 목록
 //    List<CategoryDto> categoryList();
 //    모임 게시글 등록
-    MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto);
+//    MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto);
 //    게시글 전체 목록
     List<MeetArticleDto> findByAllMeetArticle(int categoryId);
 //    모임 게시글 상세보기
-    void readMeetArticle(MeetArticleDto meetArticleDto);
+//    void readMeetArticle(MeetArticleDto meetArticleDto);
 //    모임 게시글 수정
-    void updateMeetArticle(MeetArticleDto meetArticleDto);
+//    void updateMeetArticle(MeetArticleDto meetArticleDto);
 //    모임 게시글 삭제
-    void deleteMeetArticle(MeetArticleDto meetArticleDto);
+//    void deleteMeetArticle(MeetArticleDto meetArticleDto);
 //    게시글 조회수
 //    void hitcount(MeetArticleDto meetArticleDto);
-////    태그별 모임 게시글 조회
-//    TagDto findByTag(int meetArticleId);
+//    태그별 모임 게시글 조회
+//    TagDto findByTagName(TagDto tagDto);
 ////    태그 목록
 //    List<TagDto> tagList();
 //    댓글 등록
-    void createReply(ReplyDto replyDto);
+//    void createReply(ReplyDto replyDto);
 ////    댓글 수정
 //    void updateReply(ReplyDto replyDto);
 ////    댓글 삭제

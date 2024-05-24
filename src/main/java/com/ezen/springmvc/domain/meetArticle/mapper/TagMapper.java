@@ -10,5 +10,5 @@ import java.util.List;
 public interface TagMapper {
     void createTag(TagDto tagDto);
     List<TagDto> findByTagAll();
-    TagDto findByTagId(int meetArticleId);
+    TagDto findByTagName(TagDto tagDto);
 }

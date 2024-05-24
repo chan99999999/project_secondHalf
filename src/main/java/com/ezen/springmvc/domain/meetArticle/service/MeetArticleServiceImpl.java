@@ -10,6 +10,7 @@ import com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,51 +19,51 @@ import java.util.List;
 public class MeetArticleServiceImpl implements MeetArticleService{
 //    private final CategoryMapper categoryMapper;
     private final MeetArticleMapper meetArticleMapper;
-    private final ReplyMapper replyMapper;
+//    private final ReplyMapper replyMapper;
 //    private final TagMapper tagMapper;
 
 //    @Override
 //    public List<CategoryDto> categoryList() {
 //        return categoryMapper.findByCategoryAll();
 //    }
-//
-    @Override
-    public MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.createMeetArticle(meetArticleDto);
-//        tagDto.setMeetArticleId(meetArticleDto.getMeetArticleId());
-//        tagMapper.createTag(tagDto);
-//        return meetArticleMapper.findByMeetArticleId(meetArticleDto.getMeetArticleId());
-        return null;
-    }
+
+//    @Override
+//    public MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.createMeetArticle(meetArticleDto);
+////        tagDto.setMeetArticleId(meetArticleDto.getMeetArticleId());
+////        tagMapper.createTag(tagDto);
+////        return meetArticleMapper.findByMeetArticleId(meetArticleDto.getMeetArticleId());
+//        return null;
+//    }
 
     @Override
     public List<MeetArticleDto> findByAllMeetArticle(int categoryId) {
         return meetArticleMapper.findByAllMeetArticle(categoryId);
     }
 
-    @Override
-    public void readMeetArticle(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.readMeetArticle(meetArticleDto);
-    }
+//    @Override
+//    public void readMeetArticle(MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.readMeetArticle(meetArticleDto);
+//    }
 
-    @Override
-    public void updateMeetArticle(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.updateMeetArticle(meetArticleDto);
-    }
+//    @Override
+//    public void updateMeetArticle(MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.updateMeetArticle(meetArticleDto);
+//    }
 
-    @Override
-    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.deleteMeetArticle(meetArticleDto);
-    }
+//    @Override
+//    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.deleteMeetArticle(meetArticleDto);
+//    }
 
 //    @Override
 //    public void hitcount(MeetArticleDto meetArticleDto) {
 //        meetArticleMapper.hitcount(meetArticleDto);
 //    }
 
-    //    @Override
-//    public TagDto findByTag(int meetArticleId) {
-//        return tagMapper.findByTagId(meetArticleId);
+//    @Override
+//    public TagDto findByTagName(TagDto tagDto) {
+//        return tagMapper.findByTagName(tagDto);
 //    }
 //
 //    @Override
@@ -70,10 +71,10 @@ public class MeetArticleServiceImpl implements MeetArticleService{
 //        return tagMapper.findByTagAll();
 //    }
 
-    @Override
-    public void createReply(ReplyDto replyDto) {
-        replyMapper.createReply(replyDto);
-    }
+//    @Override
+//    public void createReply(ReplyDto replyDto) {
+//        replyMapper.createReply(replyDto);
+//    }
 
 //    @Override
 //    public void updateReply(ReplyDto replyDto) {

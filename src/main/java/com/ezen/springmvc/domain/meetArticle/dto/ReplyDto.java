@@ -13,4 +13,5 @@ public class ReplyDto {
     private int meetArticleId;
     private String content;
     private String regdate;
+    private String writer;
 }

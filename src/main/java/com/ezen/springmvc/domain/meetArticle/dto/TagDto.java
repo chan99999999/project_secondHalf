@@ -12,6 +12,6 @@ import java.util.List;
 @Builder
 public class TagDto {
     private List<String> tagId;
-    private List<String> tagName;
-    private int meetArticleId;
+    private String tagName;
+    private int tArticleId;
 }
