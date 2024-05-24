@@ -12,14 +12,24 @@
 
 <body>
 <nav>
-    <div id="nav-bar">
-        <a id="nav-signup" href="/member/signup" >무료 회원가입</a>
-        <a id="nav-login" href="/member/login" >로그인</a>
+    <div class="index-nav-bar">
+        <th:block th:if="${session.loginMember == null}">
+            <div class="nav-member">
+                <a class="nav-signup" href="/member/signup">무료 회원가입</a>
+                <a class="nav-login" href="/member/login">로그인</a>
+            </div>
+        </th:block>
+        <th:block th:if="${session.loginMember != null}">
+            <div class="nav-member">
+                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.name}]님|"></a>
+                <a class="nav-logout" href="/member/logout">로그아웃</a>
+            </div>
+        </th:block>
     </div>
 </nav>
 <div class="container">
-    <div id="main-intro">
-        <h1> 홈페이지 소개 </h1>
+    <div id="main-banner">
+        <img id="main-banner-img" src="/img/index_banner.png">
     </div>
 
     <div id="main-category">

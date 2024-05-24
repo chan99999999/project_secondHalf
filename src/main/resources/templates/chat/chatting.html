@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 대화하기 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/chat.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div id="chat-container">
+        <div id="chat-member-list">
+            <div>
+                <div id="chat-search">
+                    <input id="chat-search-bar" type="text" placeholder="찾기">
+                    <button id="chat-search-btn" type="submit">검색</button>
+                </div>
+                <div class="chat-list-area">
+                <ul class="chat-list">
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">김순자 최고</div>
+                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">명언 바구니</div>
+                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">최고의 하루</div>
+                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">김순자 최고</div>
+                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">명언 바구니</div>
+                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">최고의 하루</div>
+                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">김순자 최고</div>
+                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">명언 바구니</div>
+                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">최고의 하루</div>
+                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">김순자 최고</div>
+                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">명언 바구니</div>
+                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">최고의 하루</div>
+                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">김순자 최고</div>
+                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">명언 바구니</div>
+                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
+                        </div>
+                    </li>
+                    <li class="chat-member">
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">최고의 하루</div>
+                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
+                        </div>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+        <div class="chat-bar">
+            <div class="chat-current-member">
+                <img class="profile-img chat-member-img" src="/img/profile.png">
+                <div class="chat-cureent-name">김순자 최고</div>
+            </div>
+            <div class="chat-history">
+                <ul>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                    <li class="chat-message-list">
+                        <div class="message-data">
+                            <div class="message-data-time">오전 10:10, 오늘</div>
+                            <div class="message-data-member">김순자 최고</div>
+                        </div>
+                        <div class="chat-message-text">
+                            안녕하세요? 좋은 하루 입니다.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="chat-send-box">
+                <textarea class="message-to-send" rows="3" cols="55px" placeholder="메세지 입력"></textarea>
+                <button class="message-send-btn" type="submit">전송</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

@@ -13,12 +13,11 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService{
 	
 	private final MemberMapper memberMapper;
-	
+
 	@Override
 	@Transactional
-	public MemberDto register(MemberDto memberDto) {
+	public void register(MemberDto memberDto) {
 		memberMapper.create(memberDto);
-		return memberMapper.findById(memberDto.getMemberId());
 	}
 
 	@Override

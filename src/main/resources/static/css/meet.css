@@ -1,0 +1,272 @@
+/*--------------------------MEET----------------------*/
+#meet-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    margin: 0px auto;
+}
+
+#write-meet-wrap{
+    display: flex;
+    justify-content: end;
+}
+
+#write-meet{
+    width: 200px;
+    height: 60px;
+    background-color: #ff8c18;
+    text-align: center;
+    justify-content: end;
+    align-content: center;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+#write-meet a{
+    color: white;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#meet-list-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    background-color: #e6e6e6;
+    margin-bottom: 20px;
+    padding: 20px 0px;
+}
+
+#meet-search-bar{
+    width: 1100px;
+    margin: 0px auto;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#meet-search-bar input{
+    height: 60px;
+    width: 500px;
+    border-radius: 10px;
+    font-size: 25px;
+    padding: 0px 10px;
+}
+
+#meet-search-bar button{
+    height: 60px;
+    width: 70px;
+    font-size: 20px;
+}
+
+.meet-tag{
+    display: flex;
+    font-size: 35px;
+}
+
+.meet-tag li{
+    margin: 0px 10px;
+}
+
+.meet-post{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 20px 40px;
+    background-color: white;
+}
+
+.meet-post p{
+    font-size: 25px;
+}
+
+.meet-post-title{
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.meet-tag{
+    display: flex;
+}
+
+.meet-tag li{
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #ffd5ab;
+    margin: 10px;
+}
+
+.meet-join{
+    text-align: center;
+    align-content: center;
+    background-color: #ff8c18;
+    border-radius: 10px;
+    padding: 0px 10px;
+    font-weight: bolder;
+}
+
+/*----------------------MEET_REG------------------*/
+#meet-register-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 0px auto;
+}
+
+#meet-register-form{
+    background-color: #eaeaea;
+    padding: 50px 50px 0px 50px;
+    margin-bottom: 50px;
+}
+
+#meet-register-title{
+    height: 50px;
+    width: 850px;
+    font-size: 25px;
+    padding: 0px 20px;
+}
+
+#meet-tag-wrap{
+    width: 850px;
+    margin: 10px 0px;
+    padding: 20px;
+    background-color: lightgray;
+    font-size: 25px;
+}
+
+#meet-info{
+    font-size: 25px;
+}
+
+.meet-info > input {
+    height: 40px;
+    margin: 5px 10px;
+    padding: 0px 10px;
+    font-size: 25px;
+}
+
+#meet-register-textarea{
+    margin: 10px 0;
+    font-size: 25px;
+    padding: 10px;
+}
+
+/*----------------------------MEET-READ-----------------------*/
+#meet-read-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 50px auto;
+    background-color: #eaeaea;
+    padding: 50px;
+}
+
+#meet-read-writer-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+#meet-read-writer{
+    display: flex;
+}
+
+#meet-read-writer-name{
+    align-content: center;
+    padding: 0px 10px;
+    font-size: 20px;
+}
+
+#meet-read-date{
+    align-content: center;
+    font-size: 20px;
+}
+
+.profile-img{
+    width: 40px;
+    height: 40px;
+}
+
+#meet-read-content-wrap{
+    background-color: white;
+    padding: 40px;
+    margin: 10px 0;
+}
+
+#meet-read-title{
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Cafe24Ssurround';
+    margin: 20px 0;
+}
+
+.meet-read-content{
+    font-size: 30px;
+    margin: 5px 0;
+}
+
+#meet-read-content-wrap >img{
+    width: 920px;
+    height: 500px;
+    background-size: cover;
+    margin: 10px 0;
+}
+
+#review-count-wrap{
+    padding: 0px 20px;
+    font-size: 25px;
+    display: flex;
+}
+
+.review-wrap{
+    margin: 20px 0px;
+    padding: 0px 20px;
+}
+
+.write-review{
+    padding: 10px 10px;
+    align-content: center;
+}
+
+#write-review p{
+    font-size: 20px;
+}
+
+#write-review-btn{
+    height: 80px;
+    width: 90px;
+    font-size: 25px;
+    font-weight: bolder;
+    background-color: #ff8c18;
+    border: none;
+}
+
+#review-text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#review-text textarea{
+    font-size: 25px;
+    padding: 10px;
+    margin: 5px 0px;
+}
+
+.review{
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: lightgray;
+}
+
+.review-writer{
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.review-content{
+    font-size: 25px;
+}
+
+.review img{
+    width: 55px;
+    height: 55px;
+    margin-right: 20px;
+}

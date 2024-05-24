@@ -19,4 +19,9 @@ public class MapController {
     public String placeMap(){
         return "/map/place";
     }
+
+    @GetMapping("/apimap")
+    public String apiMap(){
+        return "/map/apiMap";
+    }
 }

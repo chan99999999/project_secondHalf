@@ -1,0 +1,269 @@
+/*-----------------------LOGIN---------------------*/
+#login-wrap{
+    margin: auto;
+    width: 1400px;
+    min-width: 1400px;
+    outline: none;
+    height: 750px;
+}
+
+#login-fieldset{
+    border: none;
+}
+
+#login-div{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 100px auto;
+}
+
+.login-input{
+    height: 80px;
+    font-size: 40px;
+    padding: 0px 20px;
+}
+
+#loginId{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#loginPasswd{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#rememberLoginId{
+    width: 25px;
+    height: 25px;
+}
+
+#login-function{
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    margin: 20px 0;
+}
+
+#login-btn{
+    background-color: #fd8b18;
+    border: none;
+    font-weight: bolder;
+}
+
+/*----------------------------SignUp---------------------------------*/
+#signup-wrap{
+    margin: 0px auto;
+    width: 1400px;
+    min-width: 1400px;
+}
+
+#signup-content{
+    margin: 0px auto;
+    width: 850px;
+    font-size: 50px;
+    padding: 30px 0;
+}
+
+#signup-fieldset{
+    margin: 0px auto;
+    border: 1px solid lightgray;
+    width: 1200px;
+}
+
+#signup-list{
+    list-style: none;
+}
+
+.signup-info{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
+}
+
+.signup-input{
+    width: 500px;
+    font-size: 30px;
+    padding: 0px 20px;
+}
+
+#signup-gender{
+    display: flex;
+    width: 540px;
+    align-items: center;
+    font-size: 30px;
+}
+
+#signup-address{
+    font-size: 25px;
+    align-content: center;
+    width: 540px;
+}
+
+#signup-gender >input{
+    margin-right: 20px;
+}
+
+.signup-radio{
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.signup-radio:checked{
+    border: 10px solid tomato;
+}
+
+#signup-gender >label{
+    margin-right: 20px
+}
+
+#signup-birth{
+    width: 540px;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+#signup-birth select{
+    height: 70px;
+    width: 160px;
+    font-size: 30px;
+    text-align: center;
+}
+
+/*-------------------------RESULT----------------------*/
+#result-wrap{
+    margin: 0px auto;
+    width: 1200px;
+    min-width: 1200px;
+}
+
+#result-text{
+    font-size: 50px;
+    text-align: center;
+    margin: 50px auto;
+}
+
+#result-member-id{
+    color: #ff8c18;
+    font-weight: bolder;
+}
+
+#result-fieldset{
+    margin: 0px auto;
+    padding: 50px;
+    width: 1000px;
+    background-color: #eaeaea;
+}
+
+#result-info{
+    font-size: 50px;
+    width: 800px;
+    margin: 0px auto;
+}
+
+.result-list{
+    display: flex;
+    margin: 20px 0;
+}
+
+.result-list-title{
+    font-weight: bolder;
+    width: 300px;
+}
+
+#result-btn{
+    display: block;
+    width: 400px;
+    height: 80px;
+    text-align: center;
+    align-content: center;
+    font-size: 50px;
+    font-weight: bolder;
+    background-color: #ff8c18;
+    margin: 20px auto;
+}
+
+/*--------------------MY-PAGE-------------------*/
+#mypage-wrap{
+    width: 1400px;
+    min-width: 1400px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px auto;
+}
+
+.mypage-aside-container{
+    width: 240px;
+    background-color: #faeadd;
+    font-size: 30px;
+    padding: 30px;
+}
+
+#mypage-member{
+    width: 240px;
+    height: 220px;
+    margin: 0px auto;
+    background-color: white;
+    text-align: center;
+    align-content: center;
+    font-weight: bolder;
+}
+
+#mypage-member-img{
+    width: 150px;
+    height: 150px;
+}
+
+.mypage-menu-list{
+    padding: 20px 10px;
+}
+
+
+.mypage-container{
+    width: 1070px;
+    background-color: #eaeaea;
+}
+
+/*-----------------API--------------------*/
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
