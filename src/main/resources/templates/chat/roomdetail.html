@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Websocket ChatRoom</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div>
+        <h2 id="room-name"></h2>
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label class="input-group-text">내용</label>
+        </div>
+        <input type="text" class="form-control" id="message-input">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button" id="send-button">보내기</button>
+        </div>
+    </div>
+    <ul class="list-group" id="messages-list">
+    </ul>
+    <div></div>
+</div>
+<!-- JavaScript -->
+<script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
+<script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+<script>
+    // websocket & stomp initialize
+    var sock = new SockJS("/ws-stomp");
+    var ws = Stomp.over(sock);
+
+    // DOM elements
+    var roomNameElem = document.getElementById('room-name');
+    var messageInputElem = document.getElementById('message-input');
+    var sendButtonElem = document.getElementById('send-button');
+    var messagesListElem = document.getElementById('messages-list');
+
+    // Application state
+
+    var roomId = localStorage.getItem('wschat.roomId');
+    var sender = localStorage.getItem('wschat.sender');
+    var room = {};
+    var messages = [];
+
+    // Initialize
+    findRoom();
+    setupEventHandlers();
+
+    function findRoom() {
+        axios.get('/chat/room/' + roomId).then(response => {
+            room = response.data;
+            roomNameElem.textContent = room.name;
+        });
+    }
+
+    function sendMessage() {
+        var message = messageInputElem.value;
+        if (message.trim() === '') {
+            alert("내용을 입력하세요.");
+            return;
+        }
+        ws.send("/pub/chat/message", {}, JSON.stringify({
+            type: 'TALK',
+            roomId: roomId,
+            sender: sender,
+            message: message
+        }));
+        messageInputElem.value = '';
+    }
+
+    function recvMessage(recv) {
+        var messageItem = document.createElement('li');
+        messageItem.className = 'list-group-item';
+        messageItem.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.sender) + ' - ' + recv.message;
+        messagesListElem.insertBefore(messageItem, messagesListElem.firstChild);
+    }
+
+    function setupEventHandlers() {
+        sendButtonElem.addEventListener('click', sendMessage);
+        messageInputElem.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        ws.connect({}, function(frame) {
+            ws.subscribe("/sub/chat/room/" + roomId, function(message) {
+                var recv = JSON.parse(message.body);
+                recvMessage(recv);
+            });
+            ws.send("/pub/chat/message", {}, JSON.stringify({
+                type: 'ENTER',
+                roomId: roomId,
+                sender: sender
+            }));
+        }, function(error) {
+            alert("error " + error);
+        });
+    }
+</script>
+</body>
+</html>
