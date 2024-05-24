@@ -19,17 +19,14 @@ import java.util.List;
 public class MeetArticleServiceTest {
     @Autowired
     MeetArticleService meetArticleService;
+    @Autowired
+    MeetArticleMapper meetArticleMapper;
 
     @Test
     @DisplayName("모임 게시글 상세보기 테스트")
     void readMeetArticleTest(){
-        MeetArticleDto readMeetArticle = MeetArticleDto
-                .builder()
-                .categoryId(3)
-                .meetArticleId(1)
-                .build();
-        meetArticleService.readMeetArticle(readMeetArticle);
-        log.info("게시글 상세보기 : {}", readMeetArticle);
+        MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(3, 5);
+        log.info("게시글 상세보기 : {}", meetArticleDto);
     }
 
     @Test

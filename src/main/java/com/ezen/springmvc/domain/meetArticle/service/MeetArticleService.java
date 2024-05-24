@@ -3,7 +3,6 @@ package com.ezen.springmvc.domain.meetArticle.service;
 import com.ezen.springmvc.domain.meetArticle.dto.CategoryDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
-import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface MeetArticleService {
 //    게시글 전체 목록
     List<MeetArticleDto> findByAllMeetArticle(int categoryId);
 //    모임 게시글 상세보기
-    void readMeetArticle(MeetArticleDto meetArticleDto);
+    MeetArticleDto readMeetArticle(int categoryId, int meetArticleId);
 //    모임 게시글 수정
     void updateMeetArticle(MeetArticleDto meetArticleDto);
 //    모임 게시글 삭제

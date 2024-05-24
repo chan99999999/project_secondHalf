@@ -3,14 +3,11 @@ package com.ezen.springmvc.domain.meetArticle.service;
 import com.ezen.springmvc.domain.meetArticle.dto.CategoryDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
-import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.CategoryMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper;
-import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,8 +39,9 @@ public class MeetArticleServiceImpl implements MeetArticleService{
     }
 
     @Override
-    public void readMeetArticle(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.readMeetArticle(meetArticleDto);
+    public MeetArticleDto readMeetArticle(int categoryId, int meetArticleId) {
+        meetArticleMapper.readMeetArticle(3,5);
+        return null;
     }
 
     @Override

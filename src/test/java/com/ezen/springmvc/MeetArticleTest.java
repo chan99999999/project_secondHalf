@@ -48,13 +48,8 @@ public class MeetArticleTest {
     @Test
     @DisplayName("모임 게시글 상세보기 테스트")
     void readMeetArticleTest(){
-        MeetArticleDto readMeetArticle = MeetArticleDto
-                .builder()
-                .meetArticleId(1)
-                .categoryId(3)
-                .build();
-        meetArticleMapper.readMeetArticle(readMeetArticle);
-        log.info("게시글 상세보기 : {}", readMeetArticle);
+        MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(3, 5);
+        log.info("게시글 상세보기 : {}", meetArticleDto);
     }
 
 //    @Test

@@ -11,7 +11,7 @@ public interface MeetArticleMapper {
     void createMeetArticle(MeetArticleDto meetArticleDto);
 //    MeetArticleDto findByMeetArticleId(int meetArticleId);
     List<MeetArticleDto> findByAllMeetArticle(@Param("categoryId") int categoryId);
-    MeetArticleDto readMeetArticle(MeetArticleDto meetArticleDto);
+    MeetArticleDto readMeetArticle(int categoryId, int meetArticleId);
     void updateMeetArticle(MeetArticleDto meetArticleDto);
     void deleteMeetArticle(MeetArticleDto meetArticleDto);
 //    void hitcount(MeetArticleDto meetArticleDto);
