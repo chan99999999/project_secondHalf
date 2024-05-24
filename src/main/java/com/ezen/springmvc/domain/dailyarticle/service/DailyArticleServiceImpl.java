@@ -23,6 +23,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 카테고리 목록 반환 구현
+     *
      * @return 카테고리 목록
      */
     @Override
@@ -32,8 +33,9 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 신규 일상 게시글 등록 구현
+     *
      * @param dailyArticleDto 일상 게시글
-     * @param fileDto 파일
+     * @param fileDto         파일
      * @return 일상 게시글
      */
     @Override
@@ -47,6 +49,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 일상 게시글 목록 반환 구현
+     *
      * @param categoryId 카테고리 번호
      * @return 일상 게시글 목록
      */
@@ -57,7 +60,8 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 일상 게시글 상세 보기 구현
-     * @param categoryId 카테고리 번호
+     *
+     * @param categoryId     카테고리 번호
      * @param dailyArticleId 일상 게시글 번호
      * @return 일상 게시글
      */
@@ -68,6 +72,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 파일 번호로 파일 조회 구현
+     *
      * @param fileId 파일 번호
      * @return 파일
      */
@@ -78,6 +83,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 파일 목록 조회 구현
+     *
      * @return 파일 목록
      */
     @Override
@@ -87,6 +93,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 댓글 등록 구현
+     *
      * @param replyDto 댓글
      */
     @Transactional
@@ -97,6 +104,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 댓글 목록 반환 구현
+     *
      * @param dailyArticleId 일상 게시글 번호
      * @return 댓글 목록
      */
@@ -107,41 +115,55 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     /**
      * 좋아요 등록 구현
+     *
      * @param heartDto 좋아요
      */
     @Override
     @Transactional
     public void clickHeart(HeartDto heartDto) {
-        heartMapper.createHeart(heartDto);
+        heartMapper.createHeart(30, "sunday");
     }
 
     /**
-     * 좋아요 삭제 구현
+     * 좋아요 업데이트 구현
+     *
      * @param dailyArticleId 일상 게시글 번호
-     * @param memberId 회원 아이디
+     * @param memberId       회원 아이디
      */
     @Override
     @Transactional
-    public boolean updateHeart(int dailyArticleId, String memberId, boolean checked) {
-      try {
-          if (checked) {
-              heartMapper.plusHeart(dailyArticleId, memberId);
-          } else {
-              heartMapper.minusHeart(dailyArticleId, memberId);
-          }
-      }catch (Exception ex){
-          return  false;
-      }
-       return  true;
+    public boolean insertAndUpdateHeart(int dailyArticleId, String memberId, boolean checked) {
+        try {
+            boolean heartExists = heartMapper.existHeart(dailyArticleId, memberId) > 0;
+            // 존재하는지에 따라 좋아요 인서트할지 분기
+            if (heartExists) {
+                if (checked) { // 넘어온 checked 값에 따라 증가, 감소 분기
+                    heartMapper.plusHeart(dailyArticleId, memberId);
+                } else {
+                    heartMapper.minusHeart(dailyArticleId, memberId);
+                }
+            } else {
+                heartMapper.createHeart(dailyArticleId, memberId);
+                if (checked) {
+                    heartMapper.plusHeart(dailyArticleId, memberId);
+                }
+
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * 좋아요 개수 반환 구현
+     *
      * @param dailyArticleId 일상 게시글 번호
-     * @param memberId 회원 아이디
+     * @param memberId       회원 아이디
      * @return 좋아요 개수
      */
     @Override
+    @Transactional
     public int getHeartCount(int dailyArticleId, String memberId) {
         return heartMapper.findHeartCount(dailyArticleId, memberId);
     }

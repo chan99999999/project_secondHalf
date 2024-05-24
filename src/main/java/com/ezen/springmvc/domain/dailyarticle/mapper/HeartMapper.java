@@ -12,12 +12,13 @@ public interface HeartMapper {
 
     /**
      * 좋아요 등록
-     * @param heartDto 좋아요
+     * @param dailyArticleId 일상 게시글 번호
+     * @param memberId 회원 아이디
      */
-    public void createHeart(HeartDto heartDto);
+    public void createHeart(@Param("dailyArticleId") int dailyArticleId, @Param("memberId") String memberId);
 
     /**
-     * 좋아요 삭제
+     * 좋아요 업데이트
      * @param dailyArticleId 일상 게시글 번호
      * @param memberId 회원 아이디
      */
@@ -32,4 +33,11 @@ public interface HeartMapper {
      */
     public int findHeartCount(@Param("dailyArticleId") int dailyArticleId, @Param("memberId") String memberId);
 
+    /**
+     * 좋아요 존재 유무 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @param memberId 회원 아이디
+     * @return
+     */
+    public int existHeart(@Param("dailyArticleId") int dailyArticleId, @Param("memberId") String memberId);
 }

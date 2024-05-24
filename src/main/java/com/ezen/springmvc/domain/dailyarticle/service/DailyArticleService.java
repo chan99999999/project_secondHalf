@@ -71,11 +71,11 @@ public interface DailyArticleService {
     public void clickHeart(HeartDto heartDto);
 
     /**
-     * 좋아요 삭제
+     * 좋아요 등록 및 업데이트
      * @param dailyArticleId 일상 게시글 번호
      * @param memberId 회원 아이디
      */
-    public boolean updateHeart(int dailyArticleId, String memberId, boolean checked);
+    public boolean insertAndUpdateHeart(int dailyArticleId, String memberId, boolean checked);
 
     /**
      * 좋아요 개수 반환

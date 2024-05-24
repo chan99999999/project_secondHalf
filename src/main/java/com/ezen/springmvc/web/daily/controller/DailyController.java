@@ -132,12 +132,48 @@ public class DailyController {
     }
 
     // 좋아요 기능 처리
+//    @GetMapping("/like")
+//    public @ResponseBody boolean handleHeart(
+//            @RequestParam("dailyArticleId") int dailyArticleId,
+//            @RequestParam("memberId") String memberId,
+//            @RequestParam("checked") boolean checked) {
+//        log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
+//        return dailyArticleService.updateHeart(dailyArticleId, memberId, checked);
+//    }
+
+//    @GetMapping("/like")
+//    public ResponseEntity<Map<String, Object>> handleHeart(
+//            @RequestParam("dailyArticleId") int dailyArticleId,
+//            @RequestParam("memberId") String memberId,
+//            @RequestParam("checked") boolean checked) {
+//        log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
+//
+//        Map<String, Object> map = new HashMap<>();
+//
+//        int heartCount = dailyArticleService.getHeartCount(dailyArticleId, memberId);
+//        boolean isUpdated = dailyArticleService.updateHeart(dailyArticleId, memberId, checked);
+//
+//        map.put("heartCount", heartCount);
+//        map.put("isUpdated", isUpdated);
+//
+//        return ResponseEntity.ok(map);
+//    }
+
     @GetMapping("/like")
-    public @ResponseBody boolean handleHeart(
+    public ResponseEntity<Map<String, Object>> handleHeart(
             @RequestParam("dailyArticleId") int dailyArticleId,
             @RequestParam("memberId") String memberId,
             @RequestParam("checked") boolean checked) {
         log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
-        return dailyArticleService.updateHeart(dailyArticleId, memberId, checked);
+
+        Map<String, Object> map = new HashMap<>();
+
+        boolean isUpdated = dailyArticleService.insertAndUpdateHeart(dailyArticleId, memberId, checked);
+        int heartCount = dailyArticleService.getHeartCount(dailyArticleId, memberId);
+
+        map.put("heartCount", heartCount);
+        map.put("isUpdated", isUpdated);
+
+        return ResponseEntity.ok(map);
     }
 }

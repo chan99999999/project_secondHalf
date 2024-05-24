@@ -6,6 +6,7 @@ import com.ezen.springmvc.domain.dailyarticle.dto.HeartDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.dailyarticle.mapper.DailyArticleMapper;
 import com.ezen.springmvc.domain.dailyarticle.mapper.FileMapper;
+import com.ezen.springmvc.domain.dailyarticle.mapper.HeartMapper;
 import com.ezen.springmvc.domain.dailyarticle.mapper.ReplyMapper;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
@@ -33,6 +34,8 @@ public class DailyArticleMapperTest {
     ReplyMapper replyMapper;
     @Autowired
     private DailyArticleServiceImpl dailyArticleServiceImpl;
+    @Autowired
+    private HeartMapper heartMapper;
 
     @Test
     @DisplayName("신규 일상 게시글 등록 테스트")
@@ -139,18 +142,18 @@ public class DailyArticleMapperTest {
     }
 
     @Test
-    @DisplayName("좋아요 삭제 테스트")
-//    @Disabled
-    void removeHeartTest() {
-        dailyArticleServiceImpl.removeHeart(20, "승아");
-        log.info("좋아요 삭제 완료!!!");
+    @DisplayName("좋아요 개수 반환 테스트")
+    @Disabled
+    void getHeartCountTest() {
+        int heartCount = dailyArticleServiceImpl.getHeartCount(29, "sunday");
+        log.info("조회된 좋아요 개수 : {}", heartCount);
     }
 
     @Test
-    @DisplayName("좋아요 개수 반환 테스트")
+    @DisplayName("좋아요 존재 유무 반환 테스트")
 //    @Disabled
-    void getHeartCountTest() {
-        int heartCount = dailyArticleServiceImpl.getHeartCount(20);
-        log.info("조회된 좋아요 개수 : {}", heartCount);
+    void existHeartTest() {
+        boolean existed = heartMapper.existHeart(25, "sunday") > 0;
+        log.info("존재 하나요? : {}", existed);
     }
 }

@@ -5,7 +5,9 @@ const httpRequest = function (url) {
 const eventRegister = function () {
   const heartImg = document.querySelector('#like');
   heartImg.addEventListener('click', handleHeart);
+
 }
+
 
 // 상세 보기 페이지에서 동적으로 일상 게시판 번호 얻어오기
 const getDailyArticleIdFromURL = () => {
@@ -14,13 +16,13 @@ const getDailyArticleIdFromURL = () => {
   const dailyArticleIdStr = pathParts[pathParts.length - 1];
   const dailyArticleId = parseInt(dailyArticleIdStr, 10);
   if (isNaN(dailyArticleId)) {
-      throw new Error('Invalid dailyArticleId');
+    throw new Error('Invalid dailyArticleId');
   }
   return dailyArticleId;
 };
 
 const handleHeart = async function (event) {
-  
+
   // const dailyArticleId = 30;
   const dailyArticleId = getDailyArticleIdFromURL();
   const memberId = 'sunday';
@@ -30,12 +32,14 @@ const handleHeart = async function (event) {
   const newChecked = !isCurrentlyLiked;
   const url = `/daily/like?dailyArticleId=${dailyArticleId}&memberId=${memberId}&checked=${newChecked}`;
   // 서버에 false나 true 전달
-  const isLiked = await httpRequest(url);
+  const object = await httpRequest(url);
 
-  console.log(isLiked);
+  console.log(object);
 
-  if (isLiked) {
+  if (object.isUpdated) {
     heartImg.setAttribute('src', newChecked ? '/img/heart.png' : '/img/heart2.png');
+    const heartCountArea = document.querySelector('#heartCount');
+    heartCountArea.textContent = object.heartCount;
   }
 
 

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.HeartMapper">
     <!-- 좋아요 등록 -->
-    <insert id="createHeart" parameterType="HeartDto">
+    <insert id="createHeart">
         INSERT INTO heart (heart_id, heart_count, d_article_id, member_id)
-        VALUES (HEART_ID_SEQ.nextval, #{heartCount}, #{dailyArticleId}, #{memberId})
+        VALUES (HEART_ID_SEQ.nextval, 0, #{dailyArticleId}, #{memberId})
     </insert>
 
     <!-- 좋아요 증가 -->
@@ -25,7 +25,15 @@
 
     <!-- 일상 게시글 번호로 좋아요 개수 조회 -->
     <select id="findHeartCount" resultType="int">
-        SELECT count(*) "heartCount"
+        SELECT heart_count
+        FROM heart
+        WHERE d_article_id = #{dailyArticleId}
+          AND member_id = #{memberId}
+    </select>
+
+    <!-- 좋아요 유무 반환 -->
+    <select id="existHeart" resultType="int">
+        SELECT NVL(COUNT(*), 0)
         FROM heart
         WHERE d_article_id = #{dailyArticleId}
           AND member_id = #{memberId}
