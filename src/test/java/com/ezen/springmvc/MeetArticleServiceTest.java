@@ -20,81 +20,81 @@ public class MeetArticleServiceTest {
     @Autowired
     MeetArticleService meetArticleService;
 
-//    @Test
-//    @DisplayName("모임 게시글 상세보기 테스트")
-//    void readMeetArticleTest(){
-//        MeetArticleDto readMeetArticle = MeetArticleDto
-//                .builder()
-//                .categoryId(3)
-//                .meetArticleId(1)
-//                .build();
-//        meetArticleService.readMeetArticle(readMeetArticle);
-//        log.info("게시글 상세보기 : {}", readMeetArticle);
-//    }
+    @Test
+    @DisplayName("모임 게시글 상세보기 테스트")
+    void readMeetArticleTest(){
+        MeetArticleDto readMeetArticle = MeetArticleDto
+                .builder()
+                .categoryId(3)
+                .meetArticleId(1)
+                .build();
+        meetArticleService.readMeetArticle(readMeetArticle);
+        log.info("게시글 상세보기 : {}", readMeetArticle);
+    }
 
-//    @Test
-//    @DisplayName("모임 게시글 등록 테스트")
-//    void createMeetArticleTest(){
-//        MeetArticleDto createArticle = MeetArticleDto
-//                .builder()
-//                .title("테스트")
-//                .content("테스트")
-//                .time("2022-22-22")
-//                .enter(5)
-//                .hitcount(0)
-//                .categoryId(3)
-//                .memberId("monday")
-//                .placeId(1)
-//                .build();
-//        meetArticleService.createMeetArticle(createArticle);
-//        log.info("등록 완료 : {}", createArticle);
-//    }
-//
-//
-//    @Test
-//    @DisplayName("모임 게시글 수정 테스트")
-//    void updateArticleTest(){
-//        MeetArticleDto updateArticle = MeetArticleDto
-//                .builder()
-//                .title("수정 테스트")
-//                .content("수정 테스트")
-//                .meetArticleId(7)
-//                .build();
-//        meetArticleService.updateMeetArticle(updateArticle);
-//        log.info("수정 완료 : {}", updateArticle);
-//    }
-//
-//    @Test
-//    @DisplayName("모임 게시글 삭제 테스트")
-//    void deleteArticleTest(){
-//        MeetArticleDto deleteArticle = MeetArticleDto
-//                .builder()
-//                .meetArticleId(7)
-//                .build();
-//        meetArticleService.deleteMeetArticle(deleteArticle);
-//        log.info("삭제 완료 : {}", deleteArticle);
-//    }
-//
-//    @Test
-//    @DisplayName("모임 게시글 전체 출력 테스트")
-//    void findByAllArticleTest(){
-//        List<MeetArticleDto> list = meetArticleService.findByAllMeetArticle(3);
-//        for (MeetArticleDto MeetArticleDto : list) {
-//            log.info("조회된 게시글 목록 : {}", MeetArticleDto);
-//        }
-//    }
+    @Test
+    @DisplayName("모임 게시글 등록 테스트")
+    void createMeetArticleTest(){
+        MeetArticleDto createArticle = MeetArticleDto
+                .builder()
+                .title("테스트")
+                .content("테스트")
+                .time("2022-22-22")
+                .enter(5)
+                .hitcount(0)
+                .categoryId(3)
+                .memberId("monday")
+                .placeId(1)
+                .build();
+        meetArticleService.createMeetArticle(createArticle);
+        log.info("등록 완료 : {}", createArticle);
+    }
 
-//    @Test
-//    @DisplayName("모임 게시글 댓글 등록 테스트")
-//    void createReplyTest(){
-//        ReplyDto replyDto = ReplyDto
-//                .builder()
-//                .content("댓글 테스트")
-//                .meetArticleId(2)
-//                .build();
-//        meetArticleService.createReply(replyDto);
-//        log.info("등록된 댓글 : {}", replyDto);
-//    }
+
+    @Test
+    @DisplayName("모임 게시글 수정 테스트")
+    void updateArticleTest(){
+        MeetArticleDto updateArticle = MeetArticleDto
+                .builder()
+                .title("수정 테스트")
+                .content("수정 테스트")
+                .meetArticleId(7)
+                .build();
+        meetArticleService.updateMeetArticle(updateArticle);
+        log.info("수정 완료 : {}", updateArticle);
+    }
+
+    @Test
+    @DisplayName("모임 게시글 삭제 테스트")
+    void deleteArticleTest(){
+        MeetArticleDto deleteArticle = MeetArticleDto
+                .builder()
+                .meetArticleId(7)
+                .build();
+        meetArticleService.deleteMeetArticle(deleteArticle);
+        log.info("삭제 완료 : {}", deleteArticle);
+    }
+
+    @Test
+    @DisplayName("모임 게시글 전체 출력 테스트")
+    void findByAllArticleTest(){
+        List<MeetArticleDto> list = meetArticleService.findByAllMeetArticle(3);
+        for (MeetArticleDto MeetArticleDto : list) {
+            log.info("조회된 게시글 목록 : {}", MeetArticleDto);
+        }
+    }
+
+    @Test
+    @DisplayName("모임 게시글 댓글 등록 테스트")
+    void createReplyTest(){
+        ReplyDto replyDto = ReplyDto
+                .builder()
+                .content("댓글 테스트")
+                .meetArticleId(2)
+                .build();
+        meetArticleService.createReply(replyDto);
+        log.info("등록된 댓글 : {}", replyDto);
+    }
 
 //    @Test
 //    @Transactional

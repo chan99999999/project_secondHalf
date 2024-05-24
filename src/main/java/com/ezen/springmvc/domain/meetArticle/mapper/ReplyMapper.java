@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-//@Mapper
+@Mapper
 public interface ReplyMapper {
     void createReply(ReplyDto replyDto);
     List<ReplyDto> findByReplyAll(@Param("meetArticleId") int meetArticleId);
