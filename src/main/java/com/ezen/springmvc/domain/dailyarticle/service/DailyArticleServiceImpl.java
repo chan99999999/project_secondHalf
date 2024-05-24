@@ -3,6 +3,8 @@ package com.ezen.springmvc.domain.dailyarticle.service;
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.dailyarticle.mapper.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Service
 public class DailyArticleServiceImpl implements DailyArticleService {
 
+    private static final Logger log = LoggerFactory.getLogger(DailyArticleServiceImpl.class);
     private final CategoryMapper categoryMapper;
     private final DailyArticleMapper dailyArticleMapper;
     private final ReplyMapper replyMapper;
@@ -86,6 +89,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      * 댓글 등록 구현
      * @param replyDto 댓글
      */
+    @Transactional
     @Override
     public void writeReply(ReplyDto replyDto) {
         replyMapper.createReply(replyDto);
@@ -106,8 +110,40 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      * @param heartDto 좋아요
      */
     @Override
+    @Transactional
     public void clickHeart(HeartDto heartDto) {
         heartMapper.createHeart(heartDto);
+    }
+
+    /**
+     * 좋아요 삭제 구현
+     * @param dailyArticleId 일상 게시글 번호
+     * @param memberId 회원 아이디
+     */
+    @Override
+    @Transactional
+    public boolean updateHeart(int dailyArticleId, String memberId, boolean checked) {
+      try {
+          if (checked) {
+              heartMapper.plusHeart(dailyArticleId, memberId);
+          } else {
+              heartMapper.minusHeart(dailyArticleId, memberId);
+          }
+      }catch (Exception ex){
+          return  false;
+      }
+       return  true;
+    }
+
+    /**
+     * 좋아요 개수 반환 구현
+     * @param dailyArticleId 일상 게시글 번호
+     * @param memberId 회원 아이디
+     * @return 좋아요 개수
+     */
+    @Override
+    public int getHeartCount(int dailyArticleId, String memberId) {
+        return heartMapper.findHeartCount(dailyArticleId, memberId);
     }
 
 

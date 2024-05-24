@@ -4,10 +4,11 @@
 
 <head>
     <title th:fragment="title"> ::: 일상공유:게시글 제목 ::: </title>
-    <th:block th:fragment="script">
-    </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+    <th:block th:fragment="script">
+        <script src="/js/like.js" defer></script>
     </th:block>
 
 </head>
@@ -31,8 +32,9 @@
             <button class="back-btn" th:onclick="|location.href='@{/daily}'|">돌아가기</button>
         </div>
         <div id="like-wrap">
-            <img src="/img/heart.png" id="like" onclick="toggleLike()">
+            <img src="/img/heart2.png" id="like">
             <label for="like">좋아요</label>
+            <p> 0 </p>
             <p> ㅣ </p>
             <p>댓글(3)</p>
         </div>
@@ -62,9 +64,7 @@
     </div>
 </div>
 
-<th:block th:fragment="script">
-    <script src="/js/like.js"></script>
-</th:block>
+
 
 </html>
 

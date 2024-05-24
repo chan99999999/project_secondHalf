@@ -4,6 +4,7 @@ import com.ezen.springmvc.domain.common.dto.UploadFile;
 import com.ezen.springmvc.domain.common.service.FileService;
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.dailyarticle.mapper.DailyArticleMapper;
+import com.ezen.springmvc.domain.dailyarticle.mapper.HeartMapper;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleService;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
@@ -29,7 +30,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/daily")
@@ -37,6 +40,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DailyController {
 
+    private final HeartMapper heartMapper;
     @Value("${upload.dir}") // 파일 저장 위치 지정 어노테이션
     private String profileFileUploadPath;
 
@@ -125,5 +129,15 @@ public class DailyController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, contentType);
         return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+    }
+
+    // 좋아요 기능 처리
+    @GetMapping("/like")
+    public @ResponseBody boolean handleHeart(
+            @RequestParam("dailyArticleId") int dailyArticleId,
+            @RequestParam("memberId") String memberId,
+            @RequestParam("checked") boolean checked) {
+        log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
+        return dailyArticleService.updateHeart(dailyArticleId, memberId, checked);
     }
 }

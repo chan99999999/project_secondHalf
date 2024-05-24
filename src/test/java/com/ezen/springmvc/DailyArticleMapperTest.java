@@ -126,7 +126,7 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("좋아요 등록 테스트")
-//    @Disabled
+    @Disabled
     void clickHeartTest() {
         HeartDto heartDto = HeartDto.builder()
                 .heartCount(2)
@@ -136,5 +136,21 @@ public class DailyArticleMapperTest {
 
         dailyArticleServiceImpl.clickHeart(heartDto);
         log.info("좋아요 등록 완료");
+    }
+
+    @Test
+    @DisplayName("좋아요 삭제 테스트")
+//    @Disabled
+    void removeHeartTest() {
+        dailyArticleServiceImpl.removeHeart(20, "승아");
+        log.info("좋아요 삭제 완료!!!");
+    }
+
+    @Test
+    @DisplayName("좋아요 개수 반환 테스트")
+//    @Disabled
+    void getHeartCountTest() {
+        int heartCount = dailyArticleServiceImpl.getHeartCount(20);
+        log.info("조회된 좋아요 개수 : {}", heartCount);
     }
 }

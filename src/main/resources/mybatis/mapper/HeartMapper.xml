@@ -7,6 +7,30 @@
         VALUES (HEART_ID_SEQ.nextval, #{heartCount}, #{dailyArticleId}, #{memberId})
     </insert>
 
+    <!-- 좋아요 증가 -->
+    <update id="plusHeart">
+        UPDATE HEART
+        SET heart_count = heart_count + 1
+        WHERE d_article_id = #{dailyArticleId}
+          AND member_id = #{memberId}
+    </update>
+
+    <!-- 좋아요 감소 -->
+    <update id="minusHeart">
+        UPDATE HEART
+        SET heart_count = heart_count - 1
+        WHERE d_article_id = #{dailyArticleId}
+          AND member_id = #{memberId}
+    </update>
+
+    <!-- 일상 게시글 번호로 좋아요 개수 조회 -->
+    <select id="findHeartCount" resultType="int">
+        SELECT count(*) "heartCount"
+        FROM heart
+        WHERE d_article_id = #{dailyArticleId}
+          AND member_id = #{memberId}
+    </select>
+
 
 </mapper>
 
