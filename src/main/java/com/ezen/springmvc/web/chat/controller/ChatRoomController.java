@@ -20,7 +20,7 @@ public class ChatRoomController {
 
     @GetMapping
     public String rooms(Model model) {
-        return "/chat/room";
+        return "/chat/chatting";
     }
 
     @GetMapping("/rooms")
@@ -31,14 +31,14 @@ public class ChatRoomController {
 
     @PostMapping("/room")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String name) {
-        return chatRoomRepository.createChatRoom(name);
+    public ChatRoom createRoom() {
+        return chatRoomRepository.createChatRoom();
     }
 
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
-        return "/chat/roomdetail";
+        return "/chat/chatting";
     }
 
     @GetMapping("/room/{roomId}")
