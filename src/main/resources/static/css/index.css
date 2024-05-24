@@ -82,6 +82,32 @@ form, fieldset{
 
 /*--------------------------CHECK-BOX-------------------------------*/
 
+
+
+/*----------------------------프로필----------------*/
+.member-profile{}
+
+.member-profile:hover ul{
+    display: block;
+    background-color: white;
+    border: 1px solid gray;
+    position: absolute;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.member-profile >ul >li{
+    padding: 10px 20px;
+}
+
+.member-profile >ul >li:hover{
+    background-color: #eaeaea;
+}
+
+.perid{
+    display: none;
+}
+
 /*-------------------------------NAV--------------------------*/
 
 nav{
