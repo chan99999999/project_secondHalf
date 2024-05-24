@@ -33,7 +33,13 @@
             <button class="back-btn" th:onclick="|location.href='@{/daily}'|">돌아가기</button>
         </div>
         <div id="like-wrap">
-            <img src="/img/heart2.png" id="like">
+            <th:block th:if="${hit == true}">
+                <img  src="/img/heart.png" id="like">
+            </th:block>
+            <th:block th:if="${hit != true}">
+                <img  src="/img/heart.png" id="like">
+            </th:block>
+
             <label for="like">좋아요</label>
             <p id="heartCount"> 0 </p>
             <p> ㅣ </p>

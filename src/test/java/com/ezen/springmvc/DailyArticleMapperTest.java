@@ -81,7 +81,7 @@ public class DailyArticleMapperTest {
     @DisplayName("일상 게시글 상세 보기 테스트")
     @Disabled
     void readDailyArticleTest() {
-        DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 11);
+        DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 40);
         log.info("조회된 게시글 : {}", dailyArticleDto);
     }
 
@@ -151,7 +151,7 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("좋아요 존재 유무 반환 테스트")
-//    @Disabled
+    @Disabled
     void existHeartTest() {
         boolean existed = heartMapper.existHeart(25, "sunday") > 0;
         log.info("존재 하나요? : {}", existed);

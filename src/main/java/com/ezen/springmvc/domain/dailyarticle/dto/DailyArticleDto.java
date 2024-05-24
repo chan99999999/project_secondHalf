@@ -21,4 +21,6 @@ public class DailyArticleDto {
     private int categoryId;
     private String memberId;
     private String encryptedName;
+    private int heartCount;
+    private int totalHeartCount;
 }

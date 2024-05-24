@@ -21,11 +21,18 @@ const getDailyArticleIdFromURL = () => {
   return dailyArticleId;
 };
 
+// api를 통해서 현재 세션에 저장된 회원아이디 동적으로 얻어오기
+const getLoginMemberId = async function () {
+  const loginMember = await httpRequest('/daily/getLoginMember');
+  return loginMember.memberId
+}
+
 const handleHeart = async function (event) {
 
   // const dailyArticleId = 30;
   const dailyArticleId = getDailyArticleIdFromURL();
-  const memberId = 'sunday';
+  const memberId = await getLoginMemberId();
+  console.log(memberId);
   let heartImg = event.target;
   // 현재 상태가 꽉찬 하트이면 다시 체크할 때 false로 변경
   const isCurrentlyLiked = heartImg.getAttribute('src') === '/img/heart.png';

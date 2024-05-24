@@ -24,12 +24,37 @@
         ORDER BY d.d_article_id DESC
     </select>
 
-    <!-- 일상 게시글 상세 보기 -->
+<!--    &lt;!&ndash; 일상 게시글 상세 보기 &ndash;&gt;-->
+<!--    <select id="readDailyArticle" parameterType="int" resultType="DailyArticleDto">-->
+<!--        SELECT d.title, d.content, d.member_id, TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') regdate, f.file_name-->
+<!--        FROM daily_article d-->
+<!--                 JOIN attach_file f-->
+<!--                      ON d.d_article_id = f.d_article_id-->
+<!--        WHERE d.category_id = #{categoryId}-->
+<!--          AND d.d_article_id = #{dailyArticleId}-->
+<!--    </select>-->
+
     <select id="readDailyArticle" parameterType="int" resultType="DailyArticleDto">
-        SELECT d.title, d.content, d.member_id, TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') regdate, f.file_name
+        SELECT d.title,
+               d.content,
+               d.member_id,
+               TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+               f.file_name,
+               COALESCE(h1.member_heart_count, 0)          "heartCount",
+               h2.total_heart_count                        "totalHeartCount"
         FROM daily_article d
-                 JOIN attach_file f
-                      ON d.d_article_id = f.d_article_id
+                 LEFT JOIN
+             attach_file f ON d.d_article_id = f.d_article_id
+                 LEFT JOIN
+             (SELECT member_id,
+                     SUM(heart_count) AS member_heart_count
+              FROM heart
+              WHERE d_article_id = #{dailyArticleId}
+              GROUP BY member_id) h1 ON d.d_article_id = #{dailyArticleId}
+                 LEFT JOIN
+             (SELECT SUM(heart_count) AS total_heart_count
+              FROM heart
+              WHERE d_article_id = #{dailyArticleId}) h2 ON 1 = 1
         WHERE d.category_id = #{categoryId}
           AND d.d_article_id = #{dailyArticleId}
     </select>

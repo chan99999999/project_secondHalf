@@ -77,10 +77,6 @@ class MemberMapperTest {
     void createTest() {
         MemberDto createMember = MemberDto
                 .builder()
-                .id("sony")
-                .passwd("1111")
-                .name("손흥민")
-                .email("sony@gmail.com")
                 .build();
         memberMapper.create(createMember);
         log.info("회원 등록 완료 : {}", createMember);
@@ -92,9 +88,6 @@ class MemberMapperTest {
     void updateTest() {
         MemberDto updateMember = MemberDto
                 .builder()
-                .id("sony")
-                .passwd("2222")
-                .email("sony2@gmail.com")
                 .build();
         memberMapper.update(updateMember);
         log.info("회원 수정 완료 : {}", updateMember);

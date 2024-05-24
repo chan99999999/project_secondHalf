@@ -11,6 +11,8 @@ import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
 import com.ezen.springmvc.web.daily.form.DailyArticleForm;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +43,7 @@ import java.util.Map;
 public class DailyController {
 
     private final HeartMapper heartMapper;
-    @Value("${upload.dir}") // 파일 저장 위치 지정 어노테이션
+    @Value("${upload.directory}") // 파일 저장 위치 지정 어노테이션
     private String profileFileUploadPath;
 
     private final DailyArticleService dailyArticleService;
@@ -99,9 +101,11 @@ public class DailyController {
         DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(2, dailyArticleId);
         FileDto fileDto = dailyArticleService.getFile(dailyArticleId);
         List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
+        boolean hit = true;
         model.addAttribute("dailyArticle", dailyArticleDto);
         model.addAttribute("file", fileDto);
         model.addAttribute("replyList", replyList);
+        model.addAttribute("hit", hit);
         log.info("수신한 댓글 목록 : {}", replyList);
         return "/daily/dailyRead";
     }
@@ -163,7 +167,8 @@ public class DailyController {
     public ResponseEntity<Map<String, Object>> handleHeart(
             @RequestParam("dailyArticleId") int dailyArticleId,
             @RequestParam("memberId") String memberId,
-            @RequestParam("checked") boolean checked) {
+            @RequestParam("checked") boolean checked
+            ) {
         log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
 
         Map<String, Object> map = new HashMap<>();
@@ -174,6 +179,16 @@ public class DailyController {
         map.put("heartCount", heartCount);
         map.put("isUpdated", isUpdated);
 
+
         return ResponseEntity.ok(map);
+    }
+
+    @GetMapping("/getLoginMember")
+    public ResponseEntity<MemberDto> getLoginMember(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+        log.info("전달받은 로그인 회원 : {}", loginMember);
+
+        return ResponseEntity.ok(loginMember);
     }
 }
