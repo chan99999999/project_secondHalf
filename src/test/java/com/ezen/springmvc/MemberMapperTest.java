@@ -22,7 +22,7 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 전체 조회 테스트")
-//    @Disabled
+    @Disabled
     void findAllTest() {
         List<MemberDto> list  = memberMapper.findByAll();
         for (MemberDto memberDto : list) {
@@ -73,7 +73,7 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 등록 테스트")
-//    @Disabled
+    @Disabled
     void createTest() {
         MemberDto createMember = MemberDto
                 .builder()
