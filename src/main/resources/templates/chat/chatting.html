@@ -53,8 +53,8 @@
             </div>
 
             <div class="chat-send-box">
-                <input type="text" class="message-to-send" id="message-input" placeholder="메세지 입력">
-                <button class="message-send-btn" id="send-button" type="submit">전송</button>
+                <input type="text" class="message-to-send" id="message-input" onkeyup="sendMessageOnEnter()" placeholder="메세지 입력">
+                <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
             </div>
         </div>
     </div>
@@ -112,21 +112,35 @@
             localStorage.setItem('wschat.sender', sender);
             localStorage.setItem('wschat.roomId', roomId);
             location.href = `/chat/room/enter/` + roomId;
-            findRoom();
-            setupEventHandlers();
         }
     }
-
 
     //웹소켓, 스톰프 설정
     const sock = new SockJS("/ws-stomp");
     const ws = Stomp.over(sock);
 
+    initWebSocket();
+
+    function initWebSocket() {
+        ws.connect({}, function (frame) {
+            ws.subscribe("/sub/chat/room/" + roomId, function (message) {
+                const recv = JSON.parse(message.body);
+                recvMessage(recv);
+            });
+            ws.send("/pub/chat/message", {}, JSON.stringify({
+                type: 'ENTER',
+                roomId: roomId,
+                sender: sender
+            }));
+        }, function (error) {
+            alert("error " + error);
+        });
+    }
+
     // roomId, sender 설정
     const roomId = localStorage.getItem('wschat.roomId');
     const sender = localStorage.getItem('wschat.sender');
     let room = {};
-    let message = '';
     let messages = [];
 
     // 방 찾기
@@ -136,29 +150,9 @@
         });
     }
 
-    // 메세지 전송
-    function sendMessage() {
-        alert();
-        const messageInputElem = document.querySelector("#message-input");
-        const message = messageInputElem.value;
-        if (message.trim() === '') {
-            alert("내용을 입력하세요.");
-            return;
-        }
-        console.log(roomId);
-        ws.send("/pub/chat/message", {}, JSON.stringify({
-            type: 'TALK',
-            roomId: roomId,
-            sender: sender,
-            message: message
-        }));
-        messageInputElem.value = '';
-    }
-
-
     //메세지 수신
     function recvMessage(recv) {
-        const messagesListElem = document.getElementById('message-list');
+        const messagesListElem = document.querySelector("#message-list");
         const messageItem = document.createElement('li');
         messageItem.className = 'chat-message-list';
 
@@ -167,7 +161,7 @@
 
         const messageDataTime = document.createElement('div');
         messageDataTime.className = 'message-data-time';
-        messageDataTime.textContent = '오전 12:12, 오늘';
+        messageDataTime.textContent = new Date().toLocaleString()
 
         const messageDataMember = document.createElement('div');
         messageDataMember.className = 'message-data-member';
@@ -183,28 +177,25 @@
         messageItem.appendChild(messageData);
         messageItem.appendChild(chatMessageText);
 
-        messagesListElem.insertBefore(messageItem, messagesListElem.firstChild);
+        messagesListElem.appendChild(messageItem);
+    }
+
+    // 메세지 전송
+    function sendMessage() {
+        const messageInputElem = document.querySelector("#message-input");
+        const message = messageInputElem.value;
+        ws.send("/pub/chat/message", {}, JSON.stringify({
+            type: 'TALK',
+            roomId: roomId,
+            sender: sender,
+            message: message
+        }));
+        messageInputElem.value = '';
     }
 
     // 메세지 전송방법, 대화방 연결
-    function setupEventHandlers() {
-
-        ws.connect({}, function (frame) {
-            ws.subscribe("/sub/chat/room/" + roomId, function (message) {
-                const recv = JSON.parse(message.body);
-                recvMessage(recv);
-            });
-            ws.send("/pub/chat/message", {}, JSON.stringify({
-                type: 'ENTER',
-                roomId: roomId,
-                sender: sender
-            }));
-        }, function (error) {
-            alert("error " + error);
-        });
-
-        const sendButtonElem = document.querySelector('#send-button');
-        sendButtonElem.addEventListener('click', sendMessage);
+    function sendMessageOnEnter() {
+        const messageInputElem = document.querySelector("#message-input");
         messageInputElem.addEventListener('keyup', function (event) {
             if (event.key === 'Enter') {
                 sendMessage();
