@@ -12,12 +12,11 @@
     </th:block>
 </head>
 
-
 <div class="wrapper" th:fragment="content">
     <div id="meet-read-wrap">
         <div id="meet-read-writer-wrap">
             <div id="meet-read-writer">
-                <p id="meet-read-writer-name" th:text="${meetArticle.memberId}">박재현</p>
+                <p id="meet-read-writer-name" th:text="${meetArticle.memberId}"></p>
             </div>
             <p id="meet-read-date" th:text="${meetArticle.regdate}">2024. 05. 14.(화) 17:31 작성</p>
         </div>
@@ -31,7 +30,7 @@
             <button class="back-btn" th:onclick="|location.href='@{/meet}'|">돌아가기</button>
             <button class="register-btn">참여하기</button>
         </div>
-<!--        <div id="review-count-wrap" th:text="${reply.content}">-->
+<!--        <div id="review-count-wrap" th:text="${reply.count}">-->
 <!--            <p>댓글(3)</p>-->
 <!--        </div>-->
         <div class="review-wrap">
@@ -42,7 +41,7 @@
                     <button type="submit" id="write-review-btn">등록</button>
                 </div>
             </div>
-            <div class="reivew" th:each="reply : ${replyList}">
+            <div class="review" th:each="reply : ${replyList}">
                 <div>
                     <ul>
                         <li class="review-writer" th:text="${reply.writer}">작성자명</li>

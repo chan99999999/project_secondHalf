@@ -40,8 +40,7 @@ public class MeetArticleServiceImpl implements MeetArticleService{
 
     @Override
     public MeetArticleDto readMeetArticle(int categoryId, int meetArticleId) {
-        meetArticleMapper.readMeetArticle(3,5);
-        return null;
+        return meetArticleMapper.readMeetArticle(categoryId, meetArticleId);
     }
 
     @Override

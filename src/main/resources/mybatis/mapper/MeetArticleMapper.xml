@@ -32,7 +32,7 @@
     </insert>
     <!-- 게시글 번호 조회 -->
     <select id="findByMeetArticleId" parameterType="int" resultType="MeetArticleDto">
-        SELECT title, regdate, hitcount, category_id, member_id
+        SELECT title, content, regdate, hitcount, category_id, member_id
         FROM meet_article
         WHERE m_article_id = #{meetArticleId}
     </select>

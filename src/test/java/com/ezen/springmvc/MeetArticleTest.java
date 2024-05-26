@@ -48,7 +48,7 @@ public class MeetArticleTest {
     @Test
     @DisplayName("모임 게시글 상세보기 테스트")
     void readMeetArticleTest(){
-        MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(3, 5);
+        MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(3, 1);
         log.info("게시글 상세보기 : {}", meetArticleDto);
     }
 

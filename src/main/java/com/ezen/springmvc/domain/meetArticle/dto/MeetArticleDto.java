@@ -2,7 +2,6 @@ package com.ezen.springmvc.domain.meetArticle.dto;
 
 import lombok.*;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

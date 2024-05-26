@@ -21,6 +21,11 @@ public class MeetController {
 
     private final MeetArticleService meetArticleService;
 
+    @GetMapping("/register")
+    public String meetRegister() {
+        return "/meet/meetRegister";
+    }
+
 //    목록
     @GetMapping
     public String meetList(Model model){
@@ -39,6 +44,7 @@ public class MeetController {
                 .meetArticleId(meetArticleForm.getMeetArticleId())
                 .title(meetArticleForm.getTitle())
                 .content(meetArticleForm.getContent())
+                .enter(meetArticleForm.getEnter())
                 .build();
         meetArticleDto.setCategoryId(3);
         meetArticleDto.setMemberId("sunday");
@@ -54,18 +60,16 @@ public class MeetController {
         log.info("게시글 번호 : {}", meetArticleId);
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
         List<ReplyDto> replyList = meetArticleService.replyList(meetArticleId);
-        boolean hit = true;
         model.addAttribute("meetArticle", meetArticleDto);
         model.addAttribute("replyList", replyList);
-        model.addAttribute("hit", hit);
         log.info("수신한 댓글 목록 : {}", replyList);
         return "/meet/meetRead";
     }
 
 //    댓글 등록
     @PostMapping("/read/{meetArticleId}")
-    public String meetReadReply(@ModelAttribute ReplyDto replyDto, @PathVariable("meetArticleId")
-            int meetArticleId, Model model) {
+    public String meetCreateReply(@ModelAttribute ReplyDto replyDto, @PathVariable("meetArticleId")
+            int meetArticleId, RedirectAttributes redirectAttributes, Model model) {
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
         model.addAttribute("meetArticle", meetArticleDto);
         replyDto.setWriter("monday");
@@ -73,5 +77,4 @@ public class MeetController {
         meetArticleService.createReply(replyDto);
         return "redirect:/meet/read/{meetArticleId}";
     }
-
 }

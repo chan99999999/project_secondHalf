@@ -60,14 +60,14 @@
                                 <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}"
                                    th:text="${meetArticle.title}"></a><br>
                             </p>
-                            <p class="meet-writer-name" th:text="장소 +${meetArticle.regdate}"></p>
-                            <p class="meet-writer-name" th:text="시간 +${meetArticle.time}"></p>
-                            <p class="meet-writer-name" th:text="태그 +${meetArticle.hitcount}"></p>
+                            <p class="meet-writer-name" th:text="'장소 '+${meetArticle.regdate}"></p>
+                            <p class="meet-writer-name" th:text="'시간 '+${meetArticle.time}"></p>
+                            <p class="meet-writer-name" th:text="'태그 '+${meetArticle.hitcount}"></p>
                         </div>
                         <div class="meet-join">
                             <a href="/meet/read">
                                 <p>참여하기</p>
-                                <p>(1/5)</p>
+                                <p th:text="'('+${meetArticle.enter}+'/'+${meetArticle.enter}+')'">(1/5)</p>
                             </a>
                         </div>
                     </div>
