@@ -53,7 +53,7 @@
             </div>
 
             <div class="chat-send-box">
-                <input type="text" class="message-to-send" id="message-input" onkeyup="sendMessageOnEnter()" placeholder="메세지 입력">
+                <input type="text" class="message-to-send" id="message-input" onkeydown="sendMessageOnEnter()" placeholder="메세지 입력">
                 <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
             </div>
         </div>
@@ -196,11 +196,11 @@
     // 메세지 전송방법, 대화방 연결
     function sendMessageOnEnter() {
         const messageInputElem = document.querySelector("#message-input");
-        messageInputElem.addEventListener('keyup', function (event) {
+        messageInputElem.onkeydown = function(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
-        });
+        };
     }
 </script>
 </html>
