@@ -22,213 +22,187 @@
                     <button id="chat-search-btn" type="submit">검색</button>
                 </div>
                 <div class="chat-list-area">
-                <ul class="chat-list">
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">김순자 최고</div>
-                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">명언 바구니</div>
-                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">최고의 하루</div>
-                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">김순자 최고</div>
-                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">명언 바구니</div>
-                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">최고의 하루</div>
-                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">김순자 최고</div>
-                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">명언 바구니</div>
-                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">최고의 하루</div>
-                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">김순자 최고</div>
-                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">명언 바구니</div>
-                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">최고의 하루</div>
-                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">김순자 최고</div>
-                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">명언 바구니</div>
-                            <div class="chat-list-message">오늘의 명언 공유드립니다..</div>
-                        </div>
-                    </li>
-                    <li class="chat-member">
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">최고의 하루</div>
-                            <div class="chat-list-message">오늘도 힘차게 시작해보시죠</div>
-                        </div>
-                    </li>
-                </ul>
+                    <ul class="chat-list" id="chatrooms"></ul>
                 </div>
             </div>
         </div>
         <div class="chat-bar">
             <div class="chat-current-member">
                 <img class="profile-img chat-member-img" src="/img/profile.png">
-                <div class="chat-cureent-name member-profile">
+                <div class="chat-cureent-name member-profile" id="member-profile">
                     김순자 최고
                     <ul class="perid">
-                        <li><a href="#">1:1 대화하기</a></li>
+                        <li><a href="#" onclick="createRoom()">1:1 대화하기</a></li>
                         <hr>
                         <li><a href="#">게시글 보기</a></li>
                     </ul>
                 </div>
             </div>
             <div class="chat-history">
-                <ul>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
+                <ul id="message-list">
+                    <!--                    <li class="chat-message-list">-->
+                    <!--                        <div class="message-data">-->
+                    <!--                            <div class="message-data-time">오전 10:10, 오늘</div>-->
+                    <!--                            <div class="message-data-member">김순자 최고</div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="chat-message-text">-->
+                    <!--                            안녕하세요? 좋은 하루 입니다.-->
+                    <!--                        </div>-->
+                    <!--                    </li>-->
                 </ul>
             </div>
 
             <div class="chat-send-box">
-                <textarea class="message-to-send" rows="3" cols="55px" placeholder="메세지 입력"></textarea>
-                <button class="message-send-btn" type="submit">전송</button>
+                <input type="text" class="message-to-send" id="message-input" onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
+                <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
             </div>
         </div>
     </div>
 </div>
+<script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
+<script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+<script>
+    //대화하기 접속 시 대화 리스트 출력
+    document.addEventListener('DOMContentLoaded', function () {
+        findAllRoom();
+    });
 
+    // 대화중인 리스트 목록 전체출력
+    function findAllRoom() {
+        axios.get('/chat/rooms')
+            .then(response => {
+                const chatroomsElement = document.getElementById('chatrooms');
+                chatroomsElement.innerHTML = '';
+                response.data.forEach(room => {
+                    const li = document.createElement('li');
+                    li.className = 'chat-member';
+                    li.innerHTML = `
+                        <img class="profile-img chat-member-img" src="/img/profile.png">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">김순자 바보</div>
+                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
+                        </div>
+                    `;
+                    li.addEventListener('click', function () {
+                        enterRoom(room.roomId);
+                    });
+                    chatroomsElement.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error fetching rooms:', error));
+    }
+
+    // 대화방 생성
+    function createRoom() {
+        axios.post('/chat/room')
+            .then(response => {
+                findAllRoom();
+            })
+            .catch(error => {
+                console.error('Error creating room:', error);
+                alert('대화하기 오류메세지');
+            });
+    }
+
+    //대화방 입장
+    function enterRoom(roomId) {
+        const sender = '세션 로그인멤버 아이디';
+        if (sender) {
+            localStorage.setItem('wschat.sender', sender);
+            localStorage.setItem('wschat.roomId', roomId);
+            location.href = `/chat/room/enter/` + roomId;
+        }
+    }
+
+    //웹소켓, 스톰프 설정
+    const sock = new SockJS("/ws-stomp");
+    const ws = Stomp.over(sock);
+
+    initWebSocket();
+
+    function initWebSocket() {
+        ws.connect({}, function (frame) {
+            ws.subscribe("/sub/chat/room/" + roomId, function (message) {
+                const recv = JSON.parse(message.body);
+                recvMessage(recv);
+            });
+            ws.send("/pub/chat/message", {}, JSON.stringify({
+                type: 'ENTER',
+                roomId: roomId,
+                sender: sender
+            }));
+        }, function (error) {
+            alert("error " + error);
+        });
+    }
+
+    // roomId, sender 설정
+    const roomId = localStorage.getItem('wschat.roomId');
+    const sender = localStorage.getItem('wschat.sender');
+    let room = {};
+    let messages = [];
+
+    // 방 찾기
+    function findRoom() {
+        axios.get('/chat/room/' + roomId).then(response => {
+            room = response.data;
+        });
+    }
+
+    //메세지 수신
+    function recvMessage(recv) {
+        const messagesListElem = document.querySelector("#message-list");
+        const messageItem = document.createElement('li');
+        messageItem.className = 'chat-message-list';
+
+        const messageData = document.createElement('div');
+        messageData.className = 'message-data';
+
+        const messageDataTime = document.createElement('div');
+        messageDataTime.className = 'message-data-time';
+        messageDataTime.textContent = new Date().toLocaleString()
+
+        const messageDataMember = document.createElement('div');
+        messageDataMember.className = 'message-data-member';
+        messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.sender);
+
+        const chatMessageText = document.createElement('div');
+        chatMessageText.className = 'chat-message-text';
+        chatMessageText.textContent = recv.message;
+
+        messageData.appendChild(messageDataTime);
+        messageData.appendChild(messageDataMember);
+
+        messageItem.appendChild(messageData);
+        messageItem.appendChild(chatMessageText);
+
+        messagesListElem.appendChild(messageItem);
+    }
+
+    // 메세지 전송
+    function sendMessage() {
+        const messageInputElem = document.querySelector("#message-input");
+        const message = messageInputElem.value;
+        ws.send("/pub/chat/message", {}, JSON.stringify({
+            type: 'TALK',
+            roomId: roomId,
+            sender: sender,
+            message: message
+        }));
+        messageInputElem.value = '';
+    }
+
+    // 메세지 전송방법, 대화방 연결
+    function sendMessageOnEnter() {
+        const messageInputElem = document.querySelector("#message-input");
+        messageInputElem.onkeydown = function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        };
+    }
+</script>
 </html>
 
 
