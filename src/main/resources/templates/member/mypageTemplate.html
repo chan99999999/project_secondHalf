@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="kor" xmlns:th="http://www.thymeleaf.org" th:fragment="mypageTemplate(title, script, css, content)">
+<head>
+    <meta charset="UTF-8">
+    <!-- 동적으로 바뀌는 부분-->
+    <title th:replace="${title}"></title>
+    <th:block th:replace="${script}"></th:block>
+    <th:block th:insert="${css}">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
+</head>
+<body>
+<nav>
+    <div class="nav-bar">
+        <div id="nav-menu">
+            <a href="/">처음으로</a>
+            <p>ㅣ</p>
+            <a href="/map">우리동네</a>
+            <p>ㅣ</p>
+            <a href="/daily">일상공유</a>
+            <p>ㅣ</p>
+            <a href="/meet">동네친구</a>
+            <p>ㅣ</p>
+            <a href="/chat">대화하기</a>
+        </div>
+        <th:block th:if="${session.loginMember == null}">
+            <div class="nav-member">
+                <a class="nav-signup" href="/member/signup">무료 회원가입</a>
+                <a class="nav-login" href="/member/login">로그인</a>
+            </div>
+        </th:block>
+        <th:block th:if="${session.loginMember != null}">
+            <div class="nav-member">
+                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.nickname}]님|"></a>
+                <a class="nav-logout" href="/member/logout">로그아웃</a>
+            </div>
+        </th:block>
+    </div>
+</nav>
+
+<div class="wrapper">
+    <div id="mypage-wrap">
+        <div class="mypage-aside-container">
+            <div id="mypage-member">
+                <img id="mypage-member-img" src="/img/profile.png">
+                <div th:text="|[${session.loginMember.nickname}]님|"></div>
+                <div id="mypage-member-email" th:text="${session.loginMember.email}"></div>
+            </div>
+            <ul class="mypage-menu-list">
+                <li><a href="/member/mypage">내 정보</a></li>
+                <li>
+                    정보 변경
+                    <ul class="mypage-sub-list">
+                        <li><a href="/member/editInfo">회원정보 수정</a></li>
+                        <li><a href="/member/editPicture">대표사진 변경</a></li>
+                        <li><a href="/member/editPasswd">비밀번호 변경</a></li>
+                    </ul>
+                </li>
+                <li>
+                    작성 게시글
+                    <ul class="mypage-sub-list">
+                        <li><a href="#">일상공유</a></li>
+                        <li><a href="#">동네친구</a></li>
+                        <li><a href="#">댓글</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div th:replace="${content}">
+        </div>
+    </div>
+</div>
+
+<footer>
+</footer>
+</body>
+</html>

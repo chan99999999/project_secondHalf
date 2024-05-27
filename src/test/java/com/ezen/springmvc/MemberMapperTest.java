@@ -119,6 +119,7 @@ class MemberMapperTest {
         MemberSearchCondition searchCondition =
                 MemberSearchCondition
                         .builder()
+
 				.memberId("bangry")
 				.name("김")
 //				.email("bangry@gmail.com")
@@ -127,7 +128,6 @@ class MemberMapperTest {
         log.info("검색 옵션별 전체목록 : {}", list);
         log.info("검색 수 : {}", list.size());
     }
-
 }
 
 
