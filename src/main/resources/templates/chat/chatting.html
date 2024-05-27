@@ -107,7 +107,7 @@
 
     //대화방 입장
     function enterRoom(roomId) {
-        const sender = '세션 로그인멤버 아이디';
+        const sender = `[[${session.loginMember.nickname}]]`;
         if (sender) {
             localStorage.setItem('wschat.sender', sender);
             localStorage.setItem('wschat.roomId', roomId);
