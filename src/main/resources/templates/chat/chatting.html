@@ -119,6 +119,18 @@
     const sock = new SockJS("/ws-stomp");
     const ws = Stomp.over(sock);
 
+    let senderId = localStorage.getItem('wschat.senderId');
+    if (!senderId) {
+        senderId = Math.random().toString(36).substring(7);
+        localStorage.setItem('wschat.senderId', senderId);
+    }
+
+    // roomId, sender 설정
+    const roomId = localStorage.getItem('wschat.roomId');
+    const sender = localStorage.getItem('wschat.sender');
+    let room = {};
+    let messages = [];
+
     initWebSocket();
 
     function initWebSocket() {
@@ -130,18 +142,16 @@
             ws.send("/pub/chat/message", {}, JSON.stringify({
                 type: 'ENTER',
                 roomId: roomId,
-                sender: sender
+                sender: sender,
+                senderId: senderId
+
             }));
         }, function (error) {
             alert("error " + error);
         });
     }
 
-    // roomId, sender 설정
-    const roomId = localStorage.getItem('wschat.roomId');
-    const sender = localStorage.getItem('wschat.sender');
-    let room = {};
-    let messages = [];
+
 
     // 방 찾기
     function findRoom() {
@@ -156,8 +166,18 @@
         const messageItem = document.createElement('li');
         messageItem.className = 'chat-message-list';
 
+        if (recv.senderId === senderId){
+            messageItem.classList.add('sent');
+        }else{
+            messageItem.classList.add('received');
+        }
+
         const messageData = document.createElement('div');
         messageData.className = 'message-data';
+
+        const profileImg = document.createElement('img');
+        profileImg.className = 'profile-img';
+        profileImg.src = '/img/profile.png'; // 프로필 이미지 경로
 
         const messageDataTime = document.createElement('div');
         messageDataTime.className = 'message-data-time';
@@ -171,6 +191,7 @@
         chatMessageText.className = 'chat-message-text';
         chatMessageText.textContent = recv.message;
 
+        messageData.appendChild(profileImg);
         messageData.appendChild(messageDataTime);
         messageData.appendChild(messageDataMember);
 
@@ -178,6 +199,7 @@
         messageItem.appendChild(chatMessageText);
 
         messagesListElem.appendChild(messageItem);
+        messagesListElem.scrollTop = messagesListElem.scrollHeight;
     }
 
     // 메세지 전송
@@ -188,6 +210,7 @@
             type: 'TALK',
             roomId: roomId,
             sender: sender,
+            senderId: senderId,
             message: message
         }));
         messageInputElem.value = '';
@@ -202,6 +225,8 @@
             }
         };
     }
+
+
 </script>
 </html>
 
