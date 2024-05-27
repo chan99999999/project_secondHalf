@@ -22,4 +22,11 @@ public interface ReplyMapper {
      * @return 댓글 목록
      */
     public List<ReplyDto> findByReplyAll(@Param("dailyArticleId") int dailyArticleId);
+
+    /**
+     * 댓글 수 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 댓글 수
+     */
+    public int findReplyCount(int dailyArticleId);
 }

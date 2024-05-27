@@ -7,11 +7,19 @@
         VALUES (REPLY_ID_SEQ.nextval, #{content}, #{dailyArticleId}, #{writer})
     </insert>
 
+    <!-- 댓글 목록 반환 -->
     <select id="findByReplyAll" parameterType="int" resultType="ReplyDto">
         SELECT reply_id, d_article_id "dailyArticleId", writer, content
         FROM reply
         WHERE d_article_id = #{dailyArticleId}
         ORDER BY reply_id DESC
+    </select>
+
+    <!-- 댓글 수 반환 -->
+    <select id="findReplyCount" resultType="int">
+        SELECT COUNT(*)
+        FROM reply
+        WHERE d_article_id = #{dailyArticleId}
     </select>
 
 

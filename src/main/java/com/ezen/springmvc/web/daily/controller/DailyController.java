@@ -1,5 +1,7 @@
 package com.ezen.springmvc.web.daily.controller;
 
+import com.ezen.springmvc.domain.category.dto.CategoryDto;
+import com.ezen.springmvc.domain.category.service.CategoryService;
 import com.ezen.springmvc.domain.common.dto.UploadFile;
 import com.ezen.springmvc.domain.common.service.FileService;
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
@@ -42,25 +44,29 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DailyController {
 
-    private final HeartMapper heartMapper;
     @Value("${upload.directory}") // 파일 저장 위치 지정 어노테이션
     private String profileFileUploadPath;
 
     private final DailyArticleService dailyArticleService;
+    private final CategoryService categoryService;
     private final FileService fileService;
 
-    @GetMapping("/register")
+    @GetMapping("{categoryId}/register")
     public String dailyRegister() {
         return "/daily/dailyRegister";
     }
 
     // 신규 일상 게시글 등록 처리
-    @PostMapping("/register")
-    public String dailyRegister(@ModelAttribute DailyArticleForm dailyArticleForm, RedirectAttributes redirectAttributes) {
+    @PostMapping("{categoryId}/register")
+    public String dailyRegister(@PathVariable("categoryId") int categoryId, @ModelAttribute DailyArticleForm dailyArticleForm, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         UploadFile uploadFile = fileService.storeFile(dailyArticleForm.getAttachImage(), profileFileUploadPath);
+
+        HttpSession session = request.getSession();
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 
         DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
                 .dailyArticleId(dailyArticleForm.getDailyArticleId())
+                .memberId(loginMember.getMemberId())
                 .title(dailyArticleForm.getTitle())
                 .content(dailyArticleForm.getContent())
                 .build();
@@ -70,21 +76,20 @@ public class DailyController {
                 .encryptedName(uploadFile.getStoreFileName())
                 .build();
 
-        dailyArticleDto.setCategoryId(2);
-        dailyArticleDto.setMemberId("sunday");
+        dailyArticleDto.setCategoryId(categoryId);
         log.info("수신한 게시글 정보 : {}", dailyArticleDto);
         DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileDto);
 
         redirectAttributes.addFlashAttribute("createDailyArticleDto", createDailyArticleDto);
         redirectAttributes.addFlashAttribute("fileDto", fileDto);
-        return "redirect:/daily";
+        return "redirect:/daily/{categoryId}";
     }
 
     // 일상 게시글 목록 처리
-    @GetMapping()
-    public String dailyList(Model model) {
+    @GetMapping("{categoryId}")
+    public String dailyList(@PathVariable("categoryId") int categoryId, Model model) {
 //        List<CategoryDto> categoryList = dailyArticleService.getCategoryList();
-        List<DailyArticleDto> dailyArticleList = dailyArticleService.getDailyArticles(2);
+        List<DailyArticleDto> dailyArticleList = dailyArticleService.getDailyArticles(categoryId);
         List<FileDto> fileList = dailyArticleService.getFiles();
         model.addAttribute("dailyArticleList", dailyArticleList);
 //        model.addAttribute("categoryList", categoryList);
@@ -95,32 +100,53 @@ public class DailyController {
     }
 
     // 일상 게시글 상세보기 처리
-    @GetMapping("/read/{dailyArticleId}")
-    public String dailyRead(@PathVariable("dailyArticleId") int dailyArticleId, Model model, RedirectAttributes redirectAttributes) {
+    @GetMapping("{categoryId}/read/{dailyArticleId}")
+    public String dailyRead(@PathVariable("categoryId") int categoryId, @PathVariable("dailyArticleId") int dailyArticleId, Model model, HttpServletRequest request) {
         log.info("게시글 번호 : {}", dailyArticleId);
-        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(2, dailyArticleId);
+
+        HttpSession session = request.getSession();
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+        int heartCount = 0;
+
+        if (loginMember != null) {
+            heartCount = dailyArticleService.getHeartCount(dailyArticleId, loginMember.getMemberId());
+        } else {
+            heartCount = 0; // 로그인하지 않은 사용자는 좋아요를 누르지 않은 것으로 간주
+        }
+        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
         FileDto fileDto = dailyArticleService.getFile(dailyArticleId);
         List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
-        boolean hit = true;
+        int replyCount = dailyArticleService.getReplyCount(dailyArticleId);
+
         model.addAttribute("dailyArticle", dailyArticleDto);
         model.addAttribute("file", fileDto);
         model.addAttribute("replyList", replyList);
-        model.addAttribute("hit", hit);
+        model.addAttribute("heartCount", heartCount);
+        model.addAttribute("replyCount", replyCount);
+
+        if (loginMember != null) {
+            model.addAttribute("loginMember", loginMember);
+        }
+
+//        model.addAttribute("loginMember", loginMember);
         log.info("수신한 댓글 목록 : {}", replyList);
         return "/daily/dailyRead";
     }
 
     // 댓글 등록 처리
-    @PostMapping("/read/{dailyArticleId}")
-    public String dailyReadReply(@ModelAttribute ReplyDto replyDto, @PathVariable("dailyArticleId") int dailyArticleId, RedirectAttributes redirectAttributes, Model model) {
-        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(2, dailyArticleId);
+    @PostMapping("{categoryId}/read/{dailyArticleId}")
+    public String dailyReadReply(@PathVariable("categoryId") int categoryId, @ModelAttribute ReplyDto replyDto, @PathVariable("dailyArticleId") int dailyArticleId, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
         FileDto fileDto = dailyArticleService.getFile(dailyArticleId);
         model.addAttribute("dailyArticle", dailyArticleDto);
         model.addAttribute("file", fileDto);
-        replyDto.setWriter("monday");
+        replyDto.setWriter(loginMember.getMemberId());
         log.info("수신한 댓글 : {}", replyDto);
         dailyArticleService.writeReply(replyDto);
-        return "redirect:/daily/read/{dailyArticleId}";
+        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
     }
 
     // 회원 프로필 사진 요청 처리
@@ -136,33 +162,6 @@ public class DailyController {
     }
 
     // 좋아요 기능 처리
-//    @GetMapping("/like")
-//    public @ResponseBody boolean handleHeart(
-//            @RequestParam("dailyArticleId") int dailyArticleId,
-//            @RequestParam("memberId") String memberId,
-//            @RequestParam("checked") boolean checked) {
-//        log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
-//        return dailyArticleService.updateHeart(dailyArticleId, memberId, checked);
-//    }
-
-//    @GetMapping("/like")
-//    public ResponseEntity<Map<String, Object>> handleHeart(
-//            @RequestParam("dailyArticleId") int dailyArticleId,
-//            @RequestParam("memberId") String memberId,
-//            @RequestParam("checked") boolean checked) {
-//        log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
-//
-//        Map<String, Object> map = new HashMap<>();
-//
-//        int heartCount = dailyArticleService.getHeartCount(dailyArticleId, memberId);
-//        boolean isUpdated = dailyArticleService.updateHeart(dailyArticleId, memberId, checked);
-//
-//        map.put("heartCount", heartCount);
-//        map.put("isUpdated", isUpdated);
-//
-//        return ResponseEntity.ok(map);
-//    }
-
     @GetMapping("/like")
     public ResponseEntity<Map<String, Object>> handleHeart(
             @RequestParam("dailyArticleId") int dailyArticleId,
@@ -174,9 +173,9 @@ public class DailyController {
         Map<String, Object> map = new HashMap<>();
 
         boolean isUpdated = dailyArticleService.insertAndUpdateHeart(dailyArticleId, memberId, checked);
-        int heartCount = dailyArticleService.getHeartCount(dailyArticleId, memberId);
+        int totalHeartCount = dailyArticleService.getTotalHeartCount(dailyArticleId);
 
-        map.put("heartCount", heartCount);
+        map.put("totalHeartCount", totalHeartCount);
         map.put("isUpdated", isUpdated);
 
 
@@ -190,5 +189,13 @@ public class DailyController {
         log.info("전달받은 로그인 회원 : {}", loginMember);
 
         return ResponseEntity.ok(loginMember);
+    }
+
+    @GetMapping("/getCategory")
+    public String getCategory(Model model) {
+        List<CategoryDto> categoryList = categoryService.getCategoryList();
+        log.info("수신받은 카테고리 목록 : {}", categoryList);
+        model.addAttribute("categoryList", categoryList);
+        return "layout/template";
     }
 }

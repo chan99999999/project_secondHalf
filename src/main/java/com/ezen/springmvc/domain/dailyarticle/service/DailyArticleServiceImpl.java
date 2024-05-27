@@ -15,21 +15,12 @@ import java.util.List;
 public class DailyArticleServiceImpl implements DailyArticleService {
 
     private static final Logger log = LoggerFactory.getLogger(DailyArticleServiceImpl.class);
-    private final CategoryMapper categoryMapper;
     private final DailyArticleMapper dailyArticleMapper;
     private final ReplyMapper replyMapper;
     private final HeartMapper heartMapper;
     private final FileMapper fileMapper;
 
-    /**
-     * 카테고리 목록 반환 구현
-     *
-     * @return 카테고리 목록
-     */
-    @Override
-    public List<CategoryDto> getCategoryList() {
-        return categoryMapper.findByCategoryAll();
-    }
+
 
     /**
      * 신규 일상 게시글 등록 구현
@@ -114,6 +105,16 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     }
 
     /**
+     * 댓글 수 반환 구현
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 댓글 수
+     */
+    @Override
+    public int getReplyCount(int dailyArticleId) {
+        return replyMapper.findReplyCount(dailyArticleId);
+    }
+
+    /**
      * 좋아요 등록 구현
      *
      * @param heartDto 좋아요
@@ -166,6 +167,27 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     @Transactional
     public int getHeartCount(int dailyArticleId, String memberId) {
         return heartMapper.findHeartCount(dailyArticleId, memberId);
+    }
+
+    /**
+     * 좋아요 행의 개수 반환 구현
+     * @param dailyArticleId 일상 게시글 번호
+     * @param memberId 회원 아이디
+     * @return 좋아요 행의 개수
+     */
+    @Override
+    public int getExistHeart(int dailyArticleId, String memberId) {
+        return heartMapper.existHeart(dailyArticleId, memberId);
+    }
+
+    /**
+     * 좋아요 총 개수 반환 구현
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 좋아요 총 개수
+     */
+    @Override
+    public int getTotalHeartCount(int dailyArticleId) {
+        return heartMapper.findTotalHeartCount(dailyArticleId);
     }
 
 

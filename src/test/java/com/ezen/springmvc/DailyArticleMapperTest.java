@@ -1,5 +1,7 @@
 package com.ezen.springmvc;
 
+import com.ezen.springmvc.domain.category.dto.CategoryDto;
+import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
 import com.ezen.springmvc.domain.dailyarticle.dto.DailyArticleDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.FileDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.HeartDto;
@@ -35,7 +37,17 @@ public class DailyArticleMapperTest {
     @Autowired
     private DailyArticleServiceImpl dailyArticleServiceImpl;
     @Autowired
+    private CategoryServiceImpl categoryServiceImpl;
+    @Autowired
     private HeartMapper heartMapper;
+
+    @Test
+    @DisplayName("카테고리 목록 반환 테스트")
+//    @Disabled
+    void getCategoryListTest() {
+        List<CategoryDto> categoryList = categoryServiceImpl.getCategoryList();
+        log.info("카테고리 목록 : {}", categoryList);
+    }
 
     @Test
     @DisplayName("신규 일상 게시글 등록 테스트")
@@ -79,9 +91,9 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("일상 게시글 상세 보기 테스트")
-    @Disabled
+//    @Disabled
     void readDailyArticleTest() {
-        DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 40);
+        DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 34);
         log.info("조회된 게시글 : {}", dailyArticleDto);
     }
 

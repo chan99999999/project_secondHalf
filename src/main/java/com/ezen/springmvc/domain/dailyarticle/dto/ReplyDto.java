@@ -15,4 +15,5 @@ public class ReplyDto {
     private String writer;
     private String content;
     private String regdate;
+    private int replyCount;
 }

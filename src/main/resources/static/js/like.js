@@ -46,7 +46,7 @@ const handleHeart = async function (event) {
   if (object.isUpdated) {
     heartImg.setAttribute('src', newChecked ? '/img/heart.png' : '/img/heart2.png');
     const heartCountArea = document.querySelector('#heartCount');
-    heartCountArea.textContent = object.heartCount;
+    heartCountArea.textContent = object.totalHeartCount;
   }
 
 

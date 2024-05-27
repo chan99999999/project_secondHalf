@@ -10,11 +10,7 @@ import java.util.List;
  */
 public interface DailyArticleService {
 
-    /**
-     * 카테고리 목록 반환
-     * @return 카테고리 목록
-     */
-    public List<CategoryDto> getCategoryList();
+
 
     /**
      * 일상 게시글 등록
@@ -65,6 +61,13 @@ public interface DailyArticleService {
     public List<ReplyDto> getReplyList(int dailyArticleId);
 
     /**
+     * 댓글 수 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 댓글 수
+     */
+    public int getReplyCount(int dailyArticleId);
+
+    /**
      * 좋아요 등록
      * @param heartDto 좋아요
      */
@@ -84,4 +87,19 @@ public interface DailyArticleService {
      * @return 좋아요 개수
      */
     public int getHeartCount(int dailyArticleId, String memberId);
+
+    /**
+     * 좋아요 행의 개수 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @param memberId 회원 아이디
+     * @return 좋아요 존재 유무
+     */
+    public int getExistHeart(int dailyArticleId, String memberId);
+
+    /**
+     * 좋아요 총 개수 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 좋아요 총 개수
+     */
+    public int getTotalHeartCount(int dailyArticleId);
 }

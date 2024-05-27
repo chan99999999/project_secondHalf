@@ -16,11 +16,17 @@
 
     <!-- 일상 게시글 목록 조회 -->
     <select id="findByAllDailyArticle" parameterType="int" resultType="DailyArticleDto">
-        SELECT d.d_article_id AS dailyArticleId, d.title, d.member_id, f.file_name, f.encrypted_name
+        SELECT d.d_article_id "dailyArticleId",
+               d.title,
+               d.member_id,
+               f.file_name,
+               f.encrypted_name,
+               COALESCE(SUM(h.heart_count), 0) "totalHeartCount"
         FROM daily_article d
-                 JOIN attach_file f
-                      ON d.d_article_id = f.d_article_id
+                 JOIN attach_file f ON d.d_article_id = f.d_article_id
+                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id
         WHERE d.category_id = #{categoryId}
+        GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name
         ORDER BY d.d_article_id DESC
     </select>
 
@@ -38,25 +44,15 @@
         SELECT d.title,
                d.content,
                d.member_id,
-               TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+               TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') regdate,
                f.file_name,
-               COALESCE(h1.member_heart_count, 0)          "heartCount",
-               h2.total_heart_count                        "totalHeartCount"
+               NVL(SUM(h.heart_count), 0) "totalHeartCount"
         FROM daily_article d
-                 LEFT JOIN
-             attach_file f ON d.d_article_id = f.d_article_id
-                 LEFT JOIN
-             (SELECT member_id,
-                     SUM(heart_count) AS member_heart_count
-              FROM heart
-              WHERE d_article_id = #{dailyArticleId}
-              GROUP BY member_id) h1 ON d.d_article_id = #{dailyArticleId}
-                 LEFT JOIN
-             (SELECT SUM(heart_count) AS total_heart_count
-              FROM heart
-              WHERE d_article_id = #{dailyArticleId}) h2 ON 1 = 1
+                 LEFT JOIN attach_file f ON d.d_article_id = f.d_article_id
+                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id
         WHERE d.category_id = #{categoryId}
           AND d.d_article_id = #{dailyArticleId}
+        GROUP BY d.title, d.content, d.member_id, d.regdate, f.file_name
     </select>
 
 

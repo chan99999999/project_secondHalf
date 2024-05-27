@@ -40,4 +40,11 @@ public interface HeartMapper {
      * @return
      */
     public int existHeart(@Param("dailyArticleId") int dailyArticleId, @Param("memberId") String memberId);
+
+    /**
+     * 좋아요 총 개수 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 좋아요 총 개수
+     */
+    public int findTotalHeartCount(int dailyArticleId);
 }
