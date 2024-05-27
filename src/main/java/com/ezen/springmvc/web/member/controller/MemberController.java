@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -131,7 +132,6 @@ public class MemberController {
     @GetMapping("/editPasswd")
     public String editPasswd(@ModelAttribute MemberForm memberForm, Model model) {
         return "/member/editPasswd";
-    }
 
 // REST URL 설계
 
@@ -144,6 +144,9 @@ public class MemberController {
 ////        return memberDto;
 //        return null;
 //    }
+
+    }
+
 }
 
 

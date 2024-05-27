@@ -136,7 +136,7 @@
             <div class="chat-current-member">
                 <img class="profile-img chat-member-img" src="/img/profile.png">
                 <div class="chat-cureent-name member-profile">
-                    김순자 최고
+                    <div th:text="|[${session.loginMember.nickname}]님|"></div>
                     <ul class="perid">
                         <li><a href="#">1:1 대화하기</a></li>
                         <hr>
@@ -155,69 +155,7 @@
                             안녕하세요? 좋은 하루 입니다.
                         </div>
                     </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
-                    <li class="chat-message-list">
-                        <div class="message-data">
-                            <div class="message-data-time">오전 10:10, 오늘</div>
-                            <div class="message-data-member">김순자 최고</div>
-                        </div>
-                        <div class="chat-message-text">
-                            안녕하세요? 좋은 하루 입니다.
-                        </div>
-                    </li>
+
                 </ul>
             </div>
 
@@ -231,6 +169,13 @@
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
 <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script>
+
+    // Thymeleaf 모델 속성을 자바스크립트 변수로 할당
+    const nickname = /*[[${nickname}]]*/ 'defaultNickname';
+    // Application state
+    const sender = nickname; // nickname을 sender로 사용
+
+
     document.addEventListener('DOMContentLoaded', function() {
         findAllRoom();
     });
