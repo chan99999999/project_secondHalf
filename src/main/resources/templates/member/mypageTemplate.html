@@ -42,7 +42,7 @@
     <div id="mypage-wrap">
         <div class="mypage-aside-container">
             <div id="mypage-member">
-                <img id="mypage-member-img" src="/img/profile.png">
+                <img class="member_profile_img" id="mypage-member-img" th:src="@{/member/image/{fileName}(fileName=${session.loginMember.storePicture})}">
                 <div th:text="|[${session.loginMember.nickname}]님|"></div>
                 <div id="mypage-member-email" th:text="${session.loginMember.email}"></div>
             </div>

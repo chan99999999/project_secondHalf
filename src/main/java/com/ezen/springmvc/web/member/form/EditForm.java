@@ -17,7 +17,4 @@ public class EditForm {
     private String hobby;
     private String interest;
     private String introduce;
-    private String memberAddress;
-    private String memberPasswd;
-    private String rePasswd;
 }
