@@ -1,4 +1,4 @@
-// apiMap.js
+// searchForm.js
 
 // 마커를 담을 배열입니다
 var markers = [];
@@ -12,6 +12,33 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
+// 지도타입 컨트롤의 지도 또는 스카이뷰 버튼을 클릭하면 호출되어 지도타입을 바꾸는 함수입니다
+function setMapType(maptype) {
+    var roadmapControl = document.getElementById('btnRoadmap');
+    var skyviewControl = document.getElementById('btnSkyview');
+    if (maptype === 'roadmap') {
+        map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+        roadmapControl.className = 'selected_btn';
+        skyviewControl.className = 'btn';
+    } else {
+        map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
+        skyviewControl.className = 'selected_btn';
+        roadmapControl.className = 'btn';
+    }
+}
+
+// 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+function zoomIn() {
+    map.setLevel(map.getLevel() - 1);
+}
+
+// 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+function zoomOut() {
+    map.setLevel(map.getLevel() + 1);
+}
+
+
+
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();
 
@@ -23,7 +50,6 @@ searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
-
     var keyword = document.getElementById('keyword').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -45,30 +71,23 @@ function searchPlaces() {
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
-
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
 
         // 페이지 번호를 표출합니다
         displayPagination(pagination);
-
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
         alert('검색 결과가 존재하지 않습니다.');
         return;
-
     } else if (status === kakao.maps.services.Status.ERROR) {
-
         alert('검색 결과 중 오류가 발생했습니다.');
         return;
-
     }
 }
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
-
     var listEl = document.getElementById('placesList'),
         menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(),
@@ -82,7 +101,6 @@ function displayPlaces(places) {
     removeMarker();
 
     for (var i = 0; i < places.length; i++) {
-
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i),
@@ -123,9 +141,9 @@ function displayPlaces(places) {
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
 }
+
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
-
     var el = document.createElement('li'),
         itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
             '<div class="info">' +
@@ -147,7 +165,45 @@ function getListItem(index, places) {
 
     // 클릭 이벤트를 추가합니다
     el.onclick = function() {
-        window.location.href = 'place.html?id=' + places.id;
+        var mapId = this.getAttribute('data-id'); // 클릭된 항목의 ID를 가져옵니다
+        if (mapId) {
+            // 장소의 정보를 수집합니다
+            var placeInfo = {
+                id: places.id,
+                place_name: places.place_name,
+                address_name: places.address_name,
+                category_name: places.category_name,
+                phone: places.phone,
+                place_url: places.place_url,
+                road_address_name: places.road_address_name,
+                y: places.y,
+                x: places.x
+            };
+
+            // 장소의 정보를 콘솔에 출력합니다
+            console.log(placeInfo);
+
+            // 서버로 placeInfo 데이터를 POST 요청으로 전송합니다
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/map/place';
+            form.target = '_blank'; // 새 창에서 열기
+
+            for (var key in placeInfo) {
+                if (placeInfo.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement('input');
+                    hiddenField.type = 'hidden';
+                    hiddenField.name = key;
+                    hiddenField.value = placeInfo[key];
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            alert('장소 ID가 없습니다.');
+        }
     };
 
     return el;
@@ -228,3 +284,6 @@ function removeAllChildNods(el) {
         el.removeChild(el.lastChild);
     }
 }
+
+
+
