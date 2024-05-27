@@ -111,20 +111,21 @@ form, fieldset{
 /*-------------------------------NAV--------------------------*/
 
 nav{
+    display: flex;
+    justify-content: center;
     height: 70px;
-    /*background-color: #ffcd07;*/
     background-color: #ff8c18;
-    /*background-color: #02239a;*/
 }
 
 
 .nav-bar{
-    margin: 0px auto;
-    width: 1400px;
+    position: fixed;
+    width: 100%;
     min-width: 1400px;
     height: 70px;
     align-content: center;
     display: flex;
+    background-color: #ff8c18;
     justify-content: space-between;
 }
 
@@ -145,6 +146,7 @@ nav{
     list-style: none;
     display: flex;
     align-items: center;
+    padding-left: 70px;
 }
 
 #nav-menu a{
@@ -164,6 +166,7 @@ nav{
 
 .nav-member{
     align-content: center;
+    padding-right: 70px;
 }
 
 
