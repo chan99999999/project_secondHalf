@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+      th:replace="~{/member/mypageTemplate :: mypageTemplate(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
 
 <head>
     <title th:fragment="title"> ::: 마이페이지 ::: </title>
@@ -13,32 +13,52 @@
 </head>
 
 
-<div class="wrapper" th:fragment="content">
-    <h1 class="title-text">마이 페이지</h1>
-    <div id="mypage-wrap">
-        <div class="mypage-aside-container">
-            <div id="mypage-member">
-                <img id="mypage-member-img" src="/img/profile.png">
-                <div th:text="|[김찬규]님|"></div>
+<div class="mypage-container" th:fragment="content">
+    <div class="mypage-info-wrap">
+        <div class="mypage-title">내 정보</div>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">아이디</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.memberId}"></div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">이름</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.name}"></div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">이메일</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.email}"></div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">생년월일</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.birthDate}"></div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">주소</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.memberAddress}"></div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">취미</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.hobby}"></div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">관심사</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.interest}"></div>
+        </div>
+        <hr>
+        <div class="mypage-basic-wrap">
+            <div class="mypage-basic-title">자기소개</div>
+            <div class="mypage-basic-content" th:text="${session.loginMember.introduce}">
             </div>
-            <ul class="mypage-menu-list">
-                <li>내 정보</li>
-                <li>회원정보 수정</li>
-                <li>작성 게시글
-                    <ul>
-                        <li>일상공유</li>
-                        <li>동네친구</li>
-                        <li>댓글</li>
-                    </ul>
-                </li>
-            </ul>
         </div>
-        <div class="mypage-container">
-
-        </div>
+        <hr>
     </div>
 </div>
-
 </html>
 
 

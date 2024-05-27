@@ -1,25 +1,37 @@
 package com.ezen.springmvc.web.member.controller;
 
+import com.ezen.springmvc.domain.common.dto.UploadFile;
 import com.ezen.springmvc.domain.common.encription.EzenUtil;
+import com.ezen.springmvc.domain.common.service.FileService;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
-import com.ezen.springmvc.web.member.form.LoginForm;
-import com.ezen.springmvc.web.member.form.MemberForm;
+import com.ezen.springmvc.web.member.form.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.lang.reflect.Member;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +43,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberController {
 
+    @Value("${upload.profile.path}")
+    private String profileFileUploadPath;
+    private final FileService fileService;
     private final MemberService memberService;
 
     // 회원가입 화면 이동
@@ -102,8 +117,6 @@ public class MemberController {
         return "redirect:/";
     }
 
-//
-
     // 회원 로그아웃 처리
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
@@ -120,17 +133,93 @@ public class MemberController {
         return "/member/mypage";
     }
 
-// REST URL 설계
+    @GetMapping("/editInfo")
+    public String editInfo(@ModelAttribute MemberForm memberForm, Model model) {
+        return "/member/editInfo";
+    }
 
+    @PostMapping("editInfo")
+    public String editInfoAction(@ModelAttribute EditForm editForm, HttpSession session) {
 
-// /member/bangry
-//    @GetMapping("/{memberId}")
-//    public MemberDto read(@PathVariable("memberId") String memberId){
-//        log.info("수신한 사용자 아이디 : {}", memberId);
-////        MemberDto memberDto = MemberDto.builder().id("bangry").name("김기정").build();
-////        return memberDto;
-//        return null;
-//    }
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        MemberDto memberDto = MemberDto.builder()
+                .memberId(loginMember.getMemberId())
+                .nickname(editForm.getNickname())
+                .email(editForm.getEmail())
+                .hobby(editForm.getHobby())
+                .interest(editForm.getInterest())
+                .introduce(editForm.getIntroduce())
+                .build();
+
+        log.info(memberDto.toString());
+        memberService.editMember(memberDto);
+
+        memberDto.setName(loginMember.getName());
+        memberDto.setMemberAddress(loginMember.getMemberAddress());
+        memberDto.setBirthDate(loginMember.getBirthDate());
+        memberDto.setGender(loginMember.getGender());
+        memberDto.setPicture(loginMember.getPicture());
+        memberDto.setStorePicture(loginMember.getStorePicture());
+
+        session.setAttribute("loginMember", memberDto);
+        return "redirect:/member/mypage";
+    }
+
+    @GetMapping("/editPicture")
+    public String editPicture(@ModelAttribute EditPictureForm editPictureForm, Model model) {
+        return "/member/editPicture";
+    }
+
+    @GetMapping("/editPasswd")
+    public String editPasswd(@ModelAttribute EditPasswdForm editPasswdForm, Model model) {
+        return "/member/editPasswd";
+    }
+
+    @PostMapping("/editPasswd")
+    public String editPasswdAction(@ModelAttribute EditPasswdForm editPasswdForm, HttpSession session) {
+
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        MemberDto memberDto = MemberDto.builder()
+                .memberPasswd(editPasswdForm.getNewPasswd())
+                .memberId(loginMember.getMemberId())
+                .build();
+
+        memberService.editPasswd(memberDto);
+
+        session.invalidate();
+        return "redirect:/member/login";
+    }
+
+    @PostMapping("/editPicture")
+    public String editPictureAction(@ModelAttribute EditPictureForm editPictureForm, HttpSession session){
+
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+        UploadFile uploadFile = fileService.storeFile(editPictureForm.getProfileImage(), profileFileUploadPath);
+
+        MemberDto memberDto = MemberDto.builder()
+                .picture(uploadFile.getUploadFileName())
+                .storePicture(uploadFile.getStoreFileName())
+                .memberId(loginMember.getMemberId())
+                .build();
+
+        memberService.editPicture(memberDto);
+        return "/member/mypage";
+    }
+
+    // 회원 프로필 사진 요청 처리
+    @GetMapping("/image/{profileFileName}")
+    @ResponseBody
+    public ResponseEntity<Resource> showImage(@PathVariable("profileFileName") String profileFileName) throws IOException {
+        Path path = Paths.get(profileFileUploadPath + "/" + profileFileName);
+        String contentType = Files.probeContentType(path);
+        Resource resource = new FileSystemResource(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+        return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+    }
+
 }
 
 

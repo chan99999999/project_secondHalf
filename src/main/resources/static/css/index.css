@@ -80,23 +80,52 @@ form, fieldset{
 }
 
 
+/*--------------------------CHECK-BOX-------------------------------*/
+
+
+
+/*----------------------------프로필----------------*/
+.member-profile{}
+
+.member-profile:hover ul{
+    display: block;
+    background-color: white;
+    border: 1px solid gray;
+    position: absolute;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.member-profile >ul >li{
+    padding: 10px 20px;
+}
+
+.member-profile >ul >li:hover{
+    background-color: #eaeaea;
+}
+
+.perid{
+    display: none;
+}
+
 /*-------------------------------NAV--------------------------*/
 
 nav{
+    display: flex;
+    justify-content: center;
     height: 70px;
-    /*background-color: #ffcd07;*/
     background-color: #ff8c18;
-    /*background-color: #02239a;*/
 }
 
 
 .nav-bar{
-    margin: 0px auto;
-    width: 1400px;
+    position: fixed;
+    width: 100%;
     min-width: 1400px;
     height: 70px;
     align-content: center;
     display: flex;
+    background-color: #ff8c18;
     justify-content: space-between;
 }
 
@@ -117,6 +146,7 @@ nav{
     list-style: none;
     display: flex;
     align-items: center;
+    padding-left: 70px;
 }
 
 #nav-menu a{
@@ -136,6 +166,7 @@ nav{
 
 .nav-member{
     align-content: center;
+    padding-right: 70px;
 }
 
 
@@ -290,6 +321,10 @@ nav{
     font-size: 20px;
 }
 
+/*---------------------------PROFILE_IMG-----------------------------*/
+.profile-img{
+
+}
 
 
 /*-----------------------------FOOTER-------------------------------*/

@@ -38,6 +38,18 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	@Transactional
 	public void editMember(MemberDto memberDto) {
-		memberMapper.update(memberDto);
+		memberMapper.updateInfo(memberDto);
+	}
+
+	@Override
+	@Transactional
+	public void editPasswd(MemberDto memberDto){
+		memberMapper.updatePasswd(memberDto);
+	}
+
+	@Override
+	@Transactional
+	public void editPicture(MemberDto memberDto){
+		memberMapper.updatePicture(memberDto);
 	}
 }

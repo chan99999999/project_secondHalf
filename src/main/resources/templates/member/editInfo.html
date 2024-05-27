@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/member/mypageTemplate :: mypageTemplate(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 마이페이지 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/member.css">
+    </th:block>
+</head>
+
+<div class="mypage-container" th:fragment="content">
+    <div class="mypage-info-wrap">
+        <div class="mypage-title">정보 수정</div>
+        <form class="edit-form" name="editForm" method="post" th:object="${editForm}">
+            <div class="mypage-edit-wrap">
+                <label for="nickname">별명</label>
+                <input id="nickname" name="nickname" class="mypage-edit-text" type="text" th:value="${session.loginMember.nickname}">
+            </div>
+            <hr>
+            <div class="mypage-edit-wrap">
+                <label for="email">이메일</label>
+                <input id="email" name="email" class="mypage-edit-text" type="text" th:value="${session.loginMember.email}">
+            </div>
+            <hr>
+            <div class="mypage-edit-wrap">
+                <label for="hobby">취미</label>
+                <input id="hobby" name="hobby" class="mypage-edit-text" type="text" placeholder="취미를 적어주세요.">
+            </div>
+            <hr>
+            <div class="mypage-edit-wrap">
+                <label for="interest">관심사</label>
+                <input id="interest" name="interest" class="mypage-edit-text" type="text" placeholder="관심사를 적어주세요.">
+            </div>
+            <hr>
+            <div class="mypage-edit-wrap">
+                <label for="introduce">자기소개</label>
+                <textarea id="introduce" name="introduce" class="introduce-textarea" rows="5"
+                          placeholder="자기소개(200글자 이내)"></textarea>
+            </div>
+            <hr>
+            <div class="edit-btn-wrap">
+                <button class="back-btn" type="reset">취소하기</button>
+                <button class="register-btn" type="submit">수정하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+</html>
+
+
+
+
+
+
+
+
+
+
