@@ -187,7 +187,6 @@ function getListItem(index, places) {
             var form = document.createElement('form');
             form.method = 'POST';
             form.action = '/map/place';
-            form.target = '_blank'; // 새 창에서 열기
 
             for (var key in placeInfo) {
                 if (placeInfo.hasOwnProperty(key)) {
