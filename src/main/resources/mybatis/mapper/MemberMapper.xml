@@ -14,7 +14,7 @@
 
 	<!-- 아이디로 회원 상세 조회 -->
 	<select id="findById" parameterType="string" resultType="MemberDto">
-		SELECT member_id, name, email, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') regdate, original_profile, stored_profile
+		SELECT member_id, name, nickname, hobby, interest, member_address, gender, birth_date, introduce, picture, store_picture, member_passwd, email, TO_CHAR(regdate, 'YYYY-MM-DD') regdate
 		FROM member
 		WHERE member_id = #{value}
 	</select>

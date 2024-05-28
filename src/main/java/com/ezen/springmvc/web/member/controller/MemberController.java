@@ -155,14 +155,9 @@ public class MemberController {
         log.info(memberDto.toString());
         memberService.editMember(memberDto);
 
-        memberDto.setName(loginMember.getName());
-        memberDto.setMemberAddress(loginMember.getMemberAddress());
-        memberDto.setBirthDate(loginMember.getBirthDate());
-        memberDto.setGender(loginMember.getGender());
-        memberDto.setPicture(loginMember.getPicture());
-        memberDto.setStorePicture(loginMember.getStorePicture());
+        MemberDto editMember = memberService.getMember(loginMember.getMemberId());
 
-        session.setAttribute("loginMember", memberDto);
+        session.setAttribute("loginMember", editMember);
         return "redirect:/member/mypage";
     }
 
@@ -205,6 +200,8 @@ public class MemberController {
                 .build();
 
         memberService.editPicture(memberDto);
+        MemberDto editMember = memberService.getMember(loginMember.getMemberId());
+        session.setAttribute("loginMember", editMember);
         return "/member/mypage";
     }
 
