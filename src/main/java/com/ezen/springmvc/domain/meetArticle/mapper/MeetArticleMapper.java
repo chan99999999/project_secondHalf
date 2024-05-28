@@ -9,10 +9,10 @@ import java.util.List;
 @Mapper
 public interface MeetArticleMapper {
     void createMeetArticle(MeetArticleDto meetArticleDto);
-//    MeetArticleDto findByMeetArticleId(int meetArticleId);
+    MeetArticleDto findByMeetArticleId(int meetArticleId);
     List<MeetArticleDto> findByAllMeetArticle(@Param("categoryId") int categoryId);
-    MeetArticleDto readMeetArticle(int categoryId, int meetArticleId);
-    void updateMeetArticle(MeetArticleDto meetArticleDto);
-    void deleteMeetArticle(MeetArticleDto meetArticleDto);
+    MeetArticleDto readMeetArticle(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId);
+//    void updateMeetArticle(MeetArticleDto meetArticleDto);
+//    void deleteMeetArticle(MeetArticleDto meetArticleDto);
 //    void hitcount(MeetArticleDto meetArticleDto);
 }

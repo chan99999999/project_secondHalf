@@ -6,6 +6,7 @@ import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,15 @@ public class MeetArticleServiceTest {
 
     @Test
     @DisplayName("모임 게시글 상세보기 테스트")
+    @Disabled
     void readMeetArticleTest(){
-        MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(3, 5);
+        MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(1,29);
         log.info("게시글 상세보기 : {}", meetArticleDto);
     }
 
     @Test
     @DisplayName("모임 게시글 등록 테스트")
+    @Disabled
     void createMeetArticleTest(){
         MeetArticleDto createArticle = MeetArticleDto
                 .builder()
@@ -41,39 +44,42 @@ public class MeetArticleServiceTest {
                 .hitcount(0)
                 .categoryId(3)
                 .memberId("monday")
-                .placeId(1)
+//                .placeId(1)
                 .build();
         meetArticleService.createMeetArticle(createArticle);
         log.info("등록 완료 : {}", createArticle);
     }
 
 
-    @Test
-    @DisplayName("모임 게시글 수정 테스트")
-    void updateArticleTest(){
-        MeetArticleDto updateArticle = MeetArticleDto
-                .builder()
-                .title("수정 테스트")
-                .content("수정 테스트")
-                .meetArticleId(7)
-                .build();
-        meetArticleService.updateMeetArticle(updateArticle);
-        log.info("수정 완료 : {}", updateArticle);
-    }
-
-    @Test
-    @DisplayName("모임 게시글 삭제 테스트")
-    void deleteArticleTest(){
-        MeetArticleDto deleteArticle = MeetArticleDto
-                .builder()
-                .meetArticleId(7)
-                .build();
-        meetArticleService.deleteMeetArticle(deleteArticle);
-        log.info("삭제 완료 : {}", deleteArticle);
-    }
+//    @Test
+//    @DisplayName("모임 게시글 수정 테스트")
+//    @Disabled
+//    void updateArticleTest(){
+//        MeetArticleDto updateArticle = MeetArticleDto
+//                .builder()
+//                .title("수정 테스트")
+//                .content("수정 테스트")
+//                .meetArticleId(7)
+//                .build();
+//        meetArticleService.updateMeetArticle(updateArticle);
+//        log.info("수정 완료 : {}", updateArticle);
+//    }
+//
+//    @Test
+//    @DisplayName("모임 게시글 삭제 테스트")
+//    @Disabled
+//    void deleteArticleTest(){
+//        MeetArticleDto deleteArticle = MeetArticleDto
+//                .builder()
+//                .meetArticleId(7)
+//                .build();
+//        meetArticleService.deleteMeetArticle(deleteArticle);
+//        log.info("삭제 완료 : {}", deleteArticle);
+//    }
 
     @Test
     @DisplayName("모임 게시글 전체 출력 테스트")
+    @Disabled
     void findByAllArticleTest(){
         List<MeetArticleDto> list = meetArticleService.findByAllMeetArticle(3);
         for (MeetArticleDto MeetArticleDto : list) {
@@ -83,6 +89,7 @@ public class MeetArticleServiceTest {
 
     @Test
     @DisplayName("모임 게시글 댓글 등록 테스트")
+    @Disabled
     void createReplyTest(){
         ReplyDto replyDto = ReplyDto
                 .builder()

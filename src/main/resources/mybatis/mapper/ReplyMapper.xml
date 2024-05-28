@@ -7,40 +7,32 @@
                            m_article_id,
                            content,
                            regdate,
-                           member_id)
+                           writer)
         VALUES (reply_id_seq.NEXTVAL,
                 #{meetArticleId},
                 #{content},
                 SYSDATE,
-                #{wrtier})
+                #{writer})
     </insert>
     <!-- 댓글 목록 -->
     <select id="findByReplyAll" parameterType="int" resultType="ReplyDto">
         SELECT reply_id,
-               m_article_id,
+               m_article_id "meetArticleId",
                content,
-               member_id
+               writer
         FROM reply
         WHERE m_article_id = #{meetArticleId}
         ORDER BY reply_id DESC
     </select>
-    <!-- 댓글 수정 -->
-    <update id="updateReply" parameterType="ReplyDto">
-        UPDATE reply
-        SET content = #{content}
-        WHERE reply_id = #{replyId}
-          AND member_id = #{writer}
-    </update>
     <!-- 댓글 삭제 -->
-    <delete id="deleteReply" parameterType="ReplyDto">
-        DELETE FROM reply
-        WHERE reply_id = #{replyId}
-          AND member_id = #{writer}
-    </delete>
+<!--    <delete id="deleteReply" parameterType="ReplyDto">-->
+<!--        DELETE FROM reply-->
+<!--        WHERE reply_id = #{replyId}-->
+<!--    </delete>-->
     <!-- 댓글 갯수 -->
-    <update id="replyCount" parameterType="int">
+    <select id="replyCount" resultType="int">
         SELECT COUNT(*)
         FROM reply
         WHERE m_article_id = #{meetArticleId}
-    </update>
+    </select>
 </mapper>

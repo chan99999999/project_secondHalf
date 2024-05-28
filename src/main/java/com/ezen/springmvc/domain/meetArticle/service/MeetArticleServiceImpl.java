@@ -1,9 +1,7 @@
 package com.ezen.springmvc.domain.meetArticle.service;
 
-import com.ezen.springmvc.domain.meetArticle.dto.CategoryDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
-import com.ezen.springmvc.domain.meetArticle.mapper.CategoryMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,25 +12,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class MeetArticleServiceImpl implements MeetArticleService{
-    private final CategoryMapper categoryMapper;
     private final MeetArticleMapper meetArticleMapper;
     private final ReplyMapper replyMapper;
 //    private final TagMapper tagMapper;
-
-    @Override
-    public List<CategoryDto> categoryList() {
-        return categoryMapper.findByCategoryAll();
-    }
 
     @Override
     public MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto) {
         meetArticleMapper.createMeetArticle(meetArticleDto);
 //        tagDto.setMeetArticleId(meetArticleDto.getMeetArticleId());
 //        tagMapper.createTag(tagDto);
-//        return meetArticleMapper.findByMeetArticleId(meetArticleDto.getMeetArticleId());
-        return null;
+        return meetArticleMapper.findByMeetArticleId(meetArticleDto.getMeetArticleId());
     }
-
     @Override
     public List<MeetArticleDto> findByAllMeetArticle(int categoryId) {
         return meetArticleMapper.findByAllMeetArticle(categoryId);
@@ -43,15 +33,15 @@ public class MeetArticleServiceImpl implements MeetArticleService{
         return meetArticleMapper.readMeetArticle(categoryId, meetArticleId);
     }
 
-    @Override
-    public void updateMeetArticle(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.updateMeetArticle(meetArticleDto);
-    }
-
-    @Override
-    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.deleteMeetArticle(meetArticleDto);
-    }
+//    @Override
+//    public void updateMeetArticle(MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.updateMeetArticle(meetArticleDto);
+//    }
+//
+//    @Override
+//    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.deleteMeetArticle(meetArticleDto);
+//    }
 
 //    @Override
 //    public void hitcount(MeetArticleDto meetArticleDto) {
@@ -69,19 +59,15 @@ public class MeetArticleServiceImpl implements MeetArticleService{
 //    }
 
     @Override
-    public void createReply(ReplyDto replyDto) {
+    public MeetArticleDto createReply(ReplyDto replyDto) {
         replyMapper.createReply(replyDto);
+        return null;
     }
 
-    @Override
-    public void updateReply(ReplyDto replyDto) {
-        replyMapper.updateReply(replyDto);
-    }
-
-    @Override
-    public void deleteReply(ReplyDto replyDto) {
-        replyMapper.deleteReply(replyDto);
-    }
+//    @Override
+//    public void deleteReply(ReplyDto replyDto) {
+//        replyMapper.deleteReply(replyDto);
+//    }
 
     @Override
     public List<ReplyDto> replyList(int meetArticleId) {
@@ -89,7 +75,7 @@ public class MeetArticleServiceImpl implements MeetArticleService{
     }
 
     @Override
-    public void replyCount(ReplyDto replyDto) {
-        replyMapper.replyCount(replyDto);
+    public int replyCount(int meetArticleId) {
+        return replyMapper.replyCount(meetArticleId);
     }
 }

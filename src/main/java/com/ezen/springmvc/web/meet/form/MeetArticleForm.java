@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 public class MeetArticleForm {
     private int meetArticleId;
+    private String memberId;
     private String title;
     private String content;
     private String regdate;
@@ -17,6 +18,5 @@ public class MeetArticleForm {
     private int enter;
     private int hitcount;
     private int categoryId;
-    private String memberId;
     private int placeId;
 }

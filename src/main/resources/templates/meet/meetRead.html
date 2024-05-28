@@ -22,24 +22,27 @@
         </div>
         <div id="meet-read-content-wrap">
             <h1 id="meet-read-title" th:text="${meetArticle.title}">다이소 같이 가실 분</h1>
-            <p class="meet-read-content" th:text="${meetArticle.regdate}">-시간 : 2024. 6. 13.(목) 18:00</p>
-            <p class="meet-read-content" th:text="${meetArticle.time}">-장소 : 다이소 노원역점</p>
+            <p class="meet-read-content" th:text="${meetArticle.time}">-시간 : 2024. 6. 13.(목) 18:00</p>
+            <p class="meet-read-content" th:text="${meetArticle.placeId}">-장소 : 다이소 노원역점</p>
             <p class="meet-read-content" th:text="${meetArticle.content}">본문 내용이 들어가면 됩니다</p>
         </div>
         <div class="register-btn-wrap">
             <button class="back-btn" th:onclick="|location.href='@{/meet}'|">돌아가기</button>
             <button class="register-btn">참여하기</button>
         </div>
-<!--        <div id="review-count-wrap" th:text="${reply.count}">-->
-<!--            <p>댓글(3)</p>-->
-<!--        </div>-->
+        <div id="review-count-wrap">
+            <p th:text="'댓글(' + ${replyCount} + ')'">댓글(3)</p>
+            <p th:text="'조회수(' + ${meetArticle.hitcount} + ')'">조회수</p>
+        </div>
         <div class="review-wrap">
             <div id="write-review">
-                <p name="writer">작성자 : 김순자최고</p>
-                <div id="review-text">
-                    <textarea cols="62" rows="2"></textarea>
-                    <button type="submit" id="write-review-btn">등록</button>
-                </div>
+                <form id="meet-register-form" th:object="${replyForm}" method="post">
+                    <p name="writer"}>작성자 : 김순자최고</p>
+                    <div id="review-text" class="register-btn-wrap">
+                        <textarea name="content" cols="62" rows="2"></textarea>
+                        <button type="submit" id="write-review-btn">등록</button>
+                    </div>
+                </form>
             </div>
             <div class="review" th:each="reply : ${replyList}">
                 <div>

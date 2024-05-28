@@ -1,4 +1,4 @@
-package com.ezen.springmvc.domain.meetArticle.dto;
+package com.ezen.springmvc.web.meet.form;
 
 import lombok.*;
 
@@ -8,11 +8,8 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class ReplyDto {
-    private int replyId;
+public class ReplyForm {
     private int meetArticleId;
     private String writer;
     private String content;
-    private String regdate;
-    private int replyCount;
 }
