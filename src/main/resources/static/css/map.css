@@ -365,6 +365,7 @@
 #place-detail-wrap{
     width: 1200px;
     display: flex;
+
 }
 
 #place-map{
@@ -379,7 +380,7 @@
 }
 
 #place-info{
-    width: 700px;
+    width: 1000px;
     background-color: rgba(253, 139, 24, 0.19);
     padding: 20px;
 }

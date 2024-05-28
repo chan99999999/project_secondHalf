@@ -898,49 +898,107 @@ ALTER TABLE reply DROP COLUMN member_id;
 ALTER TABLE reply ADD CONSTRAINT reply_writer_fk FOREIGN KEY (writer)
 REFERENCES member(member_id);
 
+---재현씨 코드 
+drop table 테이블명 cascade constraints;
+
+-- 태그 테이블
+create table tag (
+   tag_id   number(20) not null,
+   tag_name varchar2(20),
+   t_article_id NUMBER(20)
+);
+-- 태그게시글 테이블(매핑 테이블)
+create table tag_article (
+   t_article_id NUMBER(20),
+   m_article_id NUMBER(20),
+   d_article_id NUMBER(20)
+);
+
+alter table tag add constraint pk_tag primary key ( tag_id );
+alter table tag_article add constraint pk_tag_article primary key ( t_article_id );
+
+-- 태그게시글 fk
+alter table tag_article add (
+   constraint daily_article_d_article_id_fk foreign key ( d_article_id )
+      references daily_article ( d_article_id )
+         on delete cascade,
+   constraint meet_article_m_article_id_fk foreign key ( m_article_id )
+      references meet_article ( m_article_id )
+         on delete cascade
+);
+
+-- 태그 FK
+ALTER TABLE tag
+ADD   CONSTRAINT tag_article_t_article_id_fk FOREIGN KEY (t_article_id)
+   REFERENCES tag_article(t_article_id);
+
+drop table tag cascade constraints;
+drop table tag_article cascade constraints;
+
+-- 태그게시글 더미
+DESC tag_article;
+
+insert into tag_article (
+   t_article_id,
+   m_article_id,
+   d_article_id
+) values (
+   1,
+   1,
+   1
+);
+SELECT * FROM tag_article;
+
+-- 태그 더미
+DESC tag;
+
+insert into tag values (
+   4,
+   '기타',
+   1
+);
+
+select *
+from tag;
+
+
 
 
 
 
 2024-05-24
+-- placemap 테이블 변경코드 알려드립니다.
 
--- 컬럼명 변경
+-- 1. 컬럼명 변경
 ALTER TABLE placemap RENAME COLUMN map_address TO address_name;
 ALTER TABLE placemap RENAME COLUMN latitude TO y;
 ALTER TABLE placemap RENAME COLUMN longitude TO x;
 
--- 새로운 컬럼 추가
+-- 2. 새로운 컬럼 추가
 ALTER TABLE placemap ADD road_address_name varchar2(200);
 
 
--- placemap 더미 있는 경우 삭제후에  x,y 컬럼의 타입을 NUMBER->VARCHAR2(50)으로 바꿔줍니다.
+-- 3-1 placemap 더미 있는 경우 삭제  더미 없는경우 3-2로
+
 DELETE FROM placemap
 WHERE place_id = 1;
 
-
-
+-- 3-2 x,y 컬럼의 타입을 NUMBER->VARCHAR2(50)으로 바꿔줍니다.위도 경도의 경우 소숫점 이하값이 있어서..NUMBER로 하면 select문 사용시에 코드가 매우 복잡해져서 VARCHAR2로 변경하였습니다...
 ALTER TABLE placemap
 MODIFY (y VARCHAR2(50),
         x VARCHAR2(50));
 
--- 시퀀스 날리고 다시 생성 
+-- 4 시퀀스 날리고 다시 생성 
 drop sequence place_id_seq;
 create sequence place_id_seq;
 
 
--- 새로운 더미넣기 ;
+-- 5 새로운 더미넣기 ;
 INSERT INTO placemap 
 (place_id, place_name, address_name, x, y, map_id, road_address_name)
 VALUES (place_id_seq.nextval, '장소이름', '지번주소', '경도', '위도', 1234, '도로명주소');
 
 select * from placemap;
-
-
-
-select * from review;
-
-
-
 
 
 UPDATE placemap
@@ -953,3 +1011,17 @@ SET
   road_address_name = '도로명주소'
 WHERE
   place_id = 1;
+
+
+
+  select * from review;
+
+
+
+--찬규님 ;
+
+ALTER table member MODIFY picture varchar2(1000);
+ALTER table member MODIFY store_picture varchar2(1000);
+ALTER table member MODIFY store_picture default 'profile.png';
+
+회원 테이블 사진, 저장사진 컬럼 변경되었습니다!
