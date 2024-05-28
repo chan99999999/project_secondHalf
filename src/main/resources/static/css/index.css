@@ -56,6 +56,10 @@ form, fieldset{
     margin: 0px auto;
 }
 
+textarea{
+    resize: none;
+}
+
 /*-------------------------BTN---------------------*/
 .register-btn-wrap{
     display: flex;
