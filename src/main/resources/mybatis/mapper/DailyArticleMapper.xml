@@ -9,7 +9,7 @@
 
     <!-- 일상 게시글 번호로 게시글 조회 -->
     <select id="findByDailyArticleId" parameterType="int" resultType="DailyArticleDto">
-        SELECT title, regdate, hitcount, category_id, member_id
+        SELECT d_article_id "dailyArticleId", title, regdate, hitcount, category_id, member_id
         FROM daily_article
         WHERE d_article_id = #{dailyArticleId}
     </select>
@@ -30,16 +30,25 @@
         ORDER BY d.d_article_id DESC
     </select>
 
-<!--    &lt;!&ndash; 일상 게시글 상세 보기 &ndash;&gt;-->
-<!--    <select id="readDailyArticle" parameterType="int" resultType="DailyArticleDto">-->
-<!--        SELECT d.title, d.content, d.member_id, TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') regdate, f.file_name-->
-<!--        FROM daily_article d-->
-<!--                 JOIN attach_file f-->
-<!--                      ON d.d_article_id = f.d_article_id-->
-<!--        WHERE d.category_id = #{categoryId}-->
-<!--          AND d.d_article_id = #{dailyArticleId}-->
-<!--    </select>-->
+    <select id="findByAllTagName" resultType="DailyArticleDto">
+        SELECT d.d_article_id                  "dailyArticleId",
+               d.title,
+               d.member_id,
+               f.file_name,
+               f.encrypted_name,
+               COALESCE(SUM(h.heart_count), 0) "totalHeartCount"
+        FROM daily_article d
+                 JOIN attach_file f ON d.d_article_id = f.d_article_id
+                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id
+                 JOIN tag_article ta ON d.d_article_id = ta.d_article_id
+                 JOIN tag t ON ta.tag_id = t.tag_id
+        WHERE d.category_id = #{categoryId}
+          AND t.tag_name = #{tagName}
+        GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name
+        ORDER BY d.d_article_id DESC
+    </select>
 
+    <!-- 일상 게시글 상세 보기 -->
     <select id="readDailyArticle" parameterType="int" resultType="DailyArticleDto">
         SELECT d.title,
                d.content,

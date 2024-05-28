@@ -19,6 +19,8 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     private final ReplyMapper replyMapper;
     private final HeartMapper heartMapper;
     private final FileMapper fileMapper;
+    private final TagMapper tagMapper;
+    private final TagArticleMapper tagArticleMapper;
 
 
 
@@ -31,10 +33,11 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      */
     @Override
     @Transactional
-    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto) {
+    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto, TagDto tagDto) {
         dailyArticleMapper.createDailyArticle(dailyArticleDto);
-        fileDto.setDailyArticleId(dailyArticleDto.getDailyArticleId());
         fileMapper.createFileDto(fileDto);
+        tagMapper.createTag(tagDto);
+
         return dailyArticleMapper.findByDailyArticleId(dailyArticleDto.getDailyArticleId());
     }
 
@@ -189,6 +192,26 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     public int getTotalHeartCount(int dailyArticleId) {
         return heartMapper.findTotalHeartCount(dailyArticleId);
     }
+
+    /**
+     * 태그 생성
+     * @param tagDto 태그
+     */
+    @Override
+    public TagDto getTag(TagDto tagDto, int tagId) {
+        tagMapper.createTag(tagDto);
+        return tagMapper.findByTagId(tagId);
+    }
+
+    /**
+     * 태그 게시글 생성
+     * @param tagArticleDto 태그 게시글
+     */
+    @Override
+    public void getTagArticle(TagArticleDto tagArticleDto) {
+        tagArticleMapper.createTagArticle(tagArticleDto);
+    }
+
 
 
 }

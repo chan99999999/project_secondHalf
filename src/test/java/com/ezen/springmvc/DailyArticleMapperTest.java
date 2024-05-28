@@ -2,14 +2,8 @@ package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
-import com.ezen.springmvc.domain.dailyarticle.dto.DailyArticleDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.FileDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.HeartDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
-import com.ezen.springmvc.domain.dailyarticle.mapper.DailyArticleMapper;
-import com.ezen.springmvc.domain.dailyarticle.mapper.FileMapper;
-import com.ezen.springmvc.domain.dailyarticle.mapper.HeartMapper;
-import com.ezen.springmvc.domain.dailyarticle.mapper.ReplyMapper;
+import com.ezen.springmvc.domain.dailyarticle.dto.*;
+import com.ezen.springmvc.domain.dailyarticle.mapper.*;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
@@ -35,6 +29,10 @@ public class DailyArticleMapperTest {
     @Autowired
     ReplyMapper replyMapper;
     @Autowired
+    TagMapper tagMapper;
+    @Autowired
+    TagArticleMapper tagArticleMapper;
+    @Autowired
     private DailyArticleServiceImpl dailyArticleServiceImpl;
     @Autowired
     private CategoryServiceImpl categoryServiceImpl;
@@ -43,7 +41,7 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("카테고리 목록 반환 테스트")
-//    @Disabled
+    @Disabled
     void getCategoryListTest() {
         List<CategoryDto> categoryList = categoryServiceImpl.getCategoryList();
         log.info("카테고리 목록 : {}", categoryList);
@@ -167,5 +165,36 @@ public class DailyArticleMapperTest {
     void existHeartTest() {
         boolean existed = heartMapper.existHeart(25, "sunday") > 0;
         log.info("존재 하나요? : {}", existed);
+    }
+
+    @Test
+    @DisplayName("태그 등록 테스트")
+    @Disabled
+    void createTagTest() {
+        TagDto tagDto = TagDto.builder()
+                .tagName("음식")
+                .build();
+        tagMapper.createTag(tagDto);
+        log.info("등록된 태그 : {}", tagDto);
+    }
+
+    @Test
+    @DisplayName("태그 아티클 등록 테스트")
+    @Disabled
+    void createTagArticleTest() {
+        TagArticleDto tagArticleDto = TagArticleDto.builder()
+                .tagId(3)
+                .dailyArticleId(39)
+                .build();
+        tagArticleMapper.createTagArticle(tagArticleDto);
+        log.info("등록된 태그 게시글 : {}", tagArticleDto);
+    }
+
+    @Test
+    @DisplayName("태그 아티클 등록 테스트")
+//    @Disabled
+    void findByAllTagNameTest() {
+        List<DailyArticleDto> list = dailyArticleMapper.findByAllTagName(2, "일상");
+        log.info("태그 별 게시글 목록 : {}", list);
     }
 }

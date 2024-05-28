@@ -52,13 +52,14 @@ public class DailyController {
     private final FileService fileService;
 
     @GetMapping("{categoryId}/register")
-    public String dailyRegister() {
+    public String dailyRegister(@PathVariable("categoryId") int categoryId, Model model) {
+        model.addAttribute("categoryId", categoryId);
         return "/daily/dailyRegister";
     }
 
     // 신규 일상 게시글 등록 처리
     @PostMapping("{categoryId}/register")
-    public String dailyRegister(@PathVariable("categoryId") int categoryId, @ModelAttribute DailyArticleForm dailyArticleForm, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String dailyRegister(@PathVariable("categoryId") int categoryId, @ModelAttribute DailyArticleForm dailyArticleForm, RedirectAttributes redirectAttributes, HttpServletRequest request, Model model) {
         UploadFile uploadFile = fileService.storeFile(dailyArticleForm.getAttachImage(), profileFileUploadPath);
 
         HttpSession session = request.getSession();
@@ -72,14 +73,23 @@ public class DailyController {
                 .build();
 
         FileDto fileDto = FileDto.builder()
+                .dailyArticleId(dailyArticleForm.getDailyArticleId())
                 .fileName(uploadFile.getUploadFileName())
                 .encryptedName(uploadFile.getStoreFileName())
                 .build();
 
+        TagDto tagDto = TagDto.builder()
+                .tagName(dailyArticleForm.getTag())
+                .build();
+
+        TagArticleDto tagArticleDto = TagArticleDto.builder()
+                .dailyArticleId(dailyArticleForm.getDailyArticleId())
+                .build();
+
         dailyArticleDto.setCategoryId(categoryId);
         log.info("수신한 게시글 정보 : {}", dailyArticleDto);
-        DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileDto);
-
+        DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileDto, tagDto);
+        dailyArticleService.getTagArticle(tagArticleDto);
         redirectAttributes.addFlashAttribute("createDailyArticleDto", createDailyArticleDto);
         redirectAttributes.addFlashAttribute("fileDto", fileDto);
         return "redirect:/daily/{categoryId}";
@@ -88,11 +98,10 @@ public class DailyController {
     // 일상 게시글 목록 처리
     @GetMapping("{categoryId}")
     public String dailyList(@PathVariable("categoryId") int categoryId, Model model) {
-//        List<CategoryDto> categoryList = dailyArticleService.getCategoryList();
         List<DailyArticleDto> dailyArticleList = dailyArticleService.getDailyArticles(categoryId);
         List<FileDto> fileList = dailyArticleService.getFiles();
+        model.addAttribute("categoryId", categoryId);
         model.addAttribute("dailyArticleList", dailyArticleList);
-//        model.addAttribute("categoryList", categoryList);
         for (DailyArticleDto dailyArticleDto : dailyArticleList) {
             log.info("수신한 게시글 목록 : {}", dailyArticleDto);
         }
@@ -128,7 +137,6 @@ public class DailyController {
             model.addAttribute("loginMember", loginMember);
         }
 
-//        model.addAttribute("loginMember", loginMember);
         log.info("수신한 댓글 목록 : {}", replyList);
         return "/daily/dailyRead";
     }
@@ -178,7 +186,6 @@ public class DailyController {
         map.put("totalHeartCount", totalHeartCount);
         map.put("isUpdated", isUpdated);
 
-
         return ResponseEntity.ok(map);
     }
 
@@ -191,11 +198,4 @@ public class DailyController {
         return ResponseEntity.ok(loginMember);
     }
 
-    @GetMapping("/getCategory")
-    public String getCategory(Model model) {
-        List<CategoryDto> categoryList = categoryService.getCategoryList();
-        log.info("수신받은 카테고리 목록 : {}", categoryList);
-        model.addAttribute("categoryList", categoryList);
-        return "layout/template";
-    }
 }

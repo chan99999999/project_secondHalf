@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.TagMapper">
+    <!-- 태그 등록 -->
+    <insert id="createTag" parameterType="TagDto">
+        INSERT INTO tag (tag_id, tag_name)
+        VALUES (TAG_ID_SEQ.nextval, #{tagName})
+    </insert>
+
+    <!-- 태그 번호로 태그 조회 -->
+    <select id="findByTagId" parameterType="int" resultType="TagDto">
+        SELECT tag_id, tag_name
+        FROM tag
+        WHERE tag_id = #{tagId}
+    </select>
+
+    <!-- 태그 이름으로 태그 조회 -->
+    <select id="findByTagName" resultType="TagDto" parameterType="string">
+        SELECT tag_id, tag_name
+        FROM tag
+        WHERE tag_name = #{tagName}
+    </select>
+
+</mapper>
+

@@ -1,6 +1,7 @@
 package com.ezen.springmvc.domain.category.service;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

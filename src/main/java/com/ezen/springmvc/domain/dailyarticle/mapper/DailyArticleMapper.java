@@ -34,6 +34,14 @@ public interface DailyArticleMapper {
     public List<DailyArticleDto> findByAllDailyArticle(@Param("categoryId") int categoryId);
 
     /**
+     * 태그 이름 별 일상 게시글 목록 반환
+     * @param categoryId 카테고리 번호
+     * @param tagName 태그 이름
+     * @return 일상 게시글 목록
+     */
+    public List<DailyArticleDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName);
+
+    /**
      * 일상 게시글 상세보기
      * @param categoryId 카테고리 번호
      * @param dailyArticleId 일상 게시글 번호

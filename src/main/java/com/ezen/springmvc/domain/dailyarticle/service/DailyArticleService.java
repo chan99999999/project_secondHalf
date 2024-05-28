@@ -2,6 +2,7 @@ package com.ezen.springmvc.domain.dailyarticle.service;
 
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface DailyArticleService {
      * @param dailyArticleDto 일상 게시글
      * @return 일상 게시글
      */
-    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto);
+    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto, TagDto tagDto);
 
     /**
      * 일상 게시글 목록 반환
@@ -102,4 +103,19 @@ public interface DailyArticleService {
      * @return 좋아요 총 개수
      */
     public int getTotalHeartCount(int dailyArticleId);
+
+    /**
+     * 태그 생성
+     * @param tagDto 태그
+     * @param tagId 태그 번호
+     * @return 태그
+     */
+    public TagDto getTag(TagDto tagDto, int tagId);
+
+    /**
+     * 태그 게시글 생성
+     * @param tagArticleDto 태그 게시글
+     */
+    public void getTagArticle(TagArticleDto tagArticleDto);
+
 }

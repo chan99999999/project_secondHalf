@@ -20,4 +20,5 @@ public class DailyArticleForm {
     private int categoryId;
     private MultipartFile attachImage;
     private int hitCount;
+    private String tag;
 }
