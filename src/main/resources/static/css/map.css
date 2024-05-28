@@ -425,30 +425,33 @@
     border: none;
 }
 
-#review-text{
+.review-writer{
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.review-text{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 10px; /* 간격을 조금 더 벌려줌 */
+    margin: 0px 10px;
 }
 
-#review-text textarea{
+.review-text textarea{
     font-size: 25px;
     padding: 10px;
     margin: 5px 0px;
 }
 
-#write-review-btn,
-#login-btn{
-    height: 40px;
+.write-review-btn{
+    height: 80px;
+    width: 70px;
     background-color: #ff8c18;
     color: #ffffff;
     font-size: 20px;
-    padding: 5px 15px; /* 좌우 패딩 조정 */
+    padding: 0px 10px; /* 좌우 패딩 조정 */
     border-radius: 10px;
     text-decoration: none;
-    display: inline-block;
-    line-height: 40px;
     transition: background-color 0.3s, color 0.3s;
     border: 1px solid transparent; /* 테두리 초기값 설정 */
 }
