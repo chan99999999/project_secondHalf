@@ -43,7 +43,7 @@ ul, li{
     font-size: 100px;
     font-family: 'Cafe24Ssurround';
     text-align: center;
-    margin: 50px 0;
+    margin: 70px 0;
 }
 
 form, fieldset{
@@ -81,6 +81,10 @@ textarea{
     font-size: 30px;
     background-color: #fd8b18;
     border: none;
+}
+
+.home-btn{
+    display: block;
 }
 
 
@@ -333,6 +337,8 @@ nav{
 
 /*-----------------------------FOOTER-------------------------------*/
 footer{
-    height: 250px;
+    position: relative;
+    height: 150px;
+    transform: translateY(0%);
     background-color: #303030;
 }

@@ -28,4 +28,7 @@ public interface MemberService {
 
 	//회원 대표사진 변경
 	public void editPicture(MemberDto member);
+
+	//회원 아이디 찾기
+	public String searchId(String name, String nickname);
 }

@@ -82,7 +82,8 @@ public class MemberController {
 
     // 회워 로그인 화면
     @GetMapping("/login")
-    public String login(@ModelAttribute LoginForm loginForm) {
+    public String login(@ModelAttribute LoginForm loginForm, @CookieValue(value = "saveId", defaultValue = "") String saveId, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("saveId", saveId);
         return "/member/loginForm";
     }
 
@@ -217,6 +218,39 @@ public class MemberController {
         return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
     }
 
+    @GetMapping("/serchMember")
+    public String serchMember(){
+        return "/member/serchMember";
+    }
+
+    @GetMapping("/searchId")
+    public String searchId(@ModelAttribute SearchIdForm searchIdForm){
+        return "/member/searchId";
+    }
+
+    @PostMapping("/searchId")
+    public String searchIdAction(@ModelAttribute SearchIdForm searchIdForm, Model model){
+        String searchId = memberService.searchId(searchIdForm.getSearchName(), searchIdForm.getSearchNickname());
+        log.info("찾은 아이디 : {}", searchId);
+        model.addAttribute("searchId", searchId);
+        return "/member/searchIdResult";
+    }
+
+    @GetMapping("/searchIdResult")
+    public String searchIdResult(Model model){
+        model.getAttribute("searchId");
+        return "/member/searchIdResult";
+    }
+
+    @GetMapping("/searchPasswd")
+    public String searchPasswd(@ModelAttribute SearchPasswdForm searchPasswdForm, Model model){
+        return "/member/searchPasswd";
+    }
+
+    @PostMapping("/searchPasswd")
+    public String searchPasswdAction(@ModelAttribute SearchPasswdForm searchPasswdForm, Model model){
+        return "/member/searchPasswdResult";
+    }
 }
 
 

@@ -31,5 +31,7 @@ public interface MemberMapper {
     //회원목록 조회
     public List<MemberDto> findByAll();
 
+    //회원 아이디 찾기
+    public String findMemberId(String name, String nickname);
 }
 

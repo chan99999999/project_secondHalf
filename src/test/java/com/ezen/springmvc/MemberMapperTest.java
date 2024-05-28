@@ -111,6 +111,7 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 대표사진 변경 테스트")
+    @Disabled
     void updatePictureTest(){
         MemberDto memberDto = MemberDto.builder()
                 .memberId("chan999")
@@ -118,6 +119,14 @@ class MemberMapperTest {
                 .storePicture("xxx-124.jpg")
                 .build();
         memberMapper.updatePicture(memberDto);
+    }
+
+    @Test
+    @DisplayName("회원 아이디 찾기")
+//    @Disabled
+    void findMemberIdTest(){
+        String memberId = memberMapper.findMemberId("먼데이", "월요일");
+        log.info("회원정보 : {}", memberId);
     }
 }
 

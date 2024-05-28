@@ -7,7 +7,7 @@
 		VALUES(#{memberId}, #{name}, #{nickname}, #{memberPasswd}, #{memberAddress}, #{gender}, #{birthDate}, #{email})
 		<!-- INSERT 후 등록일자 SELECT -->
 		<selectKey keyProperty="regdate" resultType="string" order="AFTER">
-			SELECT TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI')
+			SELECT TO_CHAR(regdate, 'YYYY-MM-DD HH24:MM')
 			FROM member WHERE member_id = #{memberId}
 		</selectKey>
 	</insert>
@@ -46,6 +46,13 @@
 		SET picture = #{picture}, store_picture = #{storePicture}
 		WHERE member_id = #{memberId}
 	</update>
+
+<!--	회원 아이디 찾기-->
+	<select id="findMemberId" parameterType="string">
+		SELECT member_id
+		FROM member
+		WHERE name = #{name} AND nickname = #{nickname}
+	</select>
 
 	<!-- 회원 전체 조회 -->
 	<select id="findByAll" resultType="MemberDto">
