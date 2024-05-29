@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 아이디 찾기 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/member.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div id="searchMember-wrap">
+        <h1 class="title-text" id="searchMember-text">아이디/비밀번호 찾기</h1>
+        <div id="searchMember-btn-wrap">
+            <a href="/member/searchId" class="search-member-btn">아이디 찾기</a>
+            <a href="/member/searchPasswd" class="search-member-btn">비밀번호 찾기</a>
+        </div>
+    </div>
+
+</html>
+
+
+
+
+
+
+
+
+
+

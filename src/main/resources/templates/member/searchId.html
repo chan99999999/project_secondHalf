@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 아이디 찾기 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/member.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div class="searchMember-wrap">
+        <h1 class="title-text searchMember-text">아이디 찾기</h1>
+        <form method="post" action="/member/searchId" th:object="${searchIdForm}">
+            <fieldset class="searchMember-fieldset">
+                <div class="searchMember-content">
+                    <ul id="searchMember-content-wrap">
+                        <li class="searchMember-li">
+                            <label for="searchId-name">이름</label>
+                            <input id="searchId-name" class="searchMember-input" type="text" th:field="*{searchName}">
+                        </li>
+                        <li class="searchMember-li">
+                            <label for="searchId-nickname">닉네임</label>
+                            <input id="searchId-nickname" class="searchMember-input" type="text" th:field="*{searchNickname}">
+                        </li>
+                    </ul>
+                    <div class="register-btn-wrap">
+                        <button class="back-btn" type="reset">돌아가기</button>
+                        <button class="register-btn" type="submit">아이디 찾기</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+

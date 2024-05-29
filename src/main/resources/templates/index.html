@@ -21,7 +21,7 @@
         </th:block>
         <th:block th:if="${session.loginMember != null}">
             <div class="nav-member">
-                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.name}]님|"></a>
+                <a class="nav-login-info" href="/member/mypage" th:text="|[${session.loginMember.nickname}]님|"></a>
                 <a class="nav-logout" href="/member/logout">로그아웃</a>
             </div>
         </th:block>
@@ -42,7 +42,7 @@
             </a>
         </div>
         <div class="category-btn">
-            <a href="/daily">
+            <a href="/daily" th:href="@{/daily/{categoryId}(categoryId=${categoryList[1].categoryId})}">
                 <div class="category-content">
                     <img src="/img/category_share.png">
                     <div class="category-title">일상공유</div>
@@ -51,7 +51,7 @@
             </a>
         </div>
         <div class="category-btn">
-            <a href="/meet" th:href="@{/meet/{categoryId}(categoryId=${categoryList[2].categoryId})}">
+            <a href="/meet">
                 <div class="category-content">
                     <img src="/img/category_meet.png">
                     <div class="category-title">동네친구</div>
@@ -70,5 +70,8 @@
         </ul>
     </div>
 </footer>
+
 </body>
+
+
 </html>

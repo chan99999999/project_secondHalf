@@ -23,10 +23,10 @@
         <div id="meet-list-wrap">
             <div id="meet-search-bar">
                 <Form th:action="@{/meet/{categoryId}(categoryId=${categoryId})}" th:method="get">
-                <div>
-                    <input type="search" th:name="tagName">
-                    <button type="submit">검색</button>
-                </div>
+                    <div>
+                        <input type="search" th:name="tagName">
+                        <button type="submit">검색</button>
+                    </div>
                 </Form>
                 <div>
                     <ul class="meet-tag">
@@ -46,6 +46,7 @@
                         <p th:text="'장소 '+${meetArticle.placeId}">-장소 : 노원구 수락산 둘레길</p>
                         <p th:text="'시간 '+${meetArticle.time}">-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
                         <ul class="meet-tag" th:text="'태그 종류들...'">
+
                             <li>건강</li>
                             <li>취미</li>
                         </ul>
@@ -61,7 +62,7 @@
         </div>
     </div>
 </div>
-</div>
+
 </html>
 
 

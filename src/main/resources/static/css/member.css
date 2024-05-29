@@ -4,7 +4,11 @@
     width: 1400px;
     min-width: 1400px;
     outline: none;
+<<<<<<< HEAD
     height: 750px;
+=======
+    height: auto;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
 
 #login-fieldset{
@@ -52,6 +56,13 @@
     font-weight: bolder;
 }
 
+<<<<<<< HEAD
+=======
+.login-option:hover{
+    font-weight: bolder;
+}
+
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 /*----------------------------SignUp---------------------------------*/
 #signup-wrap{
     margin: 0px auto;
@@ -72,9 +83,12 @@
     width: 1200px;
 }
 
+<<<<<<< HEAD
 #signup-list{
     list-style: none;
 }
+=======
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 
 .signup-info{
     display: flex;
@@ -199,10 +213,18 @@
 }
 
 .mypage-aside-container{
+<<<<<<< HEAD
     width: 240px;
     background-color: #faeadd;
     font-size: 30px;
     padding: 30px;
+=======
+    width: 300px;
+    font-size: 30px;
+    padding: 30px;
+    border-left: 1px solid #eaeaea;
+    border-right: 2px solid #eaeaea;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
 
 #mypage-member{
@@ -212,12 +234,16 @@
     background-color: white;
     text-align: center;
     align-content: center;
+<<<<<<< HEAD
     font-weight: bolder;
+=======
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
 
 #mypage-member-img{
     width: 150px;
     height: 150px;
+<<<<<<< HEAD
 }
 
 .mypage-menu-list{
@@ -267,3 +293,296 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+=======
+    border-radius: 50%;
+}
+
+#mypage-member-email{
+    color: #5F5F5F;
+    font-size: 20px;
+}
+
+.mypage-menu-list{
+    padding: 20px;
+    margin-top: 10px;
+    font-size: 35px;
+}
+
+.mypage-menu-list >li{
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.mypage-menu-list >li:hover{
+    background-color: #eaeaea;
+}
+
+.mypage-menu-list > li:hover > .mypage-sub-list{
+    display: block;
+}
+
+.mypage-menu-list > li:hover > a{
+    font-weight: bolder;
+}
+
+.mypage-menu-list > li > a{
+    display: block;
+}
+
+.mypage-sub-list{
+    display: none;
+}
+
+.mypage-sub-list:hover{
+    display: block;
+}
+
+.mypage-sub-list li{
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.mypage-sub-list >li >a{
+    display: block;
+    width: 200px;
+}
+
+.mypage-sub-list >li >a:hover{
+    display: block;
+    width: 200px;
+    font-weight: bolder;
+}
+
+.mypage-container{
+    width: 1040px;
+    min-height: 800px;
+    background-color: rgba(234, 234, 234, 0.58);
+}
+
+.mypage-info-wrap{
+    width: 800px;
+    margin: 30px auto;
+    padding: 30px 50px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.mypage-title{
+    font-size: 50px;
+    font-weight: bolder;
+    margin: 20px 0;
+}
+
+#mypage-basic-profile{
+    display: flex;
+    padding: 20px 0;
+}
+
+#mypage-basic-profile-info{
+    padding-left: 20px;
+    align-content: center;
+}
+
+#mypage-basic-profile-img{
+    width: 70px;
+    height: 70px;
+}
+
+#mypage-profile-id{
+    font-size: 30px;
+}
+
+#mypage-profile-email{
+    font-size: 25px;
+    color: #5F5F5F;
+}
+
+.mypage-basic-wrap{
+    display: flex;
+    font-size: 30px;
+    padding: 20px 0;
+}
+
+.mypage-basic-title{
+    width: 150px;
+    color: #5F5F5F;
+}
+
+.mypage-basic-content{
+    width: 650px;
+}
+
+hr{
+    background-color: #b1b1b1;
+    height: 1px;
+    border: 0;
+}
+
+/*-------------------------EDIT---------------------------*/
+.mypage-edit-wrap{
+    font-size: 35px;
+    align-content: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.mypage-edit-wrap label{
+    display: block;
+    width: 220px;
+    align-content: center;
+}
+
+.mypage-edit-text{
+    font-size: 30px;
+    width: 600px;
+    height: 50px;
+    padding: 0px 10px;
+}
+
+.introduce-textarea{
+    width: 600px;
+    resize: none;
+    font-size: 30px;
+    padding: 10px;
+}
+
+.edit-form{
+    margin: 40px 0;
+}
+
+.edit-btn-wrap{
+    text-align: center;
+    margin-bottom: -40px;
+}
+
+#edit-profile-picture{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+#edit-picture-wrap{
+    margin: 20px 0px;
+    align-content: center;
+    display: flex;
+}
+
+#mypage-file-uploder{
+
+}
+
+#mypage-file-upload{
+    padding-left: 20px;
+    font-size: 25px;
+}
+
+.mypage-edit-passwd{
+    font-size: 30px;
+    width: 500px;
+    height: 50px;
+    padding: 0px 10px;
+}
+
+.blank-hr{
+    margin-bottom: 100px;
+}
+
+/*----------------------SERACH-MEMBER--------------------------*/
+#searchMember-wrap{
+    height: 70vh;
+}
+
+#searchMember-btn-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto;
+    height: auto;
+}
+
+
+.search-member-btn{
+    display: block;
+    width: 450px;
+    height: 350px;
+    text-align: center;
+    align-content: center;
+    font-size: 60px;
+    margin: 0px 20px;
+    background-color: #eaeaea;
+    border-radius: 10px;
+}
+
+.search-member-btn:hover{
+    font-weight: bolder;
+    background-color: #ff8c18;
+    color: white;
+}
+
+.searchMember-fieldset{
+    margin: 80px auto;
+    border: 1px solid lightgray;
+    width: 1200px;
+}
+
+.searchMember-content{
+    margin: 0px auto;
+    width: 600px;
+    font-size: 50px;
+    padding: 30px 0;
+}
+
+.searchMember-content-wrap{
+    margin-bottom: 50px;
+}
+
+.searchMember-li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.searchMember-input{
+    width: 300px;
+    font-size: 30px;
+    padding: 0px 20px;
+    padding: 10px;
+}
+
+.searchId-result-wrap{
+    height: 80vh;
+    align-content: center;
+}
+
+.searchId-result{
+    text-align: center;
+    font-size: 70px;
+    align-items: center;
+    margin: 80px 0;
+}
+
+.searchId-text{
+    color: #ff8c18;
+}
+
+.register-btn-wrap a{
+    height: 70px;
+    align-content: center;
+}
+
+.searchPasswd-result{
+    text-align: center;
+    font-size: 50px;
+    align-items: center;
+}
+
+.searchPasswd-info{
+    text-align: center;
+    font-size: 50px;
+    align-items: center;
+    margin: 20px 0;
+}
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552

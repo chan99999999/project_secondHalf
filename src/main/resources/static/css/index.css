@@ -43,7 +43,11 @@ ul, li{
     font-size: 100px;
     font-family: 'Cafe24Ssurround';
     text-align: center;
+<<<<<<< HEAD
     margin: 50px 0;
+=======
+    margin: 70px 0;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
 
 form, fieldset{
@@ -56,6 +60,13 @@ form, fieldset{
     margin: 0px auto;
 }
 
+<<<<<<< HEAD
+=======
+textarea{
+    resize: none;
+}
+
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 /*-------------------------BTN---------------------*/
 .register-btn-wrap{
     display: flex;
@@ -79,24 +90,75 @@ form, fieldset{
     border: none;
 }
 
+<<<<<<< HEAD
+=======
+.home-btn{
+    display: block;
+}
+
+
+/*--------------------------CHECK-BOX-------------------------------*/
+
+
+
+/*----------------------------프로필----------------*/
+.member-profile{}
+
+.member-profile:hover ul{
+    display: block;
+    background-color: white;
+    border: 1px solid gray;
+    position: absolute;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.member-profile >ul >li{
+    padding: 10px 20px;
+}
+
+.member-profile >ul >li:hover{
+    background-color: #eaeaea;
+}
+
+.perid{
+    display: none;
+}
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 
 /*-------------------------------NAV--------------------------*/
 
 nav{
+<<<<<<< HEAD
     height: 70px;
     /*background-color: #ffcd07;*/
     background-color: #ff8c18;
     /*background-color: #02239a;*/
+=======
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    background-color: #ff8c18;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
 
 
 .nav-bar{
+<<<<<<< HEAD
     margin: 0px auto;
     width: 1400px;
+=======
+    position: fixed;
+    width: 100%;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
     min-width: 1400px;
     height: 70px;
     align-content: center;
     display: flex;
+<<<<<<< HEAD
+=======
+    background-color: #ff8c18;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
     justify-content: space-between;
 }
 
@@ -117,6 +179,10 @@ nav{
     list-style: none;
     display: flex;
     align-items: center;
+<<<<<<< HEAD
+=======
+    padding-left: 70px;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
 
 #nav-menu a{
@@ -136,6 +202,10 @@ nav{
 
 .nav-member{
     align-content: center;
+<<<<<<< HEAD
+=======
+    padding-right: 70px;
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
 
 
@@ -290,10 +360,23 @@ nav{
     font-size: 20px;
 }
 
+<<<<<<< HEAD
+=======
+/*---------------------------PROFILE_IMG-----------------------------*/
+.profile-img{
+
+}
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 
 
 /*-----------------------------FOOTER-------------------------------*/
 footer{
+<<<<<<< HEAD
     height: 250px;
+=======
+    position: relative;
+    height: 150px;
+    transform: translateY(0%);
+>>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
     background-color: #303030;
 }
