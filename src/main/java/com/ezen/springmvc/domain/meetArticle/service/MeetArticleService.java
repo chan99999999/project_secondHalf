@@ -1,7 +1,7 @@
 package com.ezen.springmvc.domain.meetArticle.service;
 
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.meetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.TagArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 
@@ -27,11 +27,11 @@ public interface MeetArticleService {
 //    태그 게시글 생성
     void createTagArticle(TagArticleDto tagArticleDto);
 //    댓글 등록
-    MeetArticleDto createReply(ReplyDto replyDto);
+    MeetArticleDto createReply(meetReplyDto meetReplyDto);
 //    댓글 삭제
 //    void deleteReply(ReplyDto replyDto);
 //    댓글 목록
-    List<ReplyDto> replyList(int meetArticleId);
+    List<meetReplyDto> replyList(int meetArticleId);
 //    댓글 갯수
     int replyCount(int meetArticleId);
 }

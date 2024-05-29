@@ -1,20 +1,5 @@
 package com.ezen.springmvc.web.chat.controller;
 
-<<<<<<< HEAD
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-@Controller
-@RequestMapping("/chat")
-@Slf4j
-public class ChatController {
-
-    @GetMapping
-    public String chatting(){
-        return "/chat/chatting";
-=======
 import com.ezen.springmvc.domain.chat.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -38,6 +23,5 @@ public class ChatController {
             message.setMessage(message.getSender() + "님이 입장하셨습니다.");
         }
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
     }
 }

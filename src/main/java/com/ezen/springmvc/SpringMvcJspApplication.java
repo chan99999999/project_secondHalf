@@ -16,6 +16,6 @@ public class SpringMvcJspApplication {
     private static final Logger log = LoggerFactory.getLogger(SpringMvcJspApplication.class);
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext  = SpringApplication.run(SpringMvcJspApplication.class, args);
-
+        ApplicationContext applicationContext = SpringApplication.run(SpringMvcJspApplication.class, args);
+    }
 }

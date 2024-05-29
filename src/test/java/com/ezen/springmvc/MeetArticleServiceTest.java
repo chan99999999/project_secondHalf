@@ -1,8 +1,7 @@
 package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
-import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
+import com.ezen.springmvc.domain.meetArticle.dto.meetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -91,13 +89,13 @@ public class MeetArticleServiceTest {
     @DisplayName("모임 게시글 댓글 등록 테스트")
     @Disabled
     void createReplyTest(){
-        ReplyDto replyDto = ReplyDto
+        meetReplyDto meetReplyDto = meetReplyDto
                 .builder()
                 .content("댓글 테스트")
                 .meetArticleId(2)
                 .build();
-        meetArticleService.createReply(replyDto);
-        log.info("등록된 댓글 : {}", replyDto);
+        meetArticleService.createReply(meetReplyDto);
+        log.info("등록된 댓글 : {}", meetReplyDto);
     }
 
 //    @Test

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper">
+<mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper">
     <!-- 댓글 목록 반환 -->
     <select id="findByReplyAll" parameterType="int" resultType="ReplyDto">
         SELECT reply_id, d_article_id "dailyArticleId", writer, content

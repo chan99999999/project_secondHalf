@@ -2,10 +2,10 @@ package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.meetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
-import com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper;
 import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
+import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -27,7 +27,7 @@ public class MeetArticleTest {
 //    @Autowired
 //    TagMapper tagMapper;
     @Autowired
-    ReplyMapper replyMapper;
+MeetReplyMapper meetReplyMapper;
     @Autowired
     MeetArticleService meetArticleService;
     @Autowired
@@ -100,24 +100,24 @@ public class MeetArticleTest {
     @DisplayName("모임 게시글 댓글 등록 테스트")
 //    @Disabled
     void createReplyTest(){
-        ReplyDto replyDto = ReplyDto
+        meetReplyDto meetReplyDto = meetReplyDto
                 .builder()
                 .replyId(1)
                 .meetArticleId(29)
                 .content("15151515151515151515")
                 .writer("monday")
                 .build();
-        replyMapper.createReply(replyDto);
-        log.info("등록된 댓글 : {}", replyDto);
+        meetReplyMapper.createReply(meetReplyDto);
+        log.info("등록된 댓글 : {}", meetReplyDto);
     }
 
     @Test
     @DisplayName("모임 게시글 댓글 목록 반환 테스트")
 //    @Disabled
     void findByReplyAllTest() {
-        List<ReplyDto> list = replyMapper.findByReplyAll(29);
-        for (ReplyDto replyDto : list) {
-            log.info("조회된 댓글 목록 : {}", replyDto);
+        List<meetReplyDto> list = meetReplyMapper.findByReplyAll(29);
+        for (meetReplyDto meetReplyDto : list) {
+            log.info("조회된 댓글 목록 : {}", meetReplyDto);
         }
     }
 

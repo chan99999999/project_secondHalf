@@ -19,12 +19,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model){
-<<<<<<< HEAD
-        List<CategoryDto> categoryList = categoryService.findByCategoryList();
-=======
         model.getAttribute("loginMember");
-        List<CategoryDto> categoryList = categoryService.getCategoryList();
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
+        List<CategoryDto> categoryList = categoryService.findByCategoryList();
         model.addAttribute("categoryList", categoryList);
         return "index";
     }

@@ -1,11 +1,11 @@
 package com.ezen.springmvc.domain.meetArticle.service;
 
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.meetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.TagArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
-import com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper;
+import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.TagArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class MeetArticleServiceImpl implements MeetArticleService{
     private final MeetArticleMapper meetArticleMapper;
-    private final ReplyMapper replyMapper;
+    private final MeetReplyMapper meetReplyMapper;
     private final TagMapper tagMapper;
     private final TagArticleMapper tagArticleMapper;
 
@@ -69,8 +69,8 @@ public class MeetArticleServiceImpl implements MeetArticleService{
     }
 
     @Override
-    public MeetArticleDto createReply(ReplyDto replyDto) {
-        replyMapper.createReply(replyDto);
+    public MeetArticleDto createReply(meetReplyDto meetReplyDto) {
+        meetReplyMapper.createReply(meetReplyDto);
         return null;
     }
 
@@ -80,12 +80,12 @@ public class MeetArticleServiceImpl implements MeetArticleService{
 //    }
 
     @Override
-    public List<ReplyDto> replyList(int meetArticleId) {
-        return replyMapper.findByReplyAll(meetArticleId);
+    public List<meetReplyDto> replyList(int meetArticleId) {
+        return meetReplyMapper.findByReplyAll(meetArticleId);
     }
 
     @Override
     public int replyCount(int meetArticleId) {
-        return replyMapper.replyCount(meetArticleId);
+        return meetReplyMapper.replyCount(meetArticleId);
     }
 }

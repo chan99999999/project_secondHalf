@@ -1,6 +1,4 @@
 package com.ezen.springmvc.web.meet.controller;
-
-<<<<<<< HEAD
 import com.ezen.springmvc.domain.meetArticle.dto.*;
 import com.ezen.springmvc.domain.category.service.CategoryService;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
@@ -16,17 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
-=======
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 
 @Controller
 @RequestMapping("/meet")
 @Slf4j
-<<<<<<< HEAD
 @RequiredArgsConstructor
 public class MeetController {
 
@@ -37,6 +28,11 @@ public class MeetController {
     public String meetRegister(@PathVariable("categoryId") int categoryId, Model model) {
         model.addAttribute("categoryId", categoryId);
         return "/meet/meetRegister";
+    }
+
+    @GetMapping
+    public String meet(Model model) {
+        return "/meet";
     }
 
     //    목록
@@ -104,7 +100,7 @@ public class MeetController {
         meetArticleService.hitcount(meetArticleId);
 //        조회수가 증가된 게시글 반환
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(categoryId, meetArticleId);
-        List<ReplyDto> replyList = meetArticleService.replyList(meetArticleId);
+        List<meetReplyDto> replyList = meetArticleService.replyList(meetArticleId);
         int replyCount = meetArticleService.replyCount(meetArticleId);
         model.addAttribute("meetArticle", meetArticleDto);
         model.addAttribute("replyList", replyList);
@@ -118,15 +114,15 @@ public class MeetController {
 
     //    댓글 등록
     @PostMapping("{categoryId}/read/{meetArticleId}")
-    public String meetCreateReply(@PathVariable("categoryId") int categoryId, @ModelAttribute ReplyDto replyDto,
+    public String meetCreateReply(@PathVariable("categoryId") int categoryId, @ModelAttribute meetReplyDto meetReplyDto,
                                   @PathVariable("meetArticleId") int meetArticleId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
 //        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(categoryId, meetArticleId);
         model.addAttribute("meetArticle", meetArticleDto);
 //        replyForm.setWriter(loginMember.getMemberId());
-        log.info("수신한 댓글 : {}", replyDto);
-        meetArticleService.createReply(replyDto);
+        log.info("수신한 댓글 : {}", meetReplyDto);
+        meetArticleService.createReply(meetReplyDto);
         return "redirect:/meet/{categoryId}/read/{meetArticleId}";
     }
 
@@ -138,22 +134,4 @@ public class MeetController {
 //
 //        return ResponseEntity.ok(loginMember);
 //    }
-=======
-public class MeetController {
-
-    @GetMapping
-    public String meetList(){
-        return "/meet/meetList";
-    }
-
-    @GetMapping("/register")
-    public String meetRegister(){
-        return "/meet/meetRegister";
-    }
-
-    @GetMapping("/read")
-    public String meetRead(){
-        return "/meet/meetRead";
-    }
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }

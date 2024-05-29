@@ -1,11 +1,5 @@
 package com.ezen.springmvc.web.map.controller;
 
-<<<<<<< HEAD
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-=======
 import com.ezen.springmvc.domain.placemap.dto.MapDTO;
 import com.ezen.springmvc.domain.placemap.service.MapService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,30 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 
 @Controller
 @RequestMapping("/map")
 @Slf4j
 public class MapController {
 
-<<<<<<< HEAD
-    @GetMapping
-    public String searchMap(){
-        return "/map/searchForm";
-    }
-
-    @GetMapping("/place")
-    public String placeMap(){
-        return "/map/place";
-    }
-
-    @GetMapping("/apimap")
-    public String apiMap(){
-        return "/map/apiMap";
-    }
-}
-=======
     private final MapService mapService;
 
     @Autowired
@@ -112,4 +88,3 @@ public class MapController {
 
 
 }
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552

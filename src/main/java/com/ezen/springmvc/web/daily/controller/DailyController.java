@@ -1,11 +1,5 @@
 package com.ezen.springmvc.web.daily.controller;
 
-<<<<<<< HEAD
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-=======
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.category.service.CategoryService;
 import com.ezen.springmvc.domain.common.dto.UploadFile;
@@ -43,29 +37,11 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 
 @Controller
 @RequestMapping("/daily")
 @Slf4j
-<<<<<<< HEAD
-public class DailyController {
 
-    @GetMapping
-    public String dailyList(){
-        return "/daily/dailyList";
-    }
-
-    @GetMapping("/register")
-    public String dailyRegister(){
-        return "/daily/dailyRegister";
-    }
-
-    @GetMapping("/read")
-    public String dailyRead(){
-        return "/daily/dailyRead";
-    }
-=======
 @RequiredArgsConstructor
 public class DailyController {
 
@@ -219,10 +195,9 @@ public class DailyController {
 
     @GetMapping("/getCategory")
     public String getCategory(Model model) {
-        List<CategoryDto> categoryList = categoryService.getCategoryList();
+        List<CategoryDto> categoryList = categoryService.findByCategoryList();
         log.info("수신받은 카테고리 목록 : {}", categoryList);
         model.addAttribute("categoryList", categoryList);
         return "layout/template";
     }
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
 }
