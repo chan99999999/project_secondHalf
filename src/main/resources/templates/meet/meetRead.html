@@ -37,11 +37,12 @@
         <div class="review-wrap">
             <div id="write-review">
                 <form id="meet-register-form" th:object="${replyForm}" method="post">
-                    <p name="writer"}>작성자 : 김순자최고</p>
+                    <p name="writer">작성자 : 김순자최고</p>
                     <div id="review-text" class="register-btn-wrap">
                         <textarea name="content" cols="62" rows="2"></textarea>
                         <button type="submit" id="write-review-btn">등록</button>
-                    </div>                </form>
+                    </div>
+                </form>
             </div>
             <div class="review" th:each="reply : ${replyList}">
                 <div>
@@ -54,16 +55,4 @@
         </div>
     </div>
 </div>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-

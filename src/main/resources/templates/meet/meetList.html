@@ -17,8 +17,7 @@
     <div id="meet-wrap">
         <h1 class="title-text">동네친구</h1>
         <div id="write-meet-wrap">
-            <div id="write-meet"><a href="/meet/register"
-                                    th:href="@{/meet/{categoryId}/register(categoryId=__${categoryId}__)}">모임 등록하기</a>
+            <div id="write-meet"><a href="/meet/register" th:href="@{/meet/{categoryId}/register(categoryId=__${categoryId}__)}">모임 등록하기</a>
             </div>
         </div>
         <div id="meet-list-wrap">
@@ -42,7 +41,7 @@
                 <div class="meet-post" th:each="meetArticle : ${meetArticleList}">
                     <div>
                         <h1 class="meet-post-title">
-                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}"
+                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId}, categoryId=__${categoryId}__)}"
                                th:text="${meetArticle.title}">둘레길 같이 가실 분</a></h1>
                         <p th:text="'장소 '+${meetArticle.placeId}">-장소 : 노원구 수락산 둘레길</p>
                         <p th:text="'시간 '+${meetArticle.time}">-시간 : 2024. 05. 13.(월) 13:00~16:00</p>

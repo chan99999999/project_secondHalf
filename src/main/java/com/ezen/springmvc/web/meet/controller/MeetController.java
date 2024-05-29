@@ -90,7 +90,7 @@ public class MeetController {
     @GetMapping("{categoryId}/read/{meetArticleId}")
     public String meetRead(@PathVariable("categoryId") int categoryId, @PathVariable("meetArticleId") int meetArticleId, Model model, HttpServletRequest request) {
         log.info("게시글 번호 : {}", meetArticleId);
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
 //        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 //        조회수 증가
         meetArticleService.hitcount(meetArticleId);
@@ -98,9 +98,6 @@ public class MeetController {
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(categoryId, meetArticleId);
         List<ReplyDto> replyList = meetArticleService.replyList(meetArticleId);
         int replyCount = meetArticleService.replyCount(meetArticleId);
-        for (ReplyDto reply : replyList) {
-            log.info("댓글: {}", reply);
-        }
         model.addAttribute("meetArticle", meetArticleDto);
         model.addAttribute("replyList", replyList);
         model.addAttribute("replyCount", replyCount);
