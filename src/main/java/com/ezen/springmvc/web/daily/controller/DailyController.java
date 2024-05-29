@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,7 @@ public class DailyController {
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 
         DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
+                .categoryId(categoryId)
                 .dailyArticleId(dailyArticleForm.getDailyArticleId())
                 .memberId(loginMember.getMemberId())
                 .title(dailyArticleForm.getTitle())
@@ -78,18 +80,28 @@ public class DailyController {
                 .encryptedName(uploadFile.getStoreFileName())
                 .build();
 
-        TagDto tagDto = TagDto.builder()
-                .tagName(dailyArticleForm.getTag())
-                .build();
+        DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileDto);
 
-        TagArticleDto tagArticleDto = TagArticleDto.builder()
-                .dailyArticleId(dailyArticleForm.getDailyArticleId())
-                .build();
+        String tags = dailyArticleForm.getTags();
+        if (tags != null && !tags.isEmpty()) {
+            List<String> tagNames = Arrays.asList(tags.split(","));
+            for (String tagName : tagNames) {
+                tagName = tagName.trim();
+                TagDto tagDto = TagDto.builder()
+                        .tagName(tagName)
+                        .build();
+                dailyArticleService.getTag(tagDto);
 
-        dailyArticleDto.setCategoryId(categoryId);
+                TagArticleDto tagArticleDto = TagArticleDto.builder()
+                        .dailyArticleId(dailyArticleForm.getDailyArticleId())
+                        .build();
+                dailyArticleService.getTagArticle(tagArticleDto);
+            }
+        }
+
+
+//        dailyArticleDto.setCategoryId(categoryId);
         log.info("수신한 게시글 정보 : {}", dailyArticleDto);
-        DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileDto, tagDto);
-        dailyArticleService.getTagArticle(tagArticleDto);
         redirectAttributes.addFlashAttribute("createDailyArticleDto", createDailyArticleDto);
         redirectAttributes.addFlashAttribute("fileDto", fileDto);
         return "redirect:/daily/{categoryId}";
@@ -97,9 +109,13 @@ public class DailyController {
 
     // 일상 게시글 목록 처리
     @GetMapping("{categoryId}")
-    public String dailyList(@PathVariable("categoryId") int categoryId, Model model) {
-        List<DailyArticleDto> dailyArticleList = dailyArticleService.getDailyArticles(categoryId);
-        List<FileDto> fileList = dailyArticleService.getFiles();
+    public String dailyList(@PathVariable("categoryId") int categoryId, @RequestParam(value = "tagName", required = false) String tagName, Model model) {
+        List<DailyArticleDto> dailyArticleList;
+        if (tagName != null && !tagName.isEmpty()) {
+            dailyArticleList = dailyArticleService.getDailyArticlesByTagName(categoryId, tagName);
+        } else {
+            dailyArticleList = dailyArticleService.getDailyArticles(categoryId);
+        }
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("dailyArticleList", dailyArticleList);
         for (DailyArticleDto dailyArticleDto : dailyArticleList) {
@@ -175,7 +191,7 @@ public class DailyController {
             @RequestParam("dailyArticleId") int dailyArticleId,
             @RequestParam("memberId") String memberId,
             @RequestParam("checked") boolean checked
-            ) {
+    ) {
         log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
 
         Map<String, Object> map = new HashMap<>();

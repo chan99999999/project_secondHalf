@@ -33,10 +33,9 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      */
     @Override
     @Transactional
-    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto, TagDto tagDto) {
+    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto) {
         dailyArticleMapper.createDailyArticle(dailyArticleDto);
         fileMapper.createFileDto(fileDto);
-        tagMapper.createTag(tagDto);
 
         return dailyArticleMapper.findByDailyArticleId(dailyArticleDto.getDailyArticleId());
     }
@@ -50,6 +49,17 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     @Override
     public List<DailyArticleDto> getDailyArticles(int categoryId) {
         return dailyArticleMapper.findByAllDailyArticle(categoryId);
+    }
+
+    /**
+     * 태그 이름 별 게시글 목록 반환 구현
+     * @param categoryId 카테고리 번호
+     * @param tagName 태그 이름
+     * @return 게시글 목록
+     */
+    @Override
+    public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName) {
+        return dailyArticleMapper.findByAllTagName(categoryId, tagName);
     }
 
     /**
@@ -198,9 +208,8 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      * @param tagDto 태그
      */
     @Override
-    public TagDto getTag(TagDto tagDto, int tagId) {
+    public void getTag(TagDto tagDto) {
         tagMapper.createTag(tagDto);
-        return tagMapper.findByTagId(tagId);
     }
 
     /**

@@ -17,19 +17,23 @@
     <div id="daily-wrap">
         <h1 class="title-text">일상공유</h1>
         <div id="write-daily-wrap">
-            <div id="write-daily"><a href="/daily/register" th:href="@{/daily/{categoryId}/register(categoryId=__${categoryId}__)}">일상 공유하기</a></div>
+            <div id="write-daily"><a href="/daily/register"
+                                     th:href="@{/daily/{categoryId}/register(categoryId=__${categoryId}__)}">일상 공유하기</a>
+            </div>
         </div>
         <div id="daily-list-wrap">
             <div id="daily-search-bar">
-                <div>
-                    <input type="search">
-                    <button type="submit">검색</button>
-                </div>
+                <Form th:action="@{/daily/{categoryId}(categoryId=${categoryId})}" th:method="get">
+                    <div>
+                        <input type="search" th:name="tagName">
+                        <button type="submit">검색</button>
+                    </div>
+                </Form>
                 <div>
                     <ul class="daily-tag">
-                        <li><a>#건강</a></li>
-                        <li><a>#명언</a></li>
-                        <li><a>#가나다</a></li>
+                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='일상')}" th:text="'#일상'">#건강</a></li>
+                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#건강'">#명언</a></li>
+                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='명언')}" th:text="'#명언'">#가나다</a></li>
                     </ul>
                 </div>
             </div>
@@ -82,12 +86,15 @@
                     <img class="daily-writer-img" src="/img/profile.png">
                     <p class="daily-writer-name" th:text="${dailyArticle.memberId}">김순자 최고</p>
                 </div>
-                <img class="daily-post-img" src="/img/sample1.jpg" th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
+                <img class="daily-post-img" src="/img/sample1.jpg"
+                     th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
                 <div class="daily-like-wrap">
                     <img class="daily-like" src="/img/heart.png">
                     <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>
                 </div>
-                <p class="daily-post-title"><a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}" th:text="${dailyArticle.title}"></a></p>
+                <p class="daily-post-title"><a
+                        th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}"
+                        th:text="${dailyArticle.title}"></a></p>
             </div>
 
         </div>

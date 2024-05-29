@@ -21,12 +21,12 @@
                 <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목" />
                 <div id="daily-tag-wrap">
                     <h3>카테고리</h3>
-                    <input class="daily-tag-list" id="1" type="checkbox" name="tag" th:value="일상">
-                    <label for="1">일상</label>
-                    <input class="daily-tag-list" id="2" type="checkbox" name="tag" th:value="건강">
-                    <label for="2">이상</label>
-                    <input class="daily-tag-list" id="3" type="checkbox" name="tag" th:value="명언">
-                    <label for="3">삼상</label>
+                    <input class="daily-tag-list" id="1" type="checkbox" name="tags" th:value="일상">
+                    <label for="1" th:text="일상">일상</label>
+                    <input class="daily-tag-list" id="2" type="checkbox" name="tags" th:value="건강">
+                    <label for="2" th:text="건강">이상</label>
+                    <input class="daily-tag-list" id="3" type="checkbox" name="tags" th:value="명언">
+                    <label for="3" th:text="명언">삼상</label>
                 </div>
                 <div id="daily-register-img-wrap">
                     <img class="daily-register-img" src="/img/sample1.jpg">

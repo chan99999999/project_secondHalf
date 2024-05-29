@@ -18,7 +18,7 @@ public interface DailyArticleService {
      * @param dailyArticleDto 일상 게시글
      * @return 일상 게시글
      */
-    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto, TagDto tagDto);
+    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto);
 
     /**
      * 일상 게시글 목록 반환
@@ -26,6 +26,14 @@ public interface DailyArticleService {
      * @return 일상 게시글 목록
      */
     public List<DailyArticleDto> getDailyArticles(int categoryId);
+
+    /**
+     * 태그 이름으로 게시글 목록 반환
+     * @param categoryId 카테고리 번호
+     * @param tagName 태그 이름
+     * @return 게시글 목록
+     */
+    public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName);
 
     /**
      * 일상 게시글 상세 보기
@@ -107,10 +115,8 @@ public interface DailyArticleService {
     /**
      * 태그 생성
      * @param tagDto 태그
-     * @param tagId 태그 번호
-     * @return 태그
      */
-    public TagDto getTag(TagDto tagDto, int tagId);
+    public void getTag(TagDto tagDto);
 
     /**
      * 태그 게시글 생성
