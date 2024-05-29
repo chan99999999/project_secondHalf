@@ -76,9 +76,8 @@ class MemberMapperTest {
     void updateTest() {
         MemberDto updateMember = MemberDto
                 .builder()
-<<<<<<< HEAD
                 .build();
-        memberMapper.update(updateMember);
+//        memberMapper.update(updateMember);
         log.info("회원 수정 완료 : {}", updateMember);
     }
 
@@ -86,8 +85,8 @@ class MemberMapperTest {
     @DisplayName("검색 타입에 따른 회원 검색 테스트")
     @Disabled
     void findBySearchTypeTest() {
-		List<MemberDto> list = memberMapper.findBySearchType("id", "bangry");
-        log.info("검색 회원 : {}", list);
+//		List<MemberDto> list = memberMapper.findBySearchType("id", "bangry");
+//        log.info("검색 회원 : {}", list);
 //        List<Member> list = memberMapper.findBySearchType("name", "김");
 //        log.info("검색 타입별 검색 회원 전체목록 : {}", list);
     }
@@ -97,8 +96,8 @@ class MemberMapperTest {
     @Disabled
     void findBySearchAllTest() {
 //		List<MemberDto> list = memberMapper.findBySearchAll("bangry");
-        List<MemberDto> list = memberMapper.findBySearchAll("김");
-        log.info("모든 검색 전체목록 : {}", list);
+//        List<MemberDto> list = memberMapper.findBySearchAll("김");
+//        log.info("모든 검색 전체목록 : {}", list);
     }
 
     @Test
@@ -113,19 +112,18 @@ class MemberMapperTest {
 				.name("김")
 //				.email("bangry@gmail.com")
                         .build();
-        List<MemberDto> list = memberMapper.findBySearchAllOption(searchCondition);
-        log.info("검색 옵션별 전체목록 : {}", list);
-        log.info("검색 수 : {}", list.size());
-=======
-                .memberId("chat")
-                .nickname("채팅")
-                .email("chan999@aa")
-                .hobby("누워")
-                .interest("음슴")
-                .introduce("안냐세여 저는 21살 귀염둥이임다")
-                .build();
-        memberMapper.updateInfo(updateMember);
-        log.info("회원 수정 완료 : {}", updateMember);
+//        List<MemberDto> list = memberMapper.findBySearchAllOption(searchCondition);
+//        log.info("검색 옵션별 전체목록 : {}", list);
+//        log.info("검색 수 : {}", list.size());
+//                .memberId("chat")
+//                .nickname("채팅")
+//                .email("chan999@aa")
+//                .hobby("누워")
+//                .interest("음슴")
+//                .introduce("안냐세여 저는 21살 귀염둥이임다")
+//                .build();
+//        memberMapper.updateInfo(updateMember);
+//        log.info("회원 수정 완료 : {}", updateMember);
     }
 
 
@@ -168,7 +166,6 @@ class MemberMapperTest {
     void findMemberPasswdTest(){
         MemberDto memberDto = memberMapper.findMemberPasswd("chan999", "김찬규", "chan999@gmail.com");
         log.info("회워정보 : {}", memberDto);
->>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
     }
 }
 

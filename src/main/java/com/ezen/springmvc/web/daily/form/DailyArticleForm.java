@@ -18,7 +18,8 @@ public class DailyArticleForm {
     private String title;
     private String content;
     private int categoryId;
-    private MultipartFile attachImage;
+//    private MultipartFile attachImage;
+    private List<MultipartFile> attachImages;
     private int hitCount;
     private String tags;
 }

@@ -1,5 +1,6 @@
 package com.ezen.springmvc.domain.dailyarticle.service;
 
+import com.ezen.springmvc.domain.common.dto.SearchDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.dailyarticle.mapper.*;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +48,8 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      * @return 일상 게시글 목록
      */
     @Override
-    public List<DailyArticleDto> getDailyArticles(int categoryId) {
-        return dailyArticleMapper.findByAllDailyArticle(categoryId);
+    public List<DailyArticleDto> getDailyArticles(int categoryId, SearchDto searchDto) {
+        return dailyArticleMapper.findByAllDailyArticle(categoryId, searchDto);
     }
 
     /**
@@ -58,8 +59,8 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      * @return 게시글 목록
      */
     @Override
-    public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName) {
-        return dailyArticleMapper.findByAllTagName(categoryId, tagName);
+    public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName, SearchDto searchDto) {
+        return dailyArticleMapper.findByAllTagName(categoryId, tagName, searchDto);
     }
 
     /**
@@ -221,6 +222,14 @@ public class DailyArticleServiceImpl implements DailyArticleService {
         tagArticleMapper.createTagArticle(tagArticleDto);
     }
 
+    /**
+     * 일상 게시글 개수 반환 구현
+     * @return 일상 게시글 개수
+     */
+    @Override
+    public int getDailyArticleCount(int categoryId, SearchDto searchDto) {
+        return dailyArticleMapper.findDailyArticleCount(categoryId, searchDto);
+    }
 
 
 }

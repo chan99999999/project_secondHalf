@@ -27,6 +27,9 @@
         <div id="daily-read-content-wrap">
             <h1 id="daily-read-title" th:text="${dailyArticle.title}">게시글 제목 들어가유</h1>
             <p id="daily-read-content" th:text="${dailyArticle.content}">게시글 본문 들어가유</p>
+            <th:block th:if="${file.encryptedName == null}">
+                <img id="daily-read-img" th:src="@{/daily/image/{fileName}(fileName='default.jpg')}">
+            </th:block>
             <img id="daily-read-img" th:src="@{/daily/image/{fileName}(fileName=${file.encryptedName})}">
         </div>
         <div class="register-btn-wrap">

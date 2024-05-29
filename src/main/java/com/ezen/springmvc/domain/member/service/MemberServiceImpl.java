@@ -9,16 +9,10 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @Service
-<<<<<<< HEAD
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 	
 	private final MemberMapper memberMapper;
-=======
-public class MemberServiceImpl implements MemberService {
->>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
-
-    private final MemberMapper memberMapper;
 
     @Override
     @Transactional

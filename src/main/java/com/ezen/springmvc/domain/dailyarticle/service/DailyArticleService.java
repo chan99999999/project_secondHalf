@@ -1,5 +1,6 @@
 package com.ezen.springmvc.domain.dailyarticle.service;
 
+import com.ezen.springmvc.domain.common.dto.SearchDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 import org.apache.ibatis.annotations.Param;
@@ -25,7 +26,7 @@ public interface DailyArticleService {
      * @param categoryId 카테고리 번호
      * @return 일상 게시글 목록
      */
-    public List<DailyArticleDto> getDailyArticles(int categoryId);
+    public List<DailyArticleDto> getDailyArticles(int categoryId, SearchDto searchDto);
 
     /**
      * 태그 이름으로 게시글 목록 반환
@@ -33,7 +34,7 @@ public interface DailyArticleService {
      * @param tagName 태그 이름
      * @return 게시글 목록
      */
-    public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName);
+    public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName, SearchDto searchDto);
 
     /**
      * 일상 게시글 상세 보기
@@ -123,5 +124,11 @@ public interface DailyArticleService {
      * @param tagArticleDto 태그 게시글
      */
     public void getTagArticle(TagArticleDto tagArticleDto);
+
+    /**
+     * 일상 게시글 개수 반환
+     * @return 일상 게시글 개수
+     */
+    public int getDailyArticleCount(int categoryId, SearchDto searchDto);
 
 }

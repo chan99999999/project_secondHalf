@@ -11,13 +11,17 @@
         <link rel="stylesheet" href="/css/daily.css">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     </th:block>
-</head>
+    <style>
+        .pagination {
+            display: inline-block;
+        }
+    </style>
 </head>
 
 
 <div class="wrapper" th:fragment="content">
     <div id="daily-wrap">
-        <h1 class="title-text">일상공유</h1>
+        <a th:href="@{/daily/{categoryId}(categoryId=${categoryId})}"><h1 class="title-text">일상공유</h1></a>
         <div id="write-daily-wrap">
             <div id="write-daily"><a href="/daily/register"
                                      th:href="@{/daily/{categoryId}/register(categoryId=__${categoryId}__)}">일상 공유하기</a>
@@ -33,9 +37,12 @@
                 </Form>
                 <div>
                     <ul class="daily-tag">
-                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='일상')}" th:text="'#일상'">#건강</a></li>
-                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#건강'">#명언</a></li>
-                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='명언')}" th:text="'#명언'">#가나다</a></li>
+                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='일상')}" th:text="'#일상'">#건강</a>
+                        </li>
+                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#건강'">#명언</a>
+                        </li>
+                        <li><a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='명언')}" th:text="'#명언'">#가나다</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -99,30 +106,58 @@
                         th:text="${dailyArticle.title}"></a></p>
             </div>
 
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:if="${pagination.showFirst}">
+                        <a class="page-link"
+                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=1, tagName=${parameterForm.tagName})}">
+
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">처음으로</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${pagination.showPrevious}">
+                        <a class="page-link"
+                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.previousStartPage}, tagName=${parameterForm.tagName})}">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">이전목록</span>
+                        </a>
+                    </li>
+
+                    <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+
+                        <li class="page-item active" th:if="${i == pagination.params.requestPage}">
+                            <a class="page-link"
+                               th:text="${i}">1</a>
+                        </li>
+                        <li class="page-item" th:if="${i != pagination.params.requestPage}">
+                            <a class="page-link"
+                               th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${i}, tagName=${parameterForm.tagName})}"
+                               th:text="${i}">2</a>
+                        </li>
+                    </th:block>
+
+                    <li class="page-item" th:if="${pagination.showNext}">
+                        <a class="page-link" href="#" aria-label="Next"
+                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.nextStartPage}, tagName=${parameterForm.tagName})}">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">다음목록</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${pagination.showLast}">
+                        <a class="page-link" href="#" aria-label="Next"
+                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.totalPages}, tagName=${parameterForm.tagName})}">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">끝으로</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
     </div>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
 
-</div>
 </div>
 
 </html>

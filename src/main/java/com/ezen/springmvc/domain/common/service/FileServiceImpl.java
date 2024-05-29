@@ -24,34 +24,93 @@ public class FileServiceImpl implements FileService {
         new File(directoryName).mkdirs();
     }
 
+//    /**
+//     * 단일 업로드 파일 저장
+//     */
+//    public UploadFile storeFile(MultipartFile multipartFile, String storePath) {
+//        if (!existUploadDirectory(storePath)) {
+//            makeUploadDirectory(storePath);
+//        }
+//
+//        String uploadFileName = multipartFile.getOriginalFilename();
+//        String storeFileName = createStoreFileName(uploadFileName);
+//        try {
+//            multipartFile.transferTo(new File(storePath + storeFileName));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return new UploadFile(uploadFileName, storeFileName);
+//    }
+
     /**
      * 단일 업로드 파일 저장
      */
     public UploadFile storeFile(MultipartFile multipartFile, String storePath) {
-        if (!existUploadDirectory(storePath)) {
-            makeUploadDirectory(storePath);
+        String uploadFileName;
+        String storeFileName;
+
+        // 파일이 비어있는 경우 (파일 업로드를 하지 않은 경우)
+        if (multipartFile.isEmpty()) {
+            // 디폴트 파일 경로를 설정
+            uploadFileName = "default.jpg";
+            storeFileName = "default.jpg";
+        } else {
+            if (!existUploadDirectory(storePath)) {
+                makeUploadDirectory(storePath);
+            }
+
+            uploadFileName = multipartFile.getOriginalFilename();
+            storeFileName = createStoreFileName(uploadFileName);
+            try {
+                multipartFile.transferTo(new File(storePath + storeFileName));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        String uploadFileName = multipartFile.getOriginalFilename();
-        String storeFileName = createStoreFileName(uploadFileName);
-        try {
-            multipartFile.transferTo(new File(storePath + storeFileName));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         return new UploadFile(uploadFileName, storeFileName);
     }
 
     /**
      * 다중 업로드 파일 저장
      */
+//    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles, String storePath) {
+//        List<UploadFile> storeFileResult = new ArrayList<UploadFile>();
+//        for (MultipartFile multipartFile : multipartFiles) {
+//            if (!multipartFile.isEmpty()) {
+//                // 업로드 파일 저장
+//                UploadFile uploadFile = null;
+//                uploadFile = storeFile(multipartFile, storePath);
+//                storeFileResult.add(uploadFile);
+//            }
+//        }
+//        return storeFileResult;
+//    }
+
+    /**
+     * 다중 업로드 파일 저장
+     */
     public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles, String storePath) {
-        List<UploadFile> storeFileResult = new ArrayList<UploadFile>();
+        List<UploadFile> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
-            if (!multipartFile.isEmpty()) {
-                // 업로드 파일 저장
-                UploadFile uploadFile = null;
-                uploadFile = storeFile(multipartFile, storePath);
+            // 파일이 비어있는 경우 (파일 업로드를 하지 않은 경우)
+            if (multipartFile.isEmpty()) {
+                // 디폴트 파일 경로를 설정
+                UploadFile uploadFile = new UploadFile("default.jpg", "default.jpg");
+                storeFileResult.add(uploadFile);
+            } else {
+                if (!existUploadDirectory(storePath)) {
+                    makeUploadDirectory(storePath);
+                }
+
+                String uploadFileName = multipartFile.getOriginalFilename();
+                String storeFileName = createStoreFileName(uploadFileName);
+                try {
+                    multipartFile.transferTo(new File(storePath + storeFileName));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                UploadFile uploadFile = new UploadFile(uploadFileName, storeFileName);
                 storeFileResult.add(uploadFile);
             }
         }

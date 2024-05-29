@@ -2,6 +2,7 @@ package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
+import com.ezen.springmvc.domain.common.dto.SearchDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.dailyarticle.mapper.*;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
@@ -77,15 +78,6 @@ public class DailyArticleMapperTest {
         log.info("조회된 게시글 : {}", dailyArticleDto);
     }
 
-    @Test
-    @DisplayName("일상 게시글 목록 조회 테스트")
-//    @Disabled
-    void findByAllDailyArticleTest() {
-        List<DailyArticleDto> list = dailyArticleMapper.findByAllDailyArticle(2);
-        for (DailyArticleDto dailyArticleDto : list) {
-            log.info("조회된 게시글 목록 : {}", dailyArticleDto);
-        }
-    }
 
     @Test
     @DisplayName("일상 게시글 상세 보기 테스트")
@@ -191,10 +183,43 @@ public class DailyArticleMapperTest {
     }
 
     @Test
-    @DisplayName("태그 아티클 등록 테스트")
-//    @Disabled
+    @DisplayName("태그 별 게시글 목록 반환 테스트")
+    @Disabled
     void findByAllTagNameTest() {
-        List<DailyArticleDto> list = dailyArticleMapper.findByAllTagName(2, "일상");
-        log.info("태그 별 게시글 목록 : {}", list);
+        SearchDto searchDto = SearchDto.builder()
+                .limit(5)
+                .page(1)
+                .tagName("일상")
+                .build();
+        List<DailyArticleDto> list = dailyArticleMapper.findByAllTagName(2, searchDto.getTagName(), searchDto);
+        for (DailyArticleDto dailyArticleDto : list) {
+            log.info("태그 별 게시글 목록 : {}", dailyArticleDto);
+
+        }
+    }
+
+    @Test
+    @DisplayName("일상 게시글 목록 조회 테스트")
+    @Disabled
+    void findByAllDailyArticleTest() {
+        SearchDto searchDto = SearchDto.builder()
+                .limit(5)
+                .page(1)
+                .build();
+        List<DailyArticleDto> list = dailyArticleMapper.findByAllDailyArticle(2, searchDto);
+        for (DailyArticleDto dailyArticleDto : list) {
+            log.info("조회된 게시글 목록 : {}", dailyArticleDto);
+        }
+    }
+
+    @Test
+    @DisplayName("일상 게시글 개수 반환 테스트")
+//    @Disabled
+    void getDailyArticleCountTest() {
+        SearchDto searchDto = SearchDto.builder()
+                .tagName("일상")
+                .build();
+        int dailyArticleCount = dailyArticleServiceImpl.getDailyArticleCount(2, searchDto);
+        log.info("조회된 게시글 개수 : {}", dailyArticleCount);
     }
 }
