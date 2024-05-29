@@ -41,6 +41,11 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+    // Bean Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // Spring AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     // SMTP 프로토콜
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 

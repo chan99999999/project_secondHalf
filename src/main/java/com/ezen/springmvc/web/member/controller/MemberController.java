@@ -23,6 +23,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,14 +53,21 @@ public class MemberController {
 
     // 회원가입 화면 이동
     @GetMapping("/signup")
-    public String signup() {
+    public String signup(Model model) {
+        MemberForm memberForm = MemberForm.builder().build();
+        model.addAttribute("memberForm", memberForm);
         return "/member/signUpForm";
     }
 
     // 회원 가입 처리
     @PostMapping("/signup")
-    public String registerAction(@ModelAttribute MemberForm memberForm, Model model, RedirectAttributes redirectAttributes) {
+    public String registerAction(@Validated @ModelAttribute MemberForm memberForm, BindingResult bindingResult,
+                                 Model model, RedirectAttributes redirectAttributes) {
         log.info("수신한 사용자 정보: {}", memberForm.toString());
+
+        if (bindingResult.hasErrors()) {
+            return "/member/signUpForm";
+        }
 
         MemberDto memberDto = MemberDto.builder()
                 .memberId(memberForm.getMemberId())
@@ -83,7 +92,10 @@ public class MemberController {
 
     // 회워 로그인 화면
     @GetMapping("/login")
-    public String login(@ModelAttribute LoginForm loginForm) {
+    public String login(@ModelAttribute LoginForm loginForm, @CookieValue(value = "saveId", required = false) String saveId, Model model) {
+        if(saveId != null) {
+            loginForm.setLoginId(saveId);
+        }
         return "/member/loginForm";
     }
 

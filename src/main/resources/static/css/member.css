@@ -510,3 +510,12 @@ hr{
     align-items: center;
     margin: 20px 0;
 }
+
+/*------------------------date*/
+
+.text-danger{
+    font-size: 25px;
+    color: red;
+    padding-left: 306px;
+    margin: -10px 0px;
+}
