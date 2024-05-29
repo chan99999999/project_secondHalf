@@ -15,11 +15,11 @@
 		</select>
 
 	<!-- 회원 닉네임으로 Like 검색  -->
-	<select id="findChatByNick" parameterType="string" resultType="MessageDto">
+	<select id="findChatByNick" parameterType="string" resultType="ChatDto">
 		SELECT room_id, created_at, sender_id, receiver_id
-		FROM message
+		FROM chat_room
 		WHERE sender_id LIKE '%' || #{value} || '%'
-	</select>
+	</select>gi
 
 
 <!--	&lt;!&ndash; 회원 닉네임으로 Like 검색 &ndash;&gt;-->
