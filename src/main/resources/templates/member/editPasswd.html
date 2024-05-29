@@ -16,15 +16,20 @@
 <div class="mypage-container" th:fragment="content">
     <div class="mypage-info-wrap">
         <div class="mypage-title">비밀번호 변경</div>
-        <form class="edit-form" name="editForm" method="post">
+        <form class="edit-form"  method="post" th:object="${editPasswdForm}">
             <div class="mypage-edit-wrap">
-                <label for="memberPaswwd">비밀번호 </label>
-                <input id="memberPaswwd" class="mypage-edit-passwd" type="text" placeholder="변경할 비밀번호를 적어주세요.">
+                <label for="oldPaswwd">현재 비밀번호 </label>
+                <input id="oldPaswwd"  class="mypage-edit-passwd" type="text" name="oldPasswd" placeholder="현재 비밀번호를 적어주세요.">
+            </div>
+            <hr class="blank-hr">
+            <div class="mypage-edit-wrap">
+                <label for="newPaswwd">변경 비밀번호 </label>
+                <input id="newPaswwd" class="mypage-edit-passwd" type="text" name="newPasswd" placeholder="변경할 비밀번호를 적어주세요.">
             </div>
             <hr>
             <div class="mypage-edit-wrap">
-                <label for="rePasswd">비밀번호 확인</label>
-                <input id="rePasswd" class="mypage-edit-passwd" type="text" placeholder="비밀번호를 한번 더 적어주세요.">
+                <label for="confirmPasswd">비밀번호 확인</label>
+                <input id="confirmPasswd" class="mypage-edit-passwd" type="text" name="confirmPasswd" placeholder="비밀번호를 한번 더 적어주세요.">
             </div>
             <hr>
             <div class="edit-btn-wrap">

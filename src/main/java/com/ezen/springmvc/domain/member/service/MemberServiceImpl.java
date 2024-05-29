@@ -9,35 +9,66 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @Service
+<<<<<<< HEAD
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 	
 	private final MemberMapper memberMapper;
+=======
+public class MemberServiceImpl implements MemberService {
+>>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
 
-	@Override
-	@Transactional
-	public void register(MemberDto memberDto) {
-		memberMapper.create(memberDto);
-	}
+    private final MemberMapper memberMapper;
 
-	@Override
-	public MemberDto isMember(String id, String passwd) {
-		return memberMapper.findByIdAndPasswd(id, passwd);
-	}
+    @Override
+    @Transactional
+    public void register(MemberDto memberDto) {
+        memberMapper.create(memberDto);
+    }
 
-	@Override
-	public List<MemberDto> getMembers() {
-		return memberMapper.findByAll();
-	}
+    @Override
+    public MemberDto isMember(String id, String passwd) {
+        return memberMapper.findByIdAndPasswd(id, passwd);
+    }
 
-	@Override
-	public MemberDto getMember(String id) {
-		return memberMapper.findById(id);
-	}
+    @Override
+    public List<MemberDto> getMembers() {
+        return memberMapper.findByAll();
+    }
 
-	@Override
-	@Transactional
-	public void editMember(MemberDto memberDto) {
-		memberMapper.update(memberDto);
-	}
+    @Override
+    public MemberDto getMember(String id) {
+        return memberMapper.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public void editMember(MemberDto memberDto) {
+        memberMapper.updateInfo(memberDto);
+    }
+
+    @Override
+    @Transactional
+    public void editPasswd(MemberDto memberDto) {
+        memberMapper.updatePasswd(memberDto);
+    }
+
+    @Override
+    @Transactional
+    public void editPicture(MemberDto memberDto) {
+        memberMapper.updatePicture(memberDto);
+    }
+
+    @Override
+    @Transactional
+    public String searchId(String name, String nickname) {
+        String memberId = memberMapper.findMemberId(name, nickname);
+        return memberId;
+    }
+
+    @Override
+    @Transactional
+    public MemberDto searchPasswd(String id, String name, String email){
+        return memberMapper.findMemberPasswd(id, name, email);
+    }
 }

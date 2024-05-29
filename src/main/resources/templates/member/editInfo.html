@@ -15,30 +15,30 @@
 <div class="mypage-container" th:fragment="content">
     <div class="mypage-info-wrap">
         <div class="mypage-title">정보 수정</div>
-        <form class="edit-form" name="editForm" method="post">
+        <form class="edit-form" name="editForm" method="post" th:object="${editForm}">
             <div class="mypage-edit-wrap">
                 <label for="nickname">별명</label>
-                <input id="nickname" class="mypage-edit-text" type="text" th:placeholder="|현재 별명 : ${session.loginMember.nickname}|">
+                <input id="nickname" name="nickname" class="mypage-edit-text" type="text" th:value="${session.loginMember.nickname}">
             </div>
             <hr>
             <div class="mypage-edit-wrap">
                 <label for="email">이메일</label>
-                <input id="email" class="mypage-edit-text" type="text" th:placeholder="|현재 별명 : ${session.loginMember.email}|">
+                <input id="email" name="email" class="mypage-edit-text" type="text" th:value="${session.loginMember.email}">
             </div>
             <hr>
             <div class="mypage-edit-wrap">
                 <label for="hobby">취미</label>
-                <input id="hobby" class="mypage-edit-text" type="text" placeholder="취미를 적어주세요.">
+                <input id="hobby" name="hobby" class="mypage-edit-text" type="text" placeholder="취미를 적어주세요.">
             </div>
             <hr>
             <div class="mypage-edit-wrap">
                 <label for="interest">관심사</label>
-                <input id="interest" class="mypage-edit-text" type="text" placeholder="관심사를 적어주세요.">
+                <input id="interest" name="interest" class="mypage-edit-text" type="text" placeholder="관심사를 적어주세요.">
             </div>
             <hr>
             <div class="mypage-edit-wrap">
                 <label for="introduce">자기소개</label>
-                <textarea id="introduce" class="introduce-textarea" rows="5"
+                <textarea id="introduce" name="introduce" class="introduce-textarea" rows="5"
                           placeholder="자기소개(200글자 이내)"></textarea>
             </div>
             <hr>

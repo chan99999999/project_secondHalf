@@ -60,18 +60,6 @@ class MemberMapperTest {
     }
 
     @Test
-    @DisplayName("성으로 회원 검색 테스트")
-    @Disabled
-    void findByNameLikeTest() {
-        String findName = "김";
-        List<MemberDto> list = memberMapper.findByNameLike(findName);
-        log.info("이름 와일드카드 검색 : {}", list);
-        for (MemberDto memberDto : list) {
-            log.info(memberDto.toString());
-        }
-    }
-
-    @Test
     @DisplayName("회원 등록 테스트")
     @Disabled
     void createTest() {
@@ -88,6 +76,7 @@ class MemberMapperTest {
     void updateTest() {
         MemberDto updateMember = MemberDto
                 .builder()
+<<<<<<< HEAD
                 .build();
         memberMapper.update(updateMember);
         log.info("회원 수정 완료 : {}", updateMember);
@@ -127,6 +116,59 @@ class MemberMapperTest {
         List<MemberDto> list = memberMapper.findBySearchAllOption(searchCondition);
         log.info("검색 옵션별 전체목록 : {}", list);
         log.info("검색 수 : {}", list.size());
+=======
+                .memberId("chat")
+                .nickname("채팅")
+                .email("chan999@aa")
+                .hobby("누워")
+                .interest("음슴")
+                .introduce("안냐세여 저는 21살 귀염둥이임다")
+                .build();
+        memberMapper.updateInfo(updateMember);
+        log.info("회원 수정 완료 : {}", updateMember);
+    }
+
+
+    @Test
+    @DisplayName("회원 비밀번호 변경 테스트")
+    @Disabled
+    void updatePasswdTest() {
+        MemberDto memberDto = MemberDto.builder()
+                .memberId("chan999")
+                .memberPasswd("2222")
+                .build();
+
+        memberMapper.updatePasswd(memberDto);
+        log.info("회원 비밀번호 변경완료{}", memberDto);
+    }
+
+    @Test
+    @DisplayName("회원 대표사진 변경 테스트")
+    @Disabled
+    void updatePictureTest(){
+        MemberDto memberDto = MemberDto.builder()
+                .memberId("chan999")
+                .picture("xxx.jpg")
+                .storePicture("xxx-124.jpg")
+                .build();
+        memberMapper.updatePicture(memberDto);
+    }
+
+    @Test
+    @DisplayName("회원 아이디 찾기")
+    @Disabled
+    void findMemberIdTest(){
+        String memberId = memberMapper.findMemberId("먼데이", "월요일");
+        log.info("회원정보 : {}", memberId);
+    }
+
+    @Test
+    @DisplayName("회원 비밀번호 찾기")
+//    @Disabled
+    void findMemberPasswdTest(){
+        MemberDto memberDto = memberMapper.findMemberPasswd("chan999", "김찬규", "chan999@gmail.com");
+        log.info("회워정보 : {}", memberDto);
+>>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
     }
 }
 

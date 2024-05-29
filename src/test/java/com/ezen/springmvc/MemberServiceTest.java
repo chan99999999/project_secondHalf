@@ -40,6 +40,23 @@ public class MemberServiceTest {
 		MemberDto isMember = memberService.isMember(id, passwd);
 		log.info("인증 사용자 정보 : {}", isMember);
 	}
+
+
+	@Test
+	@DisplayName("회원정보 수정 테스트")
+	void memberEditTest(){
+		String id = "chat";
+		MemberDto memberDto = MemberDto.builder()
+				.memberId(id)
+				.nickname("키키")
+				.email("ewq@adsa")
+				.hobby("놉")
+				.interest("눕")
+				.introduce("납")
+				.build();
+
+		memberService.editMember(memberDto);
+	}
 }
 
 

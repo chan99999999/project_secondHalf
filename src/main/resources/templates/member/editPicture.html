@@ -15,11 +15,11 @@
 <div class="mypage-container" th:fragment="content">
     <div class="mypage-info-wrap">
         <div class="mypage-title">대표사진 변경</div>
-        <form class="edit-form" name="editForm" method="post">
+        <form class="edit-form" method="post" name="editPictureForm" th:object="${editPictureForm}" enctype="multipart/form-data">
             <div id="edit-picture-wrap">
-                <img id="edit-profile-picture" src="/img/profile.png">
+                <img id="edit-profile-picture" th:src="@{/member/image/{fileName}(fileName=${session.loginMember.storePicture})}">
                 <div id="mypage-file-uploder">
-                    <input id="mypage-file-upload" type="file">
+                    <input id="mypage-file-upload" name="profileImage" type="file">
                 </div>
             </div>
             <hr>
@@ -30,6 +30,11 @@
         </form>
     </div>
 </div>
+<script>
+    function pictureUpdate(){
+
+    }
+</script>
 
 </html>
 

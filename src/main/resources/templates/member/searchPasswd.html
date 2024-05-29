@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 비밀번호 찾기 ::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/member.css">
+    </th:block>
+</head>
+
+
+<div class="wrapper" th:fragment="content">
+    <div class="searchMember-wrap">
+        <h1 class="title-text" id="searchMember-text">비밀번호 찾기</h1>
+        <form method="post" action="/member/searchPasswd" th:object="${searchPasswdForm}">
+            <fieldset class="searchMember-fieldset">
+                <div class="searchMember-content">
+                    <ul class="searchMember-content-wrap">
+                        <li class="searchMember-li">
+                            <label for="searchPasswd-name">아이디</label>
+                            <input id="searchPasswd-name" class="searchMember-input" type="text" th:field="*{searchId}">
+                        </li>
+                        <li class="searchMember-li">
+                            <label for="searchPasswd-nickname">이름</label>
+                            <input id="searchPasswd-nickname" class="searchMember-input" type="text" th:field="*{searchName}">
+                        </li>
+                        <li class="searchMember-li">
+                            <label for="searchPasswd-email">이메일</label>
+                            <input id="searchPasswd-email" class="searchMember-input" type="text" th:field="*{searchEmail}">
+                        </li>
+                    </ul>
+                    <div class="register-btn-wrap">
+                        <button class="back-btn" type="reset">돌아가기</button>
+                        <button class="register-btn" type="submit">비밀번호 찾기</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+

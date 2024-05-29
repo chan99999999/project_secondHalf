@@ -15,21 +15,21 @@
 
 <div class="wrapper" th:fragment="content">
     <div id="login-wrap">
-        <form action="/member/login" name="loginForm" method="post" th:object="${loginForm}">
+        <form action="/member/login" method="post" th:object="${loginForm}">
             <input type="hidden" name="referer" value="${referer}">
             <fieldset>
                 <div id="login-div">
                     <h1 class="title-text">로그인</h1>
 <!--                    <P>${message}</P>-->
-                    <input class="login-input" type="text" placeholder="아이디" required autofocus th:field="*{loginId}">
+                    <input class="login-input" type="text" placeholder="아이디" required autofocus th:value="${saveId}" th:field="*{loginId}">
                     <input class="login-input" type="password" placeholder="비밀번호" required th:field="*{loginPasswd}">
                     <div id="login-function">
-                        <label for="agree" class="chk_box">
-                            <input type="checkbox" id="agree" th:field="*{rememberLoginId}">
+                        <label for="agree" class="chk_box login-option">
+                            <input type="checkbox" id="agree" th:field="*{rememberLoginId}" checked>
                             <span class="on"></span>
                             아이디 저장
                         </label>
-                        <a href="#">아이디/비밀번호 찾기</a>
+                        <a class="login-option" href="/member/searchMember">아이디/비밀번호 찾기</a>
                     </div>
                     <button class="login-input" id="login-btn" type="submit">로그인 하기</button>
                 </div>

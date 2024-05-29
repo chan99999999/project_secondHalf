@@ -109,7 +109,12 @@ public class DailyController {
 
     // 일상 게시글 목록 처리
     @GetMapping("{categoryId}")
-    public String dailyList(@PathVariable("categoryId") int categoryId, @RequestParam(value = "tagName", required = false) String tagName, Model model) {
+    public String dailyList(@PathVariable("categoryId") int categoryId,
+                            @RequestParam(value = "tagName", required = false) String tagName,
+//                            @RequestParam(value = "requestPage", required = false) int requestPage,
+//                            @RequestParam(value = "rowCount", required = false) int rowCount,
+
+                            Model model) {
         List<DailyArticleDto> dailyArticleList;
         if (tagName != null && !tagName.isEmpty()) {
             dailyArticleList = dailyArticleService.getDailyArticlesByTagName(categoryId, tagName);

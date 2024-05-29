@@ -22,4 +22,16 @@ public interface MemberService {
 	
 	//회원정보 수정
 	public void editMember(MemberDto member);
+
+	//회원 비밀번호 변경
+	public void editPasswd(MemberDto member);
+
+	//회원 대표사진 변경
+	public void editPicture(MemberDto member);
+
+	//회원 아이디 찾기
+	public String searchId(String name, String nickname);
+
+	//회원 비밀번호 찾기
+	public MemberDto searchPasswd(String id, String name, String email);
 }
