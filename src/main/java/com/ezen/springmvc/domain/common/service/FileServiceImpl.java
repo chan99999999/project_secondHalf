@@ -16,31 +16,19 @@ import java.util.UUID;
 @Slf4j
 public class FileServiceImpl implements FileService {
 
-<<<<<<< HEAD
     private boolean existUploadDirectory(String directoryName) {
         return new File(directoryName).exists();
     }
 
-=======
-    private boolean existUploadDirectory(String directoryName){
-        return new File(directoryName).exists();
-    }
->>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
     private void makeUploadDirectory(String directoryName) {
         new File(directoryName).mkdirs();
     }
 
-<<<<<<< HEAD
     /**
      * 단일 업로드 파일 저장
      */
     public UploadFile storeFile(MultipartFile multipartFile, String storePath) {
         if (!existUploadDirectory(storePath)) {
-=======
-    /** 단일 업로드 파일 저장 */
-    public UploadFile storeFile(MultipartFile multipartFile, String storePath) {
-        if(!existUploadDirectory(storePath)){
->>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
             makeUploadDirectory(storePath);
         }
 
@@ -54,13 +42,9 @@ public class FileServiceImpl implements FileService {
         return new UploadFile(uploadFileName, storeFileName);
     }
 
-<<<<<<< HEAD
     /**
      * 다중 업로드 파일 저장
      */
-=======
-    /** 다중 업로드 파일 저장 */
->>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
     public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles, String storePath) {
         List<UploadFile> storeFileResult = new ArrayList<UploadFile>();
         for (MultipartFile multipartFile : multipartFiles) {
@@ -94,13 +78,5 @@ public class FileServiceImpl implements FileService {
 		String uuid = UUID.randomUUID().toString();
 		return prefix + "-" + uuid + "." + suffix;
 	}
-<<<<<<< HEAD
-
-
-
 
 }
-
-=======
-}
->>>>>>> e14cf53033f08ba3cd96bed4644341f42f9a9fb1
