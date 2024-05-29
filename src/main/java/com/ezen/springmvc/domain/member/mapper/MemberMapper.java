@@ -33,5 +33,8 @@ public interface MemberMapper {
 
     //회원 아이디 찾기
     public String findMemberId(String name, String nickname);
+
+    //회원 비밀번호 찾기
+    public MemberDto findMemberPasswd(String id, String name, String email);
 }
 

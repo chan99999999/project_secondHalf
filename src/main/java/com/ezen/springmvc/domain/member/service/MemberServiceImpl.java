@@ -59,4 +59,10 @@ public class MemberServiceImpl implements MemberService {
         String memberId = memberMapper.findMemberId(name, nickname);
         return memberId;
     }
+
+    @Override
+    @Transactional
+    public MemberDto searchPasswd(String id, String name, String email){
+        return memberMapper.findMemberPasswd(id, name, email);
+    }
 }

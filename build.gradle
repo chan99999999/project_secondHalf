@@ -41,6 +41,9 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+    // SMTP 프로토콜
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
     implementation 'org.webjars.bower:axios:0.17.1'
     implementation 'org.webjars:sockjs-client:1.1.2'
     implementation 'org.webjars:stomp-websocket:2.3.3-1'

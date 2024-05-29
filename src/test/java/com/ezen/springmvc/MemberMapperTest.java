@@ -123,10 +123,18 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 아이디 찾기")
-//    @Disabled
+    @Disabled
     void findMemberIdTest(){
         String memberId = memberMapper.findMemberId("먼데이", "월요일");
         log.info("회원정보 : {}", memberId);
+    }
+
+    @Test
+    @DisplayName("회원 비밀번호 찾기")
+//    @Disabled
+    void findMemberPasswdTest(){
+        MemberDto memberDto = memberMapper.findMemberPasswd("chan999", "김찬규", "chan999@gmail.com");
+        log.info("회워정보 : {}", memberDto);
     }
 }
 

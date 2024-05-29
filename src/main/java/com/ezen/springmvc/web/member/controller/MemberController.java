@@ -8,6 +8,8 @@ import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
 import com.ezen.springmvc.web.member.form.*;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +23,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +41,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 // REST API 서비스 전용 컨트롤러
 @Controller
@@ -47,6 +54,13 @@ public class MemberController {
     private String profileFileUploadPath;
     private final FileService fileService;
     private final MemberService memberService;
+    private final JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private String from;
+
+
+
 
     // 회원가입 화면 이동
     @GetMapping("/signup")
@@ -218,9 +232,9 @@ public class MemberController {
         return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/serchMember")
-    public String serchMember(){
-        return "/member/serchMember";
+    @GetMapping("/searchMember")
+    public String searchMember(){
+        return "/member/searchMember";
     }
 
     @GetMapping("/searchId")
@@ -248,16 +262,41 @@ public class MemberController {
     }
 
     @PostMapping("/searchPasswd")
-    public String searchPasswdAction(@ModelAttribute SearchPasswdForm searchPasswdForm, Model model){
+    public String searchPasswdAction(@ModelAttribute SearchPasswdForm searchPasswdForm, RedirectAttributes redirectAttributes) throws MessagingException {
+        MemberDto memberDto = memberService.searchPasswd(searchPasswdForm.getSearchId(), searchPasswdForm.getSearchName(), searchPasswdForm.getSearchEmail());
+
+        if(memberDto != null){
+            UUID uuid = UUID.randomUUID();
+            String tempPasswd = uuid.toString().substring(0, 6);
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+            messageHelper.setFrom(from);
+            messageHelper.setTo(memberDto.getEmail());
+            messageHelper.setSubject("[후반전 홈페이지] 임시 비밀번호 안내");
+
+            StringBuilder body = new StringBuilder();
+            body.append("요청하신 임시 비밀번호 수신을 위해 발송된 메일입니다. ")
+                    .append("\n")
+                    .append("임시 비밀번호는 ")
+                    .append(tempPasswd)
+                    .append("입니다.");
+            messageHelper.setText(body.toString());
+            javaMailSender.send(message);
+
+            MemberDto editMemberPw = MemberDto.builder()
+                    .memberPasswd(tempPasswd)
+                    .memberId(memberDto.getMemberId())
+                    .build();
+            memberService.editPasswd(editMemberPw);
+
+            redirectAttributes.addFlashAttribute("memberEmail", memberDto.getEmail());
+        }
+        return "redirect:/member/searchPasswdResult";
+    }
+
+    @GetMapping("/searchPasswdResult")
+    public String searchPasswdResult(){
         return "/member/searchPasswdResult";
     }
 }
-
-
-
-
-
-
-
-
-

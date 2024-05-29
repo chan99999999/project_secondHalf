@@ -475,23 +475,36 @@ hr{
     padding: 10px;
 }
 
-#searchId-result-wrap{
+.searchId-result-wrap{
     height: 80vh;
     align-content: center;
 }
 
-#searchId-result{
+.searchId-result{
     text-align: center;
     font-size: 70px;
     align-items: center;
     margin: 80px 0;
 }
 
-#searchId-text{
+.searchId-text{
     color: #ff8c18;
 }
 
 .register-btn-wrap a{
     height: 70px;
     align-content: center;
+}
+
+.searchPasswd-result{
+    text-align: center;
+    font-size: 50px;
+    align-items: center;
+}
+
+.searchPasswd-info{
+    text-align: center;
+    font-size: 50px;
+    align-items: center;
+    margin: 20px 0;
 }
