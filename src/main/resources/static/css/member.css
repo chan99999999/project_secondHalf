@@ -437,11 +437,13 @@ hr{
     font-size: 60px;
     margin: 0px 20px;
     background-color: #eaeaea;
+    border-radius: 10px;
 }
 
 .search-member-btn:hover{
     font-weight: bolder;
-    background-color: #ffe7cb;
+    background-color: #ff8c18;
+    color: white;
 }
 
 .searchMember-fieldset{

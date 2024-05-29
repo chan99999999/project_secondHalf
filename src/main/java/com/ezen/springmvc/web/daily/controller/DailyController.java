@@ -85,6 +85,7 @@ public class DailyController {
         return "redirect:/daily/{categoryId}";
     }
 
+
     // 일상 게시글 목록 처리
     @GetMapping("{categoryId}")
     public String dailyList(@PathVariable("categoryId") int categoryId, Model model) {
