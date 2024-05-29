@@ -5,7 +5,7 @@ import com.ezen.springmvc.domain.member.dto.MemberDto;
 import java.util.List;
 
 /**
- * 회원 관련 비즈니스 로직 처리 및 트랜잭션 관리
+// * 회원 관련 비즈니스 로직 처리 및 트랜잭션 관리
  */
 public interface MemberService {
 	//회원가입
