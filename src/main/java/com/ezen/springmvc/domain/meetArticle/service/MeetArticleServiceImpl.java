@@ -2,8 +2,12 @@ package com.ezen.springmvc.domain.meetArticle.service;
 
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.TagArticleDto;
+import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper;
+import com.ezen.springmvc.domain.meetArticle.mapper.TagArticleMapper;
+import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +18,8 @@ import java.util.List;
 public class MeetArticleServiceImpl implements MeetArticleService{
     private final MeetArticleMapper meetArticleMapper;
     private final ReplyMapper replyMapper;
-//    private final TagMapper tagMapper;
+    private final TagMapper tagMapper;
+    private final TagArticleMapper tagArticleMapper;
 
     @Override
     public MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto) {
@@ -37,26 +42,31 @@ public class MeetArticleServiceImpl implements MeetArticleService{
 //    public void updateMeetArticle(MeetArticleDto meetArticleDto) {
 //        meetArticleMapper.updateMeetArticle(meetArticleDto);
 //    }
-//
+
 //    @Override
 //    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
 //        meetArticleMapper.deleteMeetArticle(meetArticleDto);
 //    }
 
-//    @Override
-//    public void hitcount(MeetArticleDto meetArticleDto) {
-//        meetArticleMapper.hitcount(meetArticleDto);
-//    }
+    @Override
+    public void hitcount(int meetArticleId) {
+        meetArticleMapper.hitcount(meetArticleId);
+    }
 
-//    @Override
-//    public TagDto findByTagName(TagDto tagDto) {
-//        return tagMapper.findByTagName(tagDto);
-//    }
-//
-//    @Override
-//    public List<TagDto> tagList() {
-//        return tagMapper.findByTagAll();
-//    }
+    @Override
+    public void creatTag(TagDto tagDto) {
+        tagMapper.createTag(tagDto);
+    }
+
+    @Override
+    public void createTagArticle(TagArticleDto tagArticleDto) {
+        tagArticleMapper.createTagArticle(tagArticleDto);
+    }
+
+    @Override
+    public List<MeetArticleDto> findByTagName(int categoryId, String tagName) {
+        return meetArticleMapper.findByAllTagName(categoryId, tagName);
+    }
 
     @Override
     public MeetArticleDto createReply(ReplyDto replyDto) {

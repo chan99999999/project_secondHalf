@@ -2,13 +2,10 @@ package com.ezen.springmvc.domain.meetArticle.mapper;
 
 import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-//@Mapper
+@Mapper
 public interface TagMapper {
     void createTag(TagDto tagDto);
-    List<TagDto> findByTagAll();
-    TagDto findByTagName(TagDto tagDto);
+    TagDto findByTagId(int tagId);
+    TagDto findByTagName(String tagName);
 }

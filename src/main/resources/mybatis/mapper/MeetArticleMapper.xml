@@ -76,10 +76,10 @@
         DELETE FROM meet_article
         WHERE m_article_id = #{meetArticleId}
     </delete>
-    <!-- 조회수 -->
-<!--    <update id="hitcount" parameterType="MeetArticleDto">-->
-<!--        UPDATE meet_article-->
-<!--        SET hitcount = hitcount + 1-->
-<!--        WHERE m_article_id = #{meetArticleId}-->
-<!--    </update>-->
+    <!-- 조회수 증가-->
+    <update id="hitcount" parameterType="MeetArticleDto">
+        UPDATE meet_article
+        SET hitcount = hitcount + 1
+        WHERE m_article_id = #{meetArticleId}
+    </update>
 </mapper>

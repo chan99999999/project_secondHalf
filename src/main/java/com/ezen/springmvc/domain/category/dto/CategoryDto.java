@@ -1,4 +1,4 @@
-package com.ezen.springmvc.domain.meetArticle.dto;
+package com.ezen.springmvc.domain.category.dto;
 
 import lombok.*;
 

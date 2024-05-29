@@ -1,24 +1,23 @@
 package com.ezen.springmvc;
 
-import com.ezen.springmvc.domain.meetArticle.dto.CategoryDto;
+import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.ReplyMapper;
-import com.ezen.springmvc.domain.meetArticle.service.CategoryServiceImpl;
-import com.ezen.springmvc.domain.meetArticle.service.MeetArticleServiceImpl;
+import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
+import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Slf4j
@@ -29,7 +28,8 @@ public class MeetArticleTest {
 //    TagMapper tagMapper;
     @Autowired
     ReplyMapper replyMapper;
-
+    @Autowired
+    MeetArticleService meetArticleService;
     @Autowired
     private CategoryServiceImpl categoryServiceImpl;
 
@@ -38,7 +38,7 @@ public class MeetArticleTest {
     @DisplayName("카테고리 목록 반환 테스트")
 //    @Disabled
     void categoryListTest() {
-        List<CategoryDto> categoryList = categoryServiceImpl.findByCategoryAll();
+        List<CategoryDto> categoryList = categoryServiceImpl.findByCategoryList();
         log.info("카테고리 목록 : {}", categoryList);
     }
 
@@ -69,17 +69,22 @@ public class MeetArticleTest {
         log.info("게시글 상세보기 : {}", meetArticleDto);
     }
 
-//    @Test
-//    @DisplayName("모임 게시글 조회수 테스트")
-//    void hitcountArticleTest(){
-//        MeetArticleDto hitcountArticle = MeetArticleDto
-//                .builder()
-//                .hitcount(1)
-//                .meetArticleId(1)
-//                .build();
-//        meetArticleMapper.hitcount(hitcountArticle);
-//        log.info("조회수 증가 완료: {}", hitcountArticle);
-//    }
+    @Test
+    @DisplayName("모임 게시글 조회수 테스트")
+    void hitcountArticleTest(){
+        int meetArticleId = 29;
+        // 게시글 조회 전 조회수 확인
+        MeetArticleDto originalArticle = meetArticleMapper.findByMeetArticleId(meetArticleId);
+        int originalHitcount = originalArticle.getHitcount();
+        log.info("증가 전 조회수: {}", originalHitcount);
+        // 조회수 증가
+        meetArticleService.hitcount(meetArticleId);
+        // 게시글 조회 후 조회수 확인
+        MeetArticleDto updatedArticle = meetArticleMapper.findByMeetArticleId(meetArticleId);
+        int updatedHitcount = updatedArticle.getHitcount();
+        log.info("증가 후 조회수: {}", updatedHitcount);
+        assertEquals(originalHitcount + 1, updatedHitcount);
+    }
 
     @Test
     @DisplayName("모임 게시글 전체 출력 테스트")

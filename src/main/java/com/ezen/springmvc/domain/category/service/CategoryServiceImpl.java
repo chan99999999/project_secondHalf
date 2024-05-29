@@ -1,7 +1,7 @@
-package com.ezen.springmvc.domain.meetArticle.service;
+package com.ezen.springmvc.domain.category.service;
 
-import com.ezen.springmvc.domain.meetArticle.dto.CategoryDto;
-import com.ezen.springmvc.domain.meetArticle.mapper.CategoryMapper;
+import com.ezen.springmvc.domain.category.dto.CategoryDto;
+import com.ezen.springmvc.domain.category.mapper.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public List<CategoryDto> findByCategoryAll(){
+    public List<CategoryDto> findByCategoryList(){
         return categoryMapper.findByCategoryAll();
     }
 

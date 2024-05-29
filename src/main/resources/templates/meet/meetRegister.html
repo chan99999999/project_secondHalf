@@ -19,10 +19,14 @@
                 <input name="title" id="meet-register-title" type="text" placeholder="모임 제목"/>
                 <div id="meet-tag-wrap">
                     <h3>카테고리</h3>
-                    <input class="daily-tag-list" type="checkbox" name="tag" value="partner"/>짝꿍
-                    <input class="daily-tag-list" type="checkbox" name="tag" value="hobbit"/>취미
-                    <input class="daily-tag-list" type="checkbox" name="tag" value="health"/>건강
-                    <input class="daily-tag-list" type="checkbox" name="tag" value="etc"/>기타
+                    <input class="daily-tag-list" type="checkbox" name="tags" th:value="짝궁"/>
+                    <label for="1" th:text="짝궁">짝궁</label>
+                    <input class="daily-tag-list" type="checkbox" name="tags" th:value="취미"/>
+                    <label for="2" th:text="취미">취미</label>
+                    <input class="daily-tag-list" type="checkbox" name="tags" th:value="건강"/>
+                    <label for="3" th:text="건강">건강</label>
+                    <input class="daily-tag-list" type="checkbox" name="tags" th:value="기타"/>
+                    <label for="4" th:text="기타">기타</label>
                 </div>
                 <div id="meet-info">
                     <div class="meet-info">

@@ -17,20 +17,24 @@
     <div id="meet-wrap">
         <h1 class="title-text">동네친구</h1>
         <div id="write-meet-wrap">
-            <div id="write-meet"><a href="/meet/register">모임 등록하기</a></div>
+            <div id="write-meet"><a href="/meet/register"
+                                    th:href="@{/meet/{categoryId}/register(categoryId=__${categoryId}__)}">모임 등록하기</a>
+            </div>
         </div>
         <div id="meet-list-wrap">
             <div id="meet-search-bar">
+                <Form th:action="@{/meet/{categoryId}(categoryId=${categoryId})}" th:method="get">
                 <div>
-                    <input type="search">
+                    <input type="search" th:name="tagName">
                     <button type="submit">검색</button>
                 </div>
+                </Form>
                 <div>
                     <ul class="meet-tag">
-                        <li><a>#짝궁</a></li>
-                        <li><a>#건강</a></li>
-                        <li><a>#취미</a></li>
-                        <li><a>#기타</a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='짝궁')}" th:text="'#짝궁'">#짝궁</a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#건강'">#짝궁</a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='취미')}" th:text="'#취미'">#짝궁</a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='기타')}" th:text="'#기타'">#짝궁</a></li>
                     </ul>
                 </div>
             </div>
@@ -40,15 +44,15 @@
                         <h1 class="meet-post-title">
                             <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}"
                                th:text="${meetArticle.title}">둘레길 같이 가실 분</a></h1>
-                        <p th:text="'장소 '+${meetArticle.regdate}">-장소 : 노원구 수락산 둘레길</p>
+                        <p th:text="'장소 '+${meetArticle.placeId}">-장소 : 노원구 수락산 둘레길</p>
                         <p th:text="'시간 '+${meetArticle.time}">-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
-                        <ul class="meet-tag" th:text="'태그 '+${meetArticle.hitcount}">
+                        <ul class="meet-tag" th:text="'태그 종류들...'">
                             <li>건강</li>
                             <li>취미</li>
                         </ul>
                     </div>
                     <div class="meet-join">
-                        <a th:href="@{meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}">
+                        <a th:href="@{meet/{categoryId}/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId}, categoryId=__${categoryId}__)}">
                             <p>참여하기</p>
                             <p th:text="'('+${meetArticle.enter}+'/'+${meetArticle.enter}+')'">(1/5)</p>
                         </a>

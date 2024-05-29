@@ -2,33 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.TagMapper">
     <!-- 태그 등록 -->
-<!--    <insert id="createTag" parameterType="TagDto">-->
-<!--        INSERT INTO tag (tag_id, tag_name, t_article_id)-->
-<!--        VALUES (tag_id_seq.NEXTVAL,-->
-<!--                #{tagName},-->
-<!--                1)-->
-<!--    </insert>-->
-<!--    &lt;!&ndash; 게시글 ID 로 해당 태그 조회 &ndash;&gt;-->
-<!--    <select id="findByArticleId" parameterType="TagDto">-->
-<!--        SELECT m.m_article_id, m.title, m.content, t.tag_id, t.tag_name-->
-<!--        FROM meet_article m-->
-<!--                 JOIN tag_article ta-->
-<!--                      ON m.m_article_id = ta.m_article_id-->
-<!--                 JOIN tag t-->
-<!--                      ON ta.t_article_id = t.tag_id-->
-<!--        WHERE m.m_article_id = #{meetArticleId};-->
-<!--    </select>-->
-<!--    &lt;!&ndash; 태그별 게시글 조회 &ndash;&gt;-->
-<!--    <select id="findByTagName" parameterType="String" resultType="TagDto">-->
-<!--        SELECT ma.m_article_id,-->
-<!--               ma.title,-->
-<!--               ma.content,-->
-<!--               t.tag_name-->
-<!--        FROM meet_article ma-->
-<!--                 INNER JOIN tag_article ta-->
-<!--                            ON ma.m_article_id = ta.t_article_id-->
-<!--                 INNER JOIN tag t-->
-<!--                            ON ta.t_article_id = t.t_article_id-->
-<!--        WHERE t.tag_name = #{tagName};-->
-<!--    </select>-->
+    <insert id="createTag" parameterType="TagDto">
+        INSERT INTO tag (tag_id, tag_name)
+        VALUES (TAG_ID_SEQ.nextval, #{tagName})
+    </insert>
+    <!-- 태그 번호로 조회 -->
+    <select id="findByTagId" parameterType="TagDto">
+        SELECT tag_id, tag_name
+        FROM tag
+        WHERE tag_id = #{tagId}
+    </select>
+    <!-- 태그 이름으로 게시글 조회 -->
+    <select id="findByTagName" parameterType="String" resultType="TagDto">
+        SELECT tag_id, tag_name
+        FROM tag
+        WHERE tag_name = #{tagName}
+    </select>
 </mapper>
