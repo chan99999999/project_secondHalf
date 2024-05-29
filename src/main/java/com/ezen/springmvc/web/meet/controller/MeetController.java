@@ -30,11 +30,6 @@ public class MeetController {
         return "/meet/meetRegister";
     }
 
-    @GetMapping
-    public String meet(Model model) {
-        return "/meet";
-    }
-
     //    목록
     @GetMapping("{categoryId}")
     public String meetList(@PathVariable("categoryId") int categoryId, @RequestParam(value = "tagName", required = false) String tagName, Model model) {
@@ -53,7 +48,7 @@ public class MeetController {
     }
 
     //    등록
-    @PostMapping("{categoryId}/register")
+    @PostMapping("/register")
     public String meetRegister(@PathVariable("categoryId") int categoryId, @ModelAttribute MeetArticleForm meetArticleForm,
                                RedirectAttributes redirectAttributes, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
@@ -91,18 +86,19 @@ public class MeetController {
     }
 
     //    게시글 상세보기
-    @GetMapping("{categoryId}/read/{meetArticleId}")
-    public String meetRead(@PathVariable("categoryId") int categoryId, @PathVariable("meetArticleId") int meetArticleId, Model model, HttpServletRequest request) {
+    @GetMapping("/read/{meetArticleId}")
+    public String meetRead(@PathVariable("meetArticleId") int meetArticleId, Model model) {
         log.info("게시글 번호 : {}", meetArticleId);
 //        HttpSession session = request.getSession();
 //        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 //        조회수 증가
-        meetArticleService.hitcount(meetArticleId);
 //        조회수가 증가된 게시글 반환
-        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(categoryId, meetArticleId);
-        List<meetReplyDto> replyList = meetArticleService.replyList(meetArticleId);
+        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
+        meetArticleService.hitcount(meetArticleDto);
+
+        List<MeetReplyDto> replyList = meetArticleService.replyList(meetArticleId);
         int replyCount = meetArticleService.replyCount(meetArticleId);
-        model.addAttribute("meetArticle", meetArticleDto);
+        model.addAttribute("meetArticleDto", meetArticleDto);
         model.addAttribute("replyList", replyList);
         model.addAttribute("replyCount", replyCount);
 //        if (loginMember != null) {
@@ -114,7 +110,7 @@ public class MeetController {
 
     //    댓글 등록
     @PostMapping("{categoryId}/read/{meetArticleId}")
-    public String meetCreateReply(@PathVariable("categoryId") int categoryId, @ModelAttribute meetReplyDto meetReplyDto,
+    public String meetCreateReply(@PathVariable("categoryId") int categoryId, @ModelAttribute MeetReplyDto meetReplyDto,
                                   @PathVariable("meetArticleId") int meetArticleId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
 //        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");

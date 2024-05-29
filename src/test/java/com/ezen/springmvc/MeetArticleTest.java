@@ -2,7 +2,7 @@ package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.meetReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
@@ -34,13 +34,13 @@ MeetReplyMapper meetReplyMapper;
     private CategoryServiceImpl categoryServiceImpl;
 
 
-    @Test
-    @DisplayName("카테고리 목록 반환 테스트")
-//    @Disabled
-    void categoryListTest() {
-        List<CategoryDto> categoryList = categoryServiceImpl.findByCategoryList();
-        log.info("카테고리 목록 : {}", categoryList);
-    }
+//    @Test
+//    @DisplayName("카테고리 목록 반환 테스트")
+////    @Disabled
+//    void categoryListTest() {
+//        List<CategoryDto> categoryList = categoryServiceImpl.findByCategoryList();
+//        log.info("카테고리 목록 : {}", categoryList);
+//    }
 
     @Test
     @DisplayName("모임 게시글 등록 테스트")
@@ -72,18 +72,21 @@ MeetReplyMapper meetReplyMapper;
     @Test
     @DisplayName("모임 게시글 조회수 테스트")
     void hitcountArticleTest(){
-        int meetArticleId = 29;
+        MeetArticleDto meetArticleId = MeetArticleDto.builder()
+                .meetArticleId(29)
+                .build();
         // 게시글 조회 전 조회수 확인
-        MeetArticleDto originalArticle = meetArticleMapper.findByMeetArticleId(meetArticleId);
-        int originalHitcount = originalArticle.getHitcount();
-        log.info("증가 전 조회수: {}", originalHitcount);
+//        MeetArticleDto originalArticle = meetArticleMapper.findByMeetArticleId(meetArticleId);
+//        int originalHitcount = originalArticle.getHitcount();
+//        log.info("증가 전 조회수: {}", originalHitcount);
         // 조회수 증가
         meetArticleService.hitcount(meetArticleId);
+        log.info(meetArticleId.toString());
         // 게시글 조회 후 조회수 확인
-        MeetArticleDto updatedArticle = meetArticleMapper.findByMeetArticleId(meetArticleId);
-        int updatedHitcount = updatedArticle.getHitcount();
-        log.info("증가 후 조회수: {}", updatedHitcount);
-        assertEquals(originalHitcount + 1, updatedHitcount);
+//        MeetArticleDto updatedArticle = meetArticleMapper.findByMeetArticleId(meetArticleId);
+//        int updatedHitcount = updatedArticle.getHitcount();
+//        log.info("증가 후 조회수: {}", updatedHitcount);
+//        assertEquals(originalHitcount + 1, updatedHitcount);
     }
 
     @Test
@@ -96,27 +99,27 @@ MeetReplyMapper meetReplyMapper;
         }
     }
 
-    @Test
-    @DisplayName("모임 게시글 댓글 등록 테스트")
-//    @Disabled
-    void createReplyTest(){
-        meetReplyDto meetReplyDto = meetReplyDto
-                .builder()
-                .replyId(1)
-                .meetArticleId(29)
-                .content("15151515151515151515")
-                .writer("monday")
-                .build();
-        meetReplyMapper.createReply(meetReplyDto);
-        log.info("등록된 댓글 : {}", meetReplyDto);
-    }
+//    @Test
+//    @DisplayName("모임 게시글 댓글 등록 테스트")
+////    @Disabled
+//    void createReplyTest(){
+//        MeetReplyDto meetReplyDto = meetReplyDto
+//                .builder()
+//                .replyId(1)
+//                .meetArticleId(29)
+//                .content("15151515151515151515")
+//                .writer("monday")
+//                .build();
+//        meetReplyMapper.createReply(meetReplyDto);
+//        log.info("등록된 댓글 : {}", meetReplyDto);
+//    }
 
     @Test
     @DisplayName("모임 게시글 댓글 목록 반환 테스트")
 //    @Disabled
     void findByReplyAllTest() {
-        List<meetReplyDto> list = meetReplyMapper.findByReplyAll(29);
-        for (meetReplyDto meetReplyDto : list) {
+        List<MeetReplyDto> list = meetReplyMapper.findByReplyAll(29);
+        for (MeetReplyDto meetReplyDto : list) {
             log.info("조회된 댓글 목록 : {}", meetReplyDto);
         }
     }

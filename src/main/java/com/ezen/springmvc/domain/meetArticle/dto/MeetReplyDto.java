@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class meetReplyDto {
+public class MeetReplyDto {
     private int replyId;
     private int meetArticleId;
     private String writer;

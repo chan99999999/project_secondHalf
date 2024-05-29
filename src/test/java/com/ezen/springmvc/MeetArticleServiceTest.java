@@ -1,7 +1,7 @@
 package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.meetReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
@@ -85,18 +85,18 @@ public class MeetArticleServiceTest {
         }
     }
 
-    @Test
-    @DisplayName("모임 게시글 댓글 등록 테스트")
-    @Disabled
-    void createReplyTest(){
-        meetReplyDto meetReplyDto = meetReplyDto
-                .builder()
-                .content("댓글 테스트")
-                .meetArticleId(2)
-                .build();
-        meetArticleService.createReply(meetReplyDto);
-        log.info("등록된 댓글 : {}", meetReplyDto);
-    }
+//    @Test
+//    @DisplayName("모임 게시글 댓글 등록 테스트")
+//    @Disabled
+//    void createReplyTest(){
+//        MeetReplyDto meetReplyDto = meetReplyDto
+//                .builder()
+//                .content("댓글 테스트")
+//                .meetArticleId(2)
+//                .build();
+//        meetArticleService.createReply(meetReplyDto);
+//        log.info("등록된 댓글 : {}", meetReplyDto);
+//    }
 
 //    @Test
 //    @Transactional

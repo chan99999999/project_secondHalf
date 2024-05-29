@@ -20,7 +20,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model){
         model.getAttribute("loginMember");
-        List<CategoryDto> categoryList = categoryService.findByCategoryList();
+        List<CategoryDto> categoryList = categoryService.getCategoryList();
         model.addAttribute("categoryList", categoryList);
         return "index";
     }

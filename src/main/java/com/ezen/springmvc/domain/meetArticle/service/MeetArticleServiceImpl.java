@@ -1,7 +1,7 @@
 package com.ezen.springmvc.domain.meetArticle.service;
 
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.meetReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.TagArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
@@ -9,6 +9,7 @@ import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.TagArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,8 +50,9 @@ public class MeetArticleServiceImpl implements MeetArticleService{
 //    }
 
     @Override
-    public void hitcount(int meetArticleId) {
-        meetArticleMapper.hitcount(meetArticleId);
+    public MeetArticleDto hitcount(MeetArticleDto meetArticleDto) {
+        meetArticleMapper.hitcount(meetArticleDto);
+        return meetArticleDto;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class MeetArticleServiceImpl implements MeetArticleService{
     }
 
     @Override
-    public MeetArticleDto createReply(meetReplyDto meetReplyDto) {
+    public MeetArticleDto createReply(MeetReplyDto meetReplyDto) {
         meetReplyMapper.createReply(meetReplyDto);
         return null;
     }
@@ -80,7 +82,7 @@ public class MeetArticleServiceImpl implements MeetArticleService{
 //    }
 
     @Override
-    public List<meetReplyDto> replyList(int meetArticleId) {
+    public List<MeetReplyDto> replyList(int meetArticleId) {
         return meetReplyMapper.findByReplyAll(meetArticleId);
     }
 

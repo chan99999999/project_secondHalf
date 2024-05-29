@@ -51,7 +51,7 @@
             </a>
         </div>
         <div class="category-btn">
-            <a href="/meet">
+            <a href="/meet" th:href="@{/meet/{categoryId}(categoryId=${categoryList[2].categoryId})}">
                 <div class="category-content">
                     <img src="/img/category_meet.png">
                     <div class="category-title">동네친구</div>

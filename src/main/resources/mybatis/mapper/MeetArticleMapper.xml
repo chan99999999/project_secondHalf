@@ -81,5 +81,11 @@
         UPDATE meet_article
         SET hitcount = hitcount + 1
         WHERE m_article_id = #{meetArticleId}
+
+        <selectKey keyProperty="hitcount" resultType="int" order="AFTER">
+            SELECT hitcount FROM meet_article
+            WHERE m_article_id = #{meetArticleId}
+        </selectKey>
+
     </update>
 </mapper>

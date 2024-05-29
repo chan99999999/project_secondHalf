@@ -14,6 +14,6 @@ public interface MeetArticleMapper {
     MeetArticleDto readMeetArticle(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId);
 //    void updateMeetArticle(MeetArticleDto meetArticleDto);
 //    void deleteMeetArticle(MeetArticleDto meetArticleDto);
-    void hitcount(int meetArticleId);
+    void hitcount(MeetArticleDto meetArticleDto);
     List<MeetArticleDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName);
 }

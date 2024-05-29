@@ -16,23 +16,23 @@
     <div id="meet-read-wrap">
         <div id="meet-read-writer-wrap">
             <div id="meet-read-writer">
-                <p id="meet-read-writer-name" th:text="${meetArticle.memberId}"></p>
+                <p id="meet-read-writer-name" th:text="${meetArticleDto.memberId}"></p>
             </div>
-            <p id="meet-read-date" th:text="${meetArticle.regdate}">2024. 05. 14.(화) 17:31 작성</p>
+            <p id="meet-read-date" th:text="${meetArticleDto.regdate}">2024. 05. 14.(화) 17:31 작성</p>
         </div>
         <div id="meet-read-content-wrap">
-            <h1 id="meet-read-title" th:text="${meetArticle.title}">다이소 같이 가실 분</h1>
-            <p class="meet-read-content" th:text="${meetArticle.time}">-시간 : 2024. 6. 13.(목) 18:00</p>
-            <p class="meet-read-content" th:text="${meetArticle.placeId}">-장소 : 다이소 노원역점</p>
-            <p class="meet-read-content" th:text="${meetArticle.content}">본문 내용이 들어가면 됩니다</p>
+            <h1 id="meet-read-title" th:text="${meetArticleDto.title}">다이소 같이 가실 분</h1>
+            <p class="meet-read-content" th:text="${meetArticleDto.time}">-시간 : 2024. 6. 13.(목) 18:00</p>
+            <p class="meet-read-content" th:text="${meetArticleDto.placeId}">-장소 : 다이소 노원역점</p>
+            <p class="meet-read-content" th:text="${meetArticleDto.content}">본문 내용이 들어가면 됩니다</p>
         </div>
         <div class="register-btn-wrap">
-            <button class="back-btn" th:onclick="|location.href='@{/meet}'|">돌아가기</button>
+            <button class="back-btn" th:onclick="history.back(-1)">돌아가기</button>
             <button class="register-btn">참여하기</button>
         </div>
         <div id="review-count-wrap">
             <p th:text="'댓글(' + ${replyCount} + ')'">댓글(3)</p>
-            <p th:text="'조회수(' + ${meetArticle.hitcount} + ')'">조회수</p>
+            <p th:text="'조회수(' + ${meetArticleDto.hitcount} + ')'">조회수</p>
         </div>
         <div class="review-wrap">
             <div id="write-review">

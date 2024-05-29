@@ -195,7 +195,7 @@ public class DailyController {
 
     @GetMapping("/getCategory")
     public String getCategory(Model model) {
-        List<CategoryDto> categoryList = categoryService.findByCategoryList();
+        List<CategoryDto> categoryList = categoryService.getCategoryList();
         log.info("수신받은 카테고리 목록 : {}", categoryList);
         model.addAttribute("categoryList", categoryList);
         return "layout/template";
