@@ -1,12 +1,9 @@
 package com.ezen.springmvc.web.member.controller;
 
 import com.ezen.springmvc.domain.common.dto.UploadFile;
-import com.ezen.springmvc.domain.common.encription.EzenUtil;
 import com.ezen.springmvc.domain.common.service.FileService;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
-import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import com.ezen.springmvc.domain.member.service.MemberService;
-import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
 import com.ezen.springmvc.web.member.form.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -17,30 +14,22 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 // REST API 서비스 전용 컨트롤러
@@ -58,8 +47,6 @@ public class MemberController {
 
     @Value("${spring.mail.username}")
     private String from;
-
-
 
 
     // 회원가입 화면 이동
@@ -96,17 +83,17 @@ public class MemberController {
 
     // 회워 로그인 화면
     @GetMapping("/login")
-    public String login(@ModelAttribute LoginForm loginForm, @CookieValue(value = "saveId", defaultValue = "") String saveId, Model model, RedirectAttributes redirectAttributes) {
-        model.addAttribute("saveId", saveId);
+    public String login(@ModelAttribute LoginForm loginForm) {
         return "/member/loginForm";
     }
 
     // 회원 로그인 처리
     @PostMapping("/login")
-    public String loginAction(@ModelAttribute LoginForm loginForm, HttpServletResponse response, HttpServletRequest request) {
-        log.info("로그인 폼 {}", loginForm);
+    public String loginAction(@RequestParam(value = "redirectURI", required = false, defaultValue = "/") String redirectURI,
+                              @ModelAttribute LoginForm loginForm, HttpServletResponse response, HttpServletRequest request) {
+
+        log.info("redirectURI: {}", redirectURI);
         MemberDto loginMember = memberService.isMember(loginForm.getLoginId(), loginForm.getLoginPasswd());
-        log.info("{}", loginMember);
 
         if (loginMember != null) {
             if (loginForm.isRememberLoginId()) {
@@ -129,7 +116,7 @@ public class MemberController {
         }
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
-        return "redirect:/";
+        return "redirect:" + redirectURI;
     }
 
     // 회원 로그아웃 처리
