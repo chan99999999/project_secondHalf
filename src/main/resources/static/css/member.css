@@ -124,7 +124,6 @@
 }
 
 #signup-birth{
-    width: 540px;
     display: flex;
     align-content: center;
     justify-content: space-between;
@@ -135,6 +134,12 @@
     width: 160px;
     font-size: 30px;
     text-align: center;
+}
+
+#dupIdResult, #dupPasswdResult, #dupNicknameResult{
+    font-size: 25px;
+    padding-left: 306px;
+    margin: -10px 0;
 }
 
 /*-------------------------RESULT----------------------*/

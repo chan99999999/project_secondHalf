@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class MemberForm {
     @Length(min = 4, max = 10, message = "아이디는 {min}~{max}자 사이의 필수 입력 항목입니다.")
-    @Pattern(regexp = "^[a-zA-Z][0-9a-zA-Z]{5,9}$", message = "아이디 형식이 유효하지 않습니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9a-zA-Z]{4,10}$", message = "아이디 형식이 유효하지 않습니다.")
     private String memberId;        /**회원 아이디*/
     private String memberAddress;   /**회원 주소*/
     @NotBlank(message = "이름은 필수 입력 항목입니다.")

@@ -19,6 +19,12 @@
 		WHERE member_id = #{value}
 	</select>
 
+	<select id="findByNickname" parameterType="string" resultType="MemberDto">
+		SELECT member_id, name, nickname, hobby, interest, member_address, gender, birth_date, introduce, picture, store_picture, member_passwd, email, TO_CHAR(regdate, 'YYYY-MM-DD') regdate
+		FROM member
+		WHERE nickname = #{value}
+	</select>
+
 	<!-- 회원 인증 -->
 	<select id="findByIdAndPasswd" resultType="MemberDto">
 		SELECT member_id, name, nickname, hobby, interest, member_address, gender, birth_date, introduce, picture, store_picture, member_passwd, email, TO_CHAR(regdate, 'YYYY-MM-DD') regdate

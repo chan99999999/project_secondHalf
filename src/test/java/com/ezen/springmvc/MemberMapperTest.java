@@ -131,10 +131,15 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 비밀번호 찾기")
-//    @Disabled
+    @Disabled
     void findMemberPasswdTest(){
         MemberDto memberDto = memberMapper.findMemberPasswd("chan999", "김찬규", "chan999@gmail.com");
         log.info("회워정보 : {}", memberDto);
+    }
+
+    @Test
+    @DisplayName("닉네임으로 회원찾기")
+    void findMemberByNicknameTest(){
     }
 }
 

@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 // REST API 서비스 전용 컨트롤러
@@ -83,6 +85,37 @@ public class MemberController {
 
         redirectAttributes.addFlashAttribute("registerMember", memberDto);
         return "redirect:/member/result";
+    }
+
+    @GetMapping("/idcheck/{inputId}")
+    public @ResponseBody Map<String, Object> idDupCheckAction(@PathVariable("inputId") String inputId) {
+        log.info("요청 아이디 : {}", inputId);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", true);
+        map.put("message", "사용 가능한 아이디입니다.");
+
+        MemberDto memberDto = memberService.getMember(inputId);
+        if (memberDto != null) {
+            map.put("result", false);
+            map.put("message", "이미 사용중인 아이디입니다.");
+        }
+        return map;
+    }
+
+    @GetMapping("/nicknameCheck/{inputNickname}")
+    public @ResponseBody Map<String, Object> nickNameDupCheckAction(@PathVariable("inputNickname") String inputNickname) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", true);
+        map.put("message", "사용 가능한 닉네임입니다.");
+
+        MemberDto memberDto = memberService.getNickname(inputNickname);
+        if (memberDto != null) {
+            map.put("result", false);
+            map.put("message", "이미 사용중인 닉네임입니다.");
+        }
+        return map;
     }
 
     @GetMapping("/result")

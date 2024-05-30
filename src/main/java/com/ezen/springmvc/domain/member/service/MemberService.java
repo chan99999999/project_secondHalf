@@ -16,6 +16,9 @@ public interface MemberService {
 	
 	//회원정보
 	public MemberDto getMember(String id);
+
+	//회원정보(닉네임)
+	public MemberDto getNickname(String nickname);
 	
 	//회원목록
 	public List<MemberDto> getMembers();

@@ -15,7 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
     public static final  List<String> loginNotEssential =
             Arrays.asList(
                     "/", "/css/**", "/img/**", "/js/**", "/*.ico", "/vendor/**",
-                    "/member/signup/**", "/member/login", "/member/logout", "/member/result",
+                    "/member/signup/**", "/member/login", "/member/logout", "/member/result", "/member/idcheck/{inputId}",
+                    "/member/nicknameCheck/{inputNickname}",
                     "/member/searchIdResult", "/member/searchMember", "/member/searchId", "/member/searchPasswd",
                     "/member/searchPasswdResult", "/map/**", "/daily/{categoryId}", "/daily/2");
 

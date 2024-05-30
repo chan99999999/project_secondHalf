@@ -5,6 +5,8 @@
 <head>
     <title th:fragment="title"> ::: 회원가입 ::: </title>
     <th:block th:fragment="script">
+        <script src="/js/member_signUp.js" defer></script>
+        <script src="/js/validator.js" defer></script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
@@ -16,40 +18,40 @@
 <div class="wrapper" th:fragment="content">
     <div id="signup-wrap">
         <h1 class="title-text">회원 가입</h1>
-        <form name="register-form" method="post" novalidate th:object="${memberForm}">
+        <form name="signupForm" method="post" novalidate th:object="${memberForm}">
             <fieldset id="signup-fieldset">
                 <div id="signup-content">
                     <ul id="signup-list">
                         <li>
                             <div class="signup-info">
                                 <label for="signup-id">아이디</label>
-                                <input class="signup-input" name="memberId" type="text" id="signup-id" size="20"
+                                <input class="signup-input" type="text" id="signup-id" size="20" th:field="*{memberId}"
                                        placeholder="아이디를 입력해주세요." autofocus>
                             </div>
                             <p th:errors="*{memberId}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
+                            <div id="dupIdResult"></div>
                         </li>
                         <li>
                             <div class="signup-info">
                                 <label for="signup-name">이름</label>
-                                <input class="signup-input" name="name" type="text" id="signup-name" size="20"
-                                       placeholder="이름을 입력해주세요." minlength="2"
-                                       maxlength="10" autofocus required>
+                                <input class="signup-input" type="text" id="signup-name" size="20"
+                                       placeholder="이름을 입력해주세요." th:field="*{name}" autofocus required>
                             </div>
                             <p th:errors="*{name}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
                         </li>
                         <li>
                             <div class="signup-info">
                                 <label for="signup-nickname">별명</label>
-                                <input class="signup-input" name="nickname" type="text" id="signup-nickname" size="20"
-                                       autofocus
-                                       required placeholder="별명(닉네임)을 입력해주세요.">
+                                <input class="signup-input" type="text" id="signup-nickname" size="20"
+                                       autofocus required th:field="*{nickname}" placeholder="별명(닉네임)을 입력해주세요.">
                             </div>
-                            <p th:errors="*{nickname}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
+                            <p th:errors="*{nickname}" th:class="text-danger">닉네임 관련 입력 오류 메시지</p>
+                            <div id="dupNicknameResult"></div>
                         </li>
                         <li>
                             <div class="signup-info">
                                 <label for="signup-pw">비밀번호</label>
-                                <input class="signup-input" name="memberPasswd" type="password" id="signup-pw"
+                                <input class="signup-input" th:field="*{memberPasswd}" type="password" id="signup-pw"
                                        placeholder="비밀번호를 입력해주세요." required o>
                             </div>
                             <p th:errors="*{memberPasswd}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
@@ -57,28 +59,29 @@
                         <li>
                             <div class="signup-info">
                                 <label for="signup-pw-confirm">비밀번호 확인</label>
-                                <input class="signup-input" type="password" id="signup-pw-confirm"
+                                <input class="signup-input" type="password" id="signup-pw-confirm" th:field="*{rePasswd}"
                                        placeholder="비밀번호를 한번 더 입력해주세요.">
                             </div>
                             <p th:errors="*{rePasswd}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
+                            <div id="dupPasswdResult"></div>
                         </li>
                         <li>
                             <div class="signup-info">
                                 <label for="signup-address">주소</label>
                                 <div id="signup-address">
-                                    <input class="signup-radio" type="radio" name="memberAddress" id="signup-hagye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-hagye"
                                            value="하계동">
                                     <label for="signup-hagye">하계동</label>
-                                    <input class="signup-radio" type="radio" name="memberAddress" id="signup-junggye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-junggye"
                                            value="중계동">
                                     <label for="signup-junggye">중계동</label>
-                                    <input class="signup-radio" type="radio" name="memberAddress" id="signup-sanggye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-sanggye"
                                            value="상계동">
                                     <label for="signup-sanggye">상계동</label>
-                                    <input class="signup-radio" type="radio" name="memberAddress" id="signup-wolgye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-wolgye"
                                            value="월계동">
                                     <label for="signup-wolgye">월계동</label>
-                                    <input class="signup-radio" type="radio" name="memberAddress" id="signup-gongneung"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-gongneung"
                                            value="공릉동">
                                     <label for="signup-gongneung">공릉동</label>
                                 </div>
@@ -88,10 +91,10 @@
                             <div class="signup-info">
                                 <label for="signup-gender">성별</label>
                                 <div id="signup-gender">
-                                    <input class="signup-radio" type="radio" name="gender" id="signup-women"
+                                    <input class="signup-radio" type="radio" th:field="*{gender}" id="signup-women"
                                            value="W">
                                     <label for="signup-women">여성</label>
-                                    <input class="signup-radio" type="radio" name="gender" id="signup-men"
+                                    <input class="signup-radio" type="radio" th:field="*{gender}" id="signup-men"
                                            value="M">
                                     <label for="signup-men">남성</label>
                                 </div>
@@ -99,14 +102,14 @@
                         </li>
                         <li>
                             <div class="signup-info">
-                                <label for="signup-pw-confirm">생년월일</label>
-                                <input class="signup-input" type="date" name="birthDate">
+                                <label for="signup-birth">생년월일</label>
+                                <input class="signup-input" id="signup-birth" type="date" th:field="*{birthDate}">
                             </div>
                         </li>
                         <li>
                             <div class="signup-info">
                                 <label for="signup-email">이메일</label>
-                                <input class="signup-input" name="email" type="email" id="signup-email"
+                                <input class="signup-input" th:field="*{email}" type="email" id="signup-email"
                                        placeholder="이메일">
                             </div>
                             <p th:errors="*{email}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>

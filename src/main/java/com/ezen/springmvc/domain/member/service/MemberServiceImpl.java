@@ -36,6 +36,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberDto getNickname(String nickname) {
+        return memberMapper.findByNickname(nickname);
+    }
+
+    @Override
     @Transactional
     public void editMember(MemberDto memberDto) {
         memberMapper.updateInfo(memberDto);
