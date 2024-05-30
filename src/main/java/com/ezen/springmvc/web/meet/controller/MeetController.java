@@ -69,39 +69,26 @@ public class MeetController {
     }
 
     //    등록
-    @PostMapping("/register")
+    @PostMapping("{categoryId}/register")
     public String meetRegister(@PathVariable("categoryId") int categoryId,
                                @ModelAttribute MeetArticleForm meetArticleForm,
-                               HttpServletRequest request,
-                               Model model) {
+                               HttpServletRequest request) {
+        log.info("수신한 정보들 : {}", meetArticleForm);
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MeetArticleDto meetArticleDto = MeetArticleDto.builder()
                 .categoryId(categoryId)
                 .meetArticleId(meetArticleForm.getMeetArticleId())
                 .memberId(loginMember.getMemberId())
+                .placeId(1) // 추후 동적 변경 필요
                 .title(meetArticleForm.getTitle())
                 .content(meetArticleForm.getContent())
                 .enter(meetArticleForm.getEnter())
                 .time(meetArticleForm.getTime())
                 .hitcount(meetArticleForm.getHitcount())
+                .tags(meetArticleForm.getTags())
                 .build();
-        String tags = meetArticleForm.getTags();
-        if (tags != null && !tags.isEmpty()) {
-            List<String> tagNames = Arrays.asList(tags.split(","));
-            for (String tagName : tagNames) {
-                tagName = tagName.trim();
-                TagDto tagDto = TagDto.builder()
-                        .tagName(tagName)
-                        .build();
-                meetArticleService.creatTag(tagDto);
-                TagArticleDto tagArticleDto = TagArticleDto.builder()
-                        .meetArticleId(meetArticleForm.getMeetArticleId())
-                        .build();
-                meetArticleService.createTagArticle(tagArticleDto);
-            }
-        }
-        log.info("수신한 게시글 정보 : {}", meetArticleDto);
+        meetArticleService.addMeet(meetArticleDto);
         return "redirect:/meet/{categoryId}";
     }
 

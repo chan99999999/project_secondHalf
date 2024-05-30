@@ -30,11 +30,11 @@
             <button class="back-btn" th:onclick="history.back(-1)">돌아가기</button>
             <button class="register-btn">참여하기</button>
         </div>
-        <div id="review-count-wrap">
-            <p th:text="'댓글(' + ${replyCount} + ')'">댓글(3)</p>
-            <p th:text="'조회수(' + ${meetArticleDto.hitcount} + ')'">조회수</p>
-        </div>
         <div class="review-wrap">
+            <div id="review-count-wrap">
+                <p th:text="'댓글(' + ${replyCount} + ')'">댓글(3)</p>
+                <p th:text="'조회수(' + ${meetArticleDto.hitcount} + ')'">조회수</p>
+            </div>
             <th:block th:if="${loginMember != null}">
                 <div class="review-wrap">
                     <form id="meet-register-form" method="post">
@@ -57,7 +57,6 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </th:block>
         </div>

@@ -19,4 +19,5 @@ public class MeetArticleDto {
     private int categoryId;
     private String memberId;
     private int placeId;
+    private String[] tags;
 }

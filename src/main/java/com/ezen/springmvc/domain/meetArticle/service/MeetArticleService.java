@@ -11,26 +11,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface MeetArticleService {
-//    모임 게시글 등록
-    MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto, TagDto tagDto);
 //    게시글 전체 목록
     List<MeetArticleDto> findByAllMeetArticle(int categoryId, SearchDto searchDto);
 //    모임 게시글 상세보기
     MeetArticleDto readMeetArticle(int categoryId, int meetArticleId);
 //    모임 게시글 갯수 반환 (페이징처리)
-      int findByMeetArticleCount(int categoryId, SearchDto searchDto);
+    int findByMeetArticleCount(int categoryId, SearchDto searchDto);
+//    모임 게시글 등록(게시글, 태그, 태그게시글)
+    void addMeet(MeetArticleDto meetArticleDto);
 //    모임 게시글 수정
 //    void updateMeetArticle(MeetArticleDto meetArticleDto);
 //    모임 게시글 삭제
 //    void deleteMeetArticle(MeetArticleDto meetArticleDto);
 //    게시글 조회수
     MeetArticleDto hitcount(MeetArticleDto meetArticleDto);
-//    태그 등록
-    void creatTag(TagDto tagDto);
 //    태그 이름으로 게시글 목록 반환
     List<MeetArticleDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName, @Param("searchDto") SearchDto searchDto);
-//    태그 게시글 생성
-    void createTagArticle(TagArticleDto tagArticleDto);
 //    댓글 등록
     void createReply(MeetReplyDto meetReplyDto);
 //    댓글 삭제

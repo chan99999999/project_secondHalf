@@ -19,5 +19,5 @@ public class MeetArticleForm {
     private int hitcount;
     private int categoryId;
     private int placeId;
-    private String tags;
+    private String[] tags;
 }

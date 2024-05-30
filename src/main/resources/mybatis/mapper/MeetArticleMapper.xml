@@ -39,6 +39,9 @@
                 #{categoryId},
                 #{memberId},
                 #{placeId})
+        <selectKey keyProperty="meetArticleId" resultType="int" order="AFTER">
+            SELECT m_article_id_seq.CURRVAL FROM dual
+        </selectKey>
     </insert>
     <!-- 게시글 번호로 게시글 조회 -->
     <select id="findByMeetArticleId" parameterType="int" resultType="MeetArticleDto">
@@ -86,7 +89,7 @@
             WHERE m_article_id = #{meetArticleId}
         </selectKey>
     </update>
-    <!-- 게시글 수 조회 -->
+    <!-- 게시글 조회 -->
     <select id="findByMeetArticleCount" parameterType="map" resultType="int">
         SELECT COUNT(*)
         FROM meet_article

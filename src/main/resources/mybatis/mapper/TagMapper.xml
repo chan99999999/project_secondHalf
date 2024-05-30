@@ -4,7 +4,10 @@
     <!-- 태그 등록 -->
     <insert id="createTag" parameterType="TagDto">
         INSERT INTO tag (tag_id, tag_name)
-        VALUES (TAG_ID_SEQ.nextval, #{tagName})
+        VALUES (tag_id_seq.NEXTVAL, #{tagName})
+        <selectKey keyProperty="tagId" resultType="int" order="AFTER">
+            SELECT tag_id_seq.CURRVAL FROM dual
+        </selectKey>
     </insert>
     <!-- 태그 번호로 조회 -->
     <select id="findByTagId" parameterType="TagDto">
@@ -13,7 +16,7 @@
         WHERE tag_id = #{tagId}
     </select>
     <!-- 태그 이름으로 게시글 조회 -->
-    <select id="findByAllTagName" parameterType="map" resultType="TagDto">
+    <select id="findByAllTagName" parameterType="String" resultType="TagDto">
         SELECT tag_id, tag_name
         FROM tag
         WHERE tag_name = #{tagName}

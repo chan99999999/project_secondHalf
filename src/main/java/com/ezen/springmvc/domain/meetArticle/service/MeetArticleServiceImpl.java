@@ -9,25 +9,44 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class MeetArticleServiceImpl implements MeetArticleService{
+public class MeetArticleServiceImpl implements MeetArticleService {
     private static final Logger log = LoggerFactory.getLogger(MeetArticleServiceImpl.class);
     private final MeetArticleMapper meetArticleMapper;
     private final MeetReplyMapper meetReplyMapper;
     private final TagMapper tagMapper;
     private final TagArticleMapper tagArticleMapper;
 
+    // 모임 등록 서비스
     @Override
     @Transactional
-    public MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto, TagDto tagDto) {
+    public void addMeet(MeetArticleDto meetArticleDto) {
+        // 모임게시글 테이블에 신규 게시글 등록 
         meetArticleMapper.createMeetArticle(meetArticleDto);
-        tagMapper.createTag(tagDto);
-        return meetArticleMapper.findByMeetArticleId(meetArticleDto.getMeetArticleId());
+        // 태그게시글 테이블에 신규 태그게시글 등록
+        TagArticleDto tagArticleDto = TagArticleDto.builder()
+                .meetArticleId(meetArticleDto.getMeetArticleId())
+                .build();
+        tagArticleMapper.createTagArticle(tagArticleDto);
+        // 테그 테이블에 신규 태그 등록
+        String[] tags = meetArticleDto.getTags();
+        if (tags != null) {
+            for (String tagName : tags) {
+                tagName = tagName.trim();
+                TagDto tagDto = TagDto.builder()
+                        .tagName(tagName)
+                        .build();
+                // 태그 등록 및 해당 태그의 tag_id 가져오기
+                tagMapper.createTag(tagDto);
+            }
+        }
     }
+
     @Override
     public List<MeetArticleDto> findByAllMeetArticle(int categoryId, SearchDto searchDto) {
         return meetArticleMapper.findByAllMeetArticle(categoryId, searchDto);
@@ -59,15 +78,6 @@ public class MeetArticleServiceImpl implements MeetArticleService{
         return meetArticleDto;
     }
 
-    @Override
-    public void creatTag(TagDto tagDto) {
-        tagMapper.createTag(tagDto);
-    }
-
-    @Override
-    public void createTagArticle(TagArticleDto tagArticleDto) {
-        tagArticleMapper.createTagArticle(tagArticleDto);
-    }
 
     @Override
     public List<MeetArticleDto> findByAllTagName(int categoryId, String tagName, SearchDto searchDto) {

@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface MeetArticleMapper {
     void createMeetArticle(MeetArticleDto meetArticleDto);
-    MeetArticleDto findByMeetArticleId(int meetArticleId);
+    MeetArticleDto findByMeetArticleId(MeetArticleDto meetArticleId);
     List<MeetArticleDto> findByAllMeetArticle(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
     MeetArticleDto readMeetArticle(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId);
     int findByMeetArticleCount(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);

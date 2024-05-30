@@ -28,7 +28,7 @@
             <div id="meet-search-bar">
                 <Form th:action="@{/meet/{categoryId}(categoryId=${categoryId})}" th:method="get">
                     <div>
-                        <input type="search" th:name="tagName">
+                        <input type="search">
                         <button type="submit">검색</button>
                     </div>
                 </Form>
@@ -49,9 +49,10 @@
                                th:text="${meetArticle.title}">둘레길 같이 가실 분</a></h1>
                         <p th:text="'장소 '+${meetArticle.placeId}">-장소 : 노원구 수락산 둘레길</p>
                         <p th:text="'시간 '+${meetArticle.time}">-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
-                        <ul class="meet-tag" th:text="'태그 종류들...'">
-                            <li>건강</li>
-                            <li>취미</li>
+                        <ul class="meet-tag">
+                            <th:block th:each="tag : ${tagList}">
+                                <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName=${tagName})}" th:text="'#' + ${tagName}"></a></li>
+                            </th:block>
                         </ul>
                     </div>
                     <div class="meet-join">
@@ -92,7 +93,6 @@
                            th:text="${i}">2</a>
                     </li>
                 </th:block>
-
                 <li class="page-item" th:if="${pagination.showNext}">
                     <a class="page-link" href="#" aria-label="Next"
                        th:href="@{/meet/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.nextStartPage}, tagName=${parameterForm.tagName})}">
