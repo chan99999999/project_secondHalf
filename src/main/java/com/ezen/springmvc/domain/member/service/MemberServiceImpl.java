@@ -48,6 +48,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
+    public void editNickname(MemberDto memberDto) {
+        memberMapper.updateNickname(memberDto);
+    }
+
+    @Override
+    @Transactional
     public void editPasswd(MemberDto memberDto) {
         memberMapper.updatePasswd(memberDto);
     }
@@ -69,5 +75,11 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public MemberDto searchPasswd(String id, String name, String email){
         return memberMapper.findMemberPasswd(id, name, email);
+    }
+
+    @Override
+    @Transactional
+    public String checkPasswd(String id){
+        return memberMapper.confirmPasswd(id);
     }
 }

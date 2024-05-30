@@ -26,6 +26,9 @@ public interface MemberService {
 	//회원정보 수정
 	public void editMember(MemberDto member);
 
+	//회원 닉네임 수정
+	public void editNickname(MemberDto member);
+
 	//회원 비밀번호 변경
 	public void editPasswd(MemberDto member);
 
@@ -37,4 +40,7 @@ public interface MemberService {
 
 	//회원 비밀번호 찾기
 	public MemberDto searchPasswd(String id, String name, String email);
+
+	//회원 비밀번호 확인
+	public String checkPasswd(String id);
 }

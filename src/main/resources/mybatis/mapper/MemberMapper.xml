@@ -35,7 +35,14 @@
 	<!-- 회원 정보 수정 -->
 	<update id="updateInfo" parameterType="MemberDto">
 		UPDATE member
-		SET nickname = #{nickname}, email = #{email}, hobby = #{hobby}, interest = #{interest}, introduce = #{introduce}
+		SET email = #{email}, hobby = #{hobby}, interest = #{interest}, introduce = #{introduce}
+		WHERE member_id = #{memberId}
+	</update>
+
+<!--	회원 닉네임 변경-->
+	<update id="updateNickname" parameterType="MemberDto">
+		UPDATE member
+		SET nickname = #{nickname}
 		WHERE member_id = #{memberId}
 	</update>
 
@@ -65,6 +72,13 @@
 		SELECT member_id, member_passwd, name, nickname, email
 		FROM member
 		WHERE member_id = #{id} AND name = #{name} AND email = #{email}
+	</select>
+
+<!--	회원 비밀번호 확인-->
+	<select id="confirmPasswd" parameterType="string">
+		SELECT member_passwd
+		FROM member
+		WHERE member_id = #{memberId}
 	</select>
 
 	<!-- 회원 전체 조회 -->

@@ -5,6 +5,7 @@
 <head>
     <title th:fragment="title"> ::: 마이페이지 ::: </title>
     <th:block th:fragment="script">
+        <script src="/js/edit_passwd.js" defer></script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
@@ -18,19 +19,21 @@
         <div class="mypage-title">비밀번호 변경</div>
         <form class="edit-form"  method="post" th:object="${editPasswdForm}">
             <div class="mypage-edit-wrap">
-                <label for="oldPaswwd">현재 비밀번호 </label>
-                <input id="oldPaswwd"  class="mypage-edit-passwd" type="text" name="oldPasswd" placeholder="현재 비밀번호를 적어주세요.">
+                <label for="edit-oldPasswd">현재 비밀번호 </label>
+                <input id="edit-oldPasswd"  class="mypage-edit-passwd" type="password" th:field="*{oldPasswd}" placeholder="현재 비밀번호를 적어주세요.">
             </div>
+            <div id="confirmPasswdDup"></div>
             <hr class="blank-hr">
             <div class="mypage-edit-wrap">
-                <label for="newPaswwd">변경 비밀번호 </label>
-                <input id="newPaswwd" class="mypage-edit-passwd" type="text" name="newPasswd" placeholder="변경할 비밀번호를 적어주세요.">
+                <label for="edit-newPasswd">변경 비밀번호 </label>
+                <input id="edit-newPasswd" class="mypage-edit-passwd" type="password" th:field="*{newPasswd}" placeholder="변경할 비밀번호를 적어주세요.">
             </div>
             <hr>
             <div class="mypage-edit-wrap">
-                <label for="confirmPasswd">비밀번호 확인</label>
-                <input id="confirmPasswd" class="mypage-edit-passwd" type="text" name="confirmPasswd" placeholder="비밀번호를 한번 더 적어주세요.">
+                <label for="edit-confirmPasswd">비밀번호 확인</label>
+                <input id="edit-confirmPasswd" class="mypage-edit-passwd" type="password" th:field="*{confirmPasswd}" placeholder="비밀번호를 한번 더 적어주세요.">
             </div>
+            <div id="editPasswdDup"></div>
             <hr>
             <div class="edit-btn-wrap">
                 <button class="back-btn" type="reset">취소하기</button>

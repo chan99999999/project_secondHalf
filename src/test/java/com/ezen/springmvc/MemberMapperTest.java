@@ -139,7 +139,27 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("닉네임으로 회원찾기")
+    @Disabled
     void findMemberByNicknameTest(){
+    }
+
+    @Test
+    @DisplayName("닉네임 변경")
+    @Disabled
+    void editNicknameTest(){
+        MemberDto memberDto = MemberDto.builder()
+                .nickname("김김")
+                .memberId("chan999")
+                .build();
+        memberMapper.updateNickname(memberDto);
+    }
+
+    @Test
+    @DisplayName("비밀번호 확인 테스트")
+    @Disabled
+    void checkPasswdTest(){
+        String passwd = memberMapper.confirmPasswd("chan999");
+        log.info("현재 비밀번호 : {}", passwd);
     }
 }
 
