@@ -163,16 +163,21 @@
 
 #daily-register-img-wrap{
     display: flex;
+    flex-wrap: wrap;
     margin: 10px 0;
+    align-items: flex-start;
+
 }
 
 .daily-register-img{
+    max-width: 100%; /* 이미지 크기 조정 */
     width: 300px;
     height: 200px;
     margin: 5px;
 }
 
 #daily-register-img-upload{
+    display: block;
     padding: 0px 5px;
     margin: 5px;
 }

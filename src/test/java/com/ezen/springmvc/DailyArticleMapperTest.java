@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -81,7 +82,7 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("일상 게시글 상세 보기 테스트")
-//    @Disabled
+    @Disabled
     void readDailyArticleTest() {
         DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 34);
         log.info("조회된 게시글 : {}", dailyArticleDto);
@@ -91,7 +92,7 @@ public class DailyArticleMapperTest {
     @DisplayName("일상 게시글 번호로 파일 조회 테스트")
     @Disabled
     void findByFileIdTest() {
-        FileDto fileDto = fileMapper.findByFileId(17);
+        List<FileDto> fileDto = fileMapper.findByFileId(17);
         log.info("조회된 파일 : {}", fileDto);
     }
 
@@ -214,12 +215,66 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("일상 게시글 개수 반환 테스트")
-//    @Disabled
+    @Disabled
     void getDailyArticleCountTest() {
         SearchDto searchDto = SearchDto.builder()
                 .tagName("일상")
                 .build();
         int dailyArticleCount = dailyArticleServiceImpl.getDailyArticleCount(2, searchDto);
         log.info("조회된 게시글 개수 : {}", dailyArticleCount);
+    }
+
+    @Test
+    @DisplayName("다중 파일 등록 테스트")
+    @Disabled
+    void createFileListTest() {
+        DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
+                .title("게시글 제목")
+                .content("게시글 내용")
+                .memberId("sunday")
+                .categoryId(2)
+                .build();
+        dailyArticleMapper.createDailyArticle(dailyArticleDto);
+
+        List<FileDto> fileDtoList = new ArrayList<>();
+        FileDto fileDto1 = FileDto.builder()
+                .fileName("fileName1.jpg")
+                .encryptedName("filefileName1.jpg")
+                .build();
+
+        FileDto fileDto2 = FileDto.builder()
+                .fileName("fileName2.jpg")
+                .encryptedName("filefileName2.jpg")
+                .build();
+
+        FileDto fileDto3 = FileDto.builder()
+                .fileName("fileName3.jpg")
+                .encryptedName("filefileName3.jpg")
+                .build();
+
+        fileDtoList.add(fileDto1);
+        fileDtoList.add(fileDto2);
+        fileDtoList.add(fileDto3);
+
+        fileMapper.createFileList(fileDtoList);
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 테스트")
+    @Disabled
+    void deleteDailyArticleTest() {
+        dailyArticleMapper.deleteDailyArticle(2, 176);
+        log.info("게시글 삭제 완료!");
+    }
+
+    @Test
+    @DisplayName("게시글 수정 테스트")
+//    @Disabled
+    void updateDailyArticleTest() {
+        DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
+                .title("냠냠")
+                .build();
+        dailyArticleMapper.updateDailyArticle(173, dailyArticleDto);
+        log.info("게시글 제목 수정 완료!");
     }
 }

@@ -29,14 +29,30 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      * 신규 일상 게시글 등록 구현
      *
      * @param dailyArticleDto 일상 게시글
-     * @param fileDto         파일
+     * @param fileList         파일 목록
      * @return 일상 게시글
      */
+//    @Override
+//    @Transactional
+//    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, List<FileDto> fileList) {
+//        dailyArticleMapper.createDailyArticle(dailyArticleDto);
+//        fileMapper.createFileDto(fileDto);
+//
+//        return dailyArticleMapper.findByDailyArticleId(dailyArticleDto.getDailyArticleId());
+//    }
+
     @Override
     @Transactional
-    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto) {
+    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, List<FileDto> fileList) {
         dailyArticleMapper.createDailyArticle(dailyArticleDto);
-        fileMapper.createFileDto(fileDto);
+
+        if (fileList != null && !fileList.isEmpty()) {
+            if (fileList.size() == 1) {
+                fileMapper.createFileDto(fileList.get(0));
+            } else {
+                fileMapper.createFileList(fileList);
+            }
+        }
 
         return dailyArticleMapper.findByDailyArticleId(dailyArticleDto.getDailyArticleId());
     }
@@ -76,14 +92,13 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     }
 
     /**
-     * 파일 번호로 파일 조회 구현
-     *
-     * @param fileId 파일 번호
-     * @return 파일
+     * 일상 게시글 번호로 파일 목록 조회 구현
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 파일 목록
      */
     @Override
-    public FileDto getFile(int fileId) {
-        return fileMapper.findByFileId(fileId);
+    public List<FileDto> getFiles(int dailyArticleId) {
+        return fileMapper.findByFileId(dailyArticleId);
     }
 
     /**
@@ -229,6 +244,26 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     @Override
     public int getDailyArticleCount(int categoryId, SearchDto searchDto) {
         return dailyArticleMapper.findDailyArticleCount(categoryId, searchDto);
+    }
+
+    /**
+     * 일상 게시글 삭제
+     * @param categoryId 카테고리 번호
+     * @param dailyArticleId 일상 게시글 번호
+     */
+    @Override
+    public void removeDailyArticle(int categoryId, int dailyArticleId) {
+        dailyArticleMapper.deleteDailyArticle(categoryId, dailyArticleId);
+    }
+
+    /**
+     * 일상 게시글 수정 구현
+     * @param dailyArticleId 카테고리 번호
+     * @param editedDailyArticleDto 수정된 일상 게시글
+     */
+    @Override
+    public void editDailyArticle(int dailyArticleId, DailyArticleDto editedDailyArticleDto) {
+        dailyArticleMapper.updateDailyArticle(dailyArticleId, editedDailyArticleDto);
     }
 
 

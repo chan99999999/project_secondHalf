@@ -7,6 +7,17 @@
         VALUES (FILE_ID_SEQ.nextval, #{fileName}, #{encryptedName}, D_ARTICLE_ID_SEQ.currval)
     </insert>
 
+    <!-- 파일 여러 개 등록 -->
+    <insert id="createFileList" parameterType="FileDto">
+        INSERT ALL
+        <foreach collection="list" item="fileDto" separator=" ">
+            INTO attach_file (file_id, file_name, encrypted_name, d_article_id)
+            VALUES (call_file_id, #{fileDto.fileName}, #{fileDto.encryptedName}, D_ARTICLE_ID_SEQ.currval)
+        </foreach>
+        SELECT * FROM dual
+    </insert>
+
+
     <!-- 일상 게시글 번호로 파일 조회 -->
     <select id="findByFileId" parameterType="int" resultType="FileDto">
         SELECT file_id, file_name, encrypted_name, file_path, D_ARTICLE_ID "dailyArticleId"

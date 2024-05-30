@@ -19,7 +19,7 @@ public interface DailyArticleService {
      * @param dailyArticleDto 일상 게시글
      * @return 일상 게시글
      */
-    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, FileDto fileDto);
+    public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, List<FileDto> fileList);
 
     /**
      * 일상 게시글 목록 반환
@@ -49,7 +49,7 @@ public interface DailyArticleService {
      * @param dailyArticleId 일상 게시글 번호
      * @return 파일
      */
-    public FileDto getFile(int dailyArticleId);
+    public List<FileDto> getFiles(int dailyArticleId);
 
     /**
      * 파일 목록 조회
@@ -131,4 +131,17 @@ public interface DailyArticleService {
      */
     public int getDailyArticleCount(int categoryId, SearchDto searchDto);
 
+    /**
+     * 일상 게시글 삭제
+     * @param categoryId 카테고리 번호
+     * @param dailyArticleId 일상 게시글 번호
+     */
+    public void removeDailyArticle(int categoryId, int dailyArticleId);
+
+    /**
+     * 일상 게시글 수정
+     * @param dailyArticleId 일상 게시글 번호
+     * @param editedDailyArticleDto 수정된 일상 게시글
+     */
+    public void editDailyArticle(int dailyArticleId, DailyArticleDto editedDailyArticleDto);
 }

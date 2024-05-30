@@ -3,6 +3,7 @@ package com.ezen.springmvc.domain.dailyarticle.mapper;
 import com.ezen.springmvc.domain.dailyarticle.dto.FileDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.TagDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface TagMapper {
@@ -26,5 +27,4 @@ public interface TagMapper {
      * @return 태그
      */
     public TagDto findByTagName(String tagName);
-
 }

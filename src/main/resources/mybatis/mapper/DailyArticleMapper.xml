@@ -15,110 +15,160 @@
     </select>
 
     <!-- 일상 게시글 목록 조회 -->
-<!--    <select id="findByAllDailyArticle" parameterType="int" resultType="DailyArticleDto">-->
-<!--        SELECT d.d_article_id                  "dailyArticleId",-->
-<!--               d.title,-->
-<!--               d.member_id,-->
-<!--               f.file_name,-->
-<!--               f.encrypted_name,-->
-<!--               COALESCE(SUM(h.heart_count), 0) "totalHeartCount"-->
-<!--        FROM daily_article d-->
-<!--                 JOIN attach_file f ON d.d_article_id = f.d_article_id-->
-<!--                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id-->
-<!--        WHERE d.category_id = #{categoryId}-->
-<!--        GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name-->
-<!--        ORDER BY d.d_article_id DESC-->
-<!--    </select>-->
+    <!--    <select id="findByAllDailyArticle" parameterType="int" resultType="DailyArticleDto">-->
+    <!--        SELECT d.d_article_id                  "dailyArticleId",-->
+    <!--               d.title,-->
+    <!--               d.member_id,-->
+    <!--               f.file_name,-->
+    <!--               f.encrypted_name,-->
+    <!--               COALESCE(SUM(h.heart_count), 0) "totalHeartCount"-->
+    <!--        FROM daily_article d-->
+    <!--                 JOIN attach_file f ON d.d_article_id = f.d_article_id-->
+    <!--                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id-->
+    <!--        WHERE d.category_id = #{categoryId}-->
+    <!--        GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name-->
+    <!--        ORDER BY d.d_article_id DESC-->
+    <!--    </select>-->
+
+    <!--    <select id="findByAllDailyArticle" resultType="DailyArticleDto">-->
+    <!--        SELECT dailyArticleId, title, member_id, file_name, encrypted_name, totalHeartCount-->
+    <!--        FROM (-->
+    <!--                 SELECT dailyArticleId, title, member_id, file_name, encrypted_name, totalHeartCount, CEIL(ROWNUM / #{searchDto.limit}) page-->
+    <!--                 FROM (-->
+    <!--                          SELECT d.d_article_id dailyArticleId,-->
+    <!--                                 d.title,-->
+    <!--                                 d.member_id,-->
+    <!--                                 f.file_name,-->
+    <!--                                 f.encrypted_name,-->
+    <!--                                 COALESCE(SUM(h.heart_count), 0) totalHeartCount-->
+    <!--                          FROM daily_article d-->
+    <!--                                   JOIN attach_file f ON d.d_article_id = f.d_article_id-->
+    <!--                                   LEFT JOIN heart h ON d.d_article_id = h.d_article_id-->
+    <!--                          WHERE d.category_id = #{categoryId}-->
+    <!--                          GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name-->
+    <!--                          ORDER BY d.d_article_id DESC-->
+    <!--                      )-->
+    <!--             )-->
+    <!--        WHERE page = #{searchDto.page}-->
+    <!--    </select>-->
 
     <select id="findByAllDailyArticle" resultType="DailyArticleDto">
         SELECT dailyArticleId, title, member_id, file_name, encrypted_name, totalHeartCount
-        FROM (
-                 SELECT dailyArticleId, title, member_id, file_name, encrypted_name, totalHeartCount, CEIL(ROWNUM / #{searchDto.limit}) page
-                 FROM (
-                          SELECT d.d_article_id dailyArticleId,
-                                 d.title,
-                                 d.member_id,
-                                 f.file_name,
-                                 f.encrypted_name,
-                                 COALESCE(SUM(h.heart_count), 0) totalHeartCount
-                          FROM daily_article d
-                                   JOIN attach_file f ON d.d_article_id = f.d_article_id
-                                   LEFT JOIN heart h ON d.d_article_id = h.d_article_id
-                          WHERE d.category_id = #{categoryId}
-                          GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name
-                          ORDER BY d.d_article_id DESC
-                      )
-             )
+        FROM (SELECT dailyArticleId,
+                     title,
+                     member_id,
+                     file_name,
+                     encrypted_name,
+                     totalHeartCount,
+                     CEIL(ROWNUM / #{searchDto.limit}) page
+              FROM (SELECT d.d_article_id                  dailyArticleId,
+                           d.title,
+                           d.member_id,
+                           f.file_name,
+                           f.encrypted_name,
+                           COALESCE(SUM(h.heart_count), 0) totalHeartCount
+                    FROM daily_article d
+                             JOIN (SELECT a.d_article_id, a.file_name, a.encrypted_name
+                                   FROM (SELECT d.d_article_id,
+                                                f.file_name,
+                                                f.encrypted_name,
+                                                ROW_NUMBER() OVER (PARTITION BY d.d_article_id ORDER BY f.file_id) AS rn
+                                         FROM daily_article d
+                                                  JOIN attach_file f ON d.d_article_id = f.d_article_id
+                                         WHERE d.category_id = #{categoryId}) a
+                                   WHERE a.rn = 1) f ON d.d_article_id = f.d_article_id
+                             LEFT JOIN heart h ON d.d_article_id = h.d_article_id
+                    GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name
+                    ORDER BY d.d_article_id DESC))
         WHERE page = #{searchDto.page}
     </select>
 
     <!-- 태그 이름으로 게시글 목록 조회 -->
-<!--    <select id="findByAllTagName" resultType="DailyArticleDto">-->
-<!--        SELECT d.d_article_id                  "dailyArticleId",-->
-<!--               d.title,-->
-<!--               d.member_id,-->
-<!--               f.file_name,-->
-<!--               f.encrypted_name,-->
-<!--               COALESCE(SUM(h.heart_count), 0) "totalHeartCount"-->
-<!--        FROM daily_article d-->
-<!--                 JOIN attach_file f ON d.d_article_id = f.d_article_id-->
-<!--                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id-->
-<!--                 JOIN tag_article ta ON d.d_article_id = ta.d_article_id-->
-<!--                 JOIN tag t ON ta.tag_id = t.tag_id-->
-<!--        WHERE d.category_id = #{categoryId}-->
-<!--          AND t.tag_name = #{tagName}-->
-<!--        GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name-->
-<!--        ORDER BY d.d_article_id DESC-->
-<!--    </select>-->
+    <!--    <select id="findByAllTagName" resultType="DailyArticleDto">-->
+    <!--        SELECT d.d_article_id                  "dailyArticleId",-->
+    <!--               d.title,-->
+    <!--               d.member_id,-->
+    <!--               f.file_name,-->
+    <!--               f.encrypted_name,-->
+    <!--               COALESCE(SUM(h.heart_count), 0) "totalHeartCount"-->
+    <!--        FROM daily_article d-->
+    <!--                 JOIN attach_file f ON d.d_article_id = f.d_article_id-->
+    <!--                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id-->
+    <!--                 JOIN tag_article ta ON d.d_article_id = ta.d_article_id-->
+    <!--                 JOIN tag t ON ta.tag_id = t.tag_id-->
+    <!--        WHERE d.category_id = #{categoryId}-->
+    <!--          AND t.tag_name = #{tagName}-->
+    <!--        GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name-->
+    <!--        ORDER BY d.d_article_id DESC-->
+    <!--    </select>-->
 
     <select id="findByAllTagName" resultType="DailyArticleDto">
         SELECT dailyArticleId, title, member_id, file_name, encrypted_name, totalHeartCount
-        FROM (
-                 SELECT dailyArticleId, title, member_id, file_name, encrypted_name, totalHeartCount, CEIL(ROWNUM / #{searchDto.limit}) page
-                 FROM (
-                          SELECT d.d_article_id dailyArticleId,
-                                 d.title,
-                                 d.member_id,
-                                 f.file_name,
-                                 f.encrypted_name,
-                                 COALESCE(SUM(h.heart_count), 0) totalHeartCount
-                          FROM daily_article d
-                                   JOIN attach_file f ON d.d_article_id = f.d_article_id
-                                   LEFT JOIN heart h ON d.d_article_id = h.d_article_id
-                                   JOIN tag_article ta ON d.d_article_id = ta.d_article_id
-                                   JOIN tag t ON ta.tag_id = t.tag_id
-                          WHERE d.category_id = #{categoryId}
-                            AND t.tag_name = #{tagName}
-                          GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name
-                          ORDER BY d.d_article_id DESC
-                      )
-             )
+        FROM (SELECT dailyArticleId,
+                     title,
+                     member_id,
+                     file_name,
+                     encrypted_name,
+                     totalHeartCount,
+                     CEIL(ROWNUM / #{searchDto.limit}) page
+              FROM (SELECT d.d_article_id                  dailyArticleId,
+                           d.title,
+                           d.member_id,
+                           f.file_name,
+                           f.encrypted_name,
+                           COALESCE(SUM(h.heart_count), 0) totalHeartCount
+                    FROM daily_article d
+                             JOIN attach_file f ON d.d_article_id = f.d_article_id
+                             LEFT JOIN heart h ON d.d_article_id = h.d_article_id
+                             JOIN tag_article ta ON d.d_article_id = ta.d_article_id
+                             JOIN tag t ON ta.tag_id = t.tag_id
+                    WHERE d.category_id = #{categoryId}
+                      AND t.tag_name = #{tagName}
+                    GROUP BY d.d_article_id, d.title, d.member_id, f.file_name, f.encrypted_name
+                    ORDER BY d.d_article_id DESC))
         WHERE page = #{searchDto.page}
     </select>
 
 
     <!-- 일상 게시글 상세 보기 -->
+    <!--    <select id="readDailyArticle" parameterType="int" resultType="DailyArticleDto">-->
+    <!--        SELECT d.title,-->
+    <!--               d.content,-->
+    <!--               d.member_id,-->
+    <!--               TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') regdate,-->
+    <!--               f.file_name,-->
+    <!--               NVL(SUM(h.heart_count), 0)               "totalHeartCount"-->
+    <!--        FROM daily_article d-->
+    <!--                 LEFT JOIN attach_file f ON d.d_article_id = f.d_article_id-->
+    <!--                 LEFT JOIN heart h ON d.d_article_id = h.d_article_id-->
+    <!--        WHERE d.category_id = #{categoryId}-->
+    <!--          AND d.d_article_id = #{dailyArticleId}-->
+    <!--        GROUP BY d.title, d.content, d.member_id, d.regdate, f.file_name-->
+    <!--    </select>-->
+
     <select id="readDailyArticle" parameterType="int" resultType="DailyArticleDto">
         SELECT d.title,
                d.content,
                d.member_id,
-               TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') regdate,
-               f.file_name,
-               NVL(SUM(h.heart_count), 0)               "totalHeartCount"
+               TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+               NVL(SUM(h.heart_count), 0)               AS totalHeartCount
         FROM daily_article d
-                 LEFT JOIN attach_file f ON d.d_article_id = f.d_article_id
                  LEFT JOIN heart h ON d.d_article_id = h.d_article_id
         WHERE d.category_id = #{categoryId}
           AND d.d_article_id = #{dailyArticleId}
-        GROUP BY d.title, d.content, d.member_id, d.regdate, f.file_name
+        GROUP BY d.title,
+                 d.content,
+                 d.member_id,
+                 d.regdate
     </select>
 
+
     <!-- 일상 게시글 개수 조회 -->
-<!--    <select id="findDailyArticleCount" parameterType="int" resultType="int">-->
-<!--        SELECT count(*) count-->
-<!--        FROM daily_article-->
-<!--        WHERE category_id = #{categoryId}-->
-<!--    </select>-->
+    <!--    <select id="findDailyArticleCount" parameterType="int" resultType="int">-->
+    <!--        SELECT count(*) count-->
+    <!--        FROM daily_article-->
+    <!--        WHERE category_id = #{categoryId}-->
+    <!--    </select>-->
 
     <!-- 특정 게시판의 검색 조건에 따른 게시글 전체 갯수 반환 -->
     <select id="findDailyArticleCount" resultType="int">
@@ -130,9 +180,33 @@
         LEFT JOIN tag t ON ta.tag_id = t.tag_id
         <where>
             d.category_id = #{categoryId}
-            <if test="searchDto.tagName != null and !searchDto.tagName.isEmpty()">AND t.tag_name = #{searchDto.tagName}</if>
+            <if test="searchDto.tagName != null and !searchDto.tagName.isEmpty()">AND t.tag_name =
+                #{searchDto.tagName}
+            </if>
         </where>
     </select>
+
+    <!-- 일상 게시글 삭제 -->
+    <delete id="deleteDailyArticle">
+        DELETE
+        FROM daily_article
+        WHERE category_id = #{categoryId}
+          AND d_article_id = #{dailyArticleId}
+    </delete>
+
+    <!-- 일상 게시글 수정 -->
+    <update id="updateDailyArticle">
+        UPDATE daily_article
+        <set>
+            <if test="editedDailyArticleDto.title != null and !editedDailyArticleDto.title.isEmpty()">
+                title = #{editedDailyArticleDto.title},
+            </if>
+            <if test="editedDailyArticleDto.content != null and !editedDailyArticleDto.content.isEmpty()">
+                content = #{editedDailyArticleDto.content}
+            </if>
+        </set>
+        WHERE d_article_id = #{dailyArticleId}
+    </update>
 
 
 </mapper>

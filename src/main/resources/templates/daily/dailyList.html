@@ -95,8 +95,11 @@
                     <img class="daily-writer-img" src="/img/profile.png">
                     <p class="daily-writer-name" th:text="${dailyArticle.memberId}">김순자 최고</p>
                 </div>
+                <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
+
                 <img class="daily-post-img" src="/img/sample1.jpg"
                      th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
+                </a>
                 <div class="daily-like-wrap">
                     <img class="daily-like" src="/img/heart.png">
                     <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>

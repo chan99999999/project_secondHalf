@@ -5,8 +5,6 @@
 <head>
     <title th:fragment="title"> ::: 일상공유 작성하기 ::: </title>
     <th:block th:fragment="script">
-        <script src="/js/preview.js" defer></script>
-        <script src="/js/draganddrop.js" defer></script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
@@ -20,7 +18,7 @@
         <h1 class="title-text">일상 공유하기</h1>
         <form id="daily-register-form" method="post" enctype="multipart/form-data">
             <fieldset>
-                <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목" />
+                <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목" th:value="${dailyArticleDto.title}" />
                 <div id="daily-tag-wrap">
                     <h3>카테고리</h3>
                     <input class="daily-tag-list" id="1" type="checkbox" name="tags" th:value="일상">
@@ -32,13 +30,13 @@
                 </div>
                 <div id="daily-register-img-wrap">
                     <img class="daily-register-img" src="/img/sample1.jpg">
-<!--                    <img class="daily-register-img" src="/img/sample1.jpg">-->
+                    <img class="daily-register-img" src="/img/sample1.jpg">
                     <div id="daily-register-img-upload">
-                        <input id="file" name="attachImages" type="file" multiple>
+                        <input name="attachImages" type="file" multiple>
                     </div>
                 </div>
                 <div>
-                    <textarea name="content" id="daily-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
+                    <textarea name="content" id="daily-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요." th:text="${dailyArticleDto.content}"></textarea>
                 </div>
                 <div class="register-btn-wrap">
                     <button class="back-btn" type="reset">취소하기</button>

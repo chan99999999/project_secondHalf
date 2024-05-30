@@ -11,7 +11,6 @@
     <th:block th:fragment="script">
         <script src="/js/like.js" defer></script>
     </th:block>
-
 </head>
 
 
@@ -27,10 +26,15 @@
         <div id="daily-read-content-wrap">
             <h1 id="daily-read-title" th:text="${dailyArticle.title}">게시글 제목 들어가유</h1>
             <p id="daily-read-content" th:text="${dailyArticle.content}">게시글 본문 들어가유</p>
-            <th:block th:if="${file.encryptedName == null}">
-                <img id="daily-read-img" th:src="@{/daily/image/{fileName}(fileName='default.jpg')}">
+            <th:block th:if="${fileList == null or fileList.isEmpty()}">
+                <img id="daily-read-img" th:src="@{/daily/image/default.jpg}">
             </th:block>
-            <img id="daily-read-img" th:src="@{/daily/image/{fileName}(fileName=${file.encryptedName})}">
+            <th:block th:if="${fileList != null}">
+                <th:block th:each="file : ${fileList}">
+                    <img id="daily-read-img" th:src="@{/daily/image/{fileName}(fileName=${file.encryptedName})}">
+                </th:block>
+            </th:block>
+
         </div>
         <div class="register-btn-wrap">
             <button class="back-btn"
@@ -49,7 +53,49 @@
             <p id="heartCount" th:text="${dailyArticle.totalHeartCount}"> 0 </p>
             <p> ㅣ </p>
             <p th:text="'댓글(' + ${replyCount} + ')'">댓글(3)</p>
+            <th:block th:if="${loginMember != null}">
+                <th:block th:if="${loginMember.memberId == dailyArticle.memberId}">
+
+
+
+                    <form id="updateForm" method="get"
+                          th:action="@{/daily/{categoryId}/edit/{dailyArticleId}(categoryId=${categoryId}, dailyArticleId=${dailyArticleId})}">
+
+                        <button type="button" class="btn btn-dark" onclick="updateForm()">수정</button>
+                    </form>
+
+                    <form id="deleteForm" method="post" th:action="@{/daily/{categoryId}/delete/{dailyArticleId}}"
+                          th:attr="data-categoryId=${categoryId}, data-dailyArticleId=${dailyArticleId}">
+
+
+                        <button type="button" class="btn btn-dark" onclick="confirmDelete()">삭제</button>
+                    </form>
+                </th:block>
+            </th:block>
+
+
+            <script th:inline="javascript">
+                function confirmDelete() {
+                    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+                        let form = document.getElementById("deleteForm");
+                        let categoryId = form.getAttribute("data-categoryId");
+                        let dailyArticleId = form.getAttribute("data-dailyArticleId");
+                        form.setAttribute("action", "/daily/" + categoryId + "/delete/" + dailyArticleId);
+                        form.submit();
+                    }
+                }
+            </script>
+
+
+            <script>
+                function updateForm() {
+                    document.getElementById("updateForm").submit();
+                }
+            </script>
+
         </div>
+
+
         <th:block th:if="${loginMember != null}">
 
             <div class="review-wrap">
