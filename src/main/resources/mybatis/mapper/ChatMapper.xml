@@ -4,7 +4,7 @@
 	<!-- 채팅방 생성 -->
 	<insert id="createChat" parameterType="com.ezen.springmvc.domain.chat.dto.ChatDto" >
 		INSERT INTO chat_room(room_id, created_at, sender_id, receiver_id)
-		VALUES(#{roomId}, SYSDATE, #{sender}, #{receiver})
+		VALUES(#{roomId}, SYSDATE, #{senderId}, #{receiverId})
 	</insert>
 
 	<!-- 채팅방 목록 조회 -->
