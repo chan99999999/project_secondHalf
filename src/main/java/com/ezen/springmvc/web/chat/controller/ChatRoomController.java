@@ -1,6 +1,6 @@
 package com.ezen.springmvc.web.chat.controller;
 
-import com.ezen.springmvc.domain.chat.dto.ChatRoom;
+import com.ezen.springmvc.domain.chat.dto.ChatDto;
 import com.ezen.springmvc.domain.chat.repo.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +25,13 @@ public class ChatRoomController {
 
     @GetMapping("/rooms")
     @ResponseBody
-    public List<ChatRoom> room() {
+    public List<ChatDto> room() {
         return chatRoomRepository.findAllRoom();
     }
 
     @PostMapping("/room")
     @ResponseBody
-    public ChatRoom createRoom() {
+    public ChatDto createRoom() {
         return chatRoomRepository.createChatRoom();
     }
 
@@ -43,7 +43,7 @@ public class ChatRoomController {
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
+    public ChatDto roomInfo(@PathVariable String roomId) {
         return chatRoomRepository.findRoomById(roomId);
     }
 }

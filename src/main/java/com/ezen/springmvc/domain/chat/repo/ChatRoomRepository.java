@@ -1,6 +1,6 @@
 package com.ezen.springmvc.domain.chat.repo;
 
-import com.ezen.springmvc.domain.chat.dto.ChatRoom;
+import com.ezen.springmvc.domain.chat.dto.ChatDto;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 import java.util.*;
@@ -8,26 +8,26 @@ import java.util.*;
 @Repository
 public class ChatRoomRepository {
 
-    private Map<String, ChatRoom> chatRoomMap;
+    private Map<String, ChatDto> chatRoomMap;
 
     @PostConstruct
     private void init() {
         chatRoomMap = new LinkedHashMap<>();
     }
 
-    public List<ChatRoom> findAllRoom() {
+    public List<ChatDto> findAllRoom() {
         // 채팅방 생성순서 최근 순으로 반환
         List chatRooms = new ArrayList<>(chatRoomMap.values());
         Collections.reverse(chatRooms);
         return chatRooms;
     }
 
-    public ChatRoom findRoomById(String id) {
+    public ChatDto findRoomById(String id) {
         return chatRoomMap.get(id);
     }
 
-    public ChatRoom createChatRoom() {
-        ChatRoom chatRoom = ChatRoom.create();
+    public ChatDto createChatRoom() {
+        ChatDto chatRoom = ChatDto.create();
         chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
         return chatRoom;
     }
