@@ -19,8 +19,8 @@ public class ChatController {
     @MessageMapping("/chat/message")
     public void message(ChatDto message) {
         if (ChatDto.MessageType.ENTER.equals(message.getType())) {
-            log.info(message.getSender());
-            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+            log.info(message.getSenderId());
+            message.setMessage(message.getSenderId() + "님이 입장하셨습니다.");
         }
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }

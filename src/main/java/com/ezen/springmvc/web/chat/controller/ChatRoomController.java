@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import oracle.net.ns.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,7 @@ public class ChatRoomController {
     }
 
     @PostMapping("/sendMessage/{roomId}")
-    public String sendMessage(@PathVariable("roomId") String roomId,@ModelAttribute MessageForm messageForm){
+    public ResponseEntity<Resource> sendMessage(@PathVariable("roomId") String roomId, @ModelAttribute MessageForm messageForm){
         // sentAt에 현재시간 설정
 
         ChatDto chatDto = chatService.getRoom(roomId);
@@ -74,11 +75,11 @@ public class ChatRoomController {
                 .sentAt(Timestamp.from(Instant.now()))
                 .content(messageForm.getInputMessage())
                 .roomId(roomId)
-                .senderId(chatDto.getSender())
+                .senderId(chatDto.getSenderId())
                 .build();
 
         chatService.newMessage(messageDto);
-        return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/room/{nickname}")
@@ -88,8 +89,8 @@ public class ChatRoomController {
         String roomId = UUID.randomUUID().toString();
 
         ChatDto chatDto = ChatDto.builder()
-                .sender(loginMember.getNickname())
-                .receiver(nickname)
+                .senderId(loginMember.getNickname())
+                .receiverId(nickname)
                 .roomId(roomId)
                 .build();
 

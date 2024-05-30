@@ -21,8 +21,8 @@ public class ChatDto {
 
     private MessageType type; // 메시지 타입
     private String roomId; // 방번호
-    private String sender; // 메시지 보낸사람
-    private String receiver; // 메시지 받은사람
+    private String senderId; // 메시지 보낸사람
+    private String receiverId; // 메시지 받은사람
     private String message; // 메시지 - 삭제 예정!!!!! UUID 때문에 있는것
     private Timestamp createdAt; // 생성시간
 
