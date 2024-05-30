@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface MessageMapper {
     // 메시지 전송
-    public void sendMessage(String roomId, String sender, String message);
+    public void sendMessage(MessageDto messageDto);
 
     // 채팅방 메세지 조회
     List<MessageDto> findMessagesByRoomId(String roomId);
