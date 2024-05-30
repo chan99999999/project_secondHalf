@@ -19,9 +19,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model){
-        model.getAttribute("loginMember");
         List<CategoryDto> categoryList = categoryService.getCategoryList();
         model.addAttribute("categoryList", categoryList);
+        model.getAttribute("loginMember");
         return "index";
     }
 }

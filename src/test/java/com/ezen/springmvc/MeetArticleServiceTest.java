@@ -29,24 +29,24 @@ public class MeetArticleServiceTest {
         log.info("게시글 상세보기 : {}", meetArticleDto);
     }
 
-    @Test
-    @DisplayName("모임 게시글 등록 테스트")
-    @Disabled
-    void createMeetArticleTest(){
-        MeetArticleDto createArticle = MeetArticleDto
-                .builder()
-                .title("테스트")
-                .content("테스트")
-                .time("2022-22-22")
-                .enter(5)
-                .hitcount(0)
-                .categoryId(3)
-                .memberId("monday")
-//                .placeId(1)
-                .build();
-        meetArticleService.createMeetArticle(createArticle);
-        log.info("등록 완료 : {}", createArticle);
-    }
+//    @Test
+//    @DisplayName("모임 게시글 등록 테스트")
+//    @Disabled
+//    void createMeetArticleTest(){
+//        MeetArticleDto createArticle = MeetArticleDto
+//                .builder()
+//                .title("테스트")
+//                .content("테스트")
+//                .time("2022-22-22")
+//                .enter(5)
+//                .hitcount(0)
+//                .categoryId(3)
+//                .memberId("monday")
+////                .placeId(1)
+//                .build();
+//        meetArticleService.createMeetArticle(createArticle);
+//        log.info("등록 완료 : {}", createArticle);
+//    }
 
 
 //    @Test
@@ -75,15 +75,15 @@ public class MeetArticleServiceTest {
 //        log.info("삭제 완료 : {}", deleteArticle);
 //    }
 
-    @Test
-    @DisplayName("모임 게시글 전체 출력 테스트")
-    @Disabled
-    void findByAllArticleTest(){
-        List<MeetArticleDto> list = meetArticleService.findByAllMeetArticle(3);
-        for (MeetArticleDto MeetArticleDto : list) {
-            log.info("조회된 게시글 목록 : {}", MeetArticleDto);
-        }
-    }
+//    @Test
+//    @DisplayName("모임 게시글 전체 출력 테스트")
+//    @Disabled
+//    void findByAllArticleTest(){
+//        List<MeetArticleDto> list = meetArticleService.findByAllMeetArticle(3);
+//        for (MeetArticleDto MeetArticleDto : list) {
+//            log.info("조회된 게시글 목록 : {}", MeetArticleDto);
+//        }
+//    }
 
 //    @Test
 //    @DisplayName("모임 게시글 댓글 등록 테스트")

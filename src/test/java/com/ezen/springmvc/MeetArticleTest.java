@@ -89,15 +89,15 @@ MeetReplyMapper meetReplyMapper;
 //        assertEquals(originalHitcount + 1, updatedHitcount);
     }
 
-    @Test
-    @DisplayName("모임 게시글 전체 출력 테스트")
-    @Disabled
-    void findByAllMeetArticleTest(){
-        List<MeetArticleDto> list = meetArticleMapper.findByAllMeetArticle(3);
-        for (MeetArticleDto MeetArticleDto : list) {
-            log.info("조회된 게시글 목록 : {}", MeetArticleDto);
-        }
-    }
+//    @Test
+//    @DisplayName("모임 게시글 전체 출력 테스트")
+//    @Disabled
+//    void findByAllMeetArticleTest(){
+//        List<MeetArticleDto> list = meetArticleMapper.findByAllMeetArticle(3);
+//        for (MeetArticleDto MeetArticleDto : list) {
+//            log.info("조회된 게시글 목록 : {}", MeetArticleDto);
+//        }
+//    }
 
 //    @Test
 //    @DisplayName("모임 게시글 댓글 등록 테스트")

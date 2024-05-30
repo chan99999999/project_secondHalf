@@ -1,42 +1,46 @@
 package com.ezen.springmvc.domain.meetArticle.service;
 
-import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
-import com.ezen.springmvc.domain.meetArticle.dto.TagArticleDto;
-import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
-import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
-import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
-import com.ezen.springmvc.domain.meetArticle.mapper.TagArticleMapper;
-import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
+import com.ezen.springmvc.domain.common.dto.SearchDto;
+import com.ezen.springmvc.domain.meetArticle.dto.*;
+import com.ezen.springmvc.domain.meetArticle.mapper.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class MeetArticleServiceImpl implements MeetArticleService{
+    private static final Logger log = LoggerFactory.getLogger(MeetArticleServiceImpl.class);
     private final MeetArticleMapper meetArticleMapper;
     private final MeetReplyMapper meetReplyMapper;
     private final TagMapper tagMapper;
     private final TagArticleMapper tagArticleMapper;
 
     @Override
-    public MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto) {
+    @Transactional
+    public MeetArticleDto createMeetArticle(MeetArticleDto meetArticleDto, TagDto tagDto) {
         meetArticleMapper.createMeetArticle(meetArticleDto);
-//        tagDto.setMeetArticleId(meetArticleDto.getMeetArticleId());
-//        tagMapper.createTag(tagDto);
+        tagMapper.createTag(tagDto);
         return meetArticleMapper.findByMeetArticleId(meetArticleDto.getMeetArticleId());
     }
     @Override
-    public List<MeetArticleDto> findByAllMeetArticle(int categoryId) {
-        return meetArticleMapper.findByAllMeetArticle(categoryId);
+    public List<MeetArticleDto> findByAllMeetArticle(int categoryId, SearchDto searchDto) {
+        return meetArticleMapper.findByAllMeetArticle(categoryId, searchDto);
     }
 
     @Override
     public MeetArticleDto readMeetArticle(int categoryId, int meetArticleId) {
         return meetArticleMapper.readMeetArticle(categoryId, meetArticleId);
+    }
+
+    @Override
+    public int findByMeetArticleCount(int categoryId, SearchDto searchDto) {
+        return meetArticleMapper.findByMeetArticleCount(categoryId, searchDto);
     }
 
 //    @Override
@@ -66,14 +70,18 @@ public class MeetArticleServiceImpl implements MeetArticleService{
     }
 
     @Override
-    public List<MeetArticleDto> findByTagName(int categoryId, String tagName) {
-        return meetArticleMapper.findByAllTagName(categoryId, tagName);
+    public List<MeetArticleDto> findByAllTagName(int categoryId, String tagName, SearchDto searchDto) {
+        List<TagDto> tags = tagMapper.findByAllTagName(categoryId, tagName);
+        return tags.stream().map(tag -> {
+            MeetArticleDto meetArticleDto = new MeetArticleDto();
+            return meetArticleDto;
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public MeetArticleDto createReply(MeetReplyDto meetReplyDto) {
+    @Transactional
+    public void createReply(MeetReplyDto meetReplyDto) {
         meetReplyMapper.createReply(meetReplyDto);
-        return null;
     }
 
 //    @Override

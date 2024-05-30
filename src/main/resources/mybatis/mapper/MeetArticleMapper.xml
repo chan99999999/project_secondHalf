@@ -81,11 +81,18 @@
         UPDATE meet_article
         SET hitcount = hitcount + 1
         WHERE m_article_id = #{meetArticleId}
-
         <selectKey keyProperty="hitcount" resultType="int" order="AFTER">
             SELECT hitcount FROM meet_article
             WHERE m_article_id = #{meetArticleId}
         </selectKey>
-
     </update>
+    <!-- 게시글 수 조회 -->
+    <select id="findByMeetArticleCount" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM meet_article
+        WHERE category_id = #{categoryId}
+        <if test="searchDto.tagName != null and !searchDto.tagName.isEmpty()">
+            AND tag_name = #{searchDto.tagName}
+        </if>
+    </select>
 </mapper>

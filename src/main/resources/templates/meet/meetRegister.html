@@ -15,24 +15,25 @@
 <div class="wrapper" th:fragment="content">
     <div id="meet-register-wrap">
         <h1 class="title-text">모임 만들기</h1>
-        <form id="meet-register-form" th:object="${meetArticleForm}" method="post">
+        <form id="meet-register-form" th:object="${meetArticleForm}"
+              th:action="@{/meet/{categoryId}/register(categoryId=${categoryId})}" method="post">
             <fieldset>
                 <input name="title" id="meet-register-title" type="text" placeholder="모임 제목"/>
                 <div id="meet-tag-wrap">
                     <h3>카테고리</h3>
                     <input class="daily-tag-list" type="checkbox" name="tags" th:value="짝궁"/>
-<!--                    <label for="1" th:text="짝궁">짝궁</label>-->
+                    <label for="1" th:text="짝궁">짝궁</label>
                     <input class="daily-tag-list" type="checkbox" name="tags" th:value="취미"/>
-<!--                    <label for="2" th:text="취미">취미</label>-->
+                    <label for="2" th:text="취미">취미</label>
                     <input class="daily-tag-list" type="checkbox" name="tags" th:value="건강"/>
-<!--                    <label for="3" th:text="건강">건강</label>-->
+                    <label for="3" th:text="건강">건강</label>
                     <input class="daily-tag-list" type="checkbox" name="tags" th:value="기타"/>
-<!--                    <label for="4" th:text="기타">기타</label>-->
+                    <label for="4" th:text="기타">기타</label>
                 </div>
                 <div id="meet-info">
                     <div class="meet-info">
                         <label for="meet-date">시간</label>
-                        <input id="meet-date" type="datetime-local">
+                        <input name="time" id="meet-date" type="datetime-local">
                     </div>
                     <div class="meet-info">
                         <label for="meet-place">장소</label>
@@ -47,23 +48,11 @@
                     <textarea name="content" id="meet-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
                 </div>
                 <div class="register-btn-wrap">
-                    <button class="back-btn" type="reset" th:onclick="|location.href='@{/meet}'|">취소하기</button>
+                    <button class="back-btn" type="reset" th:onclick="history.back(-1)">취소하기</button>
                     <button class="register-btn" type="submit">등록하기</button>
                 </div>
             </fieldset>
         </form>
     </div>
 </div>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
