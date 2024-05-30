@@ -5,6 +5,9 @@ import com.ezen.springmvc.domain.chat.dto.MessageDto;
 import com.ezen.springmvc.domain.chat.repo.ChatRoomRepository;
 import com.ezen.springmvc.domain.chat.service.ChatService;
 import com.ezen.springmvc.domain.chat.service.ChatServiceImpl;
+import com.ezen.springmvc.domain.member.dto.MemberDto;
+import com.ezen.springmvc.web.chat.form.MessageForm;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import oracle.net.ns.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -31,6 +35,8 @@ public class ChatRoomController {
 
     @GetMapping
     public String rooms(Model model) {
+        List<ChatDto> chatList = chatService.getAllRooms();
+        model.addAttribute("chatList", chatList);
         return "/chat/chatting";
     }
 
@@ -58,11 +64,36 @@ public class ChatRoomController {
         return chatRoomRepository.findRoomById(roomId);
     }
 
-    @PostMapping("/message")
-    public ResponseEntity<String> sendMessage(@RequestBody MessageDto messageDto){
+    @PostMapping("/sendMessage/{roomId}")
+    public String sendMessage(@PathVariable("roomId") String roomId,@ModelAttribute MessageForm messageForm){
         // sentAt에 현재시간 설정
-        messageDto.setSentAt(Timestamp.from(Instant.now()));
+
+        ChatDto chatDto = chatService.getRoom(roomId);
+
+        MessageDto messageDto = MessageDto.builder()
+                .sentAt(Timestamp.from(Instant.now()))
+                .content(messageForm.getInputMessage())
+                .roomId(roomId)
+                .senderId(chatDto.getSender())
+                .build();
+
         chatService.newMessage(messageDto);
         return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/room/{nickname}")
+    public String createRoomEx(@PathVariable("nickname") String nickname, HttpSession session){
+
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+        String roomId = UUID.randomUUID().toString();
+
+        ChatDto chatDto = ChatDto.builder()
+                .sender(loginMember.getNickname())
+                .receiver(nickname)
+                .roomId(roomId)
+                .build();
+
+        chatService.newChat(chatDto);
+        return "/chat";
     }
 }

@@ -40,6 +40,13 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.findChatAll();
     }
 
+    //룸아이디로 채팅방 조회
+    @Override
+    @Transactional
+    public ChatDto getRoom(String roomId){
+        return chatMapper.findChatRoom(roomId);
+    }
+
     @Override
     public List<MessageDto> getMessagesByRoomId(String roomId) {
         return messageMapper.findMessagesByRoomId(roomId);

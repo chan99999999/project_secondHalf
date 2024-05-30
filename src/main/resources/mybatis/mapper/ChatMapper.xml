@@ -4,7 +4,7 @@
 	<!-- 채팅방 생성 -->
 	<insert id="createChat" parameterType="com.ezen.springmvc.domain.chat.dto.ChatDto" >
 		INSERT INTO chat_room(room_id, created_at, sender_id, receiver_id)
-		VALUES(#{roomId}, #{createdAt}, #{sender}, #{receiver})
+		VALUES(#{roomId}, SYSDATE, #{sender}, #{receiver})
 	</insert>
 
 	<!-- 채팅방 전체목록 조회 -->
@@ -13,6 +13,13 @@
 			FROM chat_room
 			ORDER BY created_at DESC
 		</select>
+
+	<!-- 룸아이디로 채팅방 조회 -->
+	<select id="findChatRoom" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
+		SELECT room_id, created_at, sender_id, receiver_id
+		FROM chat_room
+		WHERE room_id = #{roomId}
+	</select>
 
 	<!-- 회원 닉네임으로 채팅방 검색  -->
 	<select id="findChatRoomsByNickname" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">

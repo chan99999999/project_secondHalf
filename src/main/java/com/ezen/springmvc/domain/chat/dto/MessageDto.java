@@ -1,12 +1,15 @@
 package com.ezen.springmvc.domain.chat.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@Builder
 public class MessageDto {
     private String messageId;
     private String content;

@@ -4,7 +4,7 @@
 	<!-- 메세지 전송 -->
 	<insert id="sendMessage" parameterType="com.ezen.springmvc.domain.chat.dto.MessageDto" >
 		INSERT INTO message(message_id, content, sent_at, room_id, sender_id)
-		VALUES(message_id_seq.nextval, #{content}, #{sentAt}, #{roomId}, #{senderId} )
+		VALUES(message_id_seq.nextval, #{message}, #{sentAt, jdbcType=TIMESTAMP}, #{roomId}, #{senderId} )
 	</insert>
 
 	<!-- 채팅 메시지 내용 조회 -->

@@ -22,7 +22,9 @@
                     <button id="chat-search-btn" type="submit">검색</button>
                 </div>
                 <div class="chat-list-area">
-                    <ul class="chat-list" id="chatrooms"></ul>
+                    <ul class="chat-list" id="chatrooms">
+                        <li th:each="${chatList}"></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -53,8 +55,10 @@
             </div>
 
             <div class="chat-send-box">
-                <input type="text" class="message-to-send" id="message-input" onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
+                <form method="post" th:object="${messageForm}" action="/chat/sendMessage">
+                <input type="text" class="message-to-send" id="message-input" th:field="*{inputMessage}" onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
                 <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
+                </form>
             </div>
         </div>
     </div>
@@ -211,17 +215,41 @@
         messagesListElem.scrollTop = messagesListElem.scrollHeight;
     }
 
+    // 현재 시간을 가져오는 함수
+    function getCurrentTime() {
+        return new Date().toISOString(); // ISO 형식의 문자열로 변환
+    }
+
+
+
+
     // 메세지 전송
     function sendMessage() {
         const messageInputElem = document.querySelector("#message-input");
         const message = messageInputElem.value;
+        const sentAt = new Date().valueOf(); // 현재 시간 가져오기
+
         ws.send("/pub/chat/message", {}, JSON.stringify({
             type: 'TALK',
             roomId: roomId,
             sender: sender,
-            message: message,
+            content: message,
             sentAt: sentAt
         }));
+
+        // 서버로 메시지를 전송한 후, 데이터베이스에 저장하는 코드
+        axios.post('/chat/message', {
+            roomId: roomId,
+            sender: sender,
+            content: message,
+            sentAt: sentAt
+        })
+            .then(response => {
+                console.log('메시지가 성공적으로 전송되었습니다.');
+            })
+            .catch(error => {
+                console.error('메시지 전송 중 오류가 발생했습니다:', error);
+            });
         messageInputElem.value = '';
     }
 

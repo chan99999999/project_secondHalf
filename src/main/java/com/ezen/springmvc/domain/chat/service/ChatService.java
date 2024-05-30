@@ -21,6 +21,9 @@ public interface ChatService {
     //채팅방 전체목록 조회
     public List<ChatDto> getAllRooms();
 
+    //룸 아이디로 채팅방 조회
+    public ChatDto getRoom(String roomId);
+
     // 채팅방 메세지 조회
     public List<MessageDto> getMessagesByRoomId(String roomId);
 

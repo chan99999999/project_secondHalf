@@ -1,13 +1,17 @@
 package com.ezen.springmvc.domain.chat.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@Builder
+
 public class ChatDto {
 
     // 메시지 타입 : 입장, 채팅
@@ -25,6 +29,7 @@ public class ChatDto {
     public static ChatDto create() {
         ChatDto chatDto = new ChatDto();
         chatDto.roomId = UUID.randomUUID().toString();
+
         return chatDto;
     }
 

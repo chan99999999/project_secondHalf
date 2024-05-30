@@ -17,5 +17,6 @@ public interface ChatMapper {
     //닉네임으로 채팅방 검색
     List<ChatDto> findChatByNick(@Param("nickname") String nickname);
 
-
+    //룸아이디로 채팅방 조회
+    ChatDto findChatRoom(String roomId);
 }
