@@ -19,7 +19,7 @@
             <div id="edit-picture-wrap">
                 <img id="edit-profile-picture" th:src="@{/member/image/{fileName}(fileName=${session.loginMember.storePicture})}">
                 <div id="mypage-file-uploder">
-                    <input id="mypage-file-upload" name="profileImage" type="file">
+                    <input id="mypage-file-upload" name="profileImage" accept="image/jpeg, image/png, image/gif" type="file">
                 </div>
             </div>
             <hr>
