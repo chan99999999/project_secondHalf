@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 //@Component
-public class editMemberValidator implements Validator{
+public class EditMemberValidator implements Validator{
 	@Override
 	public boolean supports(Class<?> clazz) {
 		//Class.isAssignableFrom() 메서드는 특정 Class가 어떤 클래스를 상속했는지
