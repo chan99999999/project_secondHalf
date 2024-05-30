@@ -36,8 +36,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<ChatDto> getAllRooms() {
-        return chatMapper.findChatAll();
+    public List<ChatDto> getMyChatList() {
+        return chatMapper.findMyChatList();
     }
 
     //룸아이디로 채팅방 조회

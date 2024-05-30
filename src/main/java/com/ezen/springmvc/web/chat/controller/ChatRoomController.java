@@ -36,8 +36,9 @@ public class ChatRoomController {
 
     @GetMapping
     public String rooms(Model model) {
-        List<ChatDto> chatList = chatService.getAllRooms();
+        List<ChatDto> chatList = chatService.getMyChatList();
         model.addAttribute("chatList", chatList);
+        model.addAttribute("messageForm", new MessageForm());
         return "/chat/chatting";
     }
 
@@ -66,7 +67,7 @@ public class ChatRoomController {
     }
 
     @PostMapping("/sendMessage/{roomId}")
-    public ResponseEntity<Resource> sendMessage(@PathVariable("roomId") String roomId, @ModelAttribute MessageForm messageForm){
+    public ResponseEntity<Resource> sendMessage(@PathVariable("roomId") String roomId, @ModelAttribute("messageForm") MessageForm messageForm){
         // sentAt에 현재시간 설정
 
         ChatDto chatDto = chatService.getRoom(roomId);

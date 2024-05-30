@@ -55,9 +55,10 @@
             </div>
 
             <div class="chat-send-box">
-                <form method="post" th:object="${messageForm}" action="/chat/sendMessage">
+                <form id="message-form" method="post" th:object="${messageForm}" action="/chat/sendMessage">
                 <input type="text" class="message-to-send" id="message-input" th:field="*{inputMessage}" onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
                 <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
+<!--                <button class="message-send-btn" id="send-button" type="submit">전송</button>-->
                 </form>
             </div>
         </div>

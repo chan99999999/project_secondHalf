@@ -7,8 +7,8 @@
 		VALUES(#{roomId}, SYSDATE, #{sender}, #{receiver})
 	</insert>
 
-	<!-- 채팅방 전체목록 조회 -->
-		<select id="findChatAll" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
+	<!-- 채팅방 목록 조회 -->
+		<select id="findMyChatList" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
 			SELECT room_id, created_at, sender_id, receiver_id
 			FROM chat_room
 			ORDER BY created_at DESC

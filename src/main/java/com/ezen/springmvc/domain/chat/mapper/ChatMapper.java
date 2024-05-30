@@ -11,8 +11,8 @@ public interface ChatMapper {
     //채팅방 생성
     public void createChat(ChatDto chatDto);
 
-    //채팅방 전체목록 조회
-    public List<ChatDto> findChatAll();
+    //채팅방 목록 조회
+    public List<ChatDto> findMyChatList();
 
     //닉네임으로 채팅방 검색
     List<ChatDto> findChatByNick(@Param("nickname") String nickname);

@@ -18,8 +18,8 @@ public interface ChatService {
     // 닉네임으로 검색
     public List<ChatDto> getByNick(String nickname);
 
-    //채팅방 전체목록 조회
-    public List<ChatDto> getAllRooms();
+    //채팅방 목록 조회
+    public List<ChatDto> getMyChatList();
 
     //룸 아이디로 채팅방 조회
     public ChatDto getRoom(String roomId);
