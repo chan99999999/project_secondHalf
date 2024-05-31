@@ -29,4 +29,6 @@ public interface ReplyMapper {
      * @return 댓글 수
      */
     public int findReplyCount(int dailyArticleId);
+
+    public void deleteReply(int repl);
 }

@@ -310,3 +310,15 @@
     height: 55px;
     margin-right: 20px;
 }
+
+.hidden {
+    display: none;
+}
+
+#replyToggle {
+    cursor: pointer;
+}
+
+#replyToggle:hover {
+    color: deepskyblue;
+}

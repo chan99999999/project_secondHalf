@@ -250,20 +250,31 @@ public class DailyController {
     }
 
     // 댓글 등록 처리
-    @PostMapping("{categoryId}/read/{dailyArticleId}")
-    public String dailyReadReply(@PathVariable("categoryId") int categoryId, @ModelAttribute ReplyDto replyDto, @PathVariable("dailyArticleId") int dailyArticleId, Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+//    @PostMapping("{categoryId}/read/{dailyArticleId}")
+//    public String dailyReadReply(@PathVariable("categoryId") int categoryId, @ModelAttribute ReplyDto replyDto, @PathVariable("dailyArticleId") int dailyArticleId, Model model, HttpServletRequest request) {
+//        HttpSession session = request.getSession();
+//        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+//
+//        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
+//        List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
+//        model.addAttribute("dailyArticle", dailyArticleDto);
+//        model.addAttribute("fileList", fileList);
+//        replyDto.setWriter(loginMember.getMemberId());
+//        log.info("수신한 댓글 : {}", replyDto);
+//        dailyArticleService.writeReply(replyDto);
+//        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
+//    }
 
-        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
-        List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
-        model.addAttribute("dailyArticle", dailyArticleDto);
-        model.addAttribute("fileList", fileList);
-        replyDto.setWriter(loginMember.getMemberId());
-        log.info("수신한 댓글 : {}", replyDto);
+    @PostMapping("{categoryId}/read/{dailyArticleId}")
+    public ResponseEntity<ReplyDto> registerReply(@PathVariable("categoryId") int categoryId,
+                                                  @PathVariable("dailyArticleId") int dailyArticleId,
+                                                  @RequestBody ReplyDto replyDto) {
+        replyDto.setDailyArticleId(dailyArticleId);
         dailyArticleService.writeReply(replyDto);
-        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
+
+        return ResponseEntity.ok(replyDto);
     }
+
 
     // 회원 프로필 사진 요청 처리
     @GetMapping("/image/{profileFileName}")
@@ -344,6 +355,15 @@ public class DailyController {
         dailyArticleService.editDailyArticle(dailyArticleId, editedDailyArticle);
 
         return "redirect:/daily/{categoryId}";
+    }
+
+    // 댓글 목록 api
+    @GetMapping("/getreplylist/{dailyArticleId}")
+    public ResponseEntity<List<ReplyDto>> getReplyList(
+            @PathVariable("dailyArticleId") int dailyArticleId) {
+        List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
+
+        return ResponseEntity.ok(replyList);
     }
 
 }

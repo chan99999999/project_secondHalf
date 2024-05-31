@@ -10,6 +10,9 @@
     </th:block>
     <th:block th:fragment="script">
         <script src="/js/like.js" defer></script>
+        <script src="/js/replytoggle.js" defer></script>
+        <script src="/js/replyregister.js" defer></script>
+
     </th:block>
 </head>
 
@@ -52,7 +55,7 @@
             <label for="like">좋아요</label>
             <p id="heartCount" th:text="${dailyArticle.totalHeartCount}"> 0 </p>
             <p> ㅣ </p>
-            <p th:text="'댓글(' + ${replyCount} + ')'">댓글(3)</p>
+            <p th:text="'댓글(' + ${replyCount} + ')'" id="replyToggle">댓글(3)</p>
             <th:block th:if="${loginMember != null}">
                 <th:block th:if="${loginMember.memberId == dailyArticle.memberId}">
 
@@ -99,15 +102,18 @@
         <th:block th:if="${loginMember != null}">
 
             <div class="review-wrap">
-                <form method="post">
+<!--                <form method="post">-->
                     <div id="write-review">
                         <p name="writer" th:text="'작성자 : ' + ${loginMember.memberId}">작성자 : 김순자최고</p>
                         <div id="review-text">
                             <textarea name="content" cols="62" rows="2"></textarea>
-                            <button type="submit" id="write-review-btn">등록</button>
+<!--                            <button type="submit" id="write-review-btn">등록</button>-->
+                            <button type="button" id="write-review-btn">등록</button>
                         </div>
                     </div>
-                </form>
+<!--                </form>-->
+                <div class="review-list">
+
                 <div class="review" th:each="reply : ${replyList}">
                     <div>
                         <img src="/img/profile.png">
@@ -118,6 +124,7 @@
                             <li class="review-content" th:text="${reply.content}">시간이 너무 빨리 지나가는 것 같아요...</li>
                         </ul>
                     </div>
+                </div>
                 </div>
 
             </div>
