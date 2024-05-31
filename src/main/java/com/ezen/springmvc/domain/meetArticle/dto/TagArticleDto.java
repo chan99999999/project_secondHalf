@@ -9,6 +9,6 @@ import lombok.*;
 @ToString
 @Builder
 public class TagArticleDto {
+    private int tArticleId;
     private int meetArticleId;
-    private int tagId;
 }

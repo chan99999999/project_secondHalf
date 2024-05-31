@@ -12,5 +12,6 @@ import java.util.List;
 @Builder
 public class TagDto {
     private int tagId;
+    private int tArticleId;
     private String tagName;
 }

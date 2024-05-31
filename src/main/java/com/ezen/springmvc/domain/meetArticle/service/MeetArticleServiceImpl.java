@@ -40,6 +40,7 @@ public class MeetArticleServiceImpl implements MeetArticleService {
                 tagName = tagName.trim();
                 TagDto tagDto = TagDto.builder()
                         .tagName(tagName)
+                        .tArticleId(tagArticleDto.getTArticleId())
                         .build();
                 // 태그 등록 및 해당 태그의 tag_id 가져오기
                 tagMapper.createTag(tagDto);

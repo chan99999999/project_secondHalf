@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.TagArticleMapper">
     <!-- 태그 게시글 등록 -->
-    <insert id="createTagArticle">
-        INSERT INTO tag_article (tag_id, m_article_id, t_article_id)
-        VALUES (#{tagId}, #{meetArticleId}, t_article_id_seq.NEXTVAL)
+    <insert id="createTagArticle" parameterType="TagArticleDto">
+        INSERT INTO tag_article (t_article_id, m_article_id)
+        VALUES (t_article_id_seq.NEXTVAL, #{meetArticleId})
+        <selectKey keyProperty="tArticleId" resultType="int" order="AFTER">
+            SELECT t_article_id_seq.CURRVAL FROM dual
+        </selectKey>
     </insert>
 </mapper>

@@ -3,11 +3,8 @@
 <mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.TagMapper">
     <!-- 태그 등록 -->
     <insert id="createTag" parameterType="TagDto">
-        INSERT INTO tag (tag_id, tag_name)
-        VALUES (tag_id_seq.NEXTVAL, #{tagName})
-        <selectKey keyProperty="tagId" resultType="int" order="AFTER">
-            SELECT tag_id_seq.CURRVAL FROM dual
-        </selectKey>
+        INSERT INTO tag (tag_id, tag_name, t_article_id)
+        VALUES (tag_id_seq.NEXTVAL, #{tagName}, #{tArticleId})
     </insert>
     <!-- 태그 번호로 조회 -->
     <select id="findByTagId" parameterType="TagDto">

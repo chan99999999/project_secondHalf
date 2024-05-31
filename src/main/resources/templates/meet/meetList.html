@@ -50,8 +50,10 @@
                         <p th:text="'장소 '+${meetArticle.placeId}">-장소 : 노원구 수락산 둘레길</p>
                         <p th:text="'시간 '+${meetArticle.time}">-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
                         <ul class="meet-tag">
-                            <th:block th:each="tag : ${tagList}">
-                                <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName=${tagName})}" th:text="'#' + ${tagName}"></a></li>
+                            <th:block th:if="${meetArticle.tags != null and meetArticle.tags.length > 0}">
+                                <li th:each="tag : ${meetArticle.tags}">
+                                    <a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName=${tag})}" th:text="'#' + ${tag}"></a>
+                                </li>
                             </th:block>
                         </ul>
                     </div>
@@ -80,7 +82,6 @@
                         <span class="sr-only">이전목록</span>
                     </a>
                 </li>
-
                 <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
 
                     <li class="page-item active" th:if="${i == pagination.params.requestPage}">
@@ -111,16 +112,4 @@
         </nav>
     </div>
 </div>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
