@@ -50,8 +50,8 @@
                         <p th:text="'장소 '+${meetArticle.placeId}">-장소 : 노원구 수락산 둘레길</p>
                         <p th:text="'시간 '+${meetArticle.time}">-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
                         <ul class="meet-tag">
-                            <li th:each="tag : ${tagList}">
-                                <span th:text="'#' + ${tagName}"></span>
+                            <li th:each="tag : ${#strings.arraySplit(meetArticle.tagName, ',')}">
+                                <span th:text="'#' + ${tag}"></span>
                             </li>
                         </ul>
                     </div>

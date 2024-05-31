@@ -13,7 +13,7 @@
             ma.hitcount,
             ma.member_id,
             ma.place_id,
-            COALESCE(mt.tags, '') AS tags
+            COALESCE(mt.tags, '') "tagName"
         FROM
             meet_article ma
                 LEFT JOIN
@@ -30,7 +30,7 @@
             ) mt
             ON ma.m_article_id = mt.m_article_id
         ORDER BY
-            ma.m_article_id ASC
+            meetarticleid DESC
     </select>
    <!-- 게시글 등록 -->
     <insert id="createMeetArticle" parameterType="MeetArticleDto">
