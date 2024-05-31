@@ -133,7 +133,7 @@
         messageItem.className = 'chat-message-list';
 
         const currentUser = localStorage.getItem('wschat.sender');
-        if (recv.sender === currentUser) {
+        if (recv.senderId === currentUser) {
             messageItem.classList.add('sent');
         } else {
             messageItem.classList.add('received');
@@ -155,7 +155,7 @@
 
         const messageDataMember = document.createElement('div');
         messageDataMember.className = 'message-data-member';
-        messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.sender);
+        messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.senderId);
 
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
@@ -171,7 +171,7 @@
         messageData.appendChild(messageDataTime);
         messageData.appendChild(messageDataMember);
 
-        if (recv.sender === currentUser) {
+        if (recv.senderId === currentUser) {
             messageContent.appendChild(chatMessageText);
             messageContent.appendChild(profileImg);
         } else {
