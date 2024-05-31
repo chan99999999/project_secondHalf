@@ -9,6 +9,7 @@ import lombok.*;
 @ToString
 @Builder
 public class TagArticleDto {
+    private String tagName;
     private int tArticleId;
     private int meetArticleId;
 }

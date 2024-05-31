@@ -11,7 +11,7 @@ import java.util.List;
 public interface MeetArticleMapper {
     void createMeetArticle(MeetArticleDto meetArticleDto);
     MeetArticleDto findByMeetArticleId(MeetArticleDto meetArticleId);
-    List<MeetArticleDto> findByAllMeetArticle(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
+    List<MeetArticleDto> findByAllMeetArticle(@Param("categoryId") int categoryId);
     MeetArticleDto readMeetArticle(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId);
     int findByMeetArticleCount(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
 //    void updateMeetArticle(MeetArticleDto meetArticleDto);

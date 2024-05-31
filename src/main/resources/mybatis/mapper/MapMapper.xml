@@ -11,7 +11,6 @@
         <result property="y" column="y"/>
         <result property="x" column="x"/>
     </resultMap>
-
     <resultMap id="reviewResultMap" type="com.ezen.springmvc.domain.placemap.dto.ReviewDTO">
         <id property="reviewId" column="review_id"/>
         <result property="review" column="review"/>

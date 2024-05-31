@@ -16,9 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -48,11 +46,14 @@ public class MeetController {
                 .tagName(parameterForm.getTagName())
                 .build();
         List<MeetArticleDto> meetArticleList = null;
-        if (parameterForm != null && parameterForm.getTagName() != null && !parameterForm.getTagName().isEmpty()) {
+        if (parameterForm.getTagName() != null && !parameterForm.getTagName().isEmpty()) {
             meetArticleList = meetArticleService.findByAllTagName(categoryId, parameterForm.getTagName(), searchDto);
         } else {
-            meetArticleList = meetArticleService.findByAllMeetArticle(categoryId, searchDto);
+            meetArticleList = meetArticleService.findByAllMeetArticle(categoryId);
         }
+        TagDto tagList = TagDto.builder()
+                .tagName(parameterForm.getTagName())
+                .build();
         // 페이징 처리를 위한 테이블 행의 개수 조회
         int selectedRowCount = meetArticleService.findByMeetArticleCount(categoryId, searchDto);
         log.info("조회된 행의 수: {} ", selectedRowCount);
@@ -62,9 +63,12 @@ public class MeetController {
         model.addAttribute("meetArticleList", meetArticleList);
         model.addAttribute("parameterForm", parameterForm);
         model.addAttribute("pagination", pagination);
+        model.addAttribute("tagList", tagList);
         for (MeetArticleDto meetArticleDto : meetArticleList) {
+//            parameterForm.getTagName();
             log.info("수신한 게시글 목록 : {}", meetArticleDto);
         }
+        log.info("수신한 태그 : {}", tagList);
         return "/meet/meetList";
     }
 

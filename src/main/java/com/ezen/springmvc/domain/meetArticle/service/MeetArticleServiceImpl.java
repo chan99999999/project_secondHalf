@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,8 +48,17 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     }
 
     @Override
-    public List<MeetArticleDto> findByAllMeetArticle(int categoryId, SearchDto searchDto) {
-        return meetArticleMapper.findByAllMeetArticle(categoryId, searchDto);
+    public List<MeetArticleDto> findByAllTagName(int categoryId, String tagName, SearchDto searchDto) {
+        List<TagDto> tags = tagMapper.findByAllTagName(categoryId, tagName, searchDto);
+        return tags.stream().map(tag -> {
+            MeetArticleDto meetArticleDto = new MeetArticleDto();
+            return meetArticleDto;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MeetArticleDto> findByAllMeetArticle(int categoryId) {
+        return meetArticleMapper.findByAllMeetArticle(categoryId);
     }
 
     @Override
@@ -79,15 +87,6 @@ public class MeetArticleServiceImpl implements MeetArticleService {
         return meetArticleDto;
     }
 
-
-    @Override
-    public List<MeetArticleDto> findByAllTagName(int categoryId, String tagName, SearchDto searchDto) {
-        List<TagDto> tags = tagMapper.findByAllTagName(categoryId, tagName);
-        return tags.stream().map(tag -> {
-            MeetArticleDto meetArticleDto = new MeetArticleDto();
-            return meetArticleDto;
-        }).collect(Collectors.toList());
-    }
 
     @Override
     @Transactional

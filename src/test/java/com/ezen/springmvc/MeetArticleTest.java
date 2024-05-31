@@ -3,9 +3,11 @@ package com.ezen.springmvc;
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
+import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,10 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MeetArticleTest {
     @Autowired
     MeetArticleMapper meetArticleMapper;
-//    @Autowired
-//    TagMapper tagMapper;
     @Autowired
-MeetReplyMapper meetReplyMapper;
+    TagMapper tagMapper;
+    @Autowired
+    MeetReplyMapper meetReplyMapper;
     @Autowired
     MeetArticleService meetArticleService;
     @Autowired
@@ -89,15 +92,19 @@ MeetReplyMapper meetReplyMapper;
 //        assertEquals(originalHitcount + 1, updatedHitcount);
     }
 
-//    @Test
-//    @DisplayName("모임 게시글 전체 출력 테스트")
-//    @Disabled
-//    void findByAllMeetArticleTest(){
-//        List<MeetArticleDto> list = meetArticleMapper.findByAllMeetArticle(3);
-//        for (MeetArticleDto MeetArticleDto : list) {
-//            log.info("조회된 게시글 목록 : {}", MeetArticleDto);
+    @Test
+    @DisplayName("모임 게시글 전체 출력 테스트")
+    @Disabled
+    void findByAllMeetArticleTest(){
+        List<MeetArticleDto> list = meetArticleMapper.findByAllMeetArticle(3);
+        for (MeetArticleDto meetArticleDto : list) {
+            log.info("조회된 게시글 목록 : {}", meetArticleDto);
+        }
+//        List<TagDto> tags = tagMapper.findByAllTagName(3, "건강");
+//        for (TagDto tag : tags) {
+//            log.info("태그 정보: {}", tag);
 //        }
-//    }
+    }
 
 //    @Test
 //    @DisplayName("모임 게시글 댓글 등록 테스트")
@@ -137,15 +144,11 @@ MeetReplyMapper meetReplyMapper;
 //        log.info("수정된 댓글 : {}", updateReply);
 //    }
 
-//    @Test
-//    @Transactional
-//    @DisplayName("모임 게시글 태그 조회 테스트")
-//    void findByTagNameTest(){
-//        TagDto findByTagName = TagDto
-//                .builder()
-//                .tagName("기타")
-//                .build();
-//        tagMapper.findByTagName(findByTagName);
-//        log.info("게시글과 태그 조회 : {}", findByTagName);
-//    }
+    @Test
+    @Transactional
+    @DisplayName("모임 게시글 태그 조회 테스트")
+    void findByTagNameTest(){
+//        List<TagDto> tagDto = tagMapper.findByAllTagName(3, "기타");
+//        log.info("게시글과 태그 조회 : {}", tagDto);
+    }
 }

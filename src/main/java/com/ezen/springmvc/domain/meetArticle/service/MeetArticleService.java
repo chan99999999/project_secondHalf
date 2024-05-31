@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface MeetArticleService {
 //    게시글 전체 목록
-    List<MeetArticleDto> findByAllMeetArticle(int categoryId, SearchDto searchDto);
+    List<MeetArticleDto> findByAllMeetArticle(int categoryId);
 //    모임 게시글 상세보기
     MeetArticleDto readMeetArticle(int categoryId, int meetArticleId);
 //    모임 게시글 갯수 반환 (페이징처리)
