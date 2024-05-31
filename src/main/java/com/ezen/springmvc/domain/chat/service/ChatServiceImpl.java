@@ -26,8 +26,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     @Transactional
-    public void newMessage(MessageDto messageDto) {
-        messageMapper.sendMessage(messageDto);
+    public void receiveMessage(MessageDto messageDto) {
+        messageMapper.saveMessage(messageDto);
     }
 
     @Override

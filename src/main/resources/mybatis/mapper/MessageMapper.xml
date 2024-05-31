@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper	namespace="com.ezen.springmvc.domain.chat.mapper.MessageMapper">
 	<!-- 메세지 전송 -->
-	<insert id="sendMessage" parameterType="com.ezen.springmvc.domain.chat.dto.MessageDto" >
+	<insert id="saveMessage" parameterType="com.ezen.springmvc.domain.chat.dto.MessageDto" >
 		INSERT INTO message(message_id, content, sent_at, room_id, sender_id)
 		VALUES(message_id_seq.nextval, #{content}, #{sentAt, jdbcType=TIMESTAMP}, #{roomId}, #{senderId} )
 	</insert>

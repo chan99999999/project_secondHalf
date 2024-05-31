@@ -13,7 +13,7 @@ public interface ChatService {
     public void newChat(ChatDto chatDto);
 
     //메시지 전송
-    public void newMessage(MessageDto messageDto);
+    public void receiveMessage(MessageDto messageDto);
 
     // 닉네임으로 검색
     public List<ChatDto> getByNick(String nickname);

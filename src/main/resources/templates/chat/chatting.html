@@ -55,6 +55,18 @@
                 </div>
                 <div class="chat-history">
                     <ul id="message-list">
+                        <th:block th:each="message, status:${messages}">
+                            <li class="chat-message-list">
+                                <div class="message-data">
+                                    <div class="message-data-time" th:text="${message.sentAt}"></div>
+                                    <div class="message-data-member" th:text="${message.senderId}"></div>
+                                </div>
+                                <div class="message-content">
+                                    <div class="chat-message-text" th:text="${message.content}"></div>
+                                    <img class="profile-img" src="/img/profile.png">
+                                </div>
+                            </li>
+                        </th:block>
 <!--                        <th:block th:each="message, status:${messages}">-->
 <!--                            <li th:text="${message}"></li>-->
 <!--                        </th:block>-->
@@ -103,7 +115,15 @@
         ws.connect({}, function (frame) {
             ws.subscribe("/sub/chat/room/" + roomId, function (message) {
                 const recv = JSON.parse(message.body);
-                // 디비 저장필요
+
+                axios.post('/chat/saveMessage', recv)
+                    .then(reponse => {
+                        console.log('메세지가 서버로 전송되었습니다.');
+                    })
+                    .catch(error => {
+                        console.log('메세지 전송 중 오류가 발생했습니다.', error);
+                    });
+
                 recvMessage(recv);
 
             });
@@ -116,6 +136,8 @@
             alert("error " + error);
         });
     }
+
+
 
     function enterRoom(roomId){
         localStorage.setItem('wschat.roomId', roomId);
@@ -158,7 +180,7 @@
 
         const messageDataMember = document.createElement('div');
         messageDataMember.className = 'message-data-member';
-        messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.senderId);
+        messageDataMember.textContent = (recv.senderId);
 
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';

@@ -6,6 +6,7 @@ import com.ezen.springmvc.domain.chat.repo.ChatRoomRepository;
 import com.ezen.springmvc.domain.chat.service.ChatService;
 import com.ezen.springmvc.domain.chat.service.ChatServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
+import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.web.chat.form.MessageForm;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +33,7 @@ import java.util.UUID;
 public class ChatRoomController {
 
     private static final Logger log = LoggerFactory.getLogger(ChatRoomController.class);
-    @Autowired
     private final ChatRoomRepository chatRoomRepository;
-
-    @Autowired
     private final ChatServiceImpl chatService;
 
     @GetMapping
@@ -71,22 +69,6 @@ public class ChatRoomController {
         return chatService.getRoom(roomId);
     }
 
-//    @PostMapping("/sendMessage/{roomId}")
-//    public ResponseEntity<Resource> sendMessage(@PathVariable("roomId") String roomId, @ModelAttribute("messageForm") MessageForm messageForm) {
-//        // sentAt에 현재시간 설정
-//
-//        ChatDto chatDto = chatService.getRoom(roomId);
-//
-//        MessageDto messageDto = MessageDto.builder()
-//                .sentAt(Timestamp.from(Instant.now()))
-//                .content(messageForm.getInputMessage())
-//                .roomId(roomId)
-//                .senderId(chatDto.getSenderId())
-//                .build();
-//
-//        chatService.newMessage(messageDto);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 
     @GetMapping("/room/to/{nickname}")
     public String createRoomEx(@PathVariable("nickname") String nickname, HttpSession session) {
@@ -104,5 +86,21 @@ public class ChatRoomController {
 
         chatService.newChat(chatDto);
         return "redirect:/chat";
+    }
+
+
+    @PostMapping("/saveMessage")
+    public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto, HttpSession session) {
+        log.info("뭐받았냐 {}", messageDto.toString());
+
+
+        MessageDto saveMessage = MessageDto.builder()
+                .roomId(messageDto.getRoomId())
+                .content(messageDto.getContent())
+                .sentAt(messageDto.getSentAt())
+                .senderId(messageDto.getSenderId())
+                .build();
+        chatService.receiveMessage(saveMessage);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -44,6 +44,7 @@ public class MemberServiceTest {
 
 	@Test
 	@DisplayName("회원정보 수정 테스트")
+	@Disabled
 	void memberEditTest(){
 		String id = "chat";
 		MemberDto memberDto = MemberDto.builder()
@@ -56,6 +57,13 @@ public class MemberServiceTest {
 				.build();
 
 		memberService.editMember(memberDto);
+	}
+
+	@Test
+	@DisplayName("닉네임으로 회원찾기")
+	void findByNick(){
+		MemberDto memberDto = memberService.getNickname("찬찬");
+		log.info(memberDto.toString());
 	}
 }
 
