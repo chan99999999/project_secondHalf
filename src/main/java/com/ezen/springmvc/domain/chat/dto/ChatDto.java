@@ -14,12 +14,7 @@ import java.util.UUID;
 
 public class ChatDto {
 
-    // 메시지 타입 : 입장, 채팅
-    public enum MessageType {
-        ENTER, TALK
-    }
 
-    private MessageType type; // 메시지 타입
     private String roomId; // 방번호
     private String senderId; // 메시지 보낸사람
     private String receiverId; // 메시지 받은사람

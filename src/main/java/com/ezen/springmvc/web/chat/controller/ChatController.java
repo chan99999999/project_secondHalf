@@ -1,6 +1,7 @@
 package com.ezen.springmvc.web.chat.controller;
 
 import com.ezen.springmvc.domain.chat.dto.ChatDto;
+import com.ezen.springmvc.domain.chat.dto.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,10 @@ public class ChatController {
 
 
     @MessageMapping("/chat/message")
-    public void message(ChatDto message) {
-        if (ChatDto.MessageType.ENTER.equals(message.getType())) {
+    public void message(MessageDto message) {
+        if (MessageDto.MessageType.ENTER.equals(message.getType())) {
             log.info(message.getSenderId());
-            message.setMessage(message.getSenderId() + "님이 입장하셨습니다.");
+            message.setContent(message.getSenderId() + "님이 입장하셨습니다.");
         }
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }

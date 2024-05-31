@@ -68,7 +68,7 @@ public class ChatRoomController {
     @GetMapping("/room/{roomId}")
     @ResponseBody
     public ChatDto roomInfo(@PathVariable String roomId) {
-        return chatRoomRepository.findRoomById(roomId);
+        return chatService.getRoom(roomId);
     }
 
 //    @PostMapping("/sendMessage/{roomId}")
