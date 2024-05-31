@@ -4,9 +4,13 @@ import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.web.map.form.ReviewForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/map")
@@ -104,7 +108,7 @@ public class MapController {
     }
 
 
-    // 데이터베이스에서 place_id가 존재하는지 검색
+    // 데이터베이스에서 place_id가 존재하는지 검색 (더미)
     @PostMapping("/place/info")
     @ResponseBody
     public ReviewForm findByPlaceId(@ModelAttribute("reviewForm") ReviewForm reviewForm) {
@@ -113,9 +117,21 @@ public class MapController {
         return reviewForm;
     }
 
+//    // 데이터베이스에서 place_id가 존재하는지 검색 (동적으로)
+//    @PostMapping("/place/info")
+//    @ResponseBody
+//    public ResponseEntity<MapDto> findByPlaceId(@RequestBody Map<String, Long> request) {
+//        Long placeId = request.get("placeId");
+//        MapDto mapDto = mapService.findByPlaceId(placeId);
+//        if (mapDto != null) {
+//            return ResponseEntity.ok(mapDto);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//    }
 
 
-    // 데이터베이스에서 신규 장소 정보를 등록
+    // 데이터베이스에서 신규 장소 정보를 등록(더미)
     @PostMapping("/place/review")
     @ResponseBody
     public ReviewForm reviewPlace(@ModelAttribute("reviewForm") ReviewForm reviewForm) {
@@ -144,6 +160,13 @@ public class MapController {
         return reviewForm;
     }
 
-
+//    // 데이터베이스에서 신규 장소 정보를 등록 (동적으로)
+//    @PostMapping("/place/review")
+//    public ResponseEntity<String> reviewPlace(@ModelAttribute ReviewForm reviewForm) {
+//        // 신규 장소 등록 코드
+//        // 반환할 값이 없으므로 ResponseEntity<String> 사용
+//        mapService.addNewPlace(reviewForm); // 폼 데이터를 직접 전달합니다.
+//        return ResponseEntity.ok("신규 장소가 등록되었습니다.");
+//    }
 
 }

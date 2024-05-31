@@ -4,9 +4,7 @@ import com.ezen.springmvc.domain.placemap.mapper.MapMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +51,10 @@ public class MapServiceImpl implements MapService {
 
     // PlaceId를 사용하여 데이터베이스에서 장소정보 검색
     @Override
-    public void findByPlaceId(Long placeId) {
+    public MapDto findByPlaceId(Long placeId) {
         mapMapper.findByPlaceId(placeId);
+
+        return null;
     }
 
     // place_id 없을시 신규 등록하는 메서드

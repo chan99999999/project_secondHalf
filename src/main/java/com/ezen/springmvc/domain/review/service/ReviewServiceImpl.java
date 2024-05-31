@@ -1,6 +1,6 @@
+package com.ezen.springmvc.domain.review.service;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
 import com.ezen.springmvc.domain.review.mapper.ReviewMapper;
-import com.ezen.springmvc.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewMapper reviewMapper;
 
     @Override
-    public void writeReview(ReviewDto reviewDto){
+    public void addNewReview(ReviewDto reviewDto){
         reviewMapper.createReview(reviewDto);
     }
 

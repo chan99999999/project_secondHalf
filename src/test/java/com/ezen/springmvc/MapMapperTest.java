@@ -20,7 +20,7 @@ public class MapMapperTest {
 
     @Test
     @DisplayName("신규 리뷰 장소 등록")
-//    @Disabled
+    @Disabled
     public void createPlaceMapTest() {
         MapDto mapDto = MapDto.builder()
                 .placeId(12273701L)

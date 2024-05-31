@@ -1,9 +1,12 @@
-// review.js
-
 // URL을 통해 데이터를 가져오는 HTTP 요청을 수행하는 함수 정의
-const httpRequest = function (url) {
+const httpRequest = function (url, options = {}) {
     // fetch API를 사용하여 URL에 대한 HTTP 요청을 수행하고, 응답을 JSON 형식으로 변환하여 반환합니다.
-    return fetch(url).then(response => response.json());
+    return fetch(url, options).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    });
 }
 
 /** 이벤트 타겟에 이벤트 핸들러 연결(등록) */
@@ -20,20 +23,41 @@ const eventRegister = function () {
 }
 
 // 리뷰 등록 이벤트 처리
-const handleSubmitButton = function (event) {
+const handleSubmitButton = async function (event) {
     // 폼 제출을 방지합니다. 기본 제출 행동을 취소합니다.
     event.preventDefault();
-    // "reviewForm" 폼에서 'review' 필드의 값을 가져옵니다.
-    const review = document.reviewForm.review.value;
-    const placeId = document.reviewForm.placeId.value;
-    const nickname = document.reviewForm.nickname.value;
 
-    // 콘솔에 후기 메시지를 출력합니다.
-    console.log(review);
+    // 폼 데이터를 FormData 객체로 생성합니다.
+    const formData = new FormData(document.querySelector('form'));
 
-    // 입력 데이터 형식 검사 등 추가 로직이 필요할 경우 여기에 추가합니다.
-    // 서버로 폼 데이터를 제출합니다.
-    document.reviewForm.submit();
+    try {
+        // placeId로 장소를 검색합니다.
+        const placeId = formData.get('placeId');
+        const placeInfoResponse = await httpRequest('/place/info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ placeId })
+        });
+
+        // 장소가 존재하지 않으면 신규 장소를 등록합니다.
+        if (!placeInfoResponse) {
+            const newPlaceResponse = await httpRequest('/place/review', {
+                method: 'POST',
+                body: formData
+            });
+
+            console.log('신규 장소 등록 결과:', newPlaceResponse);
+            alert('신규 장소가 등록되었습니다.');
+        } else {
+            console.log('이미 존재하는 장소입니다:', placeInfoResponse);
+            alert('해당 장소는 이미 존재합니다.');
+        }
+    } catch (error) {
+        console.error('에러 발생:', error);
+        alert('요청 처리 중 오류가 발생했습니다. 다시 시도해 주세요.');
+    }
 }
 
 /** entry point */

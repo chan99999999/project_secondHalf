@@ -18,12 +18,13 @@ public class ReviewMapperTest {
 
     @Test
     @DisplayName("신규 리뷰 등록")
-    @Disabled
+//    @Disabled
     public void createTest() {
         ReviewDto reviewDto = ReviewDto.builder()
                 .memberId("monday")
                 .review("리뷰등록")
                 .placeId(12273700L)
+                .regdate(new java.sql.Timestamp(System.currentTimeMillis()))
                 .build();
         reviewMapper.createReview(reviewDto);
         log.info("신규 리뷰 등록 : {}", reviewDto);

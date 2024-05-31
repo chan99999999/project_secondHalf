@@ -2,6 +2,8 @@ package com.ezen.springmvc.domain.review.dto;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -9,10 +11,10 @@ import lombok.*;
 @ToString
 @Builder
 public class ReviewDto {
-        private String reviewId; //후기번호
+        private Long reviewId; //후기번호
         private String review;  // 후기내용
         private Long placeId;  //장소번호
-        private String regDate; // 등록일자
+        private Timestamp regdate; // 등록일자
         private String memberId;  // 아이디
         private String nickname; // 닉네임
 }
