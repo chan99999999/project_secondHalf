@@ -981,12 +981,16 @@ ALTER TABLE placemap ADD road_address_name varchar2(200);
 -- 3-1 placemap 더미 있는 경우 삭제  더미 없는경우 3-2로
 
 DELETE FROM placemap
-WHERE place_id = 1;
+WHERE place_id = 12273700;
 
 -- 3-2 x,y 컬럼의 타입을 NUMBER->VARCHAR2(50)으로 바꿔줍니다.위도 경도의 경우 소숫점 이하값이 있어서..NUMBER로 하면 select문 사용시에 코드가 매우 복잡해져서 VARCHAR2로 변경하였습니다...
 ALTER TABLE placemap
 MODIFY (y VARCHAR2(50),
         x VARCHAR2(50));
+
+        ALTER TABLE placemap
+MODIFY (place_id VARCHAR2(30),
+        map_id VARCHAR2(30));
 
 -- 4 시퀀스 날리고 다시 생성 
 drop sequence place_id_seq;
@@ -996,10 +1000,21 @@ create sequence place_id_seq;
 -- 5 새로운 더미넣기 ;
 INSERT INTO placemap 
 (place_id, place_name, address_name, x, y, map_id, road_address_name)
-VALUES (place_id_seq.nextval, '장소이름', '지번주소', '경도', '위도', 1234, '도로명주소');
+VALUES (place_id_seq.nextval, '장소이름', '', '경도', '위도', 1234, '');
+
+
+INSERT INTO placemap 
+(place_id, place_name, address_name, x, y, map_id, road_address_name)
+VALUES (12273700, '노원문화의거리', '서울 노원구 상계동 719-1', '127.0628665469612', '37.65488557703283', 12273700, '');
+
 
 select * from placemap;
 
+
+
+
+
+SELECT * FROM placemap WHERE map_id =1234;
 
 UPDATE placemap
 SET
@@ -1015,6 +1030,7 @@ WHERE
 
 
   select * from review;
+  
 
 
 

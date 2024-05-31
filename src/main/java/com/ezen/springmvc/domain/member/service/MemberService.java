@@ -10,16 +10,16 @@ import java.util.List;
 public interface MemberService {
 	//회원가입
 	public void register(MemberDto memberDto);
-	
+
 	//로그인
 	public MemberDto isMember(String id, String passwd);
-	
+
 	//회원정보
 	public MemberDto getMember(String id);
-	
+
 	//회원목록
 	public List<MemberDto> getMembers();
-	
+
 	//회원정보 수정
 	public void editMember(MemberDto member);
 

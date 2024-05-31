@@ -2,43 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.placemap.mapper.MapMapper">
 
-    <resultMap id="placeResultMap" type="com.ezen.springmvc.domain.placemap.dto.MapDTO">
-        <id property="placeId" column="place_id"/>
-        <result property="mapId" column="map_id"/>
-        <result property="placeName" column="place_name"/>
-        <result property="addressName" column="address_name"/>
-        <result property="roadAddressName" column="road_address_name"/>
-        <result property="y" column="y"/>
-        <result property="x" column="x"/>
-    </resultMap>
-
-    <resultMap id="reviewResultMap" type="com.ezen.springmvc.domain.placemap.dto.ReviewDTO">
-        <id property="reviewId" column="review_id"/>
-        <result property="review" column="review"/>
-        <result property="placeId" column="place_id"/>
-        <result property="regDate" column="regdate"/>
-        <result property="memberId" column="member_id"/>
-        <result property="nickname" column="nickname"/>
-    </resultMap>
-
-    <select id="selectPlaceById" resultMap="placeResultMap">
-        SELECT *
-        FROM placemap
-        WHERE place_id = #{placeId}
-    </select>
-
-    <insert id="insertPlace" parameterType="com.ezen.springmvc.domain.placemap.dto.MapDTO">
-        INSERT INTO placemap (place_id, place_name, map_id, address_name, road_address_name, y, x)
-        VALUES (#{placeId}, #{placeName}, #{mapId}, #{addressName}, #{roadAddressName}, #{y}, #{x})
+    <!-- 새로운 리뷰 장소 등록  -->
+    <insert id="createPlaceMap" parameterType="MapDto">
+        INSERT INTO placemap(place_id, place_name, address_name, x, y, map_id, road_address_name)
+        VALUES (#{placeId}, #{placeName}, #{addressName}, #{x}, #{y}, #{mapId}, #{roadAddressName})
     </insert>
 
-    <insert id="insertReview" parameterType="com.ezen.springmvc.domain.placemap.dto.ReviewDTO">
-        INSERT INTO review (review_id, review, place_id, regdate, member_id)
-        VALUES (#{reviewId}, #{review}, #{placeId}, #{regDate}, #{memberId})
-    </insert>
-
-    <select id="selectNicknameByMemberId" resultType="String">
-        SELECT nickname FROM member WHERE member_id = #{memberId}
-    </select>
 
 </mapper>

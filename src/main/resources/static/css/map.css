@@ -417,14 +417,6 @@
     font-size: 20px;
 }
 
-#write-review-btn{
-    height: 80px;
-    width: 90px;
-    font-size: 25px;
-    font-weight: bolder;
-    background-color: #ff8c18;
-    border: none;
-}
 
 .review-writer{
     padding-left: 10px;
@@ -446,7 +438,7 @@
 
 .write-review-btn{
     height: 80px;
-    width: 70px;
+    width: 80px;
     background-color: #ff8c18;
     color: #ffffff;
     font-size: 20px;

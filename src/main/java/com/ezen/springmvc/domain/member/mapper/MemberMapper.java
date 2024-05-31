@@ -4,10 +4,11 @@ import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.dto.MemberSearchCondition;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@Repository
+@Repository
 @Mapper
 public interface MemberMapper {
     //회원 생성

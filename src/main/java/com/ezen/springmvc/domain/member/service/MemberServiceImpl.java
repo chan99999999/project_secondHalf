@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService{
-	
+
 	private final MemberMapper memberMapper;
 
 	@Override

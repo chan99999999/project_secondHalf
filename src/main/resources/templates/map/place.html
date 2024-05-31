@@ -1,38 +1,72 @@
+<!-- place.html -->
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script}, ~{this :: css}, ~{this :: content})}">
+<!-- 위의 줄은 현재 HTML 콘텐츠를 지정된 Thymeleaf 템플릿의 콘텐츠로 대체하는 Thymeleaf 지시어를 포함합니다. -->
 
 <head>
+    <!-- HTML 페이지의 제목 -->
     <title th:fragment="title"> ::: 우리동네 상세정보 ::: </title>
+
+    <!-- JavaScript 가져오기 -->
     <th:block th:fragment="script">
+        <!-- 카카오 맵 JavaScript SDK 가져오기 및 앱 키 포함 -->
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a091d5d3ac1b6ffddf41488f1e545f78&libraries=services"></script>
-        <!--자바스크립트로 변수 전달-->
-        <script type="text/javascript">
+        <!-- 데이터를 JavaScript로 전달 -->
+        <script defer type="text/javascript">
             const mapDTO = {
                 x: [[${mapDTO.x}]],
                 y: [[${mapDTO.y}]],
                 mapId: [[${mapDTO.mapId}]]
             };
         </script>
-        <!--지도 상세정보 API-->
+        <!-- JavaScript 파일 가져오기 -->
+        <!-- 이 스크립트는 지도 세부 정보와 후기를 처리합니다. -->
         <script defer type="text/javascript" th:src="@{/js/place.js}"></script>
+        <script defer type="text/javascript" th:src="@{/js/review.js}"></script>
 
+        <!-- 제출된 후기 내용을 콘솔에 출력하는 스크립트 -->
     </th:block>
+
+    <!-- CSS 가져오기 -->
     <th:block th:fragment="css">
+        <!-- 사용자 정의 CSS 파일 -->
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/map.css">
+        <!-- 인라인 스타일 -->
+        <style>
+            /* 상단에 고정된 네비게이션 바 */
+            nav {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 10;
+            }
+
+            /* 지도 컨테이너에 대한 스타일링 */
+            #place-map {
+                position: relative;
+                z-index: 1;
+            }
+        </style>
     </th:block>
 </head>
 
 <body>
+<!-- 콘텐츠 래퍼 -->
 <div class="wrapper" th:fragment="content">
+    <!-- 메인 콘텐츠 영역 -->
     <div id="place-wrap">
+        <!-- 장소 이름 -->
         <h1 class="title-text" id="place-name" th:text="${mapDTO.placeName}"></h1>
 
+        <!-- 장소 세부 정보 -->
         <div id="place-detail-wrap">
+            <!-- 지도 컨테이너 -->
             <div id="place-map" style="position: relative; width: 100%; height: 350px;"></div>
 
+            <!-- 장소 정보 -->
             <div id="place-info">
                 <ul class="place-info-text">
                     <li class="place-info-title">주소</li>
@@ -53,30 +87,37 @@
             </div>
         </div>
 
+        <!-- 후기 영역 -->
         <div class="review-wrap">
             <h1>업체후기(10)</h1>
             <div id="place-review">
+                <!-- 로그인한 경우 후기 작성 폼 표시 -->
                 <th:block th:if="${session.loginMember != null}">
-                    <div class="write-review">
-                        <form method="post">
+<!--                    onsubmit="submitReview(event)": 이것은 폼이 제출될 때 호출될 JavaScript 함수를 지정-->
+                    <form method="post" name="reviewForm" action="/map/place/review" onsubmit="handleSubmitButton(event)">
+                        <div class="write-review">
                             <div class="review-writer" th:text="|작성자: ${session.loginMember.nickname}|"></div>
                             <div class="review-text">
-                                <textarea cols="76" rows="2" class="review-content"></textarea>
-                                <button type="submit" class="write-review-btn">등록</button>
+                                <textarea cols="76" rows="2" class="review-content" name="review"></textarea>
+                                <input type="hidden" name="placeId" th:value="${placeId}"/>
+                                <button type="submit" class="write-review-btn" id="addBtn">등록</button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </th:block>
+                <!-- 로그인하지 않은 경우 로그인 안내 표시 -->
                 <th:block th:if="${session.loginMember == null}">
                     <div class="write-review">
                         <form action="/member/login">
                             <div class="review-text">
-                                <textarea cols="76" rows="2" class="review-content" style="color: red" th:text="'후기 작성은 로그인 후 가능합니다.'" disabled></textarea>
+                                <textarea cols="76" rows="2" class="review-content" style="color: red"
+                                          th:text="'후기 작성은 로그인 후 가능합니다.'" disabled></textarea>
                                 <button type="submit" class="write-review-btn">로그인</button>
                             </div>
                         </form>
                     </div>
                 </th:block>
+                <!-- 하드코딩된 후기 -->
                 <div class="review">
                     <div>
                         <img src="/img/profile.png">
@@ -84,7 +125,7 @@
                     <div>
                         <ul>
                             <li class="review-writer">작성자명</li>
-                            <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
+                            <li class="review-content">후기가 등록이 안되요...미쳐버릴것 같아요</li>
                         </ul>
                     </div>
                 </div>
@@ -95,14 +136,12 @@
                     <div>
                         <ul>
                             <li class="review-writer">작성자명</li>
-                            <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
+                            <li class="review-content">이놈의 후기...돌아버리겠어요</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 </body>

@@ -1,84 +1,97 @@
 package com.ezen.springmvc.domain.placemap.service;
-
-import com.ezen.springmvc.domain.placemap.dto.MapDTO;
+import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.mapper.MapMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class MapServiceImpl implements MapService {
 
     private final MapMapper mapMapper;
 
-    @Autowired
-    public MapServiceImpl(MapMapper mapMapper) {
-        this.mapMapper = mapMapper;
-    }
-
+    // MapDto를 그대로 반환합니다
     @Override
-    public MapDTO processPlaceInfo(MapDTO mapDTO) {
-        // placeInfoDTO 객체를 처리하는 로직을 작성합니다.
-        // 여기서는 단순히 받은 정보를 반환합니다.
+    public MapDto processPlaceInfo(MapDto mapDTO) {
         return mapDTO;
     }
 
+    // 입력으로 받은 MapDto 객체를 JSON 문자열로 변환
     @Override
-    public String processPlaceInfoToJson(MapDTO mapDTO) {
-        // Jackson ObjectMapper를 사용하여 MapDTO 객체를 JSON 문자열로 변환합니다.
+    public String processPlaceInfoToJson(MapDto mapDTO) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(mapDTO);
         } catch (JsonProcessingException e) {
-            // JSON 변환 중 예외가 발생한 경우 처리합니다.
             e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public MapDTO getPlaceInfoById(String mapId) {
-        // 여기에 mapId를 사용하여 MapDTO를 가져오는 로직을 작성합니다.
-        // 데이터베이스나 다른 소스로부터 mapId에 해당하는 데이터를 가져오는 로직입니다.
-        // 아래는 예시로, 실제 구현에서는 데이터베이스 조회 등을 할 수 있습니다.
+    public void addNewPlace(MapDto mapDto) {
+        mapMapper.createPlaceMap(mapDto);
+    }
 
-        // 예시 데이터
-        return MapDTO.builder()
+    //
+    // 주어진 mapId를 사용하여 임의의 MapDto 객체를 생성하여 반환
+    @Override
+    public MapDto getPlaceInfoById(Long mapId) {
+        return MapDto.builder()
+
+                .placeId(mapId)
                 .mapId(mapId)
-                .placeName("성민복지관")
-                .addressName("서울 노원구 상계동 321-56")
-                .roadAddressName("서울 노원구 노원로32길 30-3")
-                .phone("02-931-7970")
-                .x("127.06916926781204")
-                .y("37.65571365636447")
-                .categoryName("사회,공공기관 > 단체,협회 > 사회복지시설 > 장애인복지시설")
-                .placeUrl("http://place.map.kakao.com/11728630")
+                .placeName("placeName")
+                .addressName("addressName")
+                .roadAddressName("roadAddressName")
+                .x("x")
+                .y("y")
                 .build();
     }
 
+    //데이터베이스에 place_id 에 해당하는 정보가 있는지 조회
 
-    @Override
-    public void savePlaceInfo(MapDTO mapDTO) {
-        mapMapper.insertPlaceInfo(mapDTO);
-    }
 
+
+    // 데이터베이스에 신규 place 등록
 //    @Override
-//    public MapDTO getPlaceInfoById(String mapId) {
-//        return mapMapper.getPlaceInfoById(mapId);
+//    @Transactional
+//    public void toMapEntity(MapDto mapDTO) {
+//        // MapDto를 MapEntity로 변환하여 Mapper에 전달
+//        MapEntity mapEntity = convertToMapEntity(mapDTO);
+//        mapMapper.toMapEntity(mapEntity);
 //    }
-
-    @Override
-    public void updatePlaceInfo(MapDTO mapDTO) {
-        mapMapper.updatePlaceInfo(mapDTO);
-    }
-
-    @Override
-    public void deletePlaceInfo(String mapId) {
-        mapMapper.deletePlaceInfo(mapId);
-    }
-
-
-
+//
+//    // MapDto를 MapEntity로 변환하는 메서드
+//    private MapEntity convertToMapEntity(MapDto mapDTO) {
+//        MapEntity mapEntity = new MapEntity();
+//        mapEntity.setPlaceId(mapDTO.getPlaceId());
+//        mapEntity.setMapId(mapDTO.getMapId());
+//        mapEntity.setPlaceName(mapDTO.getPlaceName());
+//        mapEntity.setAddressName(mapDTO.getAddressName());
+//        mapEntity.setRoadAddressName(mapDTO.getRoadAddressName());
+//        mapEntity.setX(mapDTO.getX());
+//        mapEntity.setY(mapDTO.getY());
+//        // 기타 필드 설정
+//
+//        return mapEntity;
+//    }
+//
+//
+//    // 데이터베이스에서 place_id가 존재하는지 검색해보는 메서드
+//    @Override
+//    public MapDto searchByPlaceId(Long placeId) {
+//        return null;
+//    }
+//
+//    // place_id 없을시 신규 등록하는 메서드
+//    @Override
+//    public MapDto addNewPlace(Long placeId) {
+//        return null;
+//    }
 
 }

@@ -1,4 +1,4 @@
-package com.ezen.springmvc.domain.placemap.dto;
+package com.ezen.springmvc.domain.review.dto;
 
 import lombok.*;
 
@@ -8,10 +8,10 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class ReviewDTO {
+public class ReviewDto {
         private String reviewId; //후기번호
         private String review;  // 후기내용
-        private String placeId;  //장소번호
+        private Long placeId;  //장소번호
         private String regDate; // 등록일자
         private String memberId;  // 아이디
         private String nickname; // 닉네임
