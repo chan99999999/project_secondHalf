@@ -25,7 +25,7 @@
                     <ul class="chat-list" id="chatrooms">
                         <th:block th:each="chatDto, status:${chatList}">
                             <li class="chat-member">
-                                <a onclick="enterRoom()" th:href="|/chat/room/enter/${chatDto.roomId}|">
+                                <a th:href="|/chat/room/enter/${chatDto.roomId}|">
                                     <img class="profile-img chat-member-img" src="/img/profile.png">
                                     <div class="chat-list-info">
                                         <div class="chat-list-name" th:text="${chatDto.senderId}"></div>
@@ -94,7 +94,7 @@
     const ws = Stomp.over(sock);
 
     // roomId, sender 설정
-    const roomId = localStorage.getItem('wschat.roomId');
+    const roomId = '7ef30bb0-1bc3-4cf2-bff6-0f55f93fe1df';
     const sender = localStorage.getItem('wschat.sender');
     let room = {};
     let messages = [];
@@ -110,24 +110,20 @@
             ws.send("/pub/chat/message", {}, JSON.stringify({
                 type: 'ENTER',
                 roomId: roomId,
-                sender: sender
+                senderId: sender
             }));
         }, function (error) {
             alert("error " + error);
         });
     }
 
+
+
     // 방 찾기
     function findRoom() {
         axios.get('/chat/room/' + roomId).then(response => {
             room = response.data;
         });
-    }
-
-    // 방 입장
-    function enterRoom(){
-        localStorage.setItem('wschat.sender',sender);
-        localStorage.setItem('wschat.roomId',roomId);
     }
 
     // 메세지 수신
@@ -137,7 +133,7 @@
         messageItem.className = 'chat-message-list';
 
         const currentUser = localStorage.getItem('wschat.sender');
-        if (recv.sender === currentUser) {
+        if (recv.senderId === currentUser) {
             messageItem.classList.add('sent');
         } else {
             messageItem.classList.add('received');
@@ -159,7 +155,7 @@
 
         const messageDataMember = document.createElement('div');
         messageDataMember.className = 'message-data-member';
-        messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.sender);
+        messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.senderId);
 
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
@@ -175,7 +171,7 @@
         messageData.appendChild(messageDataTime);
         messageData.appendChild(messageDataMember);
 
-        if (recv.sender === currentUser) {
+        if (recv.senderId === currentUser) {
             messageContent.appendChild(chatMessageText);
             messageContent.appendChild(profileImg);
         } else {
@@ -195,8 +191,6 @@
         return new Date().toISOString(); // ISO 형식의 문자열로 변환
     }
 
-    // 채팅방 입장
-
 
     // 메세지 전송
     function sendMessage() {
@@ -206,17 +200,17 @@
 
         ws.send("/pub/chat/message", {}, JSON.stringify({
             type: 'TALK',
-            roomId: `[[${roomId}]]`,
-            sender: '왜그래',
-            content: message,
+            roomId: roomId,
+            senderId: sender,
+            message: message,
             sentAt: sentAt
         }));
 
         // 서버로 메시지를 전송한 후, 데이터베이스에 저장하는 코드
         axios.post('/chat/message', {
             roomId: roomId,
-            sender: sender,
-            content: message,
+            senderId: sender,
+            message: message,
             sentAt: sentAt
         })
             .then(response => {
