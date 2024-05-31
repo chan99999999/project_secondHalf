@@ -24,7 +24,7 @@
                 <div class="chat-list-area">
                     <ul class="chat-list" id="chatrooms">
                         <th:block th:each="chatDto, status:${chatList}">
-                            <li class="chat-member">
+                            <li class="chat-member" th:onclick="enterRoom([[${chatDto.roomId}]])">
                                 <a th:href="|/chat/room/enter/${chatDto.roomId}|">
                                     <img class="profile-img chat-member-img" src="/img/profile.png">
                                     <div class="chat-list-info">
@@ -94,8 +94,8 @@
     const ws = Stomp.over(sock);
 
     // roomId, sender 설정
-    const roomId = '7ef30bb0-1bc3-4cf2-bff6-0f55f93fe1df';
-    const sender = localStorage.getItem('wschat.sender');
+    const roomId = localStorage.getItem('wschat.roomId');
+    const sender = `[[${session.loginMember.nickname}]]`;
     let room = {};
     let messages = [];
 
@@ -117,6 +117,9 @@
         });
     }
 
+    function enterRoom(roomId){
+        localStorage.setItem('wschat.roomId', roomId);
+    }
 
 
     // 방 찾기
@@ -132,7 +135,7 @@
         const messageItem = document.createElement('li');
         messageItem.className = 'chat-message-list';
 
-        const currentUser = localStorage.getItem('wschat.sender');
+        const currentUser = `[[${session.loginMember.nickname}]]`
         if (recv.senderId === currentUser) {
             messageItem.classList.add('sent');
         } else {
@@ -162,7 +165,7 @@
 
         const chatMessageText = document.createElement('div');
         chatMessageText.className = 'chat-message-text';
-        chatMessageText.textContent = recv.message;
+        chatMessageText.textContent = recv.content;
 
         const profileImg = document.createElement('img');
         profileImg.className = 'profile-img';
@@ -202,7 +205,7 @@
             type: 'TALK',
             roomId: roomId,
             senderId: sender,
-            message: message,
+            content: message,
             sentAt: sentAt
         }));
 
@@ -210,7 +213,7 @@
         axios.post('/chat/message', {
             roomId: roomId,
             senderId: sender,
-            message: message,
+            content: message,
             sentAt: sentAt
         })
             .then(response => {
