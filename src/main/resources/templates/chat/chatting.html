@@ -22,7 +22,19 @@
                     <button id="chat-search-btn" type="submit">검색</button>
                 </div>
                 <div class="chat-list-area">
-                    <ul class="chat-list" id="chatrooms"></ul>
+                    <ul class="chat-list" id="chatrooms">
+                        <th:block th:each="chatDto, status:${chatList}">
+                            <li class="chat-member">
+                                <a th:href="|/chat/room/enter/${chatDto.roomId}|">
+                                    <img class="profile-img chat-member-img" src="/img/profile.png">
+                                    <div class="chat-list-info">
+                                        <div class="chat-list-name" th:text="${chatDto.senderId}"></div>
+                                        <div class="chat-list-message">아아</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </th:block>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -32,7 +44,7 @@
                 <div class="chat-cureent-name member-profile" id="member-profile">
                     김순자 최고
                     <ul class="perid">
-                        <li><a href="#" onclick="createRoom()">1:1 대화하기</a></li>
+                        <li><a href="chat/room/chan9">1:1 대화하기</a></li>
                         <hr>
                         <li><a href="#">게시글 보기</a></li>
                     </ul>
@@ -40,21 +52,19 @@
             </div>
             <div class="chat-history">
                 <ul id="message-list">
-                    <!--                    <li class="chat-message-list">-->
-                    <!--                        <div class="message-data">-->
-                    <!--                            <div class="message-data-time">오전 10:10, 오늘</div>-->
-                    <!--                            <div class="message-data-member">김순자 최고</div>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="chat-message-text">-->
-                    <!--                            안녕하세요? 좋은 하루 입니다.-->
-                    <!--                        </div>-->
-                    <!--                    </li>-->
+                    <th:block th:each="message, status:${messages}">
+                        <li th:text="${message}"></li>
+                    </th:block>
                 </ul>
             </div>
 
             <div class="chat-send-box">
-                <input type="text" class="message-to-send" id="message-input" onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
-                <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
+                <form id="message-form" method="post" th:object="${messageForm}" action="/chat/sendMessage">
+                    <input type="text" class="message-to-send" id="message-input" th:field="*{inputMessage}"
+                           onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
+                    <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
+                    <!--                <button class="message-send-btn" id="send-button" type="submit">전송</button>-->
+                </form>
             </div>
         </div>
     </div>
@@ -65,7 +75,8 @@
 <script>
     //대화하기 접속 시 대화 리스트 출력
     document.addEventListener('DOMContentLoaded', function () {
-        findAllRoom();
+        // findAllRoom();
+        initWebSocket();
     });
 
     // 대화중인 리스트 목록 전체출력
@@ -106,20 +117,19 @@
     }
 
     //대화방 입장
-    function enterRoom(roomId) {
-        const sender = `[[${session.loginMember.nickname}]]`;
-        if (sender) {
-            localStorage.setItem('wschat.sender', sender);
-            localStorage.setItem('wschat.roomId', roomId);
-            location.href = `/chat/room/enter/` + roomId;
-        }
-    }
+    // function enterRoom(roomId) {
+    //     const sender = `[[${session.loginMember.nickname}]]`;
+    //     if (sender) {
+    //         localStorage.setItem('wschat.sender', sender);
+    //         localStorage.setItem('wschat.roomId', roomId);
+    //         location.href = `/chat/room/enter/` + roomId;
+    //     }
+    // }
 
     //웹소켓, 스톰프 설정
-    const sock = new SockJS("/ws-stomp");
+    const sock = new SockJS("/wss-stomp");
     const ws = Stomp.over(sock);
 
-    initWebSocket();
 
     function initWebSocket() {
         ws.connect({}, function (frame) {
@@ -150,68 +160,112 @@
         });
     }
 
-    //메세지 수신
+    // 메세지 수신
     function recvMessage(recv) {
         const messagesListElem = document.querySelector("#message-list");
         const messageItem = document.createElement('li');
         messageItem.className = 'chat-message-list';
+
+        const currentUser = localStorage.getItem('wschat.sender');
+        if (recv.sender === currentUser) {
+            messageItem.classList.add('sent');
+        } else {
+            messageItem.classList.add('received');
+        }
 
         const messageData = document.createElement('div');
         messageData.className = 'message-data';
 
         const messageDataTime = document.createElement('div');
         messageDataTime.className = 'message-data-time';
-        messageDataTime.textContent = new Date().toLocaleString()
+
+        const options = {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            timeZone: 'Asia/Seoul'
+        };
+        messageDataTime.textContent = new Date().toLocaleTimeString('ko-KR', options);
 
         const messageDataMember = document.createElement('div');
         messageDataMember.className = 'message-data-member';
         messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.sender);
 
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+
         const chatMessageText = document.createElement('div');
         chatMessageText.className = 'chat-message-text';
         chatMessageText.textContent = recv.message;
 
+        const profileImg = document.createElement('img');
+        profileImg.className = 'profile-img';
+        profileImg.src = '/img/profile.png'; // 프로필 이미지 경로
+
         messageData.appendChild(messageDataTime);
         messageData.appendChild(messageDataMember);
 
+        if (recv.sender === currentUser) {
+            messageContent.appendChild(chatMessageText);
+            messageContent.appendChild(profileImg);
+        } else {
+            messageContent.appendChild(profileImg);
+            messageContent.appendChild(chatMessageText);
+        }
+
         messageItem.appendChild(messageData);
-        messageItem.appendChild(chatMessageText);
+        messageItem.appendChild(messageContent);
 
         messagesListElem.appendChild(messageItem);
+        messagesListElem.scrollTop = messagesListElem.scrollHeight;
     }
+
+    // 현재 시간을 가져오는 함수
+    function getCurrentTime() {
+        return new Date().toISOString(); // ISO 형식의 문자열로 변환
+    }
+
 
     // 메세지 전송
     function sendMessage() {
         const messageInputElem = document.querySelector("#message-input");
         const message = messageInputElem.value;
+        const sentAt = new Date().valueOf(); // 현재 시간 가져오기
+
         ws.send("/pub/chat/message", {}, JSON.stringify({
             type: 'TALK',
             roomId: roomId,
             sender: sender,
-            message: message
+            content: message,
+            sentAt: sentAt
         }));
+
+        // 서버로 메시지를 전송한 후, 데이터베이스에 저장하는 코드
+        axios.post('/chat/message', {
+            roomId: roomId,
+            sender: sender,
+            content: message,
+            sentAt: sentAt
+        })
+            .then(response => {
+                console.log('메시지가 성공적으로 전송되었습니다.');
+            })
+            .catch(error => {
+                console.error('메시지 전송 중 오류가 발생했습니다:', error);
+            });
         messageInputElem.value = '';
     }
 
     // 메세지 전송방법, 대화방 연결
     function sendMessageOnEnter() {
         const messageInputElem = document.querySelector("#message-input");
-        messageInputElem.onkeydown = function(event) {
+        messageInputElem.onkeydown = function (event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         };
     }
+
+
 </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
