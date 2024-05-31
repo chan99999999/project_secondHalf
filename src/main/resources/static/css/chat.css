@@ -203,7 +203,13 @@
     height: 70px;
     background-color: white;
     padding: 20px;
+
+}
+
+.chat-member >a{
+    width: inherit;
     display: flex;
+    align-items: center;
 }
 
 .chat-member-img {
