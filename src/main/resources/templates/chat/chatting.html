@@ -94,7 +94,7 @@
     const ws = Stomp.over(sock);
 
     // roomId, sender 설정
-    const roomId = localStorage.getItem('wschat.roomId');
+    const roomId = '7ef30bb0-1bc3-4cf2-bff6-0f55f93fe1df';
     const sender = localStorage.getItem('wschat.sender');
     let room = {};
     let messages = [];
@@ -202,7 +202,7 @@
             type: 'TALK',
             roomId: roomId,
             senderId: sender,
-            content: message,
+            message: message,
             sentAt: sentAt
         }));
 
@@ -210,7 +210,7 @@
         axios.post('/chat/message', {
             roomId: roomId,
             senderId: sender,
-            content: message,
+            message: message,
             sentAt: sentAt
         })
             .then(response => {
