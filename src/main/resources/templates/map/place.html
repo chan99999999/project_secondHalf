@@ -15,16 +15,16 @@
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a091d5d3ac1b6ffddf41488f1e545f78&libraries=services"></script>
         <!-- 데이터를 JavaScript로 전달 -->
         <script defer type="text/javascript">
-            const mapDTO = {
-                x: [[${mapDTO.x}]],
-                y: [[${mapDTO.y}]],
-                mapId: [[${mapDTO.mapId}]]
+            const mapDto = {
+                x: [[${mapDto.x}]],
+                y: [[${mapDto.y}]],
+                mapId: [[${mapDto.mapId}]]
             };
         </script>
         <!-- JavaScript 파일 가져오기 -->
         <!-- 이 스크립트는 지도 세부 정보와 후기를 처리합니다. -->
         <script defer type="text/javascript" th:src="@{/js/place.js}"></script>
-        <script defer type="text/javascript" th:src="@{/js/review.js}"></script>
+<!--        <script defer type="text/javascript" th:src="@{/js/review.js}"></script>-->
 
         <!-- 제출된 후기 내용을 콘솔에 출력하는 스크립트 -->
     </th:block>
@@ -59,7 +59,7 @@
     <!-- 메인 콘텐츠 영역 -->
     <div id="place-wrap">
         <!-- 장소 이름 -->
-        <h1 class="title-text" id="place-name" th:text="${mapDTO.placeName}"></h1>
+        <h1 class="title-text" id="place-name" th:text="${mapDto.placeName}"></h1>
 
         <!-- 장소 세부 정보 -->
         <div id="place-detail-wrap">
@@ -70,19 +70,19 @@
             <div id="place-info">
                 <ul class="place-info-text">
                     <li class="place-info-title">주소</li>
-                    <li id="places-address-name" th:text="${mapDTO.addressName}"></li>
+                    <li id="places-address-name" th:text="${mapDto.addressName}"></li>
                 </ul>
                 <ul class="place-info-text">
                     <li class="place-info-title">도로명 주소</li>
-                    <li id="place-road-address" th:text="${mapDTO.roadAddressName}"></li>
+                    <li id="place-road-address" th:text="${mapDto.roadAddressName}"></li>
                 </ul>
                 <ul class="place-info-text">
                     <li class="place-info-title">전화번호</li>
-                    <li id="place-phone" th:text="${mapDTO.phone}"></li>
+                    <li id="place-phone" th:text="${mapDto.phone}"></li>
                 </ul>
                 <ul class="place-info-text">
                     <li class="place-info-title">카테고리</li>
-                    <li id="place-category" th:text="${mapDTO.categoryName}"></li>
+                    <li id="place-category" th:text="${mapDto.categoryName}"></li>
                 </ul>
             </div>
         </div>

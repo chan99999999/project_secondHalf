@@ -24,9 +24,12 @@ const handleSubmitButton = function (event) {
     // 폼 제출을 방지합니다. 기본 제출 행동을 취소합니다.
     event.preventDefault();
     // "reviewForm" 폼에서 'review' 필드의 값을 가져옵니다.
-    const reviewMessage = document.reviewForm.review.value;
+    const review = document.reviewForm.review.value;
+    const placeId = document.reviewForm.placeId.value;
+    const nickname = document.reviewForm.nickname.value;
+
     // 콘솔에 후기 메시지를 출력합니다.
-    console.log(reviewMessage);
+    console.log(review);
 
     // 입력 데이터 형식 검사 등 추가 로직이 필요할 경우 여기에 추가합니다.
     // 서버로 폼 데이터를 제출합니다.

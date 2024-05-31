@@ -67,7 +67,7 @@ public class ReviewController {
             return "/map/form/ReviewForm";
         }
 
-        // 리뷰 DTO 객체 생성 및 설정
+        // 리뷰 Dto 객체 생성 및 설정
         ReviewDto reviewDto = ReviewDto.builder()
                 .review(reviewForm.getReview())
                 .placeId(reviewForm.getPlaceId())

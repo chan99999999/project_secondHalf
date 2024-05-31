@@ -20,20 +20,33 @@ public class MapController {
     public MapController(MapService mapService) {
         this.mapService = mapService;
     }
+
+    // 특정 장소의 정보를 JSON 형식으로 반환합니다.
+    @GetMapping("/place")
+    @ResponseBody
+    public MapDto getPlaceInfo(@RequestParam("id") Long mapId) {
+        MapDto mapDto = mapService.getPlaceInfoById(mapId);
+        log.info("Fetched MapDto: {}", mapDto);
+        return mapDto;
+    }
     // GET 요청을 처리하여 맵 검색 폼을 반환합니다.
     @GetMapping
     public String searchMap() {
         return "/map/searchForm";
     }
+
     // 특정 장소의 정보를 JSON 형식으로 반환합니다.
     @GetMapping("/place/json")
     @ResponseBody
     public MapDto getPlaceInfoJson(@RequestParam("id") Long mapId) {
-//        MapDto mapDTO = mapService.getPlaceInfoById(mapId);
-//        log.info("Fetched MapDTO: {}", mapDTO);
-//        return mapDTO;
-        return null;
+        MapDto mapDto = mapService.getPlaceInfoById(mapId);
+        log.info("Fetched MapDto: {}", mapDto);
+        return mapDto;
     }
+
+
+
+
     // POST 요청을 처리하여 장소 정보를 모델에 추가하고 뷰를 반환합니다.
     @PostMapping("/place")
     public String getPlaceInfo(
@@ -48,8 +61,8 @@ public class MapController {
             @RequestParam("y") String y,
             Model model) {
 
-        // PlaceInfoDTO 객체를 생성합니다.
-        MapDto mapDTO = MapDto.builder()
+        // PlaceInfoDto 객체를 생성합니다.
+        MapDto mapDto = MapDto.builder()
                 .placeId(mapId)
                 .mapId(mapId)
                 .placeName(placeName)
@@ -62,43 +75,54 @@ public class MapController {
                 .y(y)
                 .build();
 
-        // 로그 추가: 생성된 MapDTO 객체 출력
-        log.info("생성된 Map DTO: {}", mapDTO);
+        // 로그 추가: 생성된 MapDto 객체 출력
+        log.info("생성된 Map Dto: {}", mapDto);
 
-        // MapDTO 객체를 처리합니다.
-        MapDto processedPlaceInfo = mapService.processPlaceInfo(mapDTO);
+        // MapDto 객체를 처리합니다.
+        MapDto processedPlaceInfo = mapService.processPlaceInfo(mapDto);
 
         // 로그 추가: 처리된 정보 출력
         log.info("처리된 map 정보: {}", processedPlaceInfo);
 
         // 처리된 정보를 모델에 추가합니다.
-        model.addAttribute("mapDTO", processedPlaceInfo);
+        model.addAttribute("mapDto", processedPlaceInfo);
 
         // 로그 추가: 모델에 정보가 잘 추가되었는지 확인
-        log.info("모델에 추가된 mapDTO: {}", model.containsAttribute("mapDTO"));
+        log.info("모델에 추가된 mapDto: {}", model.containsAttribute("mapDto"));
 
-        // MapDTO 객체를 JSON 문자열로 변환하고 로그를 추가합니다.
+        // MapDto 객체를 JSON 문자열로 변환하고 로그를 추가합니다.
         String json = mapService.processPlaceInfoToJson(processedPlaceInfo);
 
         // 로그 추가: JSON 문자열 출력
         log.info("JSON String 출력: {}", json);
 
         // 모델에 JSON 문자열을 추가
-        model.addAttribute("jsonMapDTO", json);
-        log.info("모델에 추가된 jsonMapDTO: {}", model.containsAttribute("jsonMapDTO"));
+        model.addAttribute("jsonMapDto", json);
+        log.info("모델에 추가된 jsonMapDto: {}", model.containsAttribute("jsonMapDto"));
 
         return "/map/place";
     }
 
-    
 
-    // 데이터베이스에서 place_id가 존재하는지 검색해보는 메서드
+    // 데이터베이스에서 place_id가 존재하는지 검색
+    @PostMapping("/place/info")
+    @ResponseBody
+    public ReviewForm findByPlaceId(@ModelAttribute("reviewForm") ReviewForm reviewForm) {
+        reviewForm.setPlaceId(12273702L);
+        mapService.findByPlaceId(reviewForm.getPlaceId());
+        return reviewForm;
+    }
+
+
+
+    // 데이터베이스에서 신규 장소 정보를 등록
     @PostMapping("/place/review")
     @ResponseBody
     public ReviewForm reviewPlace(@ModelAttribute("reviewForm") ReviewForm reviewForm) {
 //        reviewForm 임시데이터 설정
         reviewForm.setPlaceId(12273702L);
         reviewForm.setMemberId("monday");
+        reviewForm.setNickname("nickname");
         reviewForm.setReview("사용자 등록 리뷰 내용");
         reviewForm.setPlaceName("장소명");
         reviewForm.setAddressName("주소명");

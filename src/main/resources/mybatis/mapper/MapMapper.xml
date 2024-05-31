@@ -9,4 +9,12 @@
     </insert>
 
 
+    <!-- placeId로 장소 상세 조회 -->
+    <select id="findByPlaceId" parameterType="Long" resultType="mapDto">
+        SELECT place_id, place_name, address_name, x, y, map_id, road_address_name
+        FROM placemap
+        WHERE place_id = #{placeId}
+    </select>
+
+
 </mapper>

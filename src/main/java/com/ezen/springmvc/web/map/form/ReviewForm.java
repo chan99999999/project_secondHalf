@@ -11,6 +11,7 @@ import lombok.*;
 /* 신규 리뷰 쓰기 폼에 대응하는 Form 클래스 */
 public class ReviewForm {
     private Long placeId;
+    private String nickname;
     private String memberId;
     private String review;
     private String placeName;       // 장소명

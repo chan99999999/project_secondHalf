@@ -20,7 +20,7 @@ public class MapMapperTest {
 
     @Test
     @DisplayName("신규 리뷰 장소 등록")
-    @Disabled
+//    @Disabled
     public void createPlaceMapTest() {
         MapDto mapDto = MapDto.builder()
                 .placeId(12273701L)
@@ -35,4 +35,14 @@ public class MapMapperTest {
 
         log.info("신규 리뷰 장소 등록 : {}", mapDto );
     }
+
+
+    @Test
+    @DisplayName("placeId로 장소검색")
+    @Disabled
+    public void findByPlaceIdTest() {
+        MapDto mapDto = mapMapper.findByPlaceId(12273701L);
+        log.info("placeId로 장소검색 : {}", mapDto );
+    }
+
 }

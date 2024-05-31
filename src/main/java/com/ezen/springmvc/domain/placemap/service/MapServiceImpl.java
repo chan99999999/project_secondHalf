@@ -16,28 +16,25 @@ public class MapServiceImpl implements MapService {
 
     // MapDto를 그대로 반환합니다
     @Override
-    public MapDto processPlaceInfo(MapDto mapDTO) {
-        return mapDTO;
+    public MapDto processPlaceInfo(MapDto mapDto) {
+        return mapDto;
     }
 
     // 입력으로 받은 MapDto 객체를 JSON 문자열로 변환
     @Override
-    public String processPlaceInfoToJson(MapDto mapDTO) {
+    public String processPlaceInfoToJson(MapDto mapDto) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.writeValueAsString(mapDTO);
+            return objectMapper.writeValueAsString(mapDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    @Override
-    public void addNewPlace(MapDto mapDto) {
-        mapMapper.createPlaceMap(mapDto);
-    }
 
-    //
+
+
     // 주어진 mapId를 사용하여 임의의 MapDto 객체를 생성하여 반환
     @Override
     public MapDto getPlaceInfoById(Long mapId) {
@@ -53,34 +50,26 @@ public class MapServiceImpl implements MapService {
                 .build();
     }
 
+
+    // PlaceId를 사용하여 데이터베이스에서 장소정보 검색
+    @Override
+    public void findByPlaceId(Long placeId) {
+        mapMapper.findByPlaceId(placeId);
+    }
+
+    // place_id 없을시 신규 등록하는 메서드
+    @Override
+    public void addNewPlace(MapDto mapDto) {
+        mapMapper.createPlaceMap(mapDto);
+    }
+
+
+
+
+
+
     //데이터베이스에 place_id 에 해당하는 정보가 있는지 조회
 
-
-
-    // 데이터베이스에 신규 place 등록
-//    @Override
-//    @Transactional
-//    public void toMapEntity(MapDto mapDTO) {
-//        // MapDto를 MapEntity로 변환하여 Mapper에 전달
-//        MapEntity mapEntity = convertToMapEntity(mapDTO);
-//        mapMapper.toMapEntity(mapEntity);
-//    }
-//
-//    // MapDto를 MapEntity로 변환하는 메서드
-//    private MapEntity convertToMapEntity(MapDto mapDTO) {
-//        MapEntity mapEntity = new MapEntity();
-//        mapEntity.setPlaceId(mapDTO.getPlaceId());
-//        mapEntity.setMapId(mapDTO.getMapId());
-//        mapEntity.setPlaceName(mapDTO.getPlaceName());
-//        mapEntity.setAddressName(mapDTO.getAddressName());
-//        mapEntity.setRoadAddressName(mapDTO.getRoadAddressName());
-//        mapEntity.setX(mapDTO.getX());
-//        mapEntity.setY(mapDTO.getY());
-//        // 기타 필드 설정
-//
-//        return mapEntity;
-//    }
-//
 //
 //    // 데이터베이스에서 place_id가 존재하는지 검색해보는 메서드
 //    @Override
