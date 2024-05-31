@@ -47,7 +47,6 @@ public class ChatRoomController {
     }
 
 
-
     @PostMapping("/room")
     @ResponseBody
     public ChatDto createRoom() {
@@ -62,33 +61,34 @@ public class ChatRoomController {
             log.info("메세지 {}", message.getContent());
         }
         redirectAttributes.addFlashAttribute("messages", messages);
+        redirectAttributes.addFlashAttribute("roomId", roomId);
         return "redirect:/chat";
     }
 
-//    @GetMapping("/room/{roomId}")
-//    @ResponseBody
-//    public ChatDto roomInfo(@PathVariable String roomId) {
-//        return chatRoomRepository.findRoomById(roomId);
-//    }
-
-    @PostMapping("/sendMessage/{roomId}")
-    public ResponseEntity<Resource> sendMessage(@PathVariable("roomId") String roomId, @ModelAttribute("messageForm") MessageForm messageForm) {
-        // sentAt에 현재시간 설정
-
-        ChatDto chatDto = chatService.getRoom(roomId);
-
-        MessageDto messageDto = MessageDto.builder()
-                .sentAt(Timestamp.from(Instant.now()))
-                .content(messageForm.getInputMessage())
-                .roomId(roomId)
-                .senderId(chatDto.getSenderId())
-                .build();
-
-        chatService.newMessage(messageDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/room/{roomId}")
+    @ResponseBody
+    public ChatDto roomInfo(@PathVariable String roomId) {
+        return chatRoomRepository.findRoomById(roomId);
     }
 
-    @GetMapping("/room/{nickname}")
+//    @PostMapping("/sendMessage/{roomId}")
+//    public ResponseEntity<Resource> sendMessage(@PathVariable("roomId") String roomId, @ModelAttribute("messageForm") MessageForm messageForm) {
+//        // sentAt에 현재시간 설정
+//
+//        ChatDto chatDto = chatService.getRoom(roomId);
+//
+//        MessageDto messageDto = MessageDto.builder()
+//                .sentAt(Timestamp.from(Instant.now()))
+//                .content(messageForm.getInputMessage())
+//                .roomId(roomId)
+//                .senderId(chatDto.getSenderId())
+//                .build();
+//
+//        chatService.newMessage(messageDto);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
+    @GetMapping("/room/to/{nickname}")
     public String createRoomEx(@PathVariable("nickname") String nickname, HttpSession session) {
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");

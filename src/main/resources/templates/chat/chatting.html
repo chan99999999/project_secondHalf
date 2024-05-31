@@ -40,43 +40,43 @@
         </div>
 
 
-
-
-<th:block>
-        <div class="chat-bar">
-            <div class="chat-current-member">
-                <img class="profile-img chat-member-img" src="/img/profile.png">
-                <div class="chat-cureent-name member-profile" id="member-profile">
-                    김순자 최고
-                    <ul class="perid">
-                        <li><a href="chat/room/chan9">1:1 대화하기</a></li>
-                        <hr>
-                        <li><a href="#">게시글 보기</a></li>
+        <th:block th:if="${roomId != null}">
+            <div class="chat-bar">
+                <div class="chat-current-member">
+                    <img class="profile-img chat-member-img" src="/img/profile.png">
+                    <div class="chat-cureent-name member-profile" id="member-profile">
+                        김순자 최고
+                        <ul class="perid">
+                            <li><a href="chat/room/to/chan9">1:1 대화하기</a></li>
+                            <hr>
+                            <li><a href="#">게시글 보기</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="chat-history">
+                    <ul id="message-list">
+<!--                        <th:block th:each="message, status:${messages}">-->
+<!--                            <li th:text="${message}"></li>-->
+<!--                        </th:block>-->
                     </ul>
                 </div>
+
+                <div class="chat-send-box">
+<!--                    <form id="message-form" method="post" th:object="${messageForm}"-->
+<!--                          th:action="|/chat/sendMessage/${roomId}|">-->
+                        <input type="text" class="message-to-send" id="message-input"
+                               onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
+                        <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송
+                        </button>
+                        <!--                <button class="message-send-btn" id="send-button" type="submit">전송</button>-->
+<!--                    </form>-->
+                </div>
             </div>
-            <div class="chat-history">
-                <ul id="message-list">
-                    <th:block th:each="message, status:${messages}">
-                        <li th:text="${message}"></li>
-                    </th:block>
-                </ul>
+        </th:block>
+        <th:block th:if="${roomId} == null">
+            <div class="chat-bar">
             </div>
-
-            <div class="chat-send-box">
-                <form id="message-form" method="post" th:object="${messageForm}" th:action="|/chat/sendMessage/${roomId}|">
-                    <input type="text" class="message-to-send" id="message-input" th:field="*{inputMessage}"
-                           onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
-                    <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
-                    <!--                <button class="message-send-btn" id="send-button" type="submit">전송</button>-->
-                </form>
-            </div>
-        </div>
-</th:block>
-
-
-
-
+        </th:block>
 
     </div>
 </div>
@@ -86,56 +86,8 @@
 <script>
     //대화하기 접속 시 대화 리스트 출력
     document.addEventListener('DOMContentLoaded', function () {
-        // findAllRoom();
         initWebSocket();
     });
-
-    // 대화중인 리스트 목록 전체출력
-    function findAllRoom() {
-        axios.get('/chat/rooms')
-            .then(response => {
-                const chatroomsElement = document.getElementById('chatrooms');
-                chatroomsElement.innerHTML = '';
-                response.data.forEach(room => {
-                    const li = document.createElement('li');
-                    li.className = 'chat-member';
-                    li.innerHTML = `
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">김순자 바보</div>
-                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
-                        </div>
-                    `;
-                    li.addEventListener('click', function () {
-                        enterRoom(room.roomId);
-                    });
-                    chatroomsElement.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error fetching rooms:', error));
-    }
-
-    // 대화방 생성
-    function createRoom() {
-        axios.post('/chat/room')
-            .then(response => {
-                findAllRoom();
-            })
-            .catch(error => {
-                console.error('Error creating room:', error);
-                alert('대화하기 오류메세지');
-            });
-    }
-
-    //대화방 입장
-    // function enterRoom(roomId) {
-    //     const sender = `[[${session.loginMember.nickname}]]`;
-    //     if (sender) {
-    //         localStorage.setItem('wschat.sender', sender);
-    //         localStorage.setItem('wschat.roomId', roomId);
-    //         location.href = `/chat/room/enter/` + roomId;
-    //     }
-    // }
 
     //웹소켓, 스톰프 설정
     const sock = new SockJS("/wss-stomp");
