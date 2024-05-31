@@ -46,11 +46,7 @@ public class ChatRoomController {
         return "/chat/chatting";
     }
 
-    @GetMapping("/rooms")
-    @ResponseBody
-    public List<ChatDto> room() {
-        return chatRoomRepository.findAllRoom();
-    }
+
 
     @PostMapping("/room")
     @ResponseBody

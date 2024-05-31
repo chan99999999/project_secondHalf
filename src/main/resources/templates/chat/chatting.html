@@ -38,6 +38,11 @@
                 </div>
             </div>
         </div>
+
+
+
+
+<th:block>
         <div class="chat-bar">
             <div class="chat-current-member">
                 <img class="profile-img chat-member-img" src="/img/profile.png">
@@ -59,7 +64,7 @@
             </div>
 
             <div class="chat-send-box">
-                <form id="message-form" method="post" th:object="${messageForm}" action="/chat/sendMessage">
+                <form id="message-form" method="post" th:object="${messageForm}" th:action="|/chat/sendMessage/${roomId}|">
                     <input type="text" class="message-to-send" id="message-input" th:field="*{inputMessage}"
                            onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
                     <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
@@ -67,6 +72,12 @@
                 </form>
             </div>
         </div>
+</th:block>
+
+
+
+
+
     </div>
 </div>
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
@@ -135,7 +146,9 @@
         ws.connect({}, function (frame) {
             ws.subscribe("/sub/chat/room/" + roomId, function (message) {
                 const recv = JSON.parse(message.body);
+                // 디비 저장필요
                 recvMessage(recv);
+
             });
             ws.send("/pub/chat/message", {}, JSON.stringify({
                 type: 'ENTER',
