@@ -1013,13 +1013,17 @@ select * from placemap;
 
 
 
-INSERT INTO review 
-(review_id, member_id, review, place_id, regdate)
-VALUES (review_id_seq.NEXTVAL, 'tuesday', '리뷰4', 12273702, current_timestamp);
+
+
 
 INSERT INTO review 
 (review_id, member_id, review, place_id, regdate)
-VALUES (review_id_seq.NEXTVAL, 'monday', '리뷰2', 12273702, current_timestamp);
+VALUES (review_id_seq.NEXTVAL, 'tuesday', '리뷰4', 12273700, current_timestamp);
+
+
+INSERT INTO review 
+(review_id, member_id, review, place_id, regdate)
+VALUES (review_id_seq.NEXTVAL, 'monday', '리뷰2', 12273700, current_timestamp);
 
 select * from review;
 
@@ -1073,3 +1077,54 @@ ALTER table member MODIFY store_picture varchar2(1000);
 ALTER table member MODIFY store_picture default 'profile.png';
 
 회원 테이블 사진, 저장사진 컬럼 변경되었습니다!
+
+
+
+
+
+
+SELECT  review.*, member.nickname
+FROM review
+INNER JOIN member ON review.member_id = member.member_id
+WHERE place_id = 12273700;
+
+
+
+
+SELECT
+    review.review_id,
+    review.place_id,
+    review.member_id,
+    review.review,
+    review.regdate,
+    member.nickname AS nickname
+FROM
+    review
+        INNER JOIN
+    member ON review.member_id = member.member_id
+WHERE
+    review.place_id = 12273700;
+
+select *
+from REVIEW;
+
+
+
+
+
+        INSERT INTO review (review_id, member_id, review, place_id, regdate)
+        VALUES (review_id_seq.NEXTVAL, 'monday', '리뷰2', 12273700, current_timestamp);
+
+
+        INSERT INTO review (review_id, member_id, review, place_id, regdate)
+VALUES (review_id_seq.NEXTVAL, 'monday', '리뷰2', 12273700, current_timestamp);
+
+
+INSERT INTO review (review_id, member_id, review, place_id, regdate)
+VALUES (review_id_seq.NEXTVAL, 'tuesday', '리뷰3', 12273700, current_timestamp);
+
+INSERT INTO review (review_id, member_id, review, place_id, regdate)
+VALUES (review_id_seq.NEXTVAL, 'wednesday', '리뷰4', 12273700, current_timestamp);
+
+INSERT INTO review (review_id, member_id, review, place_id, regdate)
+VALUES (review_id_seq.NEXTVAL, 'thursday', '리뷰5', 12273700, current_timestamp);

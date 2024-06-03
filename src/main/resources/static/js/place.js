@@ -1,6 +1,7 @@
 // place.js
 
 window.onload = function () {
+
     const { x, y, mapId } = mapDto;
 
     console.log('mapId:', mapId);

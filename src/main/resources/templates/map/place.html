@@ -99,7 +99,8 @@
                             <div class="review-writer" th:text="|작성자: ${session.loginMember.nickname}|"></div>
                             <div class="review-text">
                                 <textarea cols="76" rows="2" class="review-content" name="review"></textarea>
-                                <input type="hidden" name="placeId" th:value="${placeId}"/>
+                                <!-- 장소의 ID를 hidden input으로 전달 -->
+                                <input type="hidden" name="placeId" id="placeId" th:value="${placeId}"/>
                                 <button type="submit" class="write-review-btn" id="addBtn">등록</button>
                             </div>
                         </div>
@@ -117,29 +118,54 @@
                         </form>
                     </div>
                 </th:block>
-                <!-- 하드코딩된 후기 -->
-                <div class="review">
-                    <div>
-                        <img src="/img/profile.png">
+
+
+
+<!--                &lt;!&ndash; 하드코딩된 후기 &ndash;&gt;-->
+<!--                <div class="review">-->
+<!--                    <div>-->
+<!--                        <img src="/img/profile.png">-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <ul>-->
+<!--                            <li class="review-writer">작성자명</li>-->
+<!--                            <li class="review-content">후기가 등록이 안되요...미쳐버릴것 같아요</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="review">-->
+<!--                    <div>-->
+<!--                        <img src="/img/profile.png">-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <ul>-->
+<!--                            <li class="review-writer">작성자명</li>-->
+<!--                            <li class="review-content">이놈의 후기...돌아버리겠어요</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <!-- 후기 목록 -->
+                <th:block th:each="review : ${reviews}">
+                    <div class="review">
+                        <div>
+                            <img src="/img/profile.png">
+                        </div>
+                        <div>
+                            <ul>
+                                <!-- 닉네임 출력 -->
+                                <li class="review-writer" th:text="${review.nickname}"></li>
+                                <!-- 리뷰 내용 출력 -->
+                                <li class="review-content" th:text="${review.review}"></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div>
-                        <ul>
-                            <li class="review-writer">작성자명</li>
-                            <li class="review-content">후기가 등록이 안되요...미쳐버릴것 같아요</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="review">
-                    <div>
-                        <img src="/img/profile.png">
-                    </div>
-                    <div>
-                        <ul>
-                            <li class="review-writer">작성자명</li>
-                            <li class="review-content">이놈의 후기...돌아버리겠어요</li>
-                        </ul>
-                    </div>
-                </div>
+                </th:block>
+
+
+            </div>
+        </div>
+
             </div>
         </div>
     </div>

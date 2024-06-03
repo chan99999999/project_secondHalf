@@ -49,6 +49,15 @@ public class MapServiceImpl implements MapService {
     }
 
 
+
+
+
+
+
+
+
+
+
     // PlaceId를 사용하여 데이터베이스에서 장소정보 검색
     @Override
     public MapDto findByPlaceId(Long placeId) {
