@@ -55,11 +55,11 @@ public class ReviewMapperTest {
     @DisplayName("특정 장소의 리뷰 목록 조회")
     public void getReviewsByPlaceIdTest() {
         Long placeId = 12273700L;
-        List<ReviewListForm> reviews = reviewMapper.getReviewsByPlaceId(placeId);
+        List<ReviewDto> reviews = reviewMapper.getReviewsByPlaceId(placeId);
         assertNotNull(reviews, "리뷰 목록이 null이면 안 됩니다.");
         assertFalse(reviews.isEmpty(), "리뷰 목록이 비어 있으면 안 됩니다.");
 
-        for (ReviewListForm review : reviews) {
+        for (ReviewDto review : reviews) {
             log.info("장소 ID {}의 리뷰: {}", placeId, review);
         }
     }

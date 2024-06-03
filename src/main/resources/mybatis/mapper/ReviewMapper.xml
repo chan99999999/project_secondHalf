@@ -50,7 +50,7 @@
             review.place_id = #{placeId}
     </select>
 
-    <resultMap id="reviewWithMemberResultMap" type="com.ezen.springmvc.web.map.form.ReviewListForm">
+    <resultMap id="reviewWithMemberResultMap" type="ReviewDto">
         <id property="reviewId" column="review_id"/>
         <result property="placeId" column="place_id"/>
         <result property="memberId" column="member_id"/>

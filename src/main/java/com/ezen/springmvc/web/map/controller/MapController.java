@@ -1,7 +1,10 @@
 package com.ezen.springmvc.web.map.controller;
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.service.MapService;
+import com.ezen.springmvc.domain.review.dto.ReviewDto;
+import com.ezen.springmvc.domain.review.service.ReviewService;
 import com.ezen.springmvc.web.map.form.ReviewForm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,20 +14,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/map")
 @Slf4j
 public class MapController {
 
     private final MapService mapService;
-
-    // 생성자를 통해 MapService를 주입받습니다.
-    @Autowired
-    public MapController(MapService mapService) {
-        this.mapService = mapService;
-    }
+    private final ReviewService reviewService;
 
     // 특정 장소의 정보를 JSON 형식으로 반환합니다.
     @GetMapping("/place")
@@ -89,11 +89,15 @@ public class MapController {
         // 로그 추가: 처리된 정보 출력
         log.info("처리된 map 정보: {}", processedPlaceInfo);
 
+        List<ReviewDto> reviewList = reviewService.getReviewsByPlaceId(mapId);
+
         // 처리된 정보를 모델에 추가합니다.
         model.addAttribute("mapDto", processedPlaceInfo);
+        model.addAttribute("reviewList", reviewList);
 
         // 로그 추가: 모델에 정보가 잘 추가되었는지 확인
         log.info("모델에 추가된 mapDto: {}", model.containsAttribute("mapDto"));
+        log.info("모델에 추가된 reviewList: {}", model.containsAttribute("reviewList"));
 
         // MapDto 객체를 JSON 문자열로 변환하고 로그를 추가합니다.
         String json = mapService.processPlaceInfoToJson(processedPlaceInfo);
@@ -131,7 +135,7 @@ public class MapController {
     @ResponseBody
     public ReviewForm reviewPlace(@RequestBody ReviewForm reviewForm) {
         log.info("Received review: {}", reviewForm);
-
+        // 지도 정보
         MapDto mapDto = MapDto.builder()
                 .placeId(reviewForm.getPlaceId())
                 .mapId(reviewForm.getPlaceId())
@@ -141,6 +145,9 @@ public class MapController {
                 .x(reviewForm.getX())
                 .y(reviewForm.getY())
                 .build();
+        
+        // 리뷰 정보
+
 
         mapService.addNewPlace(mapDto);
         return reviewForm;

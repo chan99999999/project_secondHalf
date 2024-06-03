@@ -50,7 +50,7 @@ public class ReviewController {
     @GetMapping("/list")
     public String getReviewsByPlaceId(@RequestParam("placeId") Long placeId, Model model) {
         log.info("Received request for reviews of place with ID: {}", placeId);
-        List<ReviewListForm> reviews = reviewService.getReviewsByPlaceId(placeId);
+        List<ReviewDto> reviews = reviewService.getReviewsByPlaceId(placeId);
 
         // 모델에 후기 목록을 추가합니다.
         model.addAttribute("reviews", reviews);

@@ -14,6 +14,6 @@ public interface ReviewService {
 
 
 //    List<ReviewListForm> getReviewsByPlaceId(Long placeId);
-List<ReviewListForm> getReviewsByPlaceId(@Param("placeId") Long placeId);
+List<ReviewDto> getReviewsByPlaceId(@Param("placeId") Long placeId);
 
 }

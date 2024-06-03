@@ -29,12 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public List<ReviewListForm> getReviewsByPlaceId(@Param("placeId") Long placeId) {
-        List<ReviewListForm> reviews = reviewMapper.getReviewsByPlaceId(placeId);
-        if (reviews == null) {
-            return new ArrayList<>(); // 리뷰가 없는 경우 빈 리스트 반환
-        }
-        return reviews;
+    public List<ReviewDto> getReviewsByPlaceId(Long placeId) {
+        return reviewMapper.getReviewsByPlaceId(placeId);
     }
 
 

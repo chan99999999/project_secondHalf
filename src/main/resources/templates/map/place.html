@@ -89,6 +89,7 @@
 
         <!-- 후기 영역 -->
         <div class="review-wrap">
+<!--            [[${reviewList}]]-->
             <h1>업체후기(<span th:text="${reviews != null ? #lists.size(reviews) : 0}"></span>)</h1>
             <div id="place-review">
                 <!-- 로그인한 경우 후기 작성 폼 표시 -->
@@ -122,10 +123,10 @@
 
 
                 <!-- 후기 목록 -->
-                <th:block th:each="review : ${reviews}">
+                <th:block th:each="review : ${reviewList}">
                     <div class="review">
                         <div>
-                            <img src="/img/profile.png">
+                            <img src="/img/profile.png" alt="Profile Image">
                         </div>
                         <div>
                             <ul>
@@ -136,6 +137,9 @@
                             </ul>
                         </div>
                     </div>
+                </th:block>
+            </div>
+        </div>
                 </th:block>
 
 
