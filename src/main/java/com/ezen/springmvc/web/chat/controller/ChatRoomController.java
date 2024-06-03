@@ -110,8 +110,6 @@ public class ChatRoomController {
     @PostMapping("/saveMessage")
     public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto, HttpSession session) {
         log.info("뭐받았냐 {}", messageDto.toString());
-
-
         MessageDto saveMessage = MessageDto.builder()
                 .roomId(messageDto.getRoomId())
                 .content(messageDto.getContent())

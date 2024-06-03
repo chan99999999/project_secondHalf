@@ -54,7 +54,6 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.findChatRoom(roomId);
     }
 
-
     @Override
     public List<MessageDto> getMessagesByRoomId(String roomId) {
         return messageMapper.findMessagesByRoomId(roomId);
