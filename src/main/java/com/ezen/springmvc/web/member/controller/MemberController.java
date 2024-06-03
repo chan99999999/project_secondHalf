@@ -1,12 +1,9 @@
 package com.ezen.springmvc.web.member.controller;
 
 import com.ezen.springmvc.domain.common.dto.UploadFile;
-import com.ezen.springmvc.domain.common.encription.EzenUtil;
 import com.ezen.springmvc.domain.common.service.FileService;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
-import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import com.ezen.springmvc.domain.member.service.MemberService;
-import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
 import com.ezen.springmvc.web.member.form.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -17,29 +14,25 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -60,18 +53,23 @@ public class MemberController {
     private String from;
 
 
-
-
     // 회원가입 화면 이동
     @GetMapping("/signup")
-    public String signup() {
+    public String signup(Model model) {
+        MemberForm memberForm = MemberForm.builder().build();
+        model.addAttribute("memberForm", memberForm);
         return "/member/signUpForm";
     }
 
     // 회원 가입 처리
     @PostMapping("/signup")
-    public String registerAction(@ModelAttribute MemberForm memberForm, Model model, RedirectAttributes redirectAttributes) {
+    public String registerAction(@Validated @ModelAttribute MemberForm memberForm, BindingResult bindingResult,
+                                 Model model, RedirectAttributes redirectAttributes) {
         log.info("수신한 사용자 정보: {}", memberForm.toString());
+
+        if (bindingResult.hasErrors()) {
+            return "/member/signUpForm";
+        }
 
         MemberDto memberDto = MemberDto.builder()
                 .memberId(memberForm.getMemberId())
@@ -89,6 +87,58 @@ public class MemberController {
         return "redirect:/member/result";
     }
 
+    @GetMapping("/idcheck/{inputId}")
+    public @ResponseBody Map<String, Object> idDupCheckAction(@PathVariable("inputId") String inputId) {
+        log.info("요청 아이디 : {}", inputId);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", true);
+        map.put("message", "사용 가능한 아이디입니다.");
+
+        MemberDto memberDto = memberService.getMember(inputId);
+        if (memberDto != null) {
+            map.put("result", false);
+            map.put("message", "이미 사용중인 아이디입니다.");
+        }
+        return map;
+    }
+
+    @GetMapping("/nicknameCheck/{inputNickname}")
+    public @ResponseBody Map<String, Object> nickNameDupCheckAction(@PathVariable("inputNickname") String inputNickname) {
+
+        Map<String, Object> map = new HashMap<>();
+        if(inputNickname == null){
+            map.put("result", true);
+            map.put("message", "");
+        }
+
+        map.put("result", true);
+        map.put("message", "사용 가능한 닉네임입니다.");
+
+        MemberDto memberDto = memberService.getNickname(inputNickname);
+        if (memberDto != null) {
+            map.put("result", false);
+            map.put("message", "이미 사용중인 닉네임입니다.");
+        }
+        return map;
+    }
+
+    @GetMapping("/passwdCheck/{inputPasswd}")
+    public @ResponseBody Map<String, Object> passwdDupCheckAction(@PathVariable("inputPasswd") String inputPasswd, HttpSession session) {
+
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", true);
+        map.put("message", "");
+
+        String oldPasswd = memberService.checkPasswd(loginMember.getMemberId());
+        if (!inputPasswd.equals(oldPasswd)) {
+            map.put("result", false);
+            map.put("message", "비밀번호를 올바르게 입력해주세요.");
+        }
+        return map;
+    }
+
     @GetMapping("/result")
     public String result() {
         return "/member/result";
@@ -96,40 +146,44 @@ public class MemberController {
 
     // 회워 로그인 화면
     @GetMapping("/login")
-    public String login(@ModelAttribute LoginForm loginForm, @CookieValue(value = "saveId", defaultValue = "") String saveId, Model model, RedirectAttributes redirectAttributes) {
-        model.addAttribute("saveId", saveId);
+    public String login(@ModelAttribute LoginForm loginForm, @CookieValue(value = "saveId", required = false) String saveId, Model model) {
+        if (saveId != null) {
+            loginForm.setLoginId(saveId);
+        }
         return "/member/loginForm";
     }
 
     // 회원 로그인 처리
     @PostMapping("/login")
-    public String loginAction(@ModelAttribute LoginForm loginForm, HttpServletResponse response, HttpServletRequest request) {
-        log.info("로그인 폼 {}", loginForm);
-        MemberDto loginMember = memberService.isMember(loginForm.getLoginId(), loginForm.getLoginPasswd());
-        log.info("{}", loginMember);
+    public String loginAction(@RequestParam(value = "redirectURI", required = false, defaultValue = "/") String redirectURI,
+                              @ModelAttribute LoginForm loginForm, HttpServletResponse response, HttpServletRequest request) {
 
-        if (loginMember != null) {
-            if (loginForm.isRememberLoginId()) {
-                Cookie saveIdCookie = new Cookie("saveId", loginMember.getMemberId());
-                saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
-                saveIdCookie.setPath("/");
-                response.addCookie(saveIdCookie);
-            } else {
-                Cookie[] cookies = request.getCookies();
-                if (cookies != null) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals("saveId")) {
-                            cookie.setPath("/");
-                            cookie.setMaxAge(0);
-                            response.addCookie(cookie);
-                        }
+        MemberDto loginMember = memberService.isMember(loginForm.getLoginId(), loginForm.getLoginPasswd());
+
+        if (loginMember == null) {
+            return "/member/loginForm";
+        }
+
+        if (loginForm.isRememberLoginId()) {
+            Cookie saveIdCookie = new Cookie("saveId", loginMember.getMemberId());
+            saveIdCookie.setMaxAge(60 * 60 * 24 * 7);
+            saveIdCookie.setPath("/");
+            response.addCookie(saveIdCookie);
+        } else {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("saveId")) {
+                        cookie.setPath("/");
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
                     }
                 }
             }
         }
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
-        return "redirect:/";
+        return "redirect:" + redirectURI;
     }
 
     // 회원 로그아웃 처리
@@ -160,7 +214,6 @@ public class MemberController {
 
         MemberDto memberDto = MemberDto.builder()
                 .memberId(loginMember.getMemberId())
-                .nickname(editForm.getNickname())
                 .email(editForm.getEmail())
                 .hobby(editForm.getHobby())
                 .interest(editForm.getInterest())
@@ -179,6 +232,27 @@ public class MemberController {
     @GetMapping("/editPicture")
     public String editPicture(@ModelAttribute EditPictureForm editPictureForm, Model model) {
         return "/member/editPicture";
+    }
+
+    @GetMapping("/editNickname")
+    public String editNickname(@ModelAttribute EditNicknameForm editNicknameForm){
+        return "/member/editNickname";
+    }
+
+    @PostMapping("/editNickname")
+    public String editNicknameAction(@ModelAttribute EditNicknameForm editNicknameForm, HttpSession session){
+
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        MemberDto memberDto = MemberDto.builder()
+                .nickname(editNicknameForm.getNewNickname())
+                .memberId(loginMember.getMemberId())
+                .build();
+
+        memberService.editNickname(memberDto);
+        MemberDto editMember = memberService.getMember(loginMember.getMemberId());
+        session.setAttribute("loginMember", editMember);
+        return "redirect:/member/mypage";
     }
 
     @GetMapping("/editPasswd")
@@ -203,7 +277,7 @@ public class MemberController {
     }
 
     @PostMapping("/editPicture")
-    public String editPictureAction(@ModelAttribute EditPictureForm editPictureForm, HttpSession session){
+    public String editPictureAction(@ModelAttribute EditPictureForm editPictureForm, HttpSession session) {
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         UploadFile uploadFile = fileService.storeFile(editPictureForm.getProfileImage(), profileFileUploadPath);
@@ -233,17 +307,17 @@ public class MemberController {
     }
 
     @GetMapping("/searchMember")
-    public String searchMember(){
+    public String searchMember() {
         return "/member/searchMember";
     }
 
     @GetMapping("/searchId")
-    public String searchId(@ModelAttribute SearchIdForm searchIdForm){
+    public String searchId(@ModelAttribute SearchIdForm searchIdForm) {
         return "/member/searchId";
     }
 
     @PostMapping("/searchId")
-    public String searchIdAction(@ModelAttribute SearchIdForm searchIdForm, Model model){
+    public String searchIdAction(@ModelAttribute SearchIdForm searchIdForm, Model model) {
         String searchId = memberService.searchId(searchIdForm.getSearchName(), searchIdForm.getSearchNickname());
         log.info("찾은 아이디 : {}", searchId);
         model.addAttribute("searchId", searchId);
@@ -251,13 +325,13 @@ public class MemberController {
     }
 
     @GetMapping("/searchIdResult")
-    public String searchIdResult(Model model){
+    public String searchIdResult(Model model) {
         model.getAttribute("searchId");
         return "/member/searchIdResult";
     }
 
     @GetMapping("/searchPasswd")
-    public String searchPasswd(@ModelAttribute SearchPasswdForm searchPasswdForm, Model model){
+    public String searchPasswd(@ModelAttribute SearchPasswdForm searchPasswdForm, Model model) {
         return "/member/searchPasswd";
     }
 
@@ -265,7 +339,7 @@ public class MemberController {
     public String searchPasswdAction(@ModelAttribute SearchPasswdForm searchPasswdForm, RedirectAttributes redirectAttributes) throws MessagingException {
         MemberDto memberDto = memberService.searchPasswd(searchPasswdForm.getSearchId(), searchPasswdForm.getSearchName(), searchPasswdForm.getSearchEmail());
 
-        if(memberDto != null){
+        if (memberDto != null) {
             UUID uuid = UUID.randomUUID();
             String tempPasswd = uuid.toString().substring(0, 6);
 
@@ -296,7 +370,7 @@ public class MemberController {
     }
 
     @GetMapping("/searchPasswdResult")
-    public String searchPasswdResult(){
+    public String searchPasswdResult() {
         return "/member/searchPasswdResult";
     }
 }

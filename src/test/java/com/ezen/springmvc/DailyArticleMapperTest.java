@@ -295,4 +295,12 @@ public class DailyArticleMapperTest {
 
     }
 
+    @Test
+    @DisplayName("게시글 조회수 업데이트")
+//    @Disabled
+    void updateDailyArticleHitCountTest() {
+        dailyArticleMapper.updateDailyArticleHitCount(2, 218);
+        log.info("조회수가 업데이트 된 게시글 : {}", dailyArticleMapper.findByDailyArticleId(218));
+    }
+
 }

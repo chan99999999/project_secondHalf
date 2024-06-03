@@ -87,7 +87,9 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      * @return 일상 게시글
      */
     @Override
+    @Transactional
     public DailyArticleDto getDailyArticle(int categoryId, int dailyArticleId) {
+        dailyArticleMapper.updateDailyArticleHitCount(categoryId, dailyArticleId);
         return dailyArticleMapper.readDailyArticle(categoryId, dailyArticleId);
     }
 

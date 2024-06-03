@@ -17,11 +17,6 @@
         <div class="mypage-title">정보 수정</div>
         <form class="edit-form" name="editForm" method="post" th:object="${editForm}">
             <div class="mypage-edit-wrap">
-                <label for="nickname">별명</label>
-                <input id="nickname" name="nickname" class="mypage-edit-text" type="text" th:value="${session.loginMember.nickname}">
-            </div>
-            <hr>
-            <div class="mypage-edit-wrap">
                 <label for="email">이메일</label>
                 <input id="email" name="email" class="mypage-edit-text" type="text" th:value="${session.loginMember.email}">
             </div>

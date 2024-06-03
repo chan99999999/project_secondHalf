@@ -45,7 +45,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DailyController {
 
-    private final DailyArticleMapper dailyArticleMapper;
     @Value("${upload.directory}") // 파일 저장 위치 지정 어노테이션
     private String profileFileUploadPath;
 
@@ -60,6 +59,7 @@ public class DailyController {
 
         if (loginMember == null) {
             redirectAttributes.addFlashAttribute("categoryId", categoryId);
+//            redirectAttributes.addFlashAttribute("redirectURI", "daily/" + categoryId + "/register"); // 리다이렉트 URI 전달
             return "redirect:/member/login";
         }
 
@@ -173,6 +173,7 @@ public class DailyController {
         redirectAttributes.addFlashAttribute("fileList", fileList);
         return "redirect:/daily/{categoryId}";
     }
+
 
     // 일상 게시글 목록 처리
     @GetMapping("{categoryId}")

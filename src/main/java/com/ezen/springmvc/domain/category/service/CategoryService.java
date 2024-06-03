@@ -11,5 +11,4 @@ public interface CategoryService {
      * @return 카테고리 목록
      */
     public List<CategoryDto> getCategoryList();
-
 }

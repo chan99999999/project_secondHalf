@@ -16,12 +16,18 @@ public interface MemberService {
 	
 	//회원정보
 	public MemberDto getMember(String id);
+
+	//회원정보(닉네임)
+	public MemberDto getNickname(String nickname);
 	
 	//회원목록
 	public List<MemberDto> getMembers();
 	
 	//회원정보 수정
 	public void editMember(MemberDto member);
+
+	//회원 닉네임 수정
+	public void editNickname(MemberDto member);
 
 	//회원 비밀번호 변경
 	public void editPasswd(MemberDto member);
@@ -34,4 +40,7 @@ public interface MemberService {
 
 	//회원 비밀번호 찾기
 	public MemberDto searchPasswd(String id, String name, String email);
+
+	//회원 비밀번호 확인
+	public String checkPasswd(String id);
 }

@@ -8,11 +8,11 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
-	
-	private final MemberMapper memberMapper;
+@Service
+public class MemberServiceImpl implements MemberService {
+
+    private final MemberMapper memberMapper;
 
     @Override
     @Transactional
@@ -36,9 +36,20 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public MemberDto getNickname(String nickname) {
+        return memberMapper.findByNickname(nickname);
+    }
+
+    @Override
     @Transactional
     public void editMember(MemberDto memberDto) {
         memberMapper.updateInfo(memberDto);
+    }
+
+    @Override
+    @Transactional
+    public void editNickname(MemberDto memberDto) {
+        memberMapper.updateNickname(memberDto);
     }
 
     @Override
@@ -64,5 +75,11 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     public MemberDto searchPasswd(String id, String name, String email){
         return memberMapper.findMemberPasswd(id, name, email);
+    }
+
+    @Override
+    @Transactional
+    public String checkPasswd(String id){
+        return memberMapper.confirmPasswd(id);
     }
 }

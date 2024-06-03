@@ -124,7 +124,6 @@
 }
 
 #signup-birth{
-    width: 540px;
     display: flex;
     align-content: center;
     justify-content: space-between;
@@ -135,6 +134,24 @@
     width: 160px;
     font-size: 30px;
     text-align: center;
+}
+
+#dupIdResult, #dupPasswdResult, #dupNicknameResult{
+    font-size: 25px;
+    padding-left: 306px;
+    margin: -10px 0;
+}
+
+#editNicknameDup{
+    font-size: 25px;
+    padding-left: 210px;
+    margin-bottom: 10px;
+}
+
+#editPasswdDup, #confirmPasswdDup{
+    font-size: 25px;
+    padding-left: 280px;
+    margin-bottom: 10px;
 }
 
 /*-------------------------RESULT----------------------*/
@@ -437,11 +454,13 @@ hr{
     font-size: 60px;
     margin: 0px 20px;
     background-color: #eaeaea;
+    border-radius: 10px;
 }
 
 .search-member-btn:hover{
     font-weight: bolder;
-    background-color: #ffe7cb;
+    background-color: #ff8c18;
+    color: white;
 }
 
 .searchMember-fieldset{
@@ -507,4 +526,13 @@ hr{
     font-size: 50px;
     align-items: center;
     margin: 20px 0;
+}
+
+/*------------------------date*/
+
+.text-danger{
+    font-size: 25px;
+    color: red;
+    padding-left: 306px;
+    margin: -10px 0px;
 }

@@ -22,7 +22,7 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 전체 조회 테스트")
-//    @Disabled
+    @Disabled
     void findAllTest() {
         List<MemberDto> list  = memberMapper.findByAll();
         for (MemberDto memberDto : list) {
@@ -65,6 +65,14 @@ class MemberMapperTest {
     void createTest() {
         MemberDto createMember = MemberDto
                 .builder()
+                .memberId("chan999")
+                .name("김찬규")
+                .nickname("찬찬")
+                .memberPasswd("1111")
+                .memberAddress("wolgye")
+                .gender("M")
+                .birthDate("20/05/14")
+                .email("chan999@gmail.com")
                 .build();
         memberMapper.create(createMember);
         log.info("회원 등록 완료 : {}", createMember);
@@ -76,54 +84,15 @@ class MemberMapperTest {
     void updateTest() {
         MemberDto updateMember = MemberDto
                 .builder()
+                .memberId("chat")
+                .nickname("채팅")
+                .email("chan999@aa")
+                .hobby("누워")
+                .interest("음슴")
+                .introduce("안냐세여 저는 21살 귀염둥이임다")
                 .build();
-//        memberMapper.update(updateMember);
+        memberMapper.updateInfo(updateMember);
         log.info("회원 수정 완료 : {}", updateMember);
-    }
-
-    @Test
-    @DisplayName("검색 타입에 따른 회원 검색 테스트")
-    @Disabled
-    void findBySearchTypeTest() {
-//		List<MemberDto> list = memberMapper.findBySearchType("id", "bangry");
-//        log.info("검색 회원 : {}", list);
-//        List<Member> list = memberMapper.findBySearchType("name", "김");
-//        log.info("검색 타입별 검색 회원 전체목록 : {}", list);
-    }
-
-    @Test
-    @DisplayName("아이디 또는 성으로 회원 통합 검색 테스트")
-    @Disabled
-    void findBySearchAllTest() {
-//		List<MemberDto> list = memberMapper.findBySearchAll("bangry");
-//        List<MemberDto> list = memberMapper.findBySearchAll("김");
-//        log.info("모든 검색 전체목록 : {}", list);
-    }
-
-    @Test
-    @DisplayName("회원 통합 검색 테스트")
-	@Disabled
-    void findBySearchAllOptionTest() {
-        MemberSearchCondition searchCondition =
-                MemberSearchCondition
-                        .builder()
-
-				.memberId("bangry")
-				.name("김")
-//				.email("bangry@gmail.com")
-                        .build();
-//        List<MemberDto> list = memberMapper.findBySearchAllOption(searchCondition);
-//        log.info("검색 옵션별 전체목록 : {}", list);
-//        log.info("검색 수 : {}", list.size());
-//                .memberId("chat")
-//                .nickname("채팅")
-//                .email("chan999@aa")
-//                .hobby("누워")
-//                .interest("음슴")
-//                .introduce("안냐세여 저는 21살 귀염둥이임다")
-//                .build();
-//        memberMapper.updateInfo(updateMember);
-//        log.info("회원 수정 완료 : {}", updateMember);
     }
 
 
@@ -162,10 +131,35 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원 비밀번호 찾기")
-//    @Disabled
+    @Disabled
     void findMemberPasswdTest(){
         MemberDto memberDto = memberMapper.findMemberPasswd("chan999", "김찬규", "chan999@gmail.com");
         log.info("회워정보 : {}", memberDto);
+    }
+
+    @Test
+    @DisplayName("닉네임으로 회원찾기")
+    @Disabled
+    void findMemberByNicknameTest(){
+    }
+
+    @Test
+    @DisplayName("닉네임 변경")
+    @Disabled
+    void editNicknameTest(){
+        MemberDto memberDto = MemberDto.builder()
+                .nickname("김김")
+                .memberId("chan999")
+                .build();
+        memberMapper.updateNickname(memberDto);
+    }
+
+    @Test
+    @DisplayName("비밀번호 확인 테스트")
+    @Disabled
+    void checkPasswdTest(){
+        String passwd = memberMapper.confirmPasswd("chan999");
+        log.info("현재 비밀번호 : {}", passwd);
     }
 }
 

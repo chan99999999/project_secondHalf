@@ -25,6 +25,7 @@
             <div id="daily-read-writer">
                 <img class="profile-img" src="/img/profile.png">
                 <p id="daily-read-writer-name" th:text="${dailyArticle.memberId}">김순자 최고</p>
+                <p th:text="${dailyArticle.hitCount}"></p>
             </div>
             <p id="daily-read-date" th:text="${dailyArticle.regdate}">2024. 05. 14.(화) 17:31 작성</p>
         </div>

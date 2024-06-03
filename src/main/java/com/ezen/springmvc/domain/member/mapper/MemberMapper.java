@@ -20,6 +20,9 @@ public interface MemberMapper {
     //회원정보 수정
     public void updateInfo(MemberDto member);
 
+    //닉네임 변경
+    public void updateNickname(MemberDto member);
+
     //비밀번호 변경
     public void updatePasswd(MemberDto member);
 
@@ -29,6 +32,9 @@ public interface MemberMapper {
     //아이디로 회원찾기
     public MemberDto findById(String id);
 
+    //닉네임으로 회원찾기
+    public MemberDto findByNickname(String nickname);
+
     //회원목록 조회
     public List<MemberDto> findByAll();
 
@@ -37,5 +43,8 @@ public interface MemberMapper {
 
     //회원 비밀번호 찾기
     public MemberDto findMemberPasswd(String id, String name, String email);
+
+    //회원 비밀번호 확인
+    public String confirmPasswd(String id);
 }
 

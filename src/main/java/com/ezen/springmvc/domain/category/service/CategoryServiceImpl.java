@@ -14,10 +14,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
 
-
     /**
      * 카테고리 목록 반환 구현
-     *
      * @return 카테고리 목록
      */
     @Override
