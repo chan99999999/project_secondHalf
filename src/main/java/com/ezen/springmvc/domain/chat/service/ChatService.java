@@ -27,6 +27,8 @@ public interface ChatService {
     // 채팅방 메세지 조회
     public List<MessageDto> getMessagesByRoomId(String roomId);
 
+    //같은 receiverId가 있는지 조회
+    public ChatDto getSameReceiver();
 
 
 

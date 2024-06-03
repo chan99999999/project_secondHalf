@@ -1,6 +1,7 @@
 package com.ezen.springmvc.domain.chat.mapper;
 
 import com.ezen.springmvc.domain.chat.dto.ChatDto;
+import com.ezen.springmvc.domain.chat.dto.MessageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +20,8 @@ public interface ChatMapper {
 
     //룸아이디로 채팅방 조회
     ChatDto findChatRoom(String roomId);
+
+    //같은 receiverId가 있는지 조회
+    ChatDto findSameReceiver();
+
 }

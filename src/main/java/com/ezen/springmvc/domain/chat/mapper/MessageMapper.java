@@ -13,5 +13,7 @@ public interface MessageMapper {
     // 채팅방 메세지 조회
     List<MessageDto> findMessagesByRoomId(String roomId);
 
+    //해당 채팅방의 마지막 메세지 가져오기
+    List<MessageDto> findLastMessage(String roomId);
 
 }

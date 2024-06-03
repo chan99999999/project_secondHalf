@@ -35,10 +35,17 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.findChatByNick(nickname);
     }
 
+
     @Override
     public List<ChatDto> getMyChatList() {
-        return chatMapper.findMyChatList();
+        List<ChatDto> chatList = chatMapper.findMyChatList();
+        for (ChatDto chatDto : chatList) {
+            List<MessageDto> messages = messageMapper.findMessagesByRoomId(chatDto.getRoomId());
+            chatDto.setMessages(messages);
+        }
+        return chatList;
     }
+
 
     //룸아이디로 채팅방 조회
     @Override
@@ -47,10 +54,15 @@ public class ChatServiceImpl implements ChatService {
         return chatMapper.findChatRoom(roomId);
     }
 
+
     @Override
     public List<MessageDto> getMessagesByRoomId(String roomId) {
         return messageMapper.findMessagesByRoomId(roomId);
     }
 
+    @Override
+    public ChatDto getSameReceiver() {
+        return chatMapper.findSameReceiver();
+    }
 
 }

@@ -14,6 +14,7 @@
 			ORDER BY created_at DESC
 		</select>
 
+
 	<!-- 룸아이디로 채팅방 조회 -->
 	<select id="findChatRoom" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
 		SELECT room_id, created_at, sender_id, receiver_id
@@ -29,6 +30,14 @@
 				 JOIN member m_receiver ON cr.receiver = m_receiver.member_id
 		WHERE m_sender.nickname = #{nickname} OR m_receiver.nickname = #{nickname}
 	</select>
+
+	<!-- 같은 receiverId 있는지 조회 -->
+	<select id="findSameReceiver" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
+		SELECT room_id, created_at, sender_id, receiver_id
+		FROM chat_room
+		WHERE receiver_id = #{receiverId}
+	</select>
+
 
 </mapper>
 

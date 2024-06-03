@@ -2,7 +2,6 @@ package com.ezen.springmvc.web.chat.controller;
 
 import com.ezen.springmvc.domain.chat.dto.ChatDto;
 import com.ezen.springmvc.domain.chat.dto.MessageDto;
-import com.ezen.springmvc.domain.chat.repo.ChatRoomRepository;
 import com.ezen.springmvc.domain.chat.service.ChatService;
 import com.ezen.springmvc.domain.chat.service.ChatServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
@@ -17,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +34,14 @@ import java.util.UUID;
 public class ChatRoomController {
 
     private static final Logger log = LoggerFactory.getLogger(ChatRoomController.class);
-    private final ChatRoomRepository chatRoomRepository;
     private final ChatServiceImpl chatService;
+    private final SimpMessageSendingOperations messagingTemplate;
+
+
+    @MessageMapping("/chat/message")
+    public void message(MessageDto message) {
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+    }
 
     @GetMapping
     public String rooms(Model model) {
@@ -44,12 +51,6 @@ public class ChatRoomController {
         return "/chat/chatting";
     }
 
-
-    @PostMapping("/room")
-    @ResponseBody
-    public ChatDto createRoom() {
-        return chatRoomRepository.createChatRoom();
-    }
 
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(RedirectAttributes redirectAttributes, @PathVariable String roomId) {
@@ -71,18 +72,26 @@ public class ChatRoomController {
 
 
     @GetMapping("/room/to/{nickname}")
-    public String createRoomEx(@PathVariable("nickname") String nickname, HttpSession session) {
+    public String createRoom(@PathVariable("nickname") String nickname, HttpSession session) {
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 
         log.info("로그인 정보는 {}", loginMember.toString());
         String roomId = UUID.randomUUID().toString();
 
-        //챗 디티오 전체리스트 출력하기
-        //거기서 리시버 아이디가 같은 것이 있는지 검색하는 매퍼
-        //같으면 기존 findChatDto를 출력
 
-//        if(findChatDto == null) {
+        //같은리시버 아이디가 있는지 검색하는 매퍼
+        List<ChatDto> chatList = chatService.getMyChatList();
+        ChatDto findChatDto = null;
+        for (ChatDto chatDto : chatList) {
+            if(chatDto.getReceiverId().equalsIgnoreCase(nickname)){
+                findChatDto = chatDto;
+                break;
+            }
+        }
+
+        //없으면 새로생성
+        if(findChatDto == null) {
             ChatDto chatDto = ChatDto.builder()
                     .senderId(loginMember.getMemberId())
                     .receiverId(nickname)
@@ -90,9 +99,10 @@ public class ChatRoomController {
                     .build();
 
             chatService.newChat(chatDto);
-//        } else {
-//        }
-
+        } else {
+            // 기존 채팅이 존재할 경우에는, 해당 채팅방으로 리다이렉트
+            return "redirect:/chat/room/enter/" + findChatDto.getRoomId();
+        }
         return "redirect:/chat";
     }
 
@@ -111,4 +121,5 @@ public class ChatRoomController {
         chatService.receiveMessage(saveMessage);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

@@ -29,7 +29,8 @@
                                     <img class="profile-img chat-member-img" src="/img/profile.png">
                                     <div class="chat-list-info">
                                         <div class="chat-list-name" th:text="${chatDto.senderId}"></div>
-                                        <div class="chat-list-message">아아</div>
+                                        <span class="chat-list-message" th:text="${chatDto.getLatestMessage().content}" th:if="${chatDto.getLatestMessage()} !=null">
+                                        </span>
                                     </div>
                                 </a>
                             </li>
@@ -47,7 +48,7 @@
                     <div class="chat-cureent-name member-profile" id="member-profile">
                         김순자 최고
                         <ul class="perid">
-                            <li><a href="chat/room/to/싸와디캅망고">1:1 대화하기</a></li>
+                            <li><a href="chat/room/to/카드캡터체리">1:1 대화하기</a></li>
                             <hr>
                             <li><a href="#">게시글 보기</a></li>
                         </ul>
