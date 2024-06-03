@@ -83,16 +83,23 @@
         WHERE m_article_id = #{meetArticleId}
     </select>
     <!-- 게시글 제목, 내용 수정 -->
-    <update id="updateMeetArticle" parameterType="MeetArticleDto">
+    <update id="updateMeetArticle">
         UPDATE meet_article
-        SET title   = #{title},
-            content = #{content}
+        <set>
+            <if test="updateMeetArticleDto.title != null and !updateMeetArticleDto.title.isEmpty()">
+                title = #{updateMeetArticleDto.title},
+            </if>
+            <if test="updateMeetArticleDto.content != null and !updateMeetArticleDto.content.isEmpty()">
+                content = #{updateMeetArticleDto.content}
+            </if>
+        </set>
         WHERE m_article_id = #{meetArticleId}
     </update>
     <!-- 게시글 삭제 -->
-    <delete id="deleteMeetArticle" parameterType="MeetArticleDto">
+    <delete id="deleteMeetArticle">
         DELETE FROM meet_article
         WHERE m_article_id = #{meetArticleId}
+        AND category_id = #{categoryId}
     </delete>
     <!-- 조회수 증가-->
     <update id="hitcount" parameterType="MeetArticleDto">

@@ -3,22 +3,20 @@
       th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
 
 <head>
-    <title th:fragment="title"> ::: 모임 만들기 ::: </title>
+    <title th:fragment="title"> ::: 모임게시글 수정하기 ::: </title>
     <th:block th:fragment="script">
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
-        <link rel="stylesheet" href="/css/meet.css">
+        <link rel="stylesheet" href="/css/daily.css">
     </th:block>
 </head>
-
 <div class="wrapper" th:fragment="content">
     <div id="meet-register-wrap">
-        <h1 class="title-text">모임 만들기</h1>
-        <form id="meet-register-form" th:object="${meetArticleForm}"
-              th:action="@{/meet/{categoryId}/register(categoryId=${categoryId})}" method="post">
+        <h1 class="title-text">모임 공유하기</h1>
+        <form id="meet-register-form" method="post" enctype="multipart/form-data">
             <fieldset>
-                <input name="title" id="meet-register-title" type="text" placeholder="모임 제목"/>
+                <input name="title" id="meet-register-title" type="text" placeholder="게시글 제목" th:value="${meetArticleDto.title}" />
                 <div id="meet-tag-wrap">
                     <h3>카테고리</h3>
                     <input class="meet-tag-list" id="1" type="checkbox" name="tags" th:value="일상">
@@ -30,22 +28,9 @@
                     <input class="meet-tag-list" id="4" type="checkbox" name="tags" th:value="기타">
                     <label for="4" th:text="기타">기타</label>
                 </div>
-                <div id="meet-info">
-                    <div class="meet-info">
-                        <label for="meet-date">시간</label>
-                        <input name="time" id="meet-date" type="datetime-local">
-                    </div>
-                    <div class="meet-info">
-                        <label for="meet-place">장소</label>
-                        <input id="meet-place" type="text" placeholder="카카오 맵 API">
-                    </div>
-                    <div class="meet-info">
-                        <label for="meet-count">인원</label>
-                        <input name="enter" id="meet-count" type="text" placeholder="최대인원 설정"><span>명</span>
-                    </div>
-                </div>
                 <div>
-                    <textarea name="content" id="meet-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
+                    <textarea name="content" id="meet-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."
+                              th:text="${meetArticleDto.content}"></textarea>
                 </div>
                 <div class="register-btn-wrap">
                     <button class="back-btn" type="reset" th:onclick="history.back(-1)">취소하기</button>
@@ -55,4 +40,5 @@
         </form>
     </div>
 </div>
+
 </html>

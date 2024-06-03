@@ -8,11 +8,9 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class MeetReplyDto {
-    private int replyId;
+public class UpdateMeetArticleDto {
     private int meetArticleId;
-    private int replyCount;
-    private String writer;
+    private int categoryId;
+    private String title;
     private String content;
-    private String regdate;
 }

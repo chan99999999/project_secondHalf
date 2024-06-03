@@ -20,9 +20,9 @@ public interface MeetArticleService {
 //    모임 게시글 등록(게시글, 태그, 태그게시글)
     void addMeet(MeetArticleDto meetArticleDto);
 //    모임 게시글 수정
-//    void updateMeetArticle(MeetArticleDto meetArticleDto);
+    void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto);
 //    모임 게시글 삭제
-//    void deleteMeetArticle(MeetArticleDto meetArticleDto);
+    void deleteMeetArticle(int categoryId, int meetArticleId);
 //    게시글 조회수
     MeetArticleDto hitcount(MeetArticleDto meetArticleDto);
 //    태그 이름으로 게시글 목록 반환

@@ -1,6 +1,7 @@
 package com.ezen.springmvc.domain.meetArticle.service;
 
 import com.ezen.springmvc.domain.common.dto.SearchDto;
+import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.*;
 import com.ezen.springmvc.domain.meetArticle.mapper.*;
 import lombok.RequiredArgsConstructor;
@@ -71,22 +72,21 @@ public class MeetArticleServiceImpl implements MeetArticleService {
         return meetArticleMapper.findByMeetArticleCount(categoryId, searchDto);
     }
 
-//    @Override
-//    public void updateMeetArticle(MeetArticleDto meetArticleDto) {
-//        meetArticleMapper.updateMeetArticle(meetArticleDto);
-//    }
+    @Override
+    public void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto) {
+        meetArticleMapper.updateMeetArticle(meetArticleId, meetArticleDto);
+    }
 
-//    @Override
-//    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
-//        meetArticleMapper.deleteMeetArticle(meetArticleDto);
-//    }
+    @Override
+    public void deleteMeetArticle(int categoryId, int meetArticleId) {
+        meetArticleMapper.deleteMeetArticle(categoryId, meetArticleId);
+    }
 
     @Override
     public MeetArticleDto hitcount(MeetArticleDto meetArticleDto) {
         meetArticleMapper.hitcount(meetArticleDto);
         return meetArticleDto;
     }
-
 
     @Override
     @Transactional
