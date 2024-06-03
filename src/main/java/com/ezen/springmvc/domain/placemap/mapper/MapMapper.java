@@ -9,6 +9,6 @@ public interface MapMapper {
     void createPlaceMap(MapDto mapDto);
     // placeId로 장소 상세 조회
     MapDto findByPlaceId(Long PlaceId);
-
+    // 장소 정보 업데이트
     void updatePlaceMap(MapDto mapDto);
 }

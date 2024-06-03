@@ -109,50 +109,6 @@ public class MapController {
     }
 
 
-//    // 데이터베이스에서 place_id가 존재하는지 검색 (더미)
-//    @PostMapping("/place/info")
-//    @ResponseBody
-//    public ReviewForm findByPlaceId(@ModelAttribute("reviewForm") ReviewForm reviewForm) {
-//        reviewForm.setPlaceId(12273702L);
-//        mapService.findByPlaceId(reviewForm.getPlaceId());
-//        return reviewForm;
-//    }
-
-
-
-//
-//    // 데이터베이스에서 신규 장소 정보를 등록(더미)
-//    @PostMapping("/place/review")
-//    @ResponseBody
-//    public ReviewForm reviewPlace(@ModelAttribute("reviewForm") ReviewForm reviewForm) {
-//        // reviewForm 임시데이터 설정
-//        reviewForm.setPlaceId(12273702L);
-//        reviewForm.setMemberId("monday");
-//        reviewForm.setNickname("nickname");
-//        reviewForm.setReview("사용자 등록 리뷰 내용");
-//        reviewForm.setPlaceName("장소명");
-//        reviewForm.setAddressName("주소명");
-//        reviewForm.setRoadAddressName("도로명");
-//        reviewForm.setY("127.0628665469612");
-//        reviewForm.setX("37.5028534975179");
-//        log.info("리뷰 정보 : {}", reviewForm);
-//
-//        MapDto mapDto = MapDto.builder()
-//                .placeId(reviewForm.getPlaceId())
-//                .mapId(reviewForm.getPlaceId())
-//                .addressName(reviewForm.getAddressName())
-//                .placeName(reviewForm.getPlaceName())
-//                .roadAddressName(reviewForm.getRoadAddressName())
-//                .x(reviewForm.getX())
-//                .y(reviewForm.getY())
-//                .build();
-//        mapService.addNewPlace(mapDto);
-//        return reviewForm;
-//    }
-
-
-
-
     // 데이터베이스에서 place_id가 존재하는지 검색 (동적)
     @PostMapping("place/info")
     @ResponseBody

@@ -1128,3 +1128,5 @@ VALUES (review_id_seq.NEXTVAL, 'wednesday', '리뷰4', 12273700, current_timesta
 
 INSERT INTO review (review_id, member_id, review, place_id, regdate)
 VALUES (review_id_seq.NEXTVAL, 'thursday', '리뷰5', 12273700, current_timestamp);
+
+select * from user_tables;

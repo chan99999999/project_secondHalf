@@ -1,7 +1,13 @@
 // 후기 데이터를 가져와서 동적으로 출력하는 함수
 const fetchReviews = async function (placeId) {
     try {
-        const response = await fetch(`/map/place/review/list?placeId=${placeId}`);
+        const response = await fetch(`/map/place/review/list?placeId=${placeId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
         const reviews = await response.json();
 
         // 후기 데이터가 없으면 함수 종료
@@ -18,16 +24,16 @@ const fetchReviews = async function (placeId) {
             reviewElement.classList.add('review');
 
             reviewElement.innerHTML = `
-            <div>
-                <img src="/img/profile.png">
-            </div>
-            <div>
-                <ul>
-                    <li class="review-writer">${review.memberId}</li>
-                    <li class="review-content">${review.review}</li>
-                </ul>
-            </div>
-        `;
+                <div>
+                    <img src="/img/profile.png">
+                </div>
+                <div>
+                    <ul>
+                        <li class="review-writer">${review.memberId}</li>
+                        <li class="review-content">${review.review}</li>
+                    </ul>
+                </div>
+            `;
 
             reviewList.appendChild(reviewElement);
         });
@@ -54,7 +60,7 @@ const handleSubmitButton = async function (event) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ placeId })
+            body: JSON.stringify(Object.fromEntries(formData))
         });
 
         // 장소가 존재하지 않으면 신규 장소를 등록합니다.
@@ -64,17 +70,7 @@ const handleSubmitButton = async function (event) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    placeId: formData.get('placeId'),
-                    memberId: formData.get('memberId'),
-                    nickname: formData.get('nickname'),
-                    review: formData.get('review'),
-                    placeName: formData.get('placeName'),
-                    addressName: formData.get('addressName'),
-                    roadAddressName: formData.get('roadAddressName'),
-                    y: formData.get('y'),
-                    x: formData.get('x')
-                })
+                body: JSON.stringify(Object.fromEntries(formData))
             });
 
             console.log('신규 장소 등록 결과:', newPlaceResponse);

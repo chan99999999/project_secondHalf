@@ -2,6 +2,7 @@ package com.ezen.springmvc.domain.review.service;
 
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
 import com.ezen.springmvc.web.map.form.ReviewListForm;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface ReviewService {
     void addNewReview(ReviewDto reviewDto);
 
 
-    List<ReviewListForm> getReviewsByPlaceId(Long placeId);
-
+//    List<ReviewListForm> getReviewsByPlaceId(Long placeId);
+List<ReviewListForm> getReviewsByPlaceId(@Param("placeId") Long placeId);
 
 }

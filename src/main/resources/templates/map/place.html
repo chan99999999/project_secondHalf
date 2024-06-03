@@ -24,7 +24,7 @@
         <!-- JavaScript 파일 가져오기 -->
         <!-- 이 스크립트는 지도 세부 정보와 후기를 처리합니다. -->
         <script defer type="text/javascript" th:src="@{/js/place.js}"></script>
-<!--        <script defer type="text/javascript" th:src="@{/js/review.js}"></script>-->
+        <!--        <script defer type="text/javascript" th:src="@{/js/review.js}"></script>-->
 
         <!-- 제출된 후기 내용을 콘솔에 출력하는 스크립트 -->
     </th:block>
@@ -89,12 +89,13 @@
 
         <!-- 후기 영역 -->
         <div class="review-wrap">
-            <h1>업체후기(10)</h1>
+            <h1>업체후기(<span th:text="${reviews != null ? #lists.size(reviews) : 0}"></span>)</h1>
             <div id="place-review">
                 <!-- 로그인한 경우 후기 작성 폼 표시 -->
                 <th:block th:if="${session.loginMember != null}">
-<!--                    onsubmit="submitReview(event)": 이것은 폼이 제출될 때 호출될 JavaScript 함수를 지정-->
-                    <form method="post" name="reviewForm" action="/map/place/review" onsubmit="handleSubmitButton(event)">
+                    <!--                    onsubmit="submitReview(event)": 이것은 폼이 제출될 때 호출될 JavaScript 함수를 지정-->
+                    <form method="post" name="reviewForm" action="/map/place/review/add"
+                          onsubmit="handleSubmitButton(event)">
                         <div class="write-review">
                             <div class="review-writer" th:text="|작성자: ${session.loginMember.nickname}|"></div>
                             <div class="review-text">
@@ -111,39 +112,14 @@
                     <div class="write-review">
                         <form action="/member/login">
                             <div class="review-text">
-                                <textarea cols="76" rows="2" class="review-content" style="color: red"
-                                          th:text="'후기 작성은 로그인 후 가능합니다.'" disabled></textarea>
+                        <textarea cols="76" rows="2" class="review-content" style="color: red"
+                                  th:text="'후기 작성은 로그인 후 가능합니다.'" disabled></textarea>
                                 <button type="submit" class="write-review-btn">로그인</button>
                             </div>
                         </form>
                     </div>
                 </th:block>
 
-
-
-<!--                &lt;!&ndash; 하드코딩된 후기 &ndash;&gt;-->
-<!--                <div class="review">-->
-<!--                    <div>-->
-<!--                        <img src="/img/profile.png">-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <ul>-->
-<!--                            <li class="review-writer">작성자명</li>-->
-<!--                            <li class="review-content">후기가 등록이 안되요...미쳐버릴것 같아요</li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="review">-->
-<!--                    <div>-->
-<!--                        <img src="/img/profile.png">-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <ul>-->
-<!--                            <li class="review-writer">작성자명</li>-->
-<!--                            <li class="review-content">이놈의 후기...돌아버리겠어요</li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
 
                 <!-- 후기 목록 -->
                 <th:block th:each="review : ${reviews}">
@@ -166,9 +142,9 @@
             </div>
         </div>
 
-            </div>
-        </div>
     </div>
+</div>
+</div>
 </div>
 </body>
 </html>

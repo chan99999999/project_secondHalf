@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.ui.Model;
 import java.util.List;
 
 @Controller
@@ -40,12 +40,27 @@ public class ReviewController {
     }
 
 
+//    @GetMapping("/list")
+//    @ResponseBody
+//    public List<ReviewListForm> getReviewsByPlaceId(@RequestParam("placeId") Long placeId) {
+//        log.info("Received request for reviews of place with ID: {}", placeId);
+//        return reviewService.getReviewsByPlaceId(placeId);
+//    }
+
     @GetMapping("/list")
-    @ResponseBody
-    public List<ReviewListForm> getReviewsByPlaceId(@RequestParam("placeId") Long placeId) {
+    public String getReviewsByPlaceId(@RequestParam("placeId") Long placeId, Model model) {
         log.info("Received request for reviews of place with ID: {}", placeId);
-        return reviewService.getReviewsByPlaceId(placeId);
+        List<ReviewListForm> reviews = reviewService.getReviewsByPlaceId(placeId);
+
+        // 모델에 후기 목록을 추가합니다.
+        model.addAttribute("reviews", reviews);
+        log.info("Reviews: {}", reviews);
+
+        // 나머지 코드는 그대로 유지합니다.
+        return "redirect:/map/place";
     }
+
+
 
 
 }

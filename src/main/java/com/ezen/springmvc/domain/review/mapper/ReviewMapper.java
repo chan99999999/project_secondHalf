@@ -21,4 +21,7 @@ public interface ReviewMapper {
 
     /** 특정 장소의 리뷰 조회 */
     List<ReviewListForm> getReviewsByPlaceId(@Param("placeId") Long placeId);
+
+
+
 }
