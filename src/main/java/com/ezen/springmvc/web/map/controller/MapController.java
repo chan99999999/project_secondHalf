@@ -114,7 +114,7 @@ public class MapController {
 
 
     // 데이터베이스에서 place_id가 존재하는지 검색 (동적)
-    @PostMapping("place/info")
+    @PostMapping("/place/info")
     @ResponseBody
     public ReviewForm findByPlaceId(@RequestBody ReviewForm reviewForm) {
         log.info("Received request to find place by ID: {}", reviewForm.getPlaceId());
@@ -131,7 +131,7 @@ public class MapController {
         return reviewForm;
     }
 
-    @PostMapping("place/review")
+    @PostMapping("/place/review")
     @ResponseBody
     public ReviewForm reviewPlace(@RequestBody ReviewForm reviewForm) {
         log.info("Received review: {}", reviewForm);

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @ToString
 @Builder
 public class ReviewDto {
-        private Long reviewId; //후기번호
+        private int reviewId; //후기번호
         private String review;  // 후기내용
         private Long placeId;  //장소번호
         private Timestamp regdate; // 등록일자

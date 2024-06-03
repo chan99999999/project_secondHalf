@@ -4,7 +4,6 @@
     width: 1400px;
     min-width: 1400px;
     outline: none;
-    height: 850px;
     overflow: hidden;
 }
 
@@ -359,7 +358,7 @@
 #place-wrap{
     width: 1200px;
     min-width: 1200px;
-    margin: 30px auto;
+    margin: 150px auto;
 }
 
 #place-detail-wrap{

@@ -1,4 +1,5 @@
 package com.ezen.springmvc.domain.review.service;
+import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
 import com.ezen.springmvc.domain.review.mapper.ReviewMapper;
 import com.ezen.springmvc.web.map.form.ReviewListForm;
