@@ -1,6 +1,7 @@
 package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
+import com.ezen.springmvc.domain.common.dto.SearchDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
@@ -10,6 +11,7 @@ import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,6 +47,11 @@ public class MeetArticleTest {
 //        log.info("카테고리 목록 : {}", categoryList);
 //    }
 
+    @BeforeEach
+    void setUp() {
+        searchDto = new SearchDto();
+    }
+
     @Test
     @DisplayName("모임 게시글 등록 테스트")
     @Disabled
@@ -61,7 +68,14 @@ public class MeetArticleTest {
         meetArticleMapper.createMeetArticle(createArticle);
         log.info("등록 완료 : {}", createArticle);
     }
-
+    
+    @Test
+    @DisplayName("모임 게시글 삭제 테스트")
+    @Disabled
+    void deleteTestArticle(){
+//        meetArticleMapper.deleteMeetArticle(3,2);
+        log.info("게시글 삭제 완료");
+    }
 
     @Test
     @DisplayName("모임 게시글 상세보기 테스트")
@@ -70,6 +84,16 @@ public class MeetArticleTest {
         MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(3, 29);
         assertThat(meetArticleDto).isNotNull();
         log.info("게시글 상세보기 : {}", meetArticleDto);
+    }
+
+    @Test
+    @DisplayName("모임 게시글 제목 검색 테스트")
+    void findByTitleArticleTest() {
+        String title = "테";
+//        List<MeetArticleDto> meetArticleDtoList = meetArticleMapper.findByTitle(title);
+//        for (MeetArticleDto meetArticleDto : meetArticleDtoList) {
+//            log.info("검색된 게시글 : {}", meetArticleDto);
+//        }
     }
 
     @Test
@@ -106,20 +130,20 @@ public class MeetArticleTest {
 //        }
     }
 
-//    @Test
-//    @DisplayName("모임 게시글 댓글 등록 테스트")
-////    @Disabled
-//    void createReplyTest(){
-//        MeetReplyDto meetReplyDto = meetReplyDto
-//                .builder()
-//                .replyId(1)
-//                .meetArticleId(29)
-//                .content("15151515151515151515")
-//                .writer("monday")
-//                .build();
-//        meetReplyMapper.createReply(meetReplyDto);
-//        log.info("등록된 댓글 : {}", meetReplyDto);
-//    }
+    @Test
+    @DisplayName("모임 게시글 댓글 등록 테스트")
+//    @Disabled
+    void createReplyTest(){
+        MeetReplyDto meetReplyDto = MeetReplyDto
+                .builder()
+                .replyId(1)
+                .meetArticleId(71)
+                .content("15151515151515151515")
+                .writer("monday")
+                .build();
+        meetReplyMapper.createReply(meetReplyDto);
+        log.info("등록된 댓글 : {}", meetReplyDto);
+    }
 
     @Test
     @DisplayName("모임 게시글 댓글 목록 반환 테스트")

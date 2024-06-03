@@ -14,5 +14,4 @@ public class MeetReplyDto {
     private int replyCount;
     private String writer;
     private String content;
-    private String regdate;
 }

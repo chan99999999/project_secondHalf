@@ -10,14 +10,17 @@ import lombok.*;
 @Builder
 public class MeetArticleForm {
     private int meetArticleId;
-    private String memberId;
-    private String title;
-    private String content;
-    private String regdate;
-    private String time;
+    private int tArticleId;
     private int enter;
     private int hitcount;
     private int categoryId;
     private int placeId;
+    private int tagId;
+    private String title;
+    private String content;
+    private String regdate;
+    private String time;
+    private String memberId;
     private String[] tags;
+    private String tagName;
 }

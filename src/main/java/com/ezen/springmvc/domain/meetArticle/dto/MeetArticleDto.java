@@ -10,10 +10,12 @@ import lombok.*;
 @Builder
 public class MeetArticleDto {
     private int meetArticleId;
+    private int tArticleId;
     private int enter;
     private int hitcount;
     private int categoryId;
     private int placeId;
+    private int tagId;
     private String title;
     private String content;
     private String regdate;

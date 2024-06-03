@@ -18,4 +18,9 @@
         FROM tag
         WHERE tag_name = #{tagName}
     </select>
+    <!-- 태그 삭제 -->
+    <delete id="deleteTag">
+        DELETE FROM tag
+        WHERE tag_id = #{tagId}
+    </delete>
 </mapper>

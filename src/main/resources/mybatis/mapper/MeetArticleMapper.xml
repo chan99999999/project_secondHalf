@@ -32,6 +32,12 @@
         ORDER BY
             meetarticleid DESC
     </select>
+    <!-- 제목으로 게시글 검색-->
+    <select id="findByTitle" parameterType="String">
+        select m_article_id, title
+        from meet_article
+        WHERE title LIKE  '%' || #{title} || '%'
+    </select>
    <!-- 게시글 등록 -->
     <insert id="createMeetArticle" parameterType="MeetArticleDto">
         INSERT INTO meet_article (m_article_id,
@@ -99,7 +105,7 @@
     <delete id="deleteMeetArticle">
         DELETE FROM meet_article
         WHERE m_article_id = #{meetArticleId}
-        AND category_id = #{categoryId}
+          AND category_id = #{categoryId}
     </delete>
     <!-- 조회수 증가-->
     <update id="hitcount" parameterType="MeetArticleDto">
@@ -111,7 +117,7 @@
             WHERE m_article_id = #{meetArticleId}
         </selectKey>
     </update>
-    <!-- 게시글 조회 -->
+    <!-- 게시글 갯수 -->
     <select id="findByMeetArticleCount" resultType="int" parameterType="map">
         SELECT COUNT(*)
         FROM meet_article

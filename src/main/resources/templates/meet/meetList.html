@@ -26,12 +26,12 @@
         </div>
         <div id="meet-list-wrap">
             <div id="meet-search-bar">
-                <Form th:action="@{/meet/{categoryId}(categoryId=${categoryId})}" th:method="get">
+                <form th:action="@{/meet/search}" th:method="get">
                     <div>
-                        <input type="search">
+                        <input type="text" name="title" placeholder="제목으로 검색가능합니다.">
                         <button type="submit">검색</button>
                     </div>
-                </Form>
+                </form>
                 <div>
                     <ul class="meet-tag">
                         <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='짝궁')}" th:text="'#짝궁'">#짝궁</a></li>
@@ -45,7 +45,7 @@
                 <div class="meet-post" th:each="meetArticle : ${meetArticleList}">
                     <div>
                         <h1 class="meet-post-title">
-                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId}, categoryId=__${categoryId}__)}"
+                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}"
                                th:text="${meetArticle.title}">둘레길 같이 가실 분</a></h1>
                         <p th:text="'장소 '+${meetArticle.placeId}">-장소 : 노원구 수락산 둘레길</p>
                         <p th:text="'시간 '+${meetArticle.time}">-시간 : 2024. 05. 13.(월) 13:00~16:00</p>

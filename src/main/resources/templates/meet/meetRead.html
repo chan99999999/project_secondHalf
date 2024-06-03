@@ -27,36 +27,36 @@
             <p class="meet-read-content" th:text="${meetArticleDto.content}">본문 내용이 들어가면 됩니다</p>
         </div>
         <div class="register-btn-wrap">
-            <button class="back-btn" th:onclick="history.back(-1)">돌아가기</button>
+            <button class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
             <button class="register-btn">참여하기</button>
-            <th:block th:if="${loginMember != null}">
-                <th:block th:if="${loginMember.memberId == meetArticleDto.memberId}">
-                    <form id="updateForm" method="get"
-                          th:action="@{/meet/{categoryId}/update/{meetArticleId}(categoryId=${categoryId}, meetArticleId=${meetArticleId})}">
-                        <button type="button" class="btn btn-dark" onclick="updateForm()">수정</button>
-                    </form>
-                    <form id="deleteForm" method="post" th:action="@{/meet/{categoryId}/delete/{meetArticleId}}"
-                          th:attr="data-categoryId=${categoryId}, data-meetArticleId=${meetArticleId}">
-                        <button type="button" class="btn btn-dark" onclick="confirmDelete()">삭제</button>
-                    </form>
-                </th:block>
-            </th:block>
-            <script th:inline="javascript">
-                function confirmDelete() {
-                    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
-                        let form = document.getElementById("deleteForm");
-                        let categoryId = form.getAttribute("data-categoryId");
-                        let meetArticleId = form.getAttribute("data-meetArticleId");
-                        form.setAttribute("action", "/meet/" + categoryId + "/delete/" + meetArticleId);
-                        form.submit();
-                    }
-                }
-            </script>
-            <script>
-                function updateForm() {
-                    document.getElementById("updateForm").submit();
-                }
-            </script>
+<!--            <th:block th:if="${loginMember != null}">-->
+<!--                <th:block th:if="${loginMember.memberId == meetArticleDto.memberId}">-->
+<!--                    <form id="updateForm" method="get"-->
+<!--                          th:action="@{/meet/{categoryId}/update/{meetArticleId}(categoryId=${categoryId}, meetArticleId=${meetArticleId})}">-->
+<!--                        <button type="button" class="btn btn-dark" onclick="updateForm()">수정</button>-->
+<!--                    </form>-->
+<!--                    <form id="deleteForm" method="post" th:action="@{/meet/{categoryId}/delete/{meetArticleId}(meetArticleId=${meetArticleId})}"-->
+<!--                          th:attr="data-categoryId=${categoryId}, data-meetArticleId=${meetArticleId}">-->
+<!--                        <button type="button" class="btn btn-dark" onclick="confirmDelete()">삭제</button>-->
+<!--                    </form>-->
+<!--                </th:block>-->
+<!--            </th:block>-->
+<!--            <script th:inline="javascript">-->
+<!--                function confirmDelete() {-->
+<!--                    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {-->
+<!--                        let form = document.getElementById("deleteForm");-->
+<!--                        let categoryId = form.getAttribute("data-categoryId");-->
+<!--                        let meetArticleId = form.getAttribute("data-meetArticleId");-->
+<!--                        form.setAttribute("action", "/meet/" + categoryId + "/delete/" + meetArticleId);-->
+<!--                        form.submit();-->
+<!--                    }-->
+<!--                }-->
+<!--            </script>-->
+<!--            <script>-->
+<!--                function updateForm() {-->
+<!--                    document.getElementById("updateForm").submit();-->
+<!--                }-->
+<!--            </script>-->
         </div>
         <div class="review-wrap">
             <div id="review-count-wrap">
@@ -76,9 +76,6 @@
                     </div>
                 </form>
                 <div class="review" th:each="reply : ${replyList}">
-                    <div>
-                        <img src="/img/profile.png">
-                    </div>
                     <div>
                         <ul>
                             <li class="review-writer" th:text="${reply.writer}">작성자명</li>

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper">
-    <!-- 신규 모임 게시글 생성 -->
-    <insert id="createReply" parameterType="MeetReplyDto">
-        INSERT INTO reply (reply_id, content, m_article_id, writer)
-        VALUES (REPLY_ID_SEQ.nextval, #{content}, #{meetArticleId}, #{writer})
-    </insert>
     <!-- 댓글 목록 반환 -->
     <select id="findByReplyAll" parameterType="int" resultType="MeetReplyDto">
         SELECT reply_id, m_article_id "meetArticleId", writer, content
@@ -13,11 +8,16 @@
         WHERE m_article_id = #{meetArticleId}
         ORDER BY reply_id DESC
     </select>
-
     <!-- 댓글 수 반환 -->
     <select id="replyCount" resultType="int">
         SELECT COUNT(*)
         FROM reply
         WHERE m_article_id = #{meetArticleId}
     </select>
+    <!-- 댓글 삭제 -->
+    <delete id="deleteMeetArticle">
+        DELETE FROM reply
+        WHERE m_article_id = #{meetArticleId}
+    </delete>
 </mapper>
+

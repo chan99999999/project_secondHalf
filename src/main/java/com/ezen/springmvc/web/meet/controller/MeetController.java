@@ -77,6 +77,15 @@ public class MeetController {
         return "/meet/meetList";
     }
 
+//        검색
+    @GetMapping("/search")
+    public String findByTitle(@RequestParam(value="title", required = false, defaultValue = "") String title, Model model) {
+        log.info("요청 파라메터 : {}", title);
+//        List<MeetArticleDto> meetArticleList = meetArticleService.findByTitle(title);
+//        model.addAttribute("meetArticleList", meetArticleList);
+        return "meet/meetList";
+    }
+
     //    등록
     @PostMapping("{categoryId}/register")
     public String meetRegister(@PathVariable("categoryId") int categoryId,
@@ -112,15 +121,14 @@ public class MeetController {
 //    }
 
     //    게시글 상세보기
-    @GetMapping("{categoryId}/read/{meetArticleId}")
+    @GetMapping("/read/{meetArticleId}")
     public String meetRead(@PathVariable("meetArticleId") int meetArticleId,
-                           @PathVariable("categoryId") int categoryId,
                            HttpServletRequest request,
                            Model model) {
         log.info("게시글 번호 : {}", meetArticleId);
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(categoryId, meetArticleId);
+        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
         meetArticleService.hitcount(meetArticleDto);
         List<MeetReplyDto> replyList = meetArticleService.replyList(meetArticleId);
         int replyCount = meetArticleService.replyCount(meetArticleId);
@@ -134,53 +142,54 @@ public class MeetController {
         return "/meet/meetRead";
     }
 
-    // 삭제
-    @PostMapping("{categoryId}/delete/{meetArticleId}")
-    public String dailyDelete(@PathVariable("categoryId") int categoryId,
-                              @PathVariable("meetArticleId") int meetArticleId) {
-        meetArticleService.deleteMeetArticle(categoryId, meetArticleId);
-        return "redirect:/meet/{categoryId}";
-    }
-
-    // 수정 폼으로 이동
-    @GetMapping("{categoryId}/update/{meetArticleId}")
-    public String meetUpdateForm(@PathVariable("categoryId") int categoryId,
-                                 @PathVariable("meetArticleId") int meetArticleId,
-                                 Model model) {
-        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(categoryId, meetArticleId);
-        model.addAttribute("meetArticleDto", meetArticleDto);
-        return "/meet/meetUpdate";
-    }
-
-    // 게시글 수정 처리
-    @PostMapping("{categoryId}/update/{meetArticleId}")
-    public String meetUpdateAction(@PathVariable("categoryId") int categoryId,
-                                   @PathVariable("meetArticleId") int meetArticleId,
-                                   @ModelAttribute MeetArticleForm meetArticleForm) {
-        MeetArticleDto updateMeetArticle = MeetArticleDto.builder()
-//                .categoryId(categoryId)
-                .title(meetArticleForm.getTitle())
-                .content(meetArticleForm.getContent())
-                .build();
-        meetArticleService.updateMeetArticle(meetArticleId, updateMeetArticle);
-        return "redirect:/meet/{categoryId}";
-    }
+////     삭제
+//    @PostMapping("{categoryId}/delete/{meetArticleId}")
+//    public String dailyDelete(@PathVariable("categoryId") int categoryId,
+//                              @PathVariable("meetArticleId") int meetArticleId,
+//                              MeetArticleForm meetArticleForm) {
+//
+//        meetArticleService.deleteMeetArticle();
+//        return "redirect:/meet/";
+//    }
+//
+//    // 수정 폼으로 이동
+//    @GetMapping("/update/{meetArticleId}")
+//    public String meetUpdateForm(
+//                                 @PathVariable("meetArticleId") int meetArticleId,
+//                                 Model model) {
+//        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
+//        model.addAttribute("meetArticleDto", meetArticleDto);
+//        return "/meet/meetUpdate";
+//    }
+//
+//    // 게시글 수정 처리
+//    @PostMapping("/update/{meetArticleId}")
+//    public String meetUpdateAction(
+//                                   @PathVariable("meetArticleId") int meetArticleId,
+//                                   @ModelAttribute MeetArticleForm meetArticleForm) {
+//        MeetArticleDto updateMeetArticle = MeetArticleDto.builder()
+//                .categoryId(3)
+//                .title(meetArticleForm.getTitle())
+//                .content(meetArticleForm.getContent())
+//                .build();
+//        meetArticleService.updateMeetArticle(meetArticleId, updateMeetArticle);
+//        return "redirect:/meet/{meetArticleId}";
+//    }
 
     //    댓글 등록
-    @PostMapping("{categoryId}/read/{meetArticleId}")
-    public String meetCreateReply(@PathVariable("categoryId") int categoryId,
-                                  @ModelAttribute MeetReplyDto meetReplyDto,
+    @PostMapping("/read/{meetArticleId}")
+    public String meetCreateReply(@ModelAttribute MeetReplyDto meetReplyDto,
                                   @PathVariable("meetArticleId") int meetArticleId,
                                   Model model,
                                   HttpServletRequest request) {
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(categoryId, meetArticleId);
+        MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
         model.addAttribute("meetArticleDto", meetArticleDto);
         meetReplyDto.setWriter(loginMember.getMemberId());
         log.info("수신한 댓글 : {}", meetReplyDto);
         meetArticleService.createReply(meetReplyDto);
-        return "redirect:/meet/{categoryId}/read/{meetArticleId}";
+        return "redirect:/meet/read/{meetArticleId}";
     }
 
     @GetMapping("/getLoginMember")
@@ -191,7 +200,7 @@ public class MeetController {
         return ResponseEntity.ok(loginMember);
     }
 
-    @GetMapping("/getCategory")
+    @GetMapping("/category")
     public String getCategory(Model model) {
         List<CategoryDto> categoryList = categoryService.getCategoryList();
         log.info("수신받은 카테고리 목록 : {}", categoryList);

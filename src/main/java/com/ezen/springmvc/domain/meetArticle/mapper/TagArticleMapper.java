@@ -6,5 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TagArticleMapper {
     void createTagArticle(TagArticleDto tagArticleDto);
+    void deleteTagArticle(TagArticleDto tagArticleDto);
     void readTagArticle(TagArticleDto tagArticleDto);
 }

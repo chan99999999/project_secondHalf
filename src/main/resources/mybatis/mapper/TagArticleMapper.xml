@@ -9,4 +9,9 @@
             SELECT t_article_id_seq.CURRVAL FROM dual
         </selectKey>
     </insert>
+    <!-- 태그 게시글 삭제 -->
+    <delete id="deleteTagArticle">
+        DELETE FROM tag_article
+        WHERE t_article_id = #{tArticleId}
+    </delete>
 </mapper>

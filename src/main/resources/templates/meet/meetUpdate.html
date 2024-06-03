@@ -8,12 +8,12 @@
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
-        <link rel="stylesheet" href="/css/daily.css">
+        <link rel="stylesheet" href="/css/meet.css">
     </th:block>
 </head>
 <div class="wrapper" th:fragment="content">
     <div id="meet-register-wrap">
-        <h1 class="title-text">모임 공유하기</h1>
+        <h1 class="title-text">게시글 수정</h1>
         <form id="meet-register-form" method="post" enctype="multipart/form-data">
             <fieldset>
                 <input name="title" id="meet-register-title" type="text" placeholder="게시글 제목" th:value="${meetArticleDto.title}" />

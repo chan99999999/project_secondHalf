@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface TagMapper {
     void createTag(TagDto tagDto);
+    void deleteTag(TagDto tagDto);
     void readTagName(@Param("tagName") String tagName);
     TagDto findByTagId(int tagId);
     List<TagDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName, SearchDto searchDto);

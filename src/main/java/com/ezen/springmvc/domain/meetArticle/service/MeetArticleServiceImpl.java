@@ -5,6 +5,7 @@ import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.*;
 import com.ezen.springmvc.domain.meetArticle.mapper.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,11 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     }
 
     @Override
+    public List<MeetArticleDto> findByTitle(String title, SearchDto searchDto) {
+        return meetArticleMapper.findByTitle(title, searchDto);
+    }
+
+    @Override
     public MeetArticleDto readMeetArticle(int categoryId, int meetArticleId) {
         return meetArticleMapper.readMeetArticle(categoryId, meetArticleId);
     }
@@ -70,16 +76,6 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     @Override
     public int findByMeetArticleCount(int categoryId, SearchDto searchDto) {
         return meetArticleMapper.findByMeetArticleCount(categoryId, searchDto);
-    }
-
-    @Override
-    public void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto) {
-        meetArticleMapper.updateMeetArticle(meetArticleId, meetArticleDto);
-    }
-
-    @Override
-    public void deleteMeetArticle(int categoryId, int meetArticleId) {
-        meetArticleMapper.deleteMeetArticle(categoryId, meetArticleId);
     }
 
     @Override
@@ -95,8 +91,49 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     }
 
 //    @Override
-//    public void deleteReply(ReplyDto replyDto) {
-//        replyMapper.deleteReply(replyDto);
+//    public void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.updateMeetArticle(meetArticleId, meetArticleDto);
+//    }
+
+//    @Override
+//    public void deleteReply(MeetReplyDto meetReplyDto) {
+//        meetReplyMapper.deleteReply(meetReplyDto);
+//    }
+//
+//    @Override
+//    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
+//        meetArticleMapper.deleteMeetArticle(meetArticleDto);
+//    }
+//
+//    @Override
+//    public void deleteTag(TagDto tagDto) {
+//        tagMapper.deleteTag(tagDto);
+//    }
+//
+//    @Override
+//    public void deleteTagArticle(TagArticleDto tagArticleDto) {
+//        tagArticleMapper.deleteTagArticle(tagArticleDto);
+//    }
+
+//    @Override
+//    @Transactional
+//    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
+//        // 댓글 삭제
+//        MeetReplyDto meetReplyDto = MeetReplyDto.builder()
+//                .meetArticleId(meetArticleDto.getMeetArticleId())
+//                .build();
+//        meetReplyMapper.deleteReply(meetReplyDto);
+//        // 태그 게시글 삭제
+//        TagArticleDto tagArticleDto = TagArticleDto.builder()
+//                .tArticleId(meetArticleDto.getTArticleId())
+//                .build();
+//        // 태그 삭제
+//        TagDto tagDto = TagDto.builder()
+//                .tArticleId(meetArticleDto.getTagId())
+//                .build();
+//        tagMapper.deleteTag(tagDto);
+//        // 게시글 삭제
+//        meetArticleMapper.deleteMeetArticle(meetArticleDto);
 //    }
 
     @Override
