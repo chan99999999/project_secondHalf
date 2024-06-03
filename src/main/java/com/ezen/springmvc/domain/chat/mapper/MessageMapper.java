@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface MessageMapper {
-    // 메시지 전송
+    // 전송된메세지 DB에 저장
     public void saveMessage(MessageDto messageDto);
 
     // 채팅방 메세지 조회

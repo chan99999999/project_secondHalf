@@ -47,7 +47,7 @@
                     <div class="chat-cureent-name member-profile" id="member-profile">
                         김순자 최고
                         <ul class="perid">
-                            <li><a href="chat/room/to/찬찬">1:1 대화하기</a></li>
+                            <li><a href="chat/room/to/싸와디캅망고">1:1 대화하기</a></li>
                             <hr>
                             <li><a href="#">게시글 보기</a></li>
                         </ul>
@@ -59,7 +59,7 @@
                             <th:block th:if="${message.senderId} == ${session.loginMember.nickname}">
                             <li class="chat-message-list sent">
                                 <div class="message-data">
-                                    <div class="message-data-time" th:text="${message.sentAt}"></div>
+                                    <div class="message-data-time" th:text="${#dates.format(message.sentAt, 'a hh:mm')}"></div>
                                     <div class="message-data-member" th:text="${message.senderId}"></div>
                                 </div>
                                 <div class="message-content">
@@ -71,7 +71,7 @@
                             <th:block th:if="${message.senderId} != ${session.loginMember.nickname}">
                                 <li class="chat-message-list received">
                                     <div class="message-data">
-                                        <div class="message-data-time" th:text="${message.sentAt}"></div>
+                                        <div class="message-data-time" th:text="${#dates.format(message.sentAt, 'a hh:mm')}"></div>
                                         <div class="message-data-member" th:text="${message.senderId}"></div>
                                     </div>
                                     <div class="message-content">
@@ -131,7 +131,7 @@
                 const recv = JSON.parse(message.body);
 
                 axios.post('/chat/saveMessage', recv)
-                    .then(reponse => {
+                    .then(response => {
                         console.log('메세지가 서버로 전송되었습니다.');
                     })
                     .catch(error => {
