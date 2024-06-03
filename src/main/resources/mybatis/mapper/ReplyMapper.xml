@@ -22,6 +22,22 @@
         WHERE d_article_id = #{dailyArticleId}
     </select>
 
+    <!-- 댓글 삭제 -->
+    <delete id="deleteReply" parameterType="int">
+        DELETE
+        FROM reply
+        WHERE d_article_id = #{dailyArticleId}
+          AND reply_id = #{replyId}
+    </delete>
+
+    <!-- 댓글 수정 -->
+    <update id="updateReply">
+        UPDATE reply
+        <set>
+            content = #{content}
+        </set>
+        WHERE d_article_id = #{dailyArticleId} AND reply_id = ${replyId}
+    </update>
 
 </mapper>
 

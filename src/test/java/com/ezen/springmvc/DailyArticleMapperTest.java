@@ -82,9 +82,9 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("일상 게시글 상세 보기 테스트")
-    @Disabled
+//    @Disabled
     void readDailyArticleTest() {
-        DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 34);
+        DailyArticleDto dailyArticleDto = dailyArticleMapper.readDailyArticle(2, 214);
         log.info("조회된 게시글 : {}", dailyArticleDto);
     }
 
@@ -269,7 +269,7 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("게시글 수정 테스트")
-//    @Disabled
+    @Disabled
     void updateDailyArticleTest() {
         DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
                 .title("냠냠")
@@ -277,4 +277,22 @@ public class DailyArticleMapperTest {
         dailyArticleMapper.updateDailyArticle(173, dailyArticleDto);
         log.info("게시글 제목 수정 완료!");
     }
+
+    @Test
+    @DisplayName("댓글 삭제 테스트")
+    @Disabled
+    void deleteReplyTest() {
+        replyMapper.deleteReply(181, 150);
+        log.info("댓글 삭제 완료!");
+    }
+
+    @Test
+    @DisplayName("댓글 수정 테스트")
+//    @Disabled
+    void updateReplyTest() {
+        replyMapper.updateReply(199, 97, "냠냠냠");
+        log.info("댓글 수정 완료!");
+
+    }
+
 }

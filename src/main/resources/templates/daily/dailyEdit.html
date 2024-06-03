@@ -15,7 +15,7 @@
 
 <div class="wrapper" th:fragment="content">
     <div id="daily-register-wrap">
-        <h1 class="title-text">일상 공유하기</h1>
+        <a th:href="@{/daily/{categoryId}(categoryId=${categoryId})}"><h1 class="title-text">일상 공유하기</h1></a>
         <form id="daily-register-form" method="post" enctype="multipart/form-data">
             <fieldset>
                 <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목" th:value="${dailyArticleDto.title}" />

@@ -87,7 +87,13 @@
                 <p class="daily-post-title"><a href="/daily/read">게시글 제목이 들어갑네다</a></p>
             </div>
         </div>
-        <div class="daily-list">
+
+        <div class="daily-list" th:if="${dailyArticleList.isEmpty()}">
+            <h1 class="daily-list-title">소통 공간</h1>
+            <div th:text="'조회된 게시글이 존재하지 않습니다.'"></div>
+        </div>
+
+        <div class="daily-list" th:if="${not dailyArticleList.isEmpty()}">
             <h1 class="daily-list-title">소통 공간</h1>
 
             <div class="daily-post" th:each="dailyArticle : ${dailyArticleList}">

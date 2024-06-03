@@ -144,4 +144,19 @@ public interface DailyArticleService {
      * @param editedDailyArticleDto 수정된 일상 게시글
      */
     public void editDailyArticle(int dailyArticleId, DailyArticleDto editedDailyArticleDto);
+
+    /**
+     * 댓글 삭제
+     * @param dailyArticleId 일상 게시글 번호
+     * @param replyId 댓글 번호
+     */
+    public void removeReply(int dailyArticleId, int replyId);
+
+    /**
+     * 댓글 수정
+     * @param dailyArticleId 일상 게시글 번호
+     * @param replyId 댓글 번호
+     * @param content 댓글 내용
+     */
+    public void editReply(int dailyArticleId, int replyId, String content);
 }

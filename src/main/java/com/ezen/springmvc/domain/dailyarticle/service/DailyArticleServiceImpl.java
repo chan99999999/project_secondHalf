@@ -266,5 +266,26 @@ public class DailyArticleServiceImpl implements DailyArticleService {
         dailyArticleMapper.updateDailyArticle(dailyArticleId, editedDailyArticleDto);
     }
 
+    /**
+     * 댓글 삭제
+     * @param dailyArticleId 일상 게시글 번호
+     * @param replyId 댓글 번호
+     */
+    @Override
+    public void removeReply(int dailyArticleId, int replyId) {
+        replyMapper.deleteReply(dailyArticleId, replyId);
+    }
+
+    /**
+     * 댓글 수정 구현
+     * @param dailyArticleId 일상 게시글 번호
+     * @param replyId 댓글 번호
+     * @param content 댓글 내용
+     */
+    @Override
+    public void editReply(int dailyArticleId, int replyId, String content) {
+        replyMapper.updateReply(dailyArticleId, replyId, content);
+    }
+
 
 }

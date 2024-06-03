@@ -172,7 +172,7 @@
 .daily-register-img{
     max-width: 100%; /* 이미지 크기 조정 */
     width: 300px;
-    height: 200px;
+    /*height: 200px;*/
     margin: 5px;
 }
 
@@ -321,4 +321,8 @@
 
 #replyToggle:hover {
     color: deepskyblue;
+}
+
+#tagName a:hover {
+    color: darkorange;
 }

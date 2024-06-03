@@ -22,4 +22,5 @@ public class DailyArticleDto {
     private String memberId;
     private String encryptedName;
     private int totalHeartCount;
+    private String tagNames;
 }

@@ -146,6 +146,7 @@ public class DailyController {
                 .memberId(loginMember.getMemberId())
                 .title(dailyArticleForm.getTitle())
                 .content(dailyArticleForm.getContent())
+                .tagNames(dailyArticleForm.getTags())
                 .build();
 
         DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileList);
@@ -265,6 +266,7 @@ public class DailyController {
 //        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
 //    }
 
+    // 댓글 등록 클라이언트 사이드 렌더링
     @PostMapping("{categoryId}/read/{dailyArticleId}")
     public ResponseEntity<ReplyDto> registerReply(@PathVariable("categoryId") int categoryId,
                                                   @PathVariable("dailyArticleId") int dailyArticleId,
@@ -366,4 +368,37 @@ public class DailyController {
         return ResponseEntity.ok(replyList);
     }
 
+    // 댓글 삭제
+//    @PostMapping("{categoryId}/delete-reply/{dailyArticleId}/{replyId}")
+//    public String dailyReplyDelete(@PathVariable("categoryId") int categoryId,
+//                                   @PathVariable("dailyArticleId") int dailyArticleId,
+//                                   @PathVariable("replyId") int replyId) {
+//
+//        dailyArticleService.removeReply(dailyArticleId, replyId);
+//
+//        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
+//    }
+
+    @PostMapping("/delete-reply")
+    public ResponseEntity<Void> removeReply(@RequestBody ReplyDto replyDto) {
+        dailyArticleService.removeReply(replyDto.getDailyArticleId(), replyDto.getReplyId());
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 댓글 수 반환 api
+    @GetMapping("reply-count/{dailyArticleId}")
+    public ResponseEntity<Integer> replyCount (@PathVariable("dailyArticleId") int dailyArticleId) {
+        int replyCount = dailyArticleService.getReplyCount(dailyArticleId);
+        return ResponseEntity.ok(replyCount);
+    }
+
+    // 댓글 수정 api
+    @PostMapping("/edit-reply")
+    public ResponseEntity<Void> dailyEditReply(@RequestBody ReplyDto replyDto) {
+
+        dailyArticleService.editReply(replyDto.getDailyArticleId(), replyDto.getReplyId(), replyDto.getContent());
+
+        return ResponseEntity.ok().build();
+    }
 }

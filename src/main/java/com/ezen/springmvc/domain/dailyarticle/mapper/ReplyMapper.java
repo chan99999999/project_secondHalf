@@ -30,5 +30,18 @@ public interface ReplyMapper {
      */
     public int findReplyCount(int dailyArticleId);
 
-    public void deleteReply(int repl);
+    /**
+     * 댓글 삭제
+     * @param dailyArticleId 일상 게시글 번호
+     * @param replyId 댓글 번호
+     */
+    public void deleteReply(@Param("dailyArticleId")int dailyArticleId, @Param("replyId")int replyId);
+
+    /**
+     * 댓글 수정
+     * @param dailyArticleId 일상 게시글 번호
+     * @param replyId 댓글 번호
+     * @param content 댓글 내용
+     */
+    public void updateReply(@Param("dailyArticleId")int dailyArticleId, @Param("replyId")int replyId, @Param("content") String content);
 }
