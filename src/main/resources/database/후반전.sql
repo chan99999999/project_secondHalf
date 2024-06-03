@@ -1013,6 +1013,20 @@ select * from placemap;
 
 
 
+INSERT INTO review 
+(review_id, member_id, review, place_id, regdate)
+VALUES (review_id_seq.NEXTVAL, 'tuesday', '리뷰4', 12273702, current_timestamp);
+
+INSERT INTO review 
+(review_id, member_id, review, place_id, regdate)
+VALUES (review_id_seq.NEXTVAL, 'monday', '리뷰2', 12273702, current_timestamp);
+
+select * from review;
+
+
+
+
+
 
 SELECT * FROM placemap WHERE map_id =1234;
 
@@ -1027,10 +1041,28 @@ SET
 WHERE
   place_id = 1;
 
-
-
-  select * from review;
   
+select *
+  from member;
+
+  
+select *
+  from review;
+
+ALTER TABLE review MODIFY regdate TIMESTAMP;
+
+
+    SELECT review_id,
+           member_id,
+           review,
+           place_id,
+           TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') AS regdate
+    FROM review
+    ORDER BY regdate DESC
+
+
+
+
 
 
 

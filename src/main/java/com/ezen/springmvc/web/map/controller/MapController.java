@@ -135,7 +135,7 @@ public class MapController {
     @PostMapping("/place/review")
     @ResponseBody
     public ReviewForm reviewPlace(@ModelAttribute("reviewForm") ReviewForm reviewForm) {
-//        reviewForm 임시데이터 설정
+        // reviewForm 임시데이터 설정
         reviewForm.setPlaceId(12273702L);
         reviewForm.setMemberId("monday");
         reviewForm.setNickname("nickname");

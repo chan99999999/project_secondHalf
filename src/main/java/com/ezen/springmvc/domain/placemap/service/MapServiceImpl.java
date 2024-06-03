@@ -52,17 +52,21 @@ public class MapServiceImpl implements MapService {
     // PlaceId를 사용하여 데이터베이스에서 장소정보 검색
     @Override
     public MapDto findByPlaceId(Long placeId) {
-        mapMapper.findByPlaceId(placeId);
-
-        return null;
+        return mapMapper.findByPlaceId(placeId);
     }
 
     // place_id 없을시 신규 등록하는 메서드
     @Override
     public void addNewPlace(MapDto mapDto) {
-        mapMapper.createPlaceMap(mapDto);
+        MapDto existingPlace = findByPlaceId(mapDto.getPlaceId());
+        if (existingPlace != null) {
+            // 중복된 경우 업데이트
+            mapMapper.updatePlaceMap(mapDto);
+        } else {
+            // 중복되지 않은 경우 삽입
+            mapMapper.createPlaceMap(mapDto);
+        }
     }
-
 
 
 
