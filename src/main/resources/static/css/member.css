@@ -56,6 +56,12 @@
     font-weight: bolder;
 }
 
+#notice{
+    color: red;
+    font-size: 25px;
+    margin: 10px 0px;
+}
+
 /*----------------------------SignUp---------------------------------*/
 #signup-wrap{
     margin: 0px auto;

@@ -46,5 +46,17 @@ public interface MemberMapper {
 
     //회원 비밀번호 확인
     public String confirmPasswd(String id);
+
+    //검색으로 회원 리스트 찾기
+    public List<MemberDto> findByKeyword(String keyword);
+
+    //회원 활동정지
+    public void banMember(String id);
+
+    //회원 정지 해제
+    public void releaseMember(String id);
+
+    //회원 삭제
+    public void fireMember(String id);
 }
 

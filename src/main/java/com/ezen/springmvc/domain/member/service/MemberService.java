@@ -43,4 +43,16 @@ public interface MemberService {
 
 	//회원 비밀번호 확인
 	public String checkPasswd(String id);
+
+	//검색으로 회원목록 찾기
+	public List<MemberDto> searchMembers(String keyword);
+
+	//회원 정지시키기
+	public void banMemberGrade(String id);
+
+	//회원 정지해제
+	public void releaseMemberGrade(String id);
+
+	//회원 삭제
+	public void deleteMember(String id);
 }

@@ -47,6 +47,7 @@ public class MemberController {
     private String profileFileUploadPath;
     private final FileService fileService;
     private final MemberService memberService;
+
     private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
@@ -163,6 +164,13 @@ public class MemberController {
         if (loginMember == null) {
             return "/member/loginForm";
         }
+
+        if (loginMember.getGrade().equals("BAN")) {
+            String notice = "정지된 회원입니다. 고객센터에 문의바랍니다.";
+            request.setAttribute("notice", notice);
+            return "/member/loginForm";
+        }
+
 
         if (loginForm.isRememberLoginId()) {
             Cookie saveIdCookie = new Cookie("saveId", loginMember.getMemberId());
@@ -334,6 +342,8 @@ public class MemberController {
     public String searchPasswd(@ModelAttribute SearchPasswdForm searchPasswdForm, Model model) {
         return "/member/searchPasswd";
     }
+
+
 
     @PostMapping("/searchPasswd")
     public String searchPasswdAction(@ModelAttribute SearchPasswdForm searchPasswdForm, RedirectAttributes redirectAttributes) throws MessagingException {

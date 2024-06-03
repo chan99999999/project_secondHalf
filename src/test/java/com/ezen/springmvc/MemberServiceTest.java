@@ -61,9 +61,39 @@ public class MemberServiceTest {
 
 	@Test
 	@DisplayName("닉네임으로 회원찾기")
+	@Disabled
 	void findByNick(){
 		MemberDto memberDto = memberService.getNickname("찬찬");
 		log.info(memberDto.toString());
+	}
+
+	@Test
+	@DisplayName("회원 전체조회")
+	@Disabled
+	void findAll(){
+		List<MemberDto> memberList = memberService.getMembers();
+		for (MemberDto memberDto : memberList) {
+			log.info(memberDto.toString());
+		}
+	}
+
+	@Test
+	@DisplayName("회원검색")
+	@Disabled
+	void searchMemberTest(){
+		List<MemberDto> list = memberService.searchMembers("김");
+		for (MemberDto memberDto : list) {
+			log.info("찾은회원 : {}", memberDto.toString());
+		}
+	}
+
+	@Test
+	@DisplayName("회원정지")
+	@Disabled
+	void banMemberTest(){
+		memberService.banMemberGrade("chan777");
+		MemberDto memberDto = memberService.getMember("chan777");
+		log.info("변경된 회원 : {}", memberDto.toString());
 	}
 }
 
