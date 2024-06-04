@@ -151,20 +151,34 @@ public class DailyController {
 
         DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileList);
 
+        log.info("생성된 일상 게시글 번호 : {}", dailyArticleDto.getDailyArticleId());
+
         String tags = dailyArticleForm.getTags();
         if (tags != null && !tags.isEmpty()) {
             List<String> tagNames = Arrays.asList(tags.split(","));
             for (String tagName : tagNames) {
                 tagName = tagName.trim();
-                TagDto tagDto = TagDto.builder()
-                        .tagName(tagName)
-                        .build();
-                dailyArticleService.getTag(tagDto);
 
-                TagArticleDto tagArticleDto = TagArticleDto.builder()
-                        .dailyArticleId(dailyArticleForm.getDailyArticleId())
-                        .build();
-                dailyArticleService.getTagArticle(tagArticleDto);
+//                TagDto tagDto = TagDto.builder()
+//                        .tagName(tagName)
+//                        .build();
+//                dailyArticleService.getTag(tagDto);
+
+                TagDto tagDto = dailyArticleService.getOrCreateTag(tagName);
+
+//                TagArticleDto tagArticleDto = TagArticleDto.builder()
+//                        .dailyArticleId(dailyArticleForm.getDailyArticleId())
+//                        .build();
+//                dailyArticleService.getTagArticle(tagArticleDto);
+//
+//                TagArticleDto tagArticleDto = TagArticleDto.builder()
+//                        .dailyArticleId(dailyArticleForm.getDailyArticleId())
+//                        .tagId(tagDto.getTagId()) // 태그 아이디 설정
+//                        .build();
+
+                log.info("새로 생성됐거나 기존에 있는 태그의 번호 : {}", tagDto.getTagId());
+                dailyArticleService.getTagArticle(tagDto.getTagId(), dailyArticleDto.getDailyArticleId());
+//                dailyArticleService.getTagArticle(131, 249);
             }
         }
 

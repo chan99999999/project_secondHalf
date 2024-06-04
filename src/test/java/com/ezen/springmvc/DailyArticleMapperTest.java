@@ -162,24 +162,38 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("태그 등록 테스트")
-    @Disabled
+//    @Disabled
     void createTagTest() {
         TagDto tagDto = TagDto.builder()
                 .tagName("음식")
                 .build();
         tagMapper.createTag(tagDto);
+        tagDto.setTagId(tagDto.getTagId());
         log.info("등록된 태그 : {}", tagDto);
+        log.info("등록된 태그 아이디 : {}", tagDto.getTagId());
     }
 
     @Test
     @DisplayName("태그 아티클 등록 테스트")
-    @Disabled
+//    @Disabled
     void createTagArticleTest() {
-        TagArticleDto tagArticleDto = TagArticleDto.builder()
-                .tagId(3)
-                .dailyArticleId(39)
+        DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
+                .memberId("sunday")
+                .categoryId(2)
+                .title("게시글 제목")
+                .content("내용")
                 .build();
-        tagArticleMapper.createTagArticle(tagArticleDto);
+        dailyArticleMapper.createDailyArticle(dailyArticleDto);
+
+        TagDto tagDto = TagDto.builder()
+                .tagName("음식")
+                .build();
+
+        tagMapper.createTag(tagDto);
+
+        TagArticleDto tagArticleDto = TagArticleDto.builder()
+                .build();
+        tagArticleMapper.createTagArticle(dailyArticleDto.getDailyArticleId(), tagDto.getTagId());
         log.info("등록된 태그 게시글 : {}", tagArticleDto);
     }
 
@@ -297,10 +311,18 @@ public class DailyArticleMapperTest {
 
     @Test
     @DisplayName("게시글 조회수 업데이트")
-//    @Disabled
+    @Disabled
     void updateDailyArticleHitCountTest() {
         dailyArticleMapper.updateDailyArticleHitCount(2, 218);
         log.info("조회수가 업데이트 된 게시글 : {}", dailyArticleMapper.findByDailyArticleId(218));
+    }
+
+    @Test
+    @DisplayName("태그 중복 등록 방지 로직 추가한 태그 생성 메소드 테스트")
+//    @Disabled
+    void getOrCreateTagTest() {
+        TagDto tagDto = dailyArticleServiceImpl.getOrCreateTag("건강");
+        log.info("생성된 태그 : {}", tagDto);
     }
 
 }

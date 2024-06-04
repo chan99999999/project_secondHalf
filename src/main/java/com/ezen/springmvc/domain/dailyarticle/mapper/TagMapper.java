@@ -6,16 +6,17 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
+/** tag 테이블 관련 Mapper */
 public interface TagMapper {
 
     /**
-     * 태그 등록
+     * 태그 생성
      * @param tagDto 태그
      */
     public void createTag(TagDto tagDto);
 
     /**
-     * 대그 번호로 태그 조회
+     * 태그 번호로 태그 조회
      * @param tagId 태그 번호
      * @return 태그
      */

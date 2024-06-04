@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @ToString
 @Builder
+/** 신규 일상 게시글 작성 폼에 대응하는 Form 클래스 */
 public class DailyArticleForm {
     private int dailyArticleId;
     private String memberId;
@@ -18,7 +19,6 @@ public class DailyArticleForm {
     private String title;
     private String content;
     private int categoryId;
-//    private MultipartFile attachImage;
     private List<MultipartFile> attachImages;
     private int hitCount;
     private String tags;

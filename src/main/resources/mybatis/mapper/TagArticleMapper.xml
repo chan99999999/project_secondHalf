@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.TagArticleMapper">
     <!-- 태그 게시글 등록 -->
+<!--    <insert id="createTagArticle">-->
+<!--        INSERT INTO tag_article (tag_id, d_article_id)-->
+<!--        VALUES (TAG_ID_SEQ.currval, D_ARTICLE_ID_SEQ.currval)-->
+<!--    </insert>-->
+
     <insert id="createTagArticle">
         INSERT INTO tag_article (tag_id, d_article_id)
-        VALUES (TAG_ID_SEQ.currval, D_ARTICLE_ID_SEQ.currval)
+        VALUES (#{tagId}, #{dailyArticleId})
     </insert>
 
 </mapper>

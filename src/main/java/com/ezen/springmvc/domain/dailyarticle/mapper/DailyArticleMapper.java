@@ -12,45 +12,42 @@ import org.springframework.stereotype.Repository;
 import java.sql.SQLException;
 import java.util.List;
 
-//@Repository
 @Mapper
+/** daily_article 테이블 관련 Mapper */
 public interface DailyArticleMapper {
 
     /**
-     * 신규 일상 게시글 등록
-     *
+     * 신규 일상 게시글 생성
      * @param dailyArticleDto 일상 게시글
      */
     public void createDailyArticle(DailyArticleDto dailyArticleDto);
 
     /**
      * 일상 게시글 번호로 게시글 조회
-     *
      * @param dailyArticleId 일상 게시글 번호
      * @return 일상 게시글
      */
     public DailyArticleDto findByDailyArticleId(int dailyArticleId);
 
     /**
-     * 일상 게시글 목록 반환
-     *
+     * 검색 조건에 따른 일상 게시글 목록 조회
      * @param categoryId 카테고리 번호
-     * @return 일상 게시글 목록
+     * @param searchDto  검색
+     * @return
      */
     public List<DailyArticleDto> findByAllDailyArticle(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
 
     /**
-     * 태그 이름 별 일상 게시글 목록 반환
-     *
+     * 태그 이름 및 검색 조건에 따른 일상 게시글 목록 조회
      * @param categoryId 카테고리 번호
      * @param tagName    태그 이름
+     * @param searchDto  검색
      * @return 일상 게시글 목록
      */
     public List<DailyArticleDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName, @Param("searchDto") SearchDto searchDto);
 
     /**
-     * 일상 게시글 상세보기
-     *
+     * 일상 게시글 상세 조회
      * @param categoryId     카테고리 번호
      * @param dailyArticleId 일상 게시글 번호
      * @return 일상 게시글
@@ -58,23 +55,23 @@ public interface DailyArticleMapper {
     public DailyArticleDto readDailyArticle(@Param("categoryId") int categoryId, @Param("dailyArticleId") int dailyArticleId);
 
     /**
-     * 일상 게시글 개수 반환
-     *
+     * 검색 조건에 따른 일상 게시글 개수 조회
+     * @param categoryId 카테고리 번호
+     * @param searchDto  검색
      * @return 일상 게시글 개수
      */
     public int findDailyArticleCount(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
 
     /**
-     * 일상 게시글 삭제
-     *
+     * 일상 게시글 조회수 업데이트
      * @param categoryId     카테고리 번호
      * @param dailyArticleId 일상 게시글 번호
      */
-    public void deleteDailyArticle(@Param("categoryId") int categoryId, @Param("dailyArticleId") int dailyArticleId);
+    public void updateDailyArticleHitCount(@Param("categoryId") int categoryId,
+                                           @Param("dailyArticleId") int dailyArticleId);
 
     /**
-     * 일상 게시글 수정
-     *
+     * 일상 게시글 업데이트
      * @param dailyArticleId        일상 게시글 번호
      * @param editedDailyArticleDto 수정된 일상 게시글
      */
@@ -82,11 +79,9 @@ public interface DailyArticleMapper {
                                    @Param("editedDailyArticleDto") DailyArticleDto editedDailyArticleDto);
 
     /**
-     * 일상 게시글 조회수 업데이트
-     * @param categoryId 카테고리 번호
+     * 일상 게시글 행 삭제
+     * @param categoryId     카테고리 번호
      * @param dailyArticleId 일상 게시글 번호
      */
-    public void updateDailyArticleHitCount(@Param("categoryId") int categoryId,
-                                           @Param("dailyArticleId") int dailyArticleId);
-
+    public void deleteDailyArticle(@Param("categoryId") int categoryId, @Param("dailyArticleId") int dailyArticleId);
 }

@@ -8,16 +8,17 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
+/** attach_file 테이블 관련 Mapper */
 public interface FileMapper {
 
     /**
-     * 파일 등록
+     * 파일 생성
      * @param fileDto 파일
      */
     public void createFileDto(FileDto fileDto);
 
     /**
-     * 파일 여러 개 등록
+     * 다중 파일 생성
      * @param fileList 파일 목록
      */
     public void createFileList(List<FileDto> fileList);
@@ -34,5 +35,4 @@ public interface FileMapper {
      * @return 파일 목록
      */
     public List<FileDto> findByAllFile();
-
 }
