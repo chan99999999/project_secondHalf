@@ -11,12 +11,15 @@ import java.sql.Timestamp;
 @ToString
 @Builder
 public class MessageDto {
-    // 메시지 타입 : 입장, 채팅
+
+    /**
+     *  메시지 타입 : 입장, 채팅
+     */
     public enum MessageType {
         ENTER, TALK
     }
 
-    private MessageType type; // 메시지 타입
+    private MessageType type;
     private String messageId;
     private String content;
     private Timestamp sentAt;

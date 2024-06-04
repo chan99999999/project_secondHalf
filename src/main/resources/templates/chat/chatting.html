@@ -18,8 +18,8 @@
         <div id="chat-member-list">
             <div>
                 <div id="chat-search">
-                    <input id="chat-search-bar" type="text" placeholder="찾기">
-                    <button id="chat-search-btn" type="submit">검색</button>
+                    <input id="chat-search-bar" type="text" placeholder=" 닉네임을 입력하세요">
+                    <button id="chat-search-btn" type="submit">검 색</button>
                 </div>
                 <div class="chat-list-area">
                     <ul class="chat-list" id="chatrooms">
@@ -28,8 +28,9 @@
                                 <a th:href="|/chat/room/enter/${chatDto.roomId}|">
                                     <img class="profile-img chat-member-img" src="/img/profile.png">
                                     <div class="chat-list-info">
-                                        <div class="chat-list-name" th:text="${chatDto.senderId}"></div>
-                                        <div class="chat-list-message">아아</div>
+                                        <div class="chat-list-name" th:text="${chatDto.receiverNickname}"></div>
+                                        <span class="chat-list-message" th:text="${chatDto.getLatestMessage().content}" th:if="${chatDto.getLatestMessage()} !=null">
+                                        </span>
                                     </div>
                                 </a>
                             </li>
@@ -47,7 +48,7 @@
                     <div class="chat-cureent-name member-profile" id="member-profile">
                         김순자 최고
                         <ul class="perid">
-                            <li><a href="chat/room/to/찬찬">1:1 대화하기</a></li>
+                            <li><a href="chat/room/to/싸와디캅망고">1:1 대화하기</a></li>
                             <hr>
                             <li><a href="#">게시글 보기</a></li>
                         </ul>
@@ -59,7 +60,7 @@
                             <th:block th:if="${message.senderId} == ${session.loginMember.nickname}">
                             <li class="chat-message-list sent">
                                 <div class="message-data">
-                                    <div class="message-data-time" th:text="${message.sentAt}"></div>
+                                    <div class="message-data-time" th:text="${#dates.format(message.sentAt, 'a hh:mm')}"></div>
                                     <div class="message-data-member" th:text="${message.senderId}"></div>
                                 </div>
                                 <div class="message-content">
@@ -71,7 +72,7 @@
                             <th:block th:if="${message.senderId} != ${session.loginMember.nickname}">
                                 <li class="chat-message-list received">
                                     <div class="message-data">
-                                        <div class="message-data-time" th:text="${message.sentAt}"></div>
+                                        <div class="message-data-time" th:text="${#dates.format(message.sentAt, 'a hh:mm')}"></div>
                                         <div class="message-data-member" th:text="${message.senderId}"></div>
                                     </div>
                                     <div class="message-content">
@@ -81,21 +82,15 @@
                                 </li>
                             </th:block>
                         </th:block>
-<!--                        <th:block th:each="message, status:${messages}">-->
-<!--                            <li th:text="${message}"></li>-->
-<!--                        </th:block>-->
                     </ul>
                 </div>
 
                 <div class="chat-send-box">
-<!--                    <form id="message-form" method="post" th:object="${messageForm}"-->
-<!--                          th:action="|/chat/sendMessage/${roomId}|">-->
                         <input type="text" class="message-to-send" id="message-input"
-                               onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
-                        <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송
+                               onkeydown="sendMessageOnEnter()" placeholder="메세지를 입력하세요"/>
+                        <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전 송
                         </button>
-                        <!--                <button class="message-send-btn" id="send-button" type="submit">전송</button>-->
-<!--                    </form>-->
+
                 </div>
             </div>
         </th:block>
@@ -110,28 +105,35 @@
 <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
 <script>
-    //대화하기 접속 시 대화 리스트 출력
+
+    // 대화하기 페이지가 로드되었을 때 WebSocket 초기화
     document.addEventListener('DOMContentLoaded', function () {
         initWebSocket();
     });
 
-    //웹소켓, 스톰프 설정
+    // WebSocket 및 STOMP 설정을 초기화
     const sock = new SockJS("/wss-stomp");
     const ws = Stomp.over(sock);
 
-    // roomId, sender 설정
+    // localStorage에서 roomId와 sender를 설정
     const roomId = localStorage.getItem('wschat.roomId');
     const sender = `[[${session.loginMember.nickname}]]`;
     let room = {};
     let messages = [];
 
+
+    /**
+     * WebSocket 초기화 후 서버에 연결
+     */
     function initWebSocket() {
         ws.connect({}, function (frame) {
+            // 채팅방의 메시지를 구독하고 메시지를 수신할 때마다 처리
             ws.subscribe("/sub/chat/room/" + roomId, function (message) {
                 const recv = JSON.parse(message.body);
 
+                // 서버로부터 메시지를 저장하고 화면에 표시
                 axios.post('/chat/saveMessage', recv)
-                    .then(reponse => {
+                    .then(response => {
                         console.log('메세지가 서버로 전송되었습니다.');
                     })
                     .catch(error => {
@@ -141,6 +143,8 @@
                 recvMessage(recv);
 
             });
+
+            // 채팅방에 입장하고 해당 정보를 서버에 전송
             ws.send("/pub/chat/message", {}, JSON.stringify({
                 type: 'ENTER',
                 roomId: roomId,
@@ -152,20 +156,29 @@
     }
 
 
-
+    /**
+     * 채팅방 입장
+     * @param roomId
+     */
     function enterRoom(roomId){
         localStorage.setItem('wschat.roomId', roomId);
     }
 
 
-    // 방 찾기
+    /**
+     * 채팅방 찾아서 정보 가져오기
+     */
     function findRoom() {
         axios.get('/chat/room/' + roomId).then(response => {
             room = response.data;
         });
     }
 
-    // 메세지 수신
+
+    /**
+     * 메세지 수신, 화면에 표시
+     * @param recv
+     */
     function recvMessage(recv) {
         const messagesListElem = document.querySelector("#message-list");
         const messageItem = document.createElement('li');
@@ -225,18 +238,23 @@
         messagesListElem.scrollTop = messagesListElem.scrollHeight;
     }
 
-    // 현재 시간을 가져오는 함수
-    function getCurrentTime() {
-        return new Date().toISOString(); // ISO 형식의 문자열로 변환
-    }
 
-
-    // 메세지 전송
+    /**
+     * 메세지 전송
+     */
     function sendMessage() {
         const messageInputElem = document.querySelector("#message-input");
         const message = messageInputElem.value;
-        const sentAt = new Date().valueOf(); // 현재 시간 가져오기
 
+        // 공백만 있는 경우 전송하지 않음
+        if (!message.replace(/\s/g, '').length) {
+            return;
+        }
+
+        // 현재 시간 가져오기
+        const sentAt = new Date().valueOf();
+
+        // 서버에 메세지 전송
         ws.send("/pub/chat/message", {}, JSON.stringify({
             type: 'TALK',
             roomId: roomId,
@@ -245,7 +263,7 @@
             sentAt: sentAt
         }));
 
-        // 서버로 메시지를 전송한 후, 데이터베이스에 저장하는 코드
+        // 서버로 메시지를 전송한 후, 데이터베이스에 저장
         axios.post('/chat/message', {
             roomId: roomId,
             senderId: sender,
@@ -261,7 +279,7 @@
         messageInputElem.value = '';
     }
 
-    // 메세지 전송방법, 대화방 연결
+    // Enter 키를 눌렀을 때 메시지를 전송
     function sendMessageOnEnter() {
         const messageInputElem = document.querySelector("#message-input");
         messageInputElem.onkeydown = function (event) {
