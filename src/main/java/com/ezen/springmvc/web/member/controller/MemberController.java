@@ -151,17 +151,19 @@ public class MemberController {
         if (saveId != null) {
             loginForm.setLoginId(saveId);
         }
+        model.getAttribute("notMember");
         return "/member/loginForm";
     }
 
     // 회원 로그인 처리
     @PostMapping("/login")
     public String loginAction(@RequestParam(value = "redirectURI", required = false, defaultValue = "/") String redirectURI,
-                              @ModelAttribute LoginForm loginForm, HttpServletResponse response, HttpServletRequest request) {
+                              @ModelAttribute LoginForm loginForm, Model model,HttpServletResponse response, HttpServletRequest request) {
 
         MemberDto loginMember = memberService.isMember(loginForm.getLoginId(), loginForm.getLoginPasswd());
 
         if (loginMember == null) {
+            model.addAttribute("notMember", "아이디와 비밀번호를 확인해주세요.");
             return "/member/loginForm";
         }
 
@@ -216,9 +218,13 @@ public class MemberController {
     }
 
     @PostMapping("editInfo")
-    public String editInfoAction(@ModelAttribute EditForm editForm, HttpSession session) {
+    public String editInfoAction(@ModelAttribute EditForm editForm, BindingResult bindingResult,HttpSession session) {
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        if(bindingResult.hasErrors()){
+            return "/member/editInfo";
+        }
 
         MemberDto memberDto = MemberDto.builder()
                 .memberId(loginMember.getMemberId())
@@ -243,14 +249,21 @@ public class MemberController {
     }
 
     @GetMapping("/editNickname")
-    public String editNickname(@ModelAttribute EditNicknameForm editNicknameForm){
+    public String editNickname(@ModelAttribute EditNicknameForm editNicknameForm, Model model){
+        model.getAttribute("existNickname");
         return "/member/editNickname";
     }
 
     @PostMapping("/editNickname")
-    public String editNicknameAction(@ModelAttribute EditNicknameForm editNicknameForm, HttpSession session){
+    public String editNicknameAction(@ModelAttribute EditNicknameForm editNicknameForm, Model model, HttpSession session){
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        MemberDto existNickname = memberService.getNickname(editNicknameForm.getNewNickname());
+        if (existNickname != null){
+            model.addAttribute("existNickname", "이미 존재하는 닉네임입니다. 다른 닉네임을 사용해주세요.");
+            return "/member/editNickname";
+        }
 
         MemberDto memberDto = MemberDto.builder()
                 .nickname(editNicknameForm.getNewNickname())
@@ -265,13 +278,31 @@ public class MemberController {
 
     @GetMapping("/editPasswd")
     public String editPasswd(@ModelAttribute EditPasswdForm editPasswdForm, Model model) {
+        model.getAttribute("unCorrectPw");
+        model.getAttribute("notSamePw");
+        model.getAttribute("unChangePw");
         return "/member/editPasswd";
     }
 
     @PostMapping("/editPasswd")
-    public String editPasswdAction(@ModelAttribute EditPasswdForm editPasswdForm, HttpSession session) {
+    public String editPasswdAction(@ModelAttribute EditPasswdForm editPasswdForm, Model model, HttpSession session) {
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        if(!editPasswdForm.getOldPasswd().equals(loginMember.getMemberPasswd())){
+            model.addAttribute("unCorrectPw", "현재 비밀번호가 일치하지 않습니다.");
+            return "/member/editPasswd";
+        }
+
+        if(!editPasswdForm.getNewPasswd().equals(editPasswdForm.getConfirmPasswd())){
+            model.addAttribute("notSamePw", "변경할 비밀번호를 확인해주세요.");
+            return "/member/editPasswd";
+        }
+
+        if(editPasswdForm.getOldPasswd().equals(editPasswdForm.getNewPasswd())){
+            model.addAttribute("unChangePw", "변경할 비밀번호가 현재와 동일합니다.");
+            return "/member/editPasswd";
+        }
 
         MemberDto memberDto = MemberDto.builder()
                 .memberPasswd(editPasswdForm.getNewPasswd())
