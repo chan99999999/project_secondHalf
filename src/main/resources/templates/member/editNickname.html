@@ -23,6 +23,7 @@
                 <input id="edit-nickname" th:field="*{newNickname}" class="mypage-edit-text" type="text"
                        th:placeholder="|현재 닉네임 : ${session.loginMember.nickname}|">
             </div>
+            <p class="notice" th:text="${existNickname}"></p>
             <div id="editNicknameDup"></div>
             <hr>
             <div class="edit-btn-wrap">

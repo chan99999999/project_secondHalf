@@ -82,4 +82,28 @@ public class MemberServiceImpl implements MemberService {
     public String checkPasswd(String id){
         return memberMapper.confirmPasswd(id);
     }
+
+    @Override
+    @Transactional
+    public List<MemberDto> searchMembers(String keyword){
+        return memberMapper.findByKeyword(keyword);
+    }
+
+    @Override
+    @Transactional
+    public void banMemberGrade(String id) {
+        memberMapper.banMember(id);
+    }
+
+    @Override
+    @Transactional
+    public void releaseMemberGrade(String id){
+        memberMapper.releaseMember(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteMember(String id) {
+        memberMapper.fireMember(id);
+    }
 }
