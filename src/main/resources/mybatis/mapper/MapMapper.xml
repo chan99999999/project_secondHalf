@@ -4,14 +4,14 @@
 
 
     <!-- placeId로 장소 상세 조회 -->
-    <select id="findByPlaceId" resultType="MapDto">
+    <select id="findByPlaceId" resultType="com.ezen.springmvc.domain.placemap.dto.MapDto">
         SELECT place_id, place_name, address_name, x, y, map_id, road_address_name
         FROM placemap
         WHERE place_id = #{placeId}
     </select>
 
     <!-- 장소 정보 업데이트 -->
-    <update id="updatePlaceMap" parameterType="MapDto">
+    <update id="updatePlaceMap" parameterType="com.ezen.springmvc.domain.placemap.dto.MapDto">
         UPDATE placemap
         SET place_name = #{placeName},
             address_name = #{addressName},
@@ -24,7 +24,7 @@
 
 
     <!-- 새로운 리뷰 장소 등록  -->
-    <insert id="createPlaceMap" parameterType="MapDto">
+    <insert id="createPlaceMap" parameterType="com.ezen.springmvc.domain.placemap.dto.MapDto">
         INSERT INTO placemap(place_id, place_name, address_name, x, y, map_id, road_address_name)
         VALUES (#{placeId}, #{placeName}, #{addressName}, #{x}, #{y}, #{mapId}, #{roadAddressName})
     </insert>

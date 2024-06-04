@@ -3,7 +3,7 @@
 <mapper namespace="com.ezen.springmvc.domain.review.mapper.ReviewMapper">
 
     <!-- 신규 리뷰 생성 쿼리 -->
-    <insert id="createReview" parameterType="ReviewDto">
+    <insert id="createReview" parameterType="com.ezen.springmvc.domain.review.dto.ReviewDto">
         INSERT INTO review (review_id, member_id, review, place_id, regdate)
         VALUES (review_id_seq.NEXTVAL, #{memberId}, #{review}, #{placeId}, SYSDATE)
     </insert>
@@ -46,7 +46,7 @@
             review.place_id = #{placeId}
     </select>
 
-    <resultMap id="reviewWithMemberResultMap" type="ReviewDto">
+    <resultMap id="reviewWithMemberResultMap" type="com.ezen.springmvc.domain.review.dto.ReviewDto">
         <id property="reviewId" column="review_id"/>
         <result property="placeId" column="place_id"/>
         <result property="memberId" column="member_id"/>

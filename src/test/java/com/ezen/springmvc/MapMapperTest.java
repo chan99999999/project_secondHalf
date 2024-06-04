@@ -66,7 +66,7 @@ public class MapMapperTest {
 
     @Test
     @DisplayName("placeMap 업데이트 테스트")
-//    @Disabled
+    @Disabled
     void updatePlaceMapTest() {
         MapDto mapDto = MapDto.builder()
                 .placeId(33)
