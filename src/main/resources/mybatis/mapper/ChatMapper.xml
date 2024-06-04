@@ -3,13 +3,13 @@
 <mapper	namespace="com.ezen.springmvc.domain.chat.mapper.ChatMapper">
 	<!-- 채팅방 생성 -->
 	<insert id="createChat" parameterType="com.ezen.springmvc.domain.chat.dto.ChatDto" >
-		INSERT INTO chat_room(room_id, created_at, sender_id, receiver_id)
-		VALUES(#{roomId}, SYSDATE, #{senderId}, #{receiverId})
+		INSERT INTO chat_room(room_id, created_at, sender_id, receiver_id, sender_nickname, receiver_nickname)
+		VALUES(#{roomId}, SYSDATE, #{senderId}, #{receiverId}, #{senderNickname}, #{receiverNickname})
 	</insert>
 
 	<!-- 채팅방 목록 조회 -->
 		<select id="findMyChatList" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
-			SELECT room_id, created_at, sender_id, receiver_id
+			SELECT room_id, created_at, sender_id, receiver_id, sender_nickname, receiver_nickname
 			FROM chat_room
 			ORDER BY created_at DESC
 		</select>

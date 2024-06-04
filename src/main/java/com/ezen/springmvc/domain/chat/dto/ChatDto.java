@@ -22,6 +22,8 @@ public class ChatDto {
     private String receiverId; // 메시지 받은사람
     private Timestamp createdAt; // 생성시간
     private List<MessageDto> messages;
+    private String senderNickname;
+    private String receiverNickname;
 
 
     public MessageDto getLatestMessage() {

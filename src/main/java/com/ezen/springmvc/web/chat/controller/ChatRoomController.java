@@ -36,6 +36,7 @@ public class ChatRoomController {
     private static final Logger log = LoggerFactory.getLogger(ChatRoomController.class);
     private final ChatServiceImpl chatService;
     private final SimpMessageSendingOperations messagingTemplate;
+    private final MemberService memberService;
 
 
     @MessageMapping("/chat/message")
@@ -45,7 +46,7 @@ public class ChatRoomController {
 
     @GetMapping
     public String rooms(Model model) {
-        List<ChatDto> chatList = chatService.getMyChatList();
+        List<ChatDto> chatList = chatService.getMyChatList(); log.info(chatList.toString());
         model.addAttribute("chatList", chatList);
         model.addAttribute("messageForm", new MessageForm());
         return "/chat/chatting";
@@ -76,6 +77,8 @@ public class ChatRoomController {
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 
+        MemberDto receiver = memberService.getNickname(nickname);
+
         log.info("로그인 정보는 {}", loginMember.toString());
         String roomId = UUID.randomUUID().toString();
 
@@ -84,7 +87,7 @@ public class ChatRoomController {
         List<ChatDto> chatList = chatService.getMyChatList();
         ChatDto findChatDto = null;
         for (ChatDto chatDto : chatList) {
-            if(chatDto.getReceiverId().equalsIgnoreCase(nickname)){
+            if(chatDto.getReceiverNickname().equalsIgnoreCase(nickname)){
                 findChatDto = chatDto;
                 break;
             }
@@ -94,7 +97,9 @@ public class ChatRoomController {
         if(findChatDto == null) {
             ChatDto chatDto = ChatDto.builder()
                     .senderId(loginMember.getMemberId())
-                    .receiverId(nickname)
+                    .senderNickname(loginMember.getNickname())
+                    .receiverId(receiver.getMemberId())
+                    .receiverNickname(nickname)
                     .roomId(roomId)
                     .build();
 
@@ -110,6 +115,7 @@ public class ChatRoomController {
     @PostMapping("/saveMessage")
     public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto, HttpSession session) {
         log.info("뭐받았냐 {}", messageDto.toString());
+        log.info(messageDto.getRoomId());
         MessageDto saveMessage = MessageDto.builder()
                 .roomId(messageDto.getRoomId())
                 .content(messageDto.getContent())
