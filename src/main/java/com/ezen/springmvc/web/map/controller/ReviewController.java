@@ -34,7 +34,6 @@ public class ReviewController {
                                 @RequestParam("placeName") String placeName, @RequestParam("addressName") String addressName, @RequestParam("roadAddressName") String roadAddressName,
                                 @RequestParam("content") String content, HttpSession session) {
 
-
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MapDto mapDto = MapDto.builder()
                 .x(x)
