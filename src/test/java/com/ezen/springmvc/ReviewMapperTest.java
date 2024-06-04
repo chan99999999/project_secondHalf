@@ -2,16 +2,13 @@ package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
 import com.ezen.springmvc.domain.review.mapper.ReviewMapper;
-import com.ezen.springmvc.web.map.form.ReviewListForm;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

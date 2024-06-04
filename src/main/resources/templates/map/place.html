@@ -90,16 +90,16 @@
         <!-- 후기 영역 -->
         <div class="review-wrap">
 <!--            [[${reviewList}]]-->
-            <h1>업체후기(<span th:text="${reviews != null ? #lists.size(reviews) : 0}"></span>)</h1>
+            <h1>업체후기(<span th:text="${reviewList != null ? #lists.size(reviewList) : 0}"></span>)</h1>
             <div id="place-review">
                 <!-- 로그인한 경우 후기 작성 폼 표시 -->
                 <th:block th:if="${session.loginMember != null}">
                     <!--                    onsubmit="submitReview(event)": 이것은 폼이 제출될 때 호출될 JavaScript 함수를 지정-->
-                    <form method="post" action="/map/place/review/add" name="addReview">
+                    <form method="post" action="/map/place/review/add" name="addReview" th:object="${reviewForm}">
                         <div class="write-review">
                             <div class="review-writer" th:text="|작성자: ${session.loginMember.nickname}|"></div>
                             <div class="review-text">
-                                <textarea cols="76" rows="2" class="review-content" id="content" name="content"></textarea>
+                                <textarea cols="76" rows="2" class="review-content" th:field="*{review}"></textarea>
                                 <!-- 장소의 ID를 hidden input으로 전달 -->
                                 <input type="hidden" name="x" th:value="${mapDto.x}">
                                 <input type="hidden" name="y" th:value="${mapDto.y}">

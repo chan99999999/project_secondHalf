@@ -1,4 +1,5 @@
 package com.ezen.springmvc.web.map.controller;
+
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
@@ -34,6 +35,7 @@ public class MapController {
         log.info("Fetched MapDto: {}", mapDto);
         return mapDto;
     }
+
     // GET 요청을 처리하여 맵 검색 폼을 반환합니다.
     @GetMapping
     public String searchMap() {
@@ -48,8 +50,6 @@ public class MapController {
         log.info("Fetched MapDto: {}", mapDto);
         return mapDto;
     }
-
-
 
 
     // POST 요청을 처리하여 장소 정보를 모델에 추가하고 뷰를 반환합니다.
@@ -91,9 +91,12 @@ public class MapController {
 
         List<ReviewDto> reviewList = reviewService.getReviewsByPlaceId(mapId);
 
+        ReviewForm reviewForm = ReviewForm.builder().build();
+
         // 처리된 정보를 모델에 추가합니다.
         model.addAttribute("mapDto", processedPlaceInfo);
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("reviewForm", reviewForm);
 
         // 로그 추가: 모델에 정보가 잘 추가되었는지 확인
         log.info("모델에 추가된 mapDto: {}", model.containsAttribute("mapDto"));
@@ -145,7 +148,7 @@ public class MapController {
                 .x(reviewForm.getX())
                 .y(reviewForm.getY())
                 .build();
-        
+
         // 리뷰 정보
 
 

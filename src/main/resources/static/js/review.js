@@ -25,7 +25,7 @@ const fetchReviews = async function (placeId) {
 
             reviewElement.innerHTML = `
                 <div>
-                    <img src="/img/profile.png">
+                    <img src="/img/profile.png" alt="Profile Image">
                 </div>
                 <div>
                     <ul>
@@ -45,17 +45,13 @@ const fetchReviews = async function (placeId) {
 
 // 폼 제출 시 후기 데이터를 추가하고 다시 출력합니다.
 const handleSubmitButton = async function (event) {
-    // 폼 제출을 방지합니다. 기본 제출 행동을 취소합니다.
     event.preventDefault();
 
-    // 폼 데이터를 FormData 객체로 생성합니다.
     const formData = new FormData(document.querySelector('form'));
+    const placeId = formData.get('placeId');
 
     try {
-        // 장소 ID를 가져옵니다.
-        const placeId = formData.get('placeId');
-
-        const placeInfoResponse = await httpRequest('/map/place/review/info', {
+        const placeInfoResponse = await fetch('/map/place/review/info', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,9 +59,8 @@ const handleSubmitButton = async function (event) {
             body: JSON.stringify(Object.fromEntries(formData))
         });
 
-        // 장소가 존재하지 않으면 신규 장소를 등록합니다.
-        if (!placeInfoResponse) {
-            const newPlaceResponse = await httpRequest('/map/place/review/add', {
+        if (!placeInfoResponse.ok) {
+            const newPlaceResponse = await fetch('/map/place/review/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -74,13 +69,10 @@ const handleSubmitButton = async function (event) {
             });
 
             console.log('신규 장소 등록 결과:', newPlaceResponse);
-            alert('신규 장소가 등록되었습니다.');
         } else {
             console.log('이미 존재하는 장소입니다:', placeInfoResponse);
-            alert('해당 장소는 이미 존재합니다.');
         }
 
-        // 후기 데이터를 다시 가져와서 출력합니다.
         await fetchReviews(placeId);
     } catch (error) {
         console.error('에러 발생:', error);

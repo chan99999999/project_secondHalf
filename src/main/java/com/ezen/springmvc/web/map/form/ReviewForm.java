@@ -2,6 +2,8 @@ package com.ezen.springmvc.web.map.form;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -11,6 +13,7 @@ import lombok.*;
 /* 신규 리뷰 쓰기 폼에 대응하는 Form 클래스 */
 /* 여기서 전달받은 정보들을 ReviewDto에 등록 */
 public class ReviewForm {
+    private int reviewId;
     private Long placeId;
     private String nickname;
     private String memberId;

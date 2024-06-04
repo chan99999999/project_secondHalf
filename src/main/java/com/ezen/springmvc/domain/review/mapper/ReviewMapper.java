@@ -1,11 +1,7 @@
 package com.ezen.springmvc.domain.review.mapper;
 
-import com.ezen.springmvc.domain.member.dto.MemberDto;
-import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
-import com.ezen.springmvc.web.map.form.ReviewListForm;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
