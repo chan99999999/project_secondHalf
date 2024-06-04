@@ -7,7 +7,7 @@
 		VALUES(message_id_seq.nextval, #{content}, #{sentAt, jdbcType=TIMESTAMP}, #{roomId}, #{senderId} )
 	</insert>
 
-	<!-- 채팅 메시지 내용 조회 -->
+	<!-- room_id별 채팅 메시지 내용 조회 -->
 		<select id="findMessagesByRoomId" resultType="com.ezen.springmvc.domain.chat.dto.MessageDto">
 			SELECT message_id, content, sent_at, room_id, sender_id
 			FROM message

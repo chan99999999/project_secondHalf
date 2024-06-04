@@ -21,14 +21,16 @@ public class ChatDto {
     private String senderId; // 메시지 보낸사람
     private String receiverId; // 메시지 받은사람
     private Timestamp createdAt; // 생성시간
-    private List<MessageDto> messages;
     private String senderNickname;
     private String receiverNickname;
+    private List<MessageDto> messages;
 
-
+    /**
+     * 각 방의 메세지를 역순으로 정렬 후 가장 최신메세지를 채팅 목록에 출력하기 위한 메소드
+     * @return 최신메세지
+     */
     public MessageDto getLatestMessage() {
         if (messages != null && !messages.isEmpty()) {
-            // 리스트를 시간순으로 정렬한 후 첫 번째 메시지 반환
             return messages.stream()
                     .sorted(Comparator.comparing(MessageDto::getSentAt).reversed())
                     .findFirst()

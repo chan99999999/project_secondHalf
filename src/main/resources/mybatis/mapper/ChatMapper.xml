@@ -7,7 +7,7 @@
 		VALUES(#{roomId}, SYSDATE, #{senderId}, #{receiverId}, #{senderNickname}, #{receiverNickname})
 	</insert>
 
-	<!-- 채팅방 목록 조회 -->
+	<!-- 계정별 채팅방 목록 조회 -->
 		<select id="findMyChatList" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
 			SELECT room_id, created_at, sender_id, receiver_id, sender_nickname, receiver_nickname
 			FROM chat_room
@@ -15,14 +15,14 @@
 		</select>
 
 
-	<!-- 룸아이디로 채팅방 조회 -->
+	<!-- room_id로 채팅방 조회 -->
 	<select id="findChatRoom" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
 		SELECT room_id, created_at, sender_id, receiver_id
 		FROM chat_room
 		WHERE room_id = #{roomId}
 	</select>
 
-	<!-- 회원 닉네임으로 채팅방 검색  -->
+	<!-- 상대방 닉네임에 해당하는 채팅방 검색  -->
 	<select id="findChatRoomsByNickname" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
 		SELECT cr.room_id, cr.sender, cr.receiver, cr.created_at
 		FROM chat_room cr
@@ -31,7 +31,7 @@
 		WHERE m_sender.nickname = #{nickname} OR m_receiver.nickname = #{nickname}
 	</select>
 
-	<!-- 같은 receiverId 있는지 조회 -->
+	<!-- 같은 receiverId가 있는지 조회 -->
 	<select id="findSameReceiver" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
 		SELECT room_id, created_at, sender_id, receiver_id
 		FROM chat_room
