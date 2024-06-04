@@ -54,6 +54,8 @@
 </head>
 
 <body>
+
+
 <!-- 콘텐츠 래퍼 -->
 <div class="wrapper" th:fragment="content">
     <!-- 메인 콘텐츠 영역 -->
@@ -87,38 +89,39 @@
             </div>
         </div>
 
+
         <!-- 후기 영역 -->
         <div class="review-wrap">
-<!--            [[${reviewList}]]-->
+            <!--            [[${reviewList}]]-->
             <h1>업체후기(<span th:text="${reviewList != null ? #lists.size(reviewList) : 0}"></span>)</h1>
             <div id="place-review">
                 <!-- 로그인한 경우 후기 작성 폼 표시 -->
                 <th:block th:if="${session.loginMember != null}">
-                    <!--                    onsubmit="submitReview(event)": 이것은 폼이 제출될 때 호출될 JavaScript 함수를 지정-->
-                    <form method="post" action="/map/place/review/add" name="addReview" th:object="${reviewForm}">
+                    <form id="reviewForm" name="addReview" th:object="${reviewForm}" action="javascript:addReview();">
                         <div class="write-review">
                             <div class="review-writer" th:text="|작성자: ${session.loginMember.nickname}|"></div>
                             <div class="review-text">
                                 <textarea cols="76" rows="2" class="review-content" th:field="*{review}"></textarea>
                                 <!-- 장소의 ID를 hidden input으로 전달 -->
-                                <input type="hidden" name="x" th:value="${mapDto.x}">
-                                <input type="hidden" name="y" th:value="${mapDto.y}">
-                                <input type="hidden" name="placeId" th:value="${mapDto.placeId}">
-                                <input type="hidden" name="placeName" th:value="${mapDto.placeName}">
-                                <input type="hidden" name="addressName" th:value="${mapDto.addressName}">
-                                <input type="hidden" name="roadAddressName" th:value="${mapDto.roadAddressName}">
+                                <input type="hidden" id="x" name="x" th:value="${mapDto.x}">
+                                <input type="hidden" id="y" name="y" th:value="${mapDto.y}">
+                                <input type="hidden" th:id="placeId" name="placeId" th:value="${mapDto.placeId}">
+                                <input type="hidden" id="placeName" name="placeName" th:value="${mapDto.placeName}">
+                                <input type="hidden" th:id="addressName" name="addressName" th:value="${mapDto.addressName}">
+                                <input type="hidden" id="mapId" name="mapId" th:value="${mapDto.mapId}">
+                                <input type="hidden" th:id="roadAddressName" name="roadAddressName" th:value="${mapDto.roadAddressName}">
                                 <button type="submit" class="write-review-btn" id="addBtn">등록</button>
                             </div>
                         </div>
                     </form>
                 </th:block>
-                <!-- 로그인하지 않은 경우 로그인 안내 표시 -->
+<!--                로그인하지 않은 경우 로그인 안내 표시-->
                 <th:block th:if="${session.loginMember == null}">
                     <div class="write-review">
                         <form action="/member/login">
                             <div class="review-text">
-                        <textarea cols="76" rows="2" class="review-content" style="color: red"
-                                  th:text="'후기 작성은 로그인 후 가능합니다.'" disabled></textarea>
+                                        <textarea cols="76" rows="2" class="review-content" style="color: red"
+                                                  th:text="'후기 작성은 로그인 후 가능합니다.'" disabled></textarea>
                                 <button type="submit" class="write-review-btn">로그인</button>
                             </div>
                         </form>
@@ -127,10 +130,10 @@
 
 
                 <!-- 후기 목록 -->
-                <th:block th:each="review : ${reviewList}">
-                    <div class="review">
+                <div th:id="review-box">
+                    <div th:each="review : ${reviewList}" class="review">
                         <div>
-                            <img src="/img/profile.png" alt="Profile Image">
+                            <img class="profile-img" src="/img/profile.png" alt="Profile Image">
                         </div>
                         <div>
                             <ul>
@@ -141,18 +144,83 @@
                             </ul>
                         </div>
                     </div>
-                </th:block>
+                </div>
             </div>
         </div>
-                </th:block>
-
-
-            </div>
-        </div>
-
     </div>
 </div>
-</div>
-</div>
+
+<script>
+    const httpRequest = function (url, option) {
+        return fetch(url, option).then(response => response.json());
+    }
+
+    // 후기 등록 함수
+    const addReview = async function (e) {
+        const review = {
+            placeId: document.querySelector("#placeId").value,
+            x: document.querySelector("#x").value,
+            y: document.querySelector("#y").value,
+            placeName: document.querySelector("#placeName").value,
+            addressName: document.querySelector("#addressName").value,
+            mapId: document.querySelector("#mapId").value,
+            roadAddressName: document.querySelector("#roadAddressName").value,
+            review: document.querySelector(".review-content").value
+        };
+
+        const listUpReview = function (result) {
+            // 후기 DOM 처리
+            const reviewListElem = document.querySelector("#review-box");
+
+            const writerImg = document.createElement("img");
+            writerImg.src = `[[${session.loginMember.storePicture}]]`
+            writerImg.className = 'profile-img';
+
+            const imgBox = document.createElement("div");
+            imgBox.appendChild(writerImg);
+
+
+            const reviewWriter = document.createElement("li");
+            reviewWriter.classList.add("review-writer");
+            reviewWriter.textContent = `[[${session.loginMember.nickname}]]`;
+
+            const reviewContent = document.createElement("li");
+            reviewContent.classList.add("review-content");
+            reviewContent.textContent = result.review;
+
+
+            const ul = document.createElement("ul");
+            ul.appendChild(reviewWriter);
+            ul.appendChild(reviewContent);
+
+            const reviewWrap = document.createElement("div");
+            reviewWrap.appendChild(ul);
+
+            const reviewBox = document.createElement("div");
+            reviewBox.className = 'review';
+            reviewBox.appendChild(imgBox);
+            reviewBox.appendChild(reviewWrap);
+
+            reviewListElem.appendChild(reviewBox);
+
+            // 후기 입력란 초기화
+            document.querySelector(".review-content").value = "";
+        }
+
+        const option = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(review)
+        }
+        console.log(option)
+
+        const result = await httpRequest("/map/place/review/add", option);
+        console.log(result);
+        listUpReview(result);
+    }
+</script>
 </body>
 </html>
+

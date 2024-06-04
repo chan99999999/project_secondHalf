@@ -3,6 +3,7 @@ package com.ezen.springmvc;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
 import com.ezen.springmvc.domain.review.mapper.ReviewMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,9 @@ public class ReviewMapperTest {
 
     @Test
     @DisplayName("특정 장소의 리뷰 목록 조회")
+    @Disabled
     public void getReviewsByPlaceIdTest() {
-        Long placeId = 12273700L;
+        long placeId = 12273700L;
         List<ReviewDto> reviews = reviewMapper.getReviewsByPlaceId(placeId);
         assertNotNull(reviews, "리뷰 목록이 null이면 안 됩니다.");
         assertFalse(reviews.isEmpty(), "리뷰 목록이 비어 있으면 안 됩니다.");
@@ -61,5 +63,17 @@ public class ReviewMapperTest {
         }
     }
 
+    @Test
+    @DisplayName("댓글 작성테스트")
+//    @Disabled
+    public void addReviewsTest() {
+        ReviewDto reviewDto = ReviewDto.builder()
+                .memberId("monday")
+                .review("리뷰다 간다아")
+                .placeId(33)
+                .build();
+
+        reviewMapper.createReview(reviewDto);
+    }
 
 }

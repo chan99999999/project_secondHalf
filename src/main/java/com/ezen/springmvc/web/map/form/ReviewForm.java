@@ -14,13 +14,14 @@ import java.sql.Timestamp;
 /* 여기서 전달받은 정보들을 ReviewDto에 등록 */
 public class ReviewForm {
     private int reviewId;
-    private Long placeId;
+    private long placeId;
     private String nickname;
     private String memberId;
     private String review;
     private String placeName;       // 장소명
     private String addressName;     // 지번주소
     private String roadAddressName; // 도로명주소
+    private long mapId;
     private String phone;           // 전화번호
     private String y;               // y좌표(위도)
     private String x;               // x좌표(경도)

@@ -25,11 +25,11 @@ public class ReviewController {
     private final MapService mapService;
 
     @PostMapping("/add")
-    public @ResponseBody ReviewForm reviewAddAction(@ModelAttribute("") ReviewForm reviewForm, HttpSession session) {
+    @ResponseBody
+    public ReviewForm reviewAddAction(@RequestBody ReviewForm reviewForm, HttpSession session) {
         log.info("reviewForm: {}", reviewForm);
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-        reviewForm.setMemberId(loginMember.getMemberId());
 
         MapDto mapDto = MapDto.builder()
                 .x(reviewForm.getX())
@@ -37,6 +37,7 @@ public class ReviewController {
                 .placeId(reviewForm.getPlaceId())
                 .placeName(reviewForm.getPlaceName())
                 .addressName(reviewForm.getAddressName())
+                .mapId(reviewForm.getMapId())
                 .roadAddressName(reviewForm.getRoadAddressName())
                 .build();
 
@@ -87,7 +88,7 @@ public class ReviewController {
 
 
     @GetMapping("/list")
-    public String getReviewsByPlaceId(@RequestParam("placeId") Long placeId, Model model) {
+    public String getReviewsByPlaceId(@RequestParam("placeId") long placeId, Model model) {
         log.info("Received request for reviews of place with ID: {}", placeId);
         List<ReviewDto> reviews = reviewService.getReviewsByPlaceId(placeId);
 

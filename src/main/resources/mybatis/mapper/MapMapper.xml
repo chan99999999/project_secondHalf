@@ -11,23 +11,22 @@
     </select>
 
     <!-- 장소 정보 업데이트 -->
-    <update id="updatePlaceMap">
+    <update id="updatePlaceMap" parameterType="MapDto">
         UPDATE placemap
         SET place_name = #{placeName},
             address_name = #{addressName},
             x = #{x},
             y = #{y},
+            map_id = #{mapId},
             road_address_name = #{roadAddressName}
         WHERE place_id = #{placeId}
     </update>
 
 
     <!-- 새로운 리뷰 장소 등록  -->
-    <insert id="createPlaceMap">
+    <insert id="createPlaceMap" parameterType="MapDto">
         INSERT INTO placemap(place_id, place_name, address_name, x, y, map_id, road_address_name)
         VALUES (#{placeId}, #{placeName}, #{addressName}, #{x}, #{y}, #{mapId}, #{roadAddressName})
     </insert>
-
-
 
 </mapper>

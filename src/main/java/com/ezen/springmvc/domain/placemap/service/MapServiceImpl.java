@@ -35,7 +35,7 @@ public class MapServiceImpl implements MapService {
 
     // 주어진 mapId를 사용하여 임의의 MapDto 객체를 생성하여 반환
     @Override
-    public MapDto getPlaceInfoById(Long mapId) {
+    public MapDto getPlaceInfoById(long mapId) {
         return MapDto.builder()
 
                 .placeId(mapId)
@@ -60,7 +60,7 @@ public class MapServiceImpl implements MapService {
 
     // PlaceId를 사용하여 데이터베이스에서 장소정보 검색
     @Override
-    public MapDto findByPlaceId(Long placeId) {
+    public MapDto findByPlaceId(long placeId) {
         return mapMapper.findByPlaceId(placeId);
     }
 

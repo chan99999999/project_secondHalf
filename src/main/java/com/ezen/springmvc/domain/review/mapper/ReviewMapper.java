@@ -16,7 +16,7 @@ public interface ReviewMapper {
 
 
     /** 특정 장소의 리뷰 조회 */
-    List<ReviewDto> getReviewsByPlaceId(Long placeId);
+    List<ReviewDto> getReviewsByPlaceId(long placeId);
 
 
 

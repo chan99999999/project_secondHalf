@@ -30,7 +30,7 @@ public class MapController {
     // 특정 장소의 정보를 JSON 형식으로 반환합니다.
     @GetMapping("/place")
     @ResponseBody
-    public MapDto getPlaceInfo(@RequestParam("id") Long mapId) {
+    public MapDto getPlaceInfo(@RequestParam("id") long mapId) {
         MapDto mapDto = mapService.getPlaceInfoById(mapId);
         log.info("Fetched MapDto: {}", mapDto);
         return mapDto;
@@ -42,10 +42,11 @@ public class MapController {
         return "/map/searchForm";
     }
 
+
     // 특정 장소의 정보를 JSON 형식으로 반환합니다.
-    @GetMapping("/place/json")
+    @GetMapping("/place/code")
     @ResponseBody
-    public MapDto getPlaceInfoJson(@RequestParam("id") Long mapId) {
+    public MapDto getPlaceInfoJson(@RequestParam("id") long mapId) {
         MapDto mapDto = mapService.getPlaceInfoById(mapId);
         log.info("Fetched MapDto: {}", mapDto);
         return mapDto;
@@ -55,7 +56,7 @@ public class MapController {
     // POST 요청을 처리하여 장소 정보를 모델에 추가하고 뷰를 반환합니다.
     @PostMapping("/place")
     public String getPlaceInfo(
-            @RequestParam("id") Long mapId,
+            @RequestParam("id") long mapId,
             @RequestParam("place_name") String placeName,
             @RequestParam("address_name") String addressName,
             @RequestParam("category_name") String categoryName,

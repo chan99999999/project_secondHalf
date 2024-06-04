@@ -48,10 +48,11 @@ public class MapMapperTest {
 
     @Test
     @DisplayName("신규 리뷰 장소 등록")
+//    @Disabled
     public void createPlaceMapTest() {
         MapDto mapDto = MapDto.builder()
-                .placeId(12273701L)
-                .mapId(12273701L)
+                .placeId(33)
+                .mapId(33)
                 .addressName("주소 이름")
                 .placeName("테스트 장소명")
                 .roadAddressName("테스트 도로명 주소")
@@ -64,7 +65,25 @@ public class MapMapperTest {
     }
 
     @Test
+    @DisplayName("placeMap 업데이트 테스트")
+//    @Disabled
+    void updatePlaceMapTest() {
+        MapDto mapDto = MapDto.builder()
+                .placeId(33)
+                .mapId(33)
+                .addressName("가나다")
+                .placeName("테스트 장소명")
+                .roadAddressName("테스트 도로명 주소")
+                .x("127.0628665469612")
+                .y("37.5028534975179")
+                .build();
+        mapMapper.updatePlaceMap(mapDto);
+    }
+
+
+    @Test
     @DisplayName("placeId로 장소검색")
+    @Disabled
     public void findByPlaceIdTest() {
         MapDto mapDto = mapMapper.findByPlaceId(12273701L);
         log.info("placeId로 장소검색 : {}", mapDto );

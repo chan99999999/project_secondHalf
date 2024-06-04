@@ -9,8 +9,8 @@ import lombok.*;
 @ToString
 @Builder
 public class MapDto {
-    private Long placeId;         // DB의 장소번호 PK(시퀀스 자동생성)
-    private Long mapId;           // 카카오맵 API의 장소 id
+    private long placeId;         // DB의 장소번호 PK(시퀀스 자동생성)
+    private long mapId;           // 카카오맵 API의 장소 id
     private String placeName;       // 장소명
     private String addressName;     // 지번주소
     private String roadAddressName; // 도로명주소

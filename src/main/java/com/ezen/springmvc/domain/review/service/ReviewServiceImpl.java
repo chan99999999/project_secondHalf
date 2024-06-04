@@ -1,6 +1,7 @@
 package com.ezen.springmvc.domain.review.service;
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.mapper.MapMapper;
+import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
 import com.ezen.springmvc.domain.review.mapper.ReviewMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,13 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
     private final MapMapper mapMapper;
     private final ReviewMapper reviewMapper;
+    private final MapService mapService;
 
     @Override
     @Transactional
     public void addNewReview(MapDto mapDto, ReviewDto reviewDto){
         // 지도에 신규 장소 등록
-        mapMapper.createPlaceMap(mapDto);
+        mapService.addNewPlace(mapDto);
         // 신규 장소에 대한 리뷰 등록
         reviewMapper.createReview(reviewDto);
     }
@@ -33,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public List<ReviewDto> getReviewsByPlaceId(Long placeId) {
+    public List<ReviewDto> getReviewsByPlaceId(long placeId) {
         return reviewMapper.getReviewsByPlaceId(placeId);
     }
 
