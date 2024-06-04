@@ -47,7 +47,7 @@
                     <div class="chat-cureent-name member-profile" id="member-profile">
                         김순자 최고
                         <ul class="perid">
-                            <li><a href="chat/room/to/chan9">1:1 대화하기</a></li>
+                            <li><a href="chat/room/to/찬찬">1:1 대화하기</a></li>
                             <hr>
                             <li><a href="#">게시글 보기</a></li>
                         </ul>
@@ -56,7 +56,8 @@
                 <div class="chat-history">
                     <ul id="message-list">
                         <th:block th:each="message, status:${messages}">
-                            <li class="chat-message-list">
+                            <th:block th:if="${message.senderId} == ${session.loginMember.nickname}">
+                            <li class="chat-message-list sent">
                                 <div class="message-data">
                                     <div class="message-data-time" th:text="${message.sentAt}"></div>
                                     <div class="message-data-member" th:text="${message.senderId}"></div>
@@ -66,6 +67,19 @@
                                     <img class="profile-img" src="/img/profile.png">
                                 </div>
                             </li>
+                            </th:block>
+                            <th:block th:if="${message.senderId} != ${session.loginMember.nickname}">
+                                <li class="chat-message-list received">
+                                    <div class="message-data">
+                                        <div class="message-data-time" th:text="${message.sentAt}"></div>
+                                        <div class="message-data-member" th:text="${message.senderId}"></div>
+                                    </div>
+                                    <div class="message-content">
+                                        <div class="chat-message-text" th:text="${message.content}"></div>
+                                        <img class="profile-img" src="/img/profile.png">
+                                    </div>
+                                </li>
+                            </th:block>
                         </th:block>
 <!--                        <th:block th:each="message, status:${messages}">-->
 <!--                            <li th:text="${message}"></li>-->

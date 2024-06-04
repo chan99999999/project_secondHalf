@@ -78,13 +78,21 @@ public class ChatRoomController {
         log.info("로그인 정보는 {}", loginMember.toString());
         String roomId = UUID.randomUUID().toString();
 
-        ChatDto chatDto = ChatDto.builder()
-                .senderId(loginMember.getMemberId())
-                .receiverId(nickname)
-                .roomId(roomId)
-                .build();
+        //챗 디티오 전체리스트 출력하기
+        //거기서 리시버 아이디가 같은 것이 있는지 검색하는 매퍼
+        //같으면 기존 findChatDto를 출력
 
-        chatService.newChat(chatDto);
+//        if(findChatDto == null) {
+            ChatDto chatDto = ChatDto.builder()
+                    .senderId(loginMember.getMemberId())
+                    .receiverId(nickname)
+                    .roomId(roomId)
+                    .build();
+
+            chatService.newChat(chatDto);
+//        } else {
+//        }
+
         return "redirect:/chat";
     }
 
