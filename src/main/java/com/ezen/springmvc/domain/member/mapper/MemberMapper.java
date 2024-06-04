@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@Repository
+@Repository
 @Mapper
 public interface MemberMapper {
     //회원 생성
