@@ -311,7 +311,7 @@
 
 #search-map-tagbox {
     width: 330px;
-    background-color: #white;
+    background-color:white;
     margin: 10px 0;
     border-radius: 10px;
     padding: 10px;
@@ -365,7 +365,6 @@
 #place-detail-wrap{
     width: 1200px;
     display: flex;
-
 }
 
 #place-map{

@@ -1,97 +1,101 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
-
 <head>
     <title th:fragment="title"> ::: 동네친구:모임 제목 ::: </title>
     <th:block th:fragment="script">
+        <script th:inline="javascript">
+            const memberId = [[${loginMember}]];
+
+            function participate(categoryId, meetArticleId) {
+                fetch(`/meet/${categoryId}/participate/${meetArticleId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(memberId),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('participate-btn').textContent = '참여중';
+                        document.getElementById('participate-btn').setAttribute('onclick', `cancelParticipation(${categoryId}, ${meetArticleId})`);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            function cancelParticipation(categoryId, meetArticleId) {
+                fetch(`/meet/${categoryId}/cancelParticipation/${meetArticleId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(memberId),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('participate-btn').textContent = '참여하기';
+                        document.getElementById('participate-btn').setAttribute('onclick', `participate(${categoryId}, ${meetArticleId})`);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        </script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/meet.css">
     </th:block>
 </head>
-
-
 <div class="wrapper" th:fragment="content">
     <div id="meet-read-wrap">
         <div id="meet-read-writer-wrap">
             <div id="meet-read-writer">
-                <img class="profile-img" src="/img/profile.png" >
-                <p id="daily-read-writer-name">김순자 최고</p>
+                <p id="meet-read-writer-name" th:text="${meetArticleDto.memberId}">김순자 최고</p>
             </div>
-            <p id="meet-read-date">2024. 05. 14.(화) 17:31 작성</p>
+            <p id="meet-read-date" th:text="${meetArticleDto.regdate}">2024. 05. 14.(화) 17:31 작성</p>
         </div>
         <div id="meet-read-content-wrap">
-            <h1 id="meet-read-title">다이소 같이 가실 분</h1>
-            <p class="meet-read-content">-시간 : 2024. 6. 13.(목) 18:00</p>
-            <p class="meet-read-content">-장소 : 다이소 노원역점</p>
-            <img src="/img/map-sample.png">
-            <p class="meet-read-content">
-                본문 내용이 들어가면 됩니다
-            </p>
+            <h1 id="meet-read-title" th:text="${meetArticleDto.title}">다이소 같이 가실 분</h1>
+            <p class="meet-read-content" th:text="${meetArticleDto.time}">-시간 : 2024. 6. 13.(목) 18:00</p>
+            <p class="meet-read-content" th:text="${meetArticleDto.placeId}">-장소 : 다이소 노원역점</p>
+            <p class="meet-read-content" th:text="${meetArticleDto.content}">본문 내용이 들어가면 됩니다</p>
         </div>
         <div class="register-btn-wrap">
-            <button class="back-btn">돌아가기</button>
-            <button class="register-btn">참여하기</button>
-        </div>
-        <div id="review-count-wrap">
-            <p>댓글(3)</p>
+            <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
+            <button type="button" id="participate-btn" class="register-btn" th:if="${loginMember.memberId}"
+                    th:onclick="|participate(${categoryId}, ${meetArticleDto.meetArticleId})|">참여하기
+                <button type="button" id="cancel-participation-btn" class="register-btn" th:if="${participate}" style="display: inline-block;"
+                        th:onclick="|cancelParticipation(${categoryId}, ${meetArticleDto.meetArticleId})|">참여 취소
+                </button>
+            </button>
         </div>
         <div class="review-wrap">
-            <div id="write-review">
-                <p>작성자 : 김순자최고</p>
-                <div id="review-text">
-                    <textarea cols="62" rows="2"></textarea>
-                    <button type="submit" id="write-review-btn">등록</button>
-                </div>
-            </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
+            <div id="review-count-wrap">
+                <p th:text="'댓글(' + ${meetReplyCount} + ')'">댓글(3)</p>
+                <p th:text="'조회수(' + ${meetArticleDto.hitcount} + ')'">조회수</p>
             </div>
         </div>
+        <th:block th:if="${loginMember != null}">
+            <div class="review-wrap">
+                <form id="meet-register-form" method="post">
+                    <div id="write-review">
+                        <p name="writer" th:text="'작성자 : ' + ${loginMember.memberId}"></p>
+                        <div id="review-text">
+                            <textarea name="content" cols="62" rows="2"></textarea>
+                            <button type="submit" id="write-review-btn">등록</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="review" th:each="meetReply : ${meetReplyList}">
+                    <div>
+                        <ul>
+                            <li class="review-writer" th:text="${meetReply.writer}">작성자명</li>
+                            <li class="review-content" th:text="${meetReply.content}">시간이 너무 빨리 지나가는 것 같아요...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </th:block>
     </div>
 </div>
-
 </html>
-
-
-
-
-
-
-
-
-
-
 
