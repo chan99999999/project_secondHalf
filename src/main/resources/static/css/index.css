@@ -91,6 +91,10 @@ textarea{
     min-height: 80vh;
 }
 
+section{
+    min-height: 80vh;
+}
+
 /*-------------------------BTN---------------------*/
 .register-btn-wrap{
     display: flex;
