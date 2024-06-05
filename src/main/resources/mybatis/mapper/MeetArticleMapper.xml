@@ -33,7 +33,7 @@
             meetarticleid DESC
     </select>
     <!-- 제목으로 게시글 검색-->
-    <select id="findByTitle" resultType="MeetArticleDto">
+    <select id="findByMeetTitle" resultType="MeetArticleDto">
         SELECT
                title,
                enter,
@@ -119,27 +119,8 @@
         FROM meet_article
         WHERE m_article_id = #{meetArticleId}
     </select>
-    <!-- 게시글 제목, 내용 수정 -->
-    <update id="updateMeetArticle">
-        UPDATE meet_article
-        <set>
-            <if test="updateMeetArticleDto.title != null and !updateMeetArticleDto.title.isEmpty()">
-                title = #{updateMeetArticleDto.title},
-            </if>
-            <if test="updateMeetArticleDto.content != null and !updateMeetArticleDto.content.isEmpty()">
-                content = #{updateMeetArticleDto.content}
-            </if>
-        </set>
-        WHERE m_article_id = #{meetArticleId}
-    </update>
-    <!-- 게시글 삭제 -->
-    <delete id="deleteMeetArticle">
-        DELETE FROM meet_article
-        WHERE m_article_id = #{meetArticleId}
-          AND category_id = #{categoryId}
-    </delete>
     <!-- 조회수 증가-->
-    <update id="hitcount" parameterType="MeetArticleDto">
+    <update id="meetHitcount" parameterType="MeetArticleDto">
         UPDATE meet_article
         SET hitcount = hitcount + 1
         WHERE m_article_id = #{meetArticleId}
@@ -156,14 +137,14 @@
     </select>
     <!-- 참여하기 -->
     <insert id="participate">
-        INSERT INTO enter (category_id, meet_article_id, member_id)
+        INSERT INTO enter (category_id, m_article_id, member_id)
         VALUES (#{categoryId}, #{meetArticleId}, #{memberId})
     </insert>
     <!-- 참여취소 -->
     <delete id="cancelParticipation">
         DELETE FROM enter
                WHERE category_id = #{categoryId}
-                 AND meet_article_id = #{meetArticleId}
+                 AND m_article_id = #{meetArticleId}
                  AND member_id = #{memberId}
     </delete>
 </mapper>

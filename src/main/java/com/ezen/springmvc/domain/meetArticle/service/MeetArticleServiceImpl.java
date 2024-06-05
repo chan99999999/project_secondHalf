@@ -1,19 +1,15 @@
 package com.ezen.springmvc.domain.meetArticle.service;
 
 import com.ezen.springmvc.domain.common.dto.SearchDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.*;
 import com.ezen.springmvc.domain.meetArticle.mapper.*;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -21,8 +17,8 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     private static final Logger log = LoggerFactory.getLogger(MeetArticleServiceImpl.class);
     private final MeetArticleMapper meetArticleMapper;
     private final MeetReplyMapper meetReplyMapper;
-    private final TagMapper tagMapper;
-    private final TagArticleMapper tagArticleMapper;
+    private final MeetTagMapper meetTagMapper;
+    private final MeetTagArticleMapper meetTagArticleMapper;
 
     // 모임 등록 서비스
     @Override
@@ -31,28 +27,28 @@ public class MeetArticleServiceImpl implements MeetArticleService {
         // 모임게시글 테이블에 신규 게시글 등록 
         meetArticleMapper.createMeetArticle(meetArticleDto);
         // 태그게시글 테이블에 신규 태그게시글 등록
-        TagArticleDto tagArticleDto = TagArticleDto.builder()
+        MeetTagArticleDto meetTagArticleDto = MeetTagArticleDto.builder()
                 .meetArticleId(meetArticleDto.getMeetArticleId())
                 .build();
-        tagArticleMapper.createTagArticle(tagArticleDto);
+        meetTagArticleMapper.createMeetTagArticle(meetTagArticleDto);
         // 테그 테이블에 신규 태그 등록
         String[] tags = meetArticleDto.getTags();
         if (tags != null) {
             for (String tagName : tags) {
                 tagName = tagName.trim();
-                TagDto tagDto = TagDto.builder()
+                MeetTagDto meetTagDto = MeetTagDto.builder()
                         .tagName(tagName)
-                        .tArticleId(tagArticleDto.getTArticleId())
+                        .tArticleId(meetTagArticleDto.getTArticleId())
                         .build();
                 // 태그 등록 및 해당 태그의 tag_id 가져오기
-                tagMapper.createTag(tagDto);
+                meetTagMapper.createMeetTag(meetTagDto);
             }
         }
     }
 
     @Override
-    public List<TagDto> findByAllTagName(String tagName) {
-        return tagMapper.findByAllTagName(tagName);
+    public List<MeetTagDto> findByAllMeetTagName(String tagName) {
+        return meetTagMapper.findByAllMeetTagName(tagName);
     }
 
     @Override
@@ -61,8 +57,8 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     }
 
     @Override
-    public List<MeetArticleDto> findByTitle(int categoryId, SearchDto searchDto) {
-        return meetArticleMapper.findByTitle(categoryId, searchDto);
+    public List<MeetArticleDto> findByMeetTitle(int categoryId, SearchDto searchDto) {
+        return meetArticleMapper.findByMeetTitle(categoryId, searchDto);
     }
 
     @Override
@@ -76,25 +72,25 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     }
 
     @Override
-    public MeetArticleDto hitcount(MeetArticleDto meetArticleDto) {
-        meetArticleMapper.hitcount(meetArticleDto);
+    public MeetArticleDto meetHitcount(MeetArticleDto meetArticleDto) {
+        meetArticleMapper.meetHitcount(meetArticleDto);
         return meetArticleDto;
     }
 
     @Override
     @Transactional
-    public void createReply(MeetReplyDto meetReplyDto) {
-        meetReplyMapper.createReply(meetReplyDto);
+    public void createMeetReply(MeetReplyDto meetReplyDto) {
+        meetReplyMapper.createMeetReply(meetReplyDto);
     }
 
     @Override
-    public List<MeetReplyDto> replyList(int meetArticleId) {
-        return meetReplyMapper.findByReplyAll(meetArticleId);
+    public List<MeetReplyDto> meetReplyList(int meetArticleId) {
+        return meetReplyMapper.findByMeetReplyAll(meetArticleId);
     }
 
     @Override
-    public int replyCount(int meetArticleId) {
-        return meetReplyMapper.replyCount(meetArticleId);
+    public int meetReplyCount(int meetArticleId) {
+        return meetReplyMapper.meetReplyCount(meetArticleId);
     }
 
     @Override
@@ -106,4 +102,5 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     public void cancelParticipation(int categoryId, int meetArticleId, String memberId) {
         meetArticleMapper.cancelParticipation(categoryId, meetArticleId, memberId);
     }
+
 }

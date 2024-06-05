@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
-
 <head>
     <title th:fragment="title"> ::: 동네친구:모임 제목 ::: </title>
     <th:block th:fragment="script">
@@ -71,7 +70,7 @@
         </div>
         <div class="review-wrap">
             <div id="review-count-wrap">
-                <p th:text="'댓글(' + ${replyCount} + ')'">댓글(3)</p>
+                <p th:text="'댓글(' + ${meetReplyCount} + ')'">댓글(3)</p>
                 <p th:text="'조회수(' + ${meetArticleDto.hitcount} + ')'">조회수</p>
             </div>
         </div>
@@ -86,18 +85,17 @@
                         </div>
                     </div>
                 </form>
-                <div class="review" th:each="reply : ${replyList}">
+                <div class="review" th:each="meetReply : ${meetReplyList}">
                     <div>
                         <ul>
-                            <li class="review-writer" th:text="${reply.writer}">작성자명</li>
-                            <li class="review-content" th:text="${reply.content}">시간이 너무 빨리 지나가는 것 같아요...</li>
+                            <li class="review-writer" th:text="${meetReply.writer}">작성자명</li>
+                            <li class="review-content" th:text="${meetReply.content}">시간이 너무 빨리 지나가는 것 같아요...</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </th:block>
     </div>
-</div>
 </div>
 </html>
 

@@ -55,10 +55,11 @@
                             </li>
                         </ul>
                     </div>
+
                     <div class="meet-join">
                         <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}">
                             <p>참여하기</p>
-                            <p th:text="'('+ 1 +'/'+${meetArticle.enter}+')'">(1/5)</p>
+                            <p id="participant-count-${meetArticle.meetArticleId}" th:text="'('+ 1 +'/'+${meetArticle.enter}+')'"></p>
                         </a>
                     </div>
                 </div>

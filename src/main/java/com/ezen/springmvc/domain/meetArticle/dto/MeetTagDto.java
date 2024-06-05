@@ -2,15 +2,13 @@ package com.ezen.springmvc.domain.meetArticle.dto;
 
 import lombok.*;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
-public class TagDto {
+public class MeetTagDto {
     private int tagId;
     private int tArticleId;
     private int meetArticleId;

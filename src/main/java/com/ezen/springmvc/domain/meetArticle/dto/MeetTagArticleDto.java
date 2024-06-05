@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class TagArticleDto {
+public class MeetTagArticleDto {
     private String tagName;
     private int tArticleId;
     private int meetArticleId;

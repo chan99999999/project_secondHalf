@@ -1,17 +1,14 @@
 package com.ezen.springmvc;
 
-import com.ezen.springmvc.domain.category.dto.CategoryDto;
-import com.ezen.springmvc.domain.common.dto.SearchDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
-import com.ezen.springmvc.domain.meetArticle.dto.TagDto;
+import com.ezen.springmvc.domain.meetArticle.dto.MeetTagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.category.service.CategoryServiceImpl;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetReplyMapper;
-import com.ezen.springmvc.domain.meetArticle.mapper.TagMapper;
+import com.ezen.springmvc.domain.meetArticle.mapper.MeetTagMapper;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +27,7 @@ public class MeetArticleTest {
     @Autowired
     MeetArticleMapper meetArticleMapper;
     @Autowired
-    TagMapper tagMapper;
+    MeetTagMapper meetTagMapper;
     @Autowired
     MeetReplyMapper meetReplyMapper;
     @Autowired
@@ -178,7 +175,7 @@ public class MeetArticleTest {
     @Transactional
     @DisplayName("모임 게시글 태그 조회 테스트")
     void findByTagNameTest(){
-        List<TagDto> list = tagMapper.findByAllTagName("취미");
+        List<MeetTagDto> list = meetTagMapper.findByAllTagName("취미");
         log.info("게시글과 태그 조회 : {}", list);
     }
 }

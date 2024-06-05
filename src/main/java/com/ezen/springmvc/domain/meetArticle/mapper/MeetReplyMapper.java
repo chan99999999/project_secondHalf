@@ -9,9 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface MeetReplyMapper {
-    void createReply(MeetReplyDto meetReplyDto);
-    List<MeetReplyDto> findByReplyAll(@Param("meetArticleId") int meetArticleId);
-//    void updateReply(ReplyDto replyDto);
-    void deleteReply(MeetReplyDto meetreplyDto);
-    int replyCount(int meetArticleId);
+    void createMeetReply(MeetReplyDto meetReplyDto);
+    List<MeetReplyDto> findByMeetReplyAll(@Param("meetArticleId") int meetArticleId);
+    int meetReplyCount(int meetArticleId);
 }

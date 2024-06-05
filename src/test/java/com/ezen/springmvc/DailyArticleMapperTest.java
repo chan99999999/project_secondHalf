@@ -11,8 +11,6 @@ import com.ezen.springmvc.domain.dailyarticle.mapper.FileMapper;
 import com.ezen.springmvc.domain.dailyarticle.mapper.HeartMapper;
 import com.ezen.springmvc.domain.dailyarticle.mapper.ReplyMapper;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
-import com.ezen.springmvc.domain.member.dto.MemberDto;
-import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;

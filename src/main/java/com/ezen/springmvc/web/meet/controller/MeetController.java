@@ -2,16 +2,12 @@ package com.ezen.springmvc.web.meet.controller;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.common.dto.SearchDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.DailyArticleDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.FileDto;
-import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.*;
 import com.ezen.springmvc.domain.category.service.CategoryService;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.web.common.page.Pagination;
 import com.ezen.springmvc.web.common.page.ParameterForm;
-import com.ezen.springmvc.web.daily.form.DailyArticleForm;
 import com.ezen.springmvc.web.meet.form.MeetArticleForm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +54,7 @@ public class MeetController {
         // 태그 검색일 경우
         if (parameterForm.getTagName() != null && !parameterForm.getTagName().isEmpty()) {
             meetArticleList = new ArrayList<>();
-            List<TagDto> tagList = meetArticleService.findByAllTagName(parameterForm.getTagName());
+            List<MeetTagDto> tagList = meetArticleService.findByAllMeetTagName(parameterForm.getTagName());
             if (!tagList.isEmpty()) {
                 tagList.forEach(tagDto -> {
                     MeetArticleDto meetArticleDto = MeetArticleDto.builder()
@@ -73,13 +68,12 @@ public class MeetController {
                     meetArticleList.add(meetArticleDto);
                 });
             }
-
         } else if (parameterForm.getTitle() != null) { // 제목 검색일 경우..
-            meetArticleList = meetArticleService.findByTitle(categoryId, searchDto);
+            meetArticleList = meetArticleService.findByMeetTitle(categoryId, searchDto);
         } else {
             meetArticleList = meetArticleService.findByAllMeetArticle(categoryId);
         }
-        TagDto tagList = TagDto.builder()
+        MeetTagDto tagList = MeetTagDto.builder()
                 .tagName(parameterForm.getTagName())
                 .build();
         for (MeetArticleDto meetArticleDto : meetArticleList) {
@@ -132,22 +126,22 @@ public class MeetController {
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
-        meetArticleService.hitcount(meetArticleDto);
-        List<MeetReplyDto> replyList = meetArticleService.replyList(meetArticleId);
-        int replyCount = meetArticleService.replyCount(meetArticleId);
+        meetArticleService.meetHitcount(meetArticleDto);
+        List<MeetReplyDto> meetReplyList = meetArticleService.meetReplyList(meetArticleId);
+        int meetReplyCount = meetArticleService.meetReplyCount(meetArticleId);
         model.addAttribute("meetArticleDto", meetArticleDto);
-        model.addAttribute("replyList", replyList);
-        model.addAttribute("replyCount", replyCount);
+        model.addAttribute("meetReplyList", meetReplyList);
+        model.addAttribute("meetReplyCount", meetReplyCount);
         if (loginMember != null) {
             model.addAttribute("loginMember", loginMember);
         }
-        log.info("수신한 댓글 목록 : {}", replyList);
+        log.info("수신한 댓글 목록 : {}", meetReplyList);
         return "/meet/meetRead";
     }
 
     //    댓글 등록
     @PostMapping("/read/{meetArticleId}")
-    public String meetCreateReply(@ModelAttribute MeetReplyDto meetReplyDto,
+    public String meetCreateMeetReply(@ModelAttribute MeetReplyDto meetReplyDto,
                                   @PathVariable("meetArticleId") int meetArticleId,
                                   Model model,
                                   HttpServletRequest request) {
@@ -157,26 +151,24 @@ public class MeetController {
         model.addAttribute("meetArticleDto", meetArticleDto);
         meetReplyDto.setWriter(loginMember.getMemberId());
         log.info("수신한 댓글 : {}", meetReplyDto);
-        meetArticleService.createReply(meetReplyDto);
+        meetArticleService.createMeetReply(meetReplyDto);
         return "redirect:/meet/read/{meetArticleId}";
     }
 
-//    참여하기
+//    // 참여하기
 //    @PostMapping("/{categoryId}/participate/{meetArticleId}")
 //    @ResponseBody
 //    public ResponseEntity<?> participate(@PathVariable int categoryId, @PathVariable int meetArticleId, @RequestBody String memberId) {
 //        meetArticleService.participate(categoryId, meetArticleId, memberId);
-//        int currentParticipants = meetArticleService.getParticipantCount(meetArticleId);
-//        return ResponseEntity.ok(currentParticipants);
+//        return ResponseEntity.ok().build();
 //    }
 //
-////    참여취소
+//    // 참여 취소
 //    @PostMapping("/{categoryId}/cancelParticipation/{meetArticleId}")
 //    @ResponseBody
 //    public ResponseEntity<?> cancelParticipation(@PathVariable int categoryId, @PathVariable int meetArticleId, @RequestBody String memberId) {
 //        meetArticleService.cancelParticipation(categoryId, meetArticleId, memberId);
-//        int currentParticipants = meetArticleService.getParticipantCount(meetArticleId);
-//        return ResponseEntity.ok(currentParticipants);
+//        return ResponseEntity.ok().build();
 //    }
 
     @GetMapping("/getLoginMember")
