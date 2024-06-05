@@ -3,11 +3,12 @@ const eventRegister3 = function () {
   replyRegisterBtn.addEventListener('click', handleReplyRegister);
 }
 
+// 상세보기 페이지 url에서 동적으로 카테고리 번호 얻어오기
 const getCategoryIdFromURL = () => {
   const path = window.location.pathname;
   const pathParts = path.split('/');
 
-  const categoryIdStr = pathParts[2]; // URL의 두 번째 부분에서 카테고리 ID 추출
+  const categoryIdStr = pathParts[2]; // URL의 두 번째 부분에서 카테고리 번호 추출
 
   const categoryId = parseInt(categoryIdStr, 10);
   if (isNaN(categoryId)) {
@@ -16,7 +17,7 @@ const getCategoryIdFromURL = () => {
   return categoryId;
 };
 
-// 댓글 목록 가져오기
+// api를 통해서 댓글 목록 얻어오기
 const getReplyList = async function () {
   const dailyArticleId = getDailyArticleIdFromURL();
   const url = `/daily/getreplylist/${dailyArticleId}`;
@@ -24,7 +25,7 @@ const getReplyList = async function () {
   return replyList;
 }
 
-
+// 이벤트 처리 함수
 const handleReplyRegister = async function (event) {
 
   const replyContentInput = document.querySelector('textarea[name="content"]');
@@ -34,12 +35,12 @@ const handleReplyRegister = async function (event) {
   const dailyArticleId = getDailyArticleIdFromURL();
   const memberId = await getLoginMemberId();
 
+  const url = `/daily/${categoryId}/read/${dailyArticleId}`;
+
   const replyData = {
     writer: memberId,
     content: replyContent
   };
-
-  const url = `/daily/${categoryId}/read/${dailyArticleId}`;
 
   const options = {
     method: 'POST',

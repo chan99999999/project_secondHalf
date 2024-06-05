@@ -326,3 +326,9 @@
 #tagName a:hover {
     color: darkorange;
 }
+
+#inputTag {
+    width: 250px;
+    height: 40px;
+    font-size: 25px;
+}

@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.TagMapper">
-    <!-- 태그 등록 -->
-<!--    <insert id="createTag" parameterType="TagDto">-->
-<!--        INSERT INTO tag (tag_id, tag_name)-->
-<!--        VALUES (TAG_ID_SEQ.nextval, #{tagName})-->
-<!--    </insert>-->
-
-    <!-- 태그 등록 -->
+    <!-- 태그 생성 -->
     <insert id="createTag" parameterType="TagDto">
-        <!-- 시퀀스 값을 가져옵니다 -->
         <selectKey keyProperty="tagId" resultType="int" order="BEFORE">
             SELECT TAG_ID_SEQ.nextval FROM dual
         </selectKey>
 
-        <!-- 가져온 시퀀스 값을 사용하여 삽입합니다 -->
         INSERT INTO tag (tag_id, tag_name)
         VALUES (#{tagId}, #{tagName})
     </insert>
-
 
     <!-- 태그 번호로 태그 조회 -->
     <select id="findByTagId" parameterType="int" resultType="TagDto">
@@ -33,6 +24,4 @@
         FROM tag
         WHERE tag_name = #{tagName}
     </select>
-
 </mapper>
-

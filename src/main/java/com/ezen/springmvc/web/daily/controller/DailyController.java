@@ -45,21 +45,22 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DailyController {
 
-    @Value("${upload.directory}") // 파일 저장 위치 지정 어노테이션
+    // 첨부 파일 저장 위치 지정 어노테이션
+    @Value("${upload.directory}")
     private String profileFileUploadPath;
 
     private final DailyArticleService dailyArticleService;
-    private final CategoryService categoryService;
     private final FileService fileService;
 
+    // 일상 게시글 작성 화면 요청 처리
     @GetMapping("{categoryId}/register")
     public String dailyRegister(@PathVariable("categoryId") int categoryId, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 
         if (loginMember == null) {
             redirectAttributes.addFlashAttribute("categoryId", categoryId);
-//            redirectAttributes.addFlashAttribute("redirectURI", "daily/" + categoryId + "/register"); // 리다이렉트 URI 전달
             return "redirect:/member/login";
         }
 
@@ -67,65 +68,18 @@ public class DailyController {
         return "/daily/dailyRegister";
     }
 
-    // 신규 일상 게시글 등록 처리
-//    @PostMapping("{categoryId}/register")
-//    public String dailyRegister(@PathVariable("categoryId") int categoryId, @ModelAttribute DailyArticleForm dailyArticleForm, RedirectAttributes redirectAttributes, HttpServletRequest request, Model model) {
-//        UploadFile uploadFile = fileService.storeFile(dailyArticleForm.getAttachImage(), profileFileUploadPath);
-//
-//        HttpSession session = request.getSession();
-//        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-//
-//        DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
-//                .categoryId(categoryId)
-//                .dailyArticleId(dailyArticleForm.getDailyArticleId())
-//                .memberId(loginMember.getMemberId())
-//                .title(dailyArticleForm.getTitle())
-//                .content(dailyArticleForm.getContent())
-//                .build();
-//
-//        FileDto fileDto = FileDto.builder()
-//                .dailyArticleId(dailyArticleForm.getDailyArticleId())
-//                .fileName(uploadFile.getUploadFileName())
-//                .encryptedName(uploadFile.getStoreFileName())
-//                .build();
-//
-//        DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileDto);
-//
-//        String tags = dailyArticleForm.getTags();
-//        if (tags != null && !tags.isEmpty()) {
-//            List<String> tagNames = Arrays.asList(tags.split(","));
-//            for (String tagName : tagNames) {
-//                tagName = tagName.trim();
-//                TagDto tagDto = TagDto.builder()
-//                        .tagName(tagName)
-//                        .build();
-//                dailyArticleService.getTag(tagDto);
-//
-//                TagArticleDto tagArticleDto = TagArticleDto.builder()
-//                        .dailyArticleId(dailyArticleForm.getDailyArticleId())
-//                        .build();
-//                dailyArticleService.getTagArticle(tagArticleDto);
-//            }
-//        }
-//
-//
-////        dailyArticleDto.setCategoryId(categoryId);
-//        log.info("수신한 게시글 정보 : {}", dailyArticleDto);
-//        redirectAttributes.addFlashAttribute("createDailyArticleDto", createDailyArticleDto);
-//        redirectAttributes.addFlashAttribute("fileDto", fileDto);
-//        return "redirect:/daily/{categoryId}";
-//    }
-
+    // 일상 게시글 작성 요청 처리
     @PostMapping("{categoryId}/register")
     public String dailyRegister(@PathVariable("categoryId") int categoryId,
                                 @ModelAttribute DailyArticleForm dailyArticleForm,
                                 RedirectAttributes redirectAttributes,
-                                HttpServletRequest request,
-                                Model model) {
+                                HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        // 파일
         List<MultipartFile> attachImages = dailyArticleForm.getAttachImages();
-
-        log.info("첨부 파일 목록들 : {}", attachImages);
-
         List<UploadFile> uploadFiles = fileService.storeFiles(attachImages, profileFileUploadPath);
         List<FileDto> fileList = new ArrayList<>();
         for (UploadFile uploadFile : uploadFiles) {
@@ -134,12 +88,11 @@ public class DailyController {
                     .fileName(uploadFile.getUploadFileName())
                     .encryptedName(uploadFile.getStoreFileName())
                     .build();
+
             fileList.add(fileDto);
         }
 
-        HttpSession session = request.getSession();
-        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-
+        // 일상 게시글
         DailyArticleDto dailyArticleDto = DailyArticleDto.builder()
                 .categoryId(categoryId)
                 .dailyArticleId(dailyArticleForm.getDailyArticleId())
@@ -149,66 +102,46 @@ public class DailyController {
                 .tagNames(dailyArticleForm.getTags())
                 .build();
 
+        // 일상 게시글, 파일 등록
         DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileList);
 
-        log.info("생성된 일상 게시글 번호 : {}", dailyArticleDto.getDailyArticleId());
-
+        // 태그
         String tags = dailyArticleForm.getTags();
         if (tags != null && !tags.isEmpty()) {
+            // 콤마를 기준으로 태그 이름들 파싱
             List<String> tagNames = Arrays.asList(tags.split(","));
             for (String tagName : tagNames) {
                 tagName = tagName.trim();
 
-//                TagDto tagDto = TagDto.builder()
-//                        .tagName(tagName)
-//                        .build();
-//                dailyArticleService.getTag(tagDto);
-
+                // 태그 등록
                 TagDto tagDto = dailyArticleService.getOrCreateTag(tagName);
 
-//                TagArticleDto tagArticleDto = TagArticleDto.builder()
-//                        .dailyArticleId(dailyArticleForm.getDailyArticleId())
-//                        .build();
-//                dailyArticleService.getTagArticle(tagArticleDto);
-//
-//                TagArticleDto tagArticleDto = TagArticleDto.builder()
-//                        .dailyArticleId(dailyArticleForm.getDailyArticleId())
-//                        .tagId(tagDto.getTagId()) // 태그 아이디 설정
-//                        .build();
-
-                log.info("새로 생성됐거나 기존에 있는 태그의 번호 : {}", tagDto.getTagId());
+                // 태그 게시글 등록
                 dailyArticleService.getTagArticle(tagDto.getTagId(), dailyArticleDto.getDailyArticleId());
-//                dailyArticleService.getTagArticle(131, 249);
             }
         }
 
-        log.info("수신한 게시글 정보 : {}", dailyArticleDto);
         redirectAttributes.addFlashAttribute("createDailyArticleDto", createDailyArticleDto);
         redirectAttributes.addFlashAttribute("fileList", fileList);
         return "redirect:/daily/{categoryId}";
     }
 
-
-    // 일상 게시글 목록 처리
+    // 일상 게시글 목록 요청 처리
     @GetMapping("{categoryId}")
     public String dailyList(@PathVariable("categoryId") int categoryId,
                             @ModelAttribute ParameterForm parameterForm,
-//                            @RequestParam(value = "tagName", required = false) String tagName,
-//                            @RequestParam(value = "requestPage", required = false) int requestPage,
-//                            @RequestParam(value = "rowCount", required = false) int rowCount,
-
                             Model model) {
-        log.info("전달된 파라메터 정보 : {}", parameterForm);
 
+        List<DailyArticleDto> dailyArticleList = null;
+
+        // 검색 조건
         SearchDto searchDto = SearchDto.builder()
                 .limit(parameterForm.getElementSize())
                 .page(parameterForm.getRequestPage())
                 .tagName(parameterForm.getTagName())
                 .build();
 
-
-        List<DailyArticleDto> dailyArticleList = null;
-
+        // 태그 이름 파라미터 유무에 따른 게시글 목록 반환
         if (parameterForm.getTagName() != null && !parameterForm.getTagName().isEmpty()) {
             dailyArticleList = dailyArticleService.getDailyArticlesByTagName(categoryId, parameterForm.getTagName(), searchDto);
         } else {
@@ -217,28 +150,23 @@ public class DailyController {
 
         // 페이징 처리를 위한 테이블 행의 개수 조회
         int selectedRowCount = dailyArticleService.getDailyArticleCount(categoryId, searchDto);
-        log.info("조회된 행의 수: {} ", selectedRowCount);
         parameterForm.setRowCount(selectedRowCount);
-
         Pagination pagination = new Pagination(parameterForm);
 
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("dailyArticleList", dailyArticleList);
         model.addAttribute("parameterForm", parameterForm);
         model.addAttribute("pagination", pagination);
-        for (DailyArticleDto dailyArticleDto : dailyArticleList) {
-            log.info("수신한 게시글 목록 : {}", dailyArticleDto);
-        }
         return "/daily/dailyList";
     }
 
-    // 일상 게시글 상세보기 처리
+    // 일상 게시글 상세보기 요청 처리
     @GetMapping("{categoryId}/read/{dailyArticleId}")
     public String dailyRead(@PathVariable("categoryId") int categoryId, @PathVariable("dailyArticleId") int dailyArticleId, Model model, HttpServletRequest request) {
-        log.info("게시글 번호 : {}", dailyArticleId);
 
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
         int heartCount = 0;
 
         if (loginMember != null) {
@@ -246,123 +174,88 @@ public class DailyController {
         } else {
             heartCount = 0; // 로그인하지 않은 사용자는 좋아요를 누르지 않은 것으로 간주
         }
+
         DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
         List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
         List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
         int replyCount = dailyArticleService.getReplyCount(dailyArticleId);
 
+        if (loginMember != null) {
+            model.addAttribute("loginMember", loginMember);
+        }
         model.addAttribute("dailyArticle", dailyArticleDto);
         model.addAttribute("fileList", fileList);
         model.addAttribute("replyList", replyList);
         model.addAttribute("heartCount", heartCount);
         model.addAttribute("replyCount", replyCount);
-
-        if (loginMember != null) {
-            model.addAttribute("loginMember", loginMember);
-        }
-
-        log.info("수신한 댓글 목록 : {}", replyList);
         return "/daily/dailyRead";
     }
 
-    // 댓글 등록 처리
+    // 댓글 등록 요청 처리(서버 사이드 렌더링)
 //    @PostMapping("{categoryId}/read/{dailyArticleId}")
 //    public String dailyReadReply(@PathVariable("categoryId") int categoryId, @ModelAttribute ReplyDto replyDto, @PathVariable("dailyArticleId") int dailyArticleId, Model model, HttpServletRequest request) {
+//
 //        HttpSession session = request.getSession();
 //        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
 //
+//        replyDto.setWriter(loginMember.getMemberId());
+//        dailyArticleService.writeReply(replyDto);
+//
 //        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
 //        List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
+//
 //        model.addAttribute("dailyArticle", dailyArticleDto);
 //        model.addAttribute("fileList", fileList);
-//        replyDto.setWriter(loginMember.getMemberId());
-//        log.info("수신한 댓글 : {}", replyDto);
-//        dailyArticleService.writeReply(replyDto);
 //        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
 //    }
 
-    // 댓글 등록 클라이언트 사이드 렌더링
+    // 댓글 등록 요청 api(클라이언트 사이드 렌더링)
     @PostMapping("{categoryId}/read/{dailyArticleId}")
     public ResponseEntity<ReplyDto> registerReply(@PathVariable("categoryId") int categoryId,
                                                   @PathVariable("dailyArticleId") int dailyArticleId,
                                                   @RequestBody ReplyDto replyDto) {
+
         replyDto.setDailyArticleId(dailyArticleId);
         dailyArticleService.writeReply(replyDto);
 
         return ResponseEntity.ok(replyDto);
     }
 
-
-    // 회원 프로필 사진 요청 처리
-    @GetMapping("/image/{profileFileName}")
-    @ResponseBody
-    public ResponseEntity<Resource> showImage(@PathVariable("profileFileName") String profileFileName) throws IOException {
-        Path path = Paths.get(profileFileUploadPath + "/" + profileFileName);
-        String contentType = Files.probeContentType(path);
-        Resource resource = new FileSystemResource(path);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-        return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
-    }
-
-    // 좋아요 기능 처리
+    // 좋아요 기능 api
     @GetMapping("/like")
     public ResponseEntity<Map<String, Object>> handleHeart(
             @RequestParam("dailyArticleId") int dailyArticleId,
             @RequestParam("memberId") String memberId,
-            @RequestParam("checked") boolean checked
-    ) {
-        log.info("게시글 번호: {}, 회원 아이디 : {}, 조아요 체크 : {}", dailyArticleId, memberId, checked);
+            @RequestParam("checked") boolean checked) {
 
         Map<String, Object> map = new HashMap<>();
 
         boolean isUpdated = dailyArticleService.insertAndUpdateHeart(dailyArticleId, memberId, checked);
         int totalHeartCount = dailyArticleService.getTotalHeartCount(dailyArticleId);
 
-        map.put("totalHeartCount", totalHeartCount);
         map.put("isUpdated", isUpdated);
+        map.put("totalHeartCount", totalHeartCount);
 
         return ResponseEntity.ok(map);
     }
 
-    @GetMapping("/getLoginMember")
-    public ResponseEntity<MemberDto> getLoginMember(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-        log.info("전달받은 로그인 회원 : {}", loginMember);
-
-        return ResponseEntity.ok(loginMember);
-    }
-
-    // 게시글 삭제 처리
-    @PostMapping("{categoryId}/delete/{dailyArticleId}")
-    public String dailyDelete(@PathVariable("categoryId") int categoryId,
-                              @PathVariable("dailyArticleId") int dailyArticleId
-    ) {
-
-        dailyArticleService.removeDailyArticle(categoryId, dailyArticleId);
-
-
-        return "redirect:/daily/{categoryId}";
-    }
-
-    // 게시글 수정 폼으로 이동
+    // 게시글 수정 화면 요청 처리
     @GetMapping("{categoryId}/edit/{dailyArticleId}")
     public String dailyEditForm(@PathVariable("categoryId") int categoryId,
                                 @PathVariable("dailyArticleId") int dailyArticleId,
                                 Model model) {
+
         DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
         model.addAttribute("dailyArticleDto", dailyArticleDto);
 
         return "/daily/dailyEdit";
     }
 
-    // 게시글 수정 처리
+    // 게시글 수정 요청 처리
     @PostMapping("{categoryId}/edit/{dailyArticleId}")
     public String dailyEditAction(@PathVariable("categoryId") int categoryId,
                                   @PathVariable("dailyArticleId") int dailyArticleId,
-                                  @ModelAttribute DailyArticleForm dailyArticleForm
-    ) {
+                                  @ModelAttribute DailyArticleForm dailyArticleForm) {
 
         DailyArticleDto editedDailyArticle = DailyArticleDto.builder()
                 .title(dailyArticleForm.getTitle())
@@ -374,16 +267,17 @@ public class DailyController {
         return "redirect:/daily/{categoryId}";
     }
 
-    // 댓글 목록 api
-    @GetMapping("/getreplylist/{dailyArticleId}")
-    public ResponseEntity<List<ReplyDto>> getReplyList(
-            @PathVariable("dailyArticleId") int dailyArticleId) {
-        List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
+    // 게시글 삭제 처리
+    @PostMapping("{categoryId}/delete/{dailyArticleId}")
+    public String dailyDelete(@PathVariable("categoryId") int categoryId,
+                              @PathVariable("dailyArticleId") int dailyArticleId) {
 
-        return ResponseEntity.ok(replyList);
+        dailyArticleService.removeDailyArticle(categoryId, dailyArticleId);
+
+        return "redirect:/daily/{categoryId}";
     }
 
-    // 댓글 삭제
+    // 댓글 삭제 요청 처리(서버 사이드 렌더링)
 //    @PostMapping("{categoryId}/delete-reply/{dailyArticleId}/{replyId}")
 //    public String dailyReplyDelete(@PathVariable("categoryId") int categoryId,
 //                                   @PathVariable("dailyArticleId") int dailyArticleId,
@@ -394,26 +288,61 @@ public class DailyController {
 //        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
 //    }
 
+    // 댓글 삭제 요청 api(클라이언트 사이드 렌더링)
     @PostMapping("/delete-reply")
     public ResponseEntity<Void> removeReply(@RequestBody ReplyDto replyDto) {
+
         dailyArticleService.removeReply(replyDto.getDailyArticleId(), replyDto.getReplyId());
 
         return ResponseEntity.ok().build();
     }
 
-    // 댓글 수 반환 api
-    @GetMapping("reply-count/{dailyArticleId}")
-    public ResponseEntity<Integer> replyCount (@PathVariable("dailyArticleId") int dailyArticleId) {
-        int replyCount = dailyArticleService.getReplyCount(dailyArticleId);
-        return ResponseEntity.ok(replyCount);
-    }
-
-    // 댓글 수정 api
+    // 댓글 수정 요청 api
     @PostMapping("/edit-reply")
     public ResponseEntity<Void> dailyEditReply(@RequestBody ReplyDto replyDto) {
 
         dailyArticleService.editReply(replyDto.getDailyArticleId(), replyDto.getReplyId(), replyDto.getContent());
 
         return ResponseEntity.ok().build();
+    }
+
+    // 세션에 저장된 회원 api
+    @GetMapping("/getLoginMember")
+    public ResponseEntity<MemberDto> getLoginMember(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        return ResponseEntity.ok(loginMember);
+    }
+
+    // 댓글 목록 api
+    @GetMapping("/getreplylist/{dailyArticleId}")
+    public ResponseEntity<List<ReplyDto>> getReplyList(@PathVariable("dailyArticleId") int dailyArticleId) {
+
+        List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
+
+        return ResponseEntity.ok(replyList);
+    }
+
+    // 댓글 개수 api
+    @GetMapping("reply-count/{dailyArticleId}")
+    public ResponseEntity<Integer> replyCount(@PathVariable("dailyArticleId") int dailyArticleId) {
+
+        int replyCount = dailyArticleService.getReplyCount(dailyArticleId);
+
+        return ResponseEntity.ok(replyCount);
+    }
+
+    // 회원 프로필 사진 요청 처리
+    @GetMapping("/image/{profileFileName}")
+    @ResponseBody
+    public ResponseEntity<Resource> showImage(@PathVariable("profileFileName") String profileFileName) throws IOException {
+        Path path = Paths.get(profileFileUploadPath + "/" + profileFileName);
+        String contentType = Files.probeContentType(path);
+        Resource resource = new FileSystemResource(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+        return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
     }
 }

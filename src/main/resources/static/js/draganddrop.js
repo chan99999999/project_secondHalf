@@ -6,7 +6,7 @@ const eventRegister2 = function () {
   dragArea.addEventListener("drop", handleDrop);
 }
 
-// 드래그 오버 이벤트 핸들러
+// 드래그 이벤트 핸들러
 const handleDragOver = function (event) {
   event.preventDefault();
 }
@@ -17,9 +17,8 @@ const handleDrop = function (event) {
 
   const files = event.dataTransfer.files;
   const previewArea = document.querySelector('#daily-register-img-wrap');
-
+  // 기존 미리보기 이미지 삭제
   Array.from(previewArea.querySelectorAll('img.daily-register-img')).forEach(img => img.remove());
-
   
   Array.from(files).forEach(file => {
     if (!file.type.startsWith('image/')) return; // 이미지 파일이 아니면 건너뜀
@@ -35,10 +34,6 @@ const handleDrop = function (event) {
       // 파일 인풋 요소에 파일 추가
       const fileInput = document.querySelector('#file');
       fileInput.files = files
-      console.log(files);
-
-
-
     };
     reader.readAsDataURL(file);
   });
