@@ -1,11 +1,12 @@
 // place.js
 
 window.onload = function () {
-    const { x, y, mapId } = mapDTO;
+
+    const { x, y, mapId } = mapDto;
 
     console.log('mapId:', mapId);
 
-    fetch(`/map/place/json?id=${mapId}`)
+    fetch(`/map/place/code?id=${mapId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -81,3 +82,7 @@ window.onload = function () {
             console.error('Fetch error:', error);
         });
 };
+
+const httpRequest = function (url, option) {
+    return fetch(url, option).then(response => response.json());
+}

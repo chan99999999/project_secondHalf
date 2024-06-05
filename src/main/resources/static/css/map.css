@@ -4,7 +4,6 @@
     width: 1400px;
     min-width: 1400px;
     outline: none;
-    height: 850px;
     overflow: hidden;
 }
 
@@ -359,7 +358,7 @@
 #place-wrap{
     width: 1200px;
     min-width: 1200px;
-    margin: 30px auto;
+    margin: 150px auto;
 }
 
 #place-detail-wrap{
@@ -417,14 +416,6 @@
     font-size: 20px;
 }
 
-#write-review-btn{
-    height: 80px;
-    width: 90px;
-    font-size: 25px;
-    font-weight: bolder;
-    background-color: #ff8c18;
-    border: none;
-}
 
 .review-writer{
     padding-left: 10px;
@@ -446,7 +437,7 @@
 
 .write-review-btn{
     height: 80px;
-    width: 70px;
+    width: 80px;
     background-color: #ff8c18;
     color: #ffffff;
     font-size: 20px;

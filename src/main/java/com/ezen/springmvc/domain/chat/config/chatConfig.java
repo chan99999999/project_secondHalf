@@ -6,6 +6,9 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+/**
+ * Spring WebSocket을 사용하여 실시간 메시징을 구현하기 위한 설정
+ */
 @Configuration
 @EnableWebSocketMessageBroker
 public class chatConfig implements WebSocketMessageBrokerConfigurer {
@@ -18,7 +21,7 @@ public class chatConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("http://localhost/chat.*")
+        registry.addEndpoint("/wss-stomp").setAllowedOriginPatterns("http://localhost/chat.*")
                 .withSockJS();
     }
 }

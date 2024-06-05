@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ezen.springmvc.web.common.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,8 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
                     "/", "/css/**", "/img/**", "/js/**", "/*.ico", "/vendor/**",
                     "/member/signup/**", "/member/login", "/member/logout", "/member/result", "/member/idcheck/{inputId}",
                     "/member/nicknameCheck/{inputNickname}",
-                    "/member/searchIdResult", "/member/searchMember", "/member/searchId", "/member/searchPasswd",
-                    "/member/searchPasswdResult", "/meet","/map/**", "/daily/{categoryId}", "/daily/2", "/daily/image/**", "/daily/{categoryId}/read/**");
+                    "/member/searchIdResult", "/member/searchMember", "/member/searchId", "/member/searchPasswd", "/admin/**", "/admin/search",
+                    "/member/searchPasswdResult", "/meet","/map/**", "/daily/{categoryId}", "/daily/2");
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -27,5 +28,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns(loginNotEssential);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000");
     }
 }
