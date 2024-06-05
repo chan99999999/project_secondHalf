@@ -47,10 +47,10 @@ public class MeetArticleTest {
 //        log.info("카테고리 목록 : {}", categoryList);
 //    }
 
-    @BeforeEach
-    void setUp() {
-        searchDto = new SearchDto();
-    }
+//    @BeforeEach
+//    void setUp() {
+//        searchDto = new SearchDto();
+//    }
 
     @Test
     @DisplayName("모임 게시글 등록 테스트")
@@ -86,15 +86,21 @@ public class MeetArticleTest {
         log.info("게시글 상세보기 : {}", meetArticleDto);
     }
 
-    @Test
-    @DisplayName("모임 게시글 제목 검색 테스트")
-    void findByTitleArticleTest() {
-        String title = "테";
-//        List<MeetArticleDto> meetArticleDtoList = meetArticleMapper.findByTitle(title);
+//    @Test
+//    @DisplayName("모임 게시글 제목 검색 테스트")
+//    @Disabled
+//    void findByTitleArticleTest() {
+//        int categoryId = 3;
+//        SearchDto searchDto = SearchDto.builder()
+//                .limit(10)
+//                .page(1)
+//                .title("테")
+//                .build();
+//        List<MeetArticleDto> meetArticleDtoList = meetArticleMapper.findByTitle(categoryId, searchDto);
 //        for (MeetArticleDto meetArticleDto : meetArticleDtoList) {
 //            log.info("검색된 게시글 : {}", meetArticleDto);
 //        }
-    }
+//    }
 
     @Test
     @DisplayName("모임 게시글 조회수 테스트")

@@ -33,10 +33,41 @@
             meetarticleid DESC
     </select>
     <!-- 제목으로 게시글 검색-->
-    <select id="findByTitle" parameterType="String">
-        select m_article_id, title
-        from meet_article
-        WHERE title LIKE  '%' || #{title} || '%'
+    <select id="findByTitle" resultType="MeetArticleDto">
+        SELECT
+               title,
+               enter,
+               category_id,
+               place_id,
+               hitcount,
+               regdate,
+               time,
+               member_id
+        FROM (SELECT CEIL(rownum / #{searchDto.limit})page,
+                      title,
+                      enter,
+                      category_id,
+                      place_id,
+                      hitcount,
+                      TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate,
+                      time,
+                      member_id
+                FROM (SELECT
+                             title,
+                             enter,
+                             category_id,
+                             place_id,
+                             hitcount,
+                             regdate,
+                             time,
+                             member_id
+                            FROM meet_article
+                            <where>
+                                category_id = #{categoryId}
+                                <if test="searchDto.title != null">AND title LIKE '%' || #{searchDto.title} || '%'</if>
+                            </where>
+                            ORDER BY m_article_id DESC))
+        WHERE  page = #{searchDto.page}
     </select>
    <!-- 게시글 등록 -->
     <insert id="createMeetArticle" parameterType="MeetArticleDto">

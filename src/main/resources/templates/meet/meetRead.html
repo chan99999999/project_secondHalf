@@ -27,8 +27,8 @@
             <p class="meet-read-content" th:text="${meetArticleDto.content}">본문 내용이 들어가면 됩니다</p>
         </div>
         <div class="register-btn-wrap">
-            <button class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
-            <button class="register-btn">참여하기</button>
+            <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
+            <button type="button" class="register-btn" th:onclick="|location.href='@{/meet/3}'|">참여하기</button>
 <!--            <th:block th:if="${loginMember != null}">-->
 <!--                <th:block th:if="${loginMember.memberId == meetArticleDto.memberId}">-->
 <!--                    <form id="updateForm" method="get"-->

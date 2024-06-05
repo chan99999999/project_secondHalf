@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -45,20 +46,27 @@ public class MeetController {
                            @ModelAttribute ParameterForm parameterForm,
                            Model model) {
         log.info("전달된 파라미터 정보 : {}", parameterForm);
+        log.info("제목 검색 파라미터 정보 : {}", parameterForm.getTitle());
         SearchDto searchDto = SearchDto.builder()
                 .limit(parameterForm.getElementSize())
                 .page(parameterForm.getRequestPage())
                 .tagName(parameterForm.getTagName())
+                .meetArticleId(parameterForm.getMeetArticleId())
+                .title(parameterForm.getTitle())
                 .build();
         List<MeetArticleDto> meetArticleList = null;
-        if (parameterForm.getTagName() != null && !parameterForm.getTagName().isEmpty()) {
-            meetArticleList = meetArticleService.findByAllTagName(categoryId, parameterForm.getTagName(), searchDto);
-        } else {
+        if (parameterForm.getTitle() == null) {
             meetArticleList = meetArticleService.findByAllMeetArticle(categoryId);
+        } else {
+            meetArticleList = meetArticleService.findByTitle(categoryId, searchDto);
         }
         TagDto tagList = TagDto.builder()
                 .tagName(parameterForm.getTagName())
                 .build();
+        for (MeetArticleDto meetArticleDto : meetArticleList) {
+            parameterForm.getTagName();
+            log.info("수신한 게시글 목록 : {}", meetArticleDto);
+        }
         // 페이징 처리를 위한 테이블 행의 개수 조회
         int selectedRowCount = meetArticleService.findByMeetArticleCount(categoryId, searchDto);
         log.info("조회된 행의 수: {} ", selectedRowCount);
@@ -69,21 +77,7 @@ public class MeetController {
         model.addAttribute("parameterForm", parameterForm);
         model.addAttribute("pagination", pagination);
         model.addAttribute("tagList", tagList);
-        for (MeetArticleDto meetArticleDto : meetArticleList) {
-//            parameterForm.getTagName();
-            log.info("수신한 게시글 목록 : {}", meetArticleDto);
-        }
-        log.info("수신한 태그 : {}", tagList);
         return "/meet/meetList";
-    }
-
-//        검색
-    @GetMapping("/search")
-    public String findByTitle(@RequestParam(value="title", required = false, defaultValue = "") String title, Model model) {
-        log.info("요청 파라메터 : {}", title);
-//        List<MeetArticleDto> meetArticleList = meetArticleService.findByTitle(title);
-//        model.addAttribute("meetArticleList", meetArticleList);
-        return "meet/meetList";
     }
 
     //    등록

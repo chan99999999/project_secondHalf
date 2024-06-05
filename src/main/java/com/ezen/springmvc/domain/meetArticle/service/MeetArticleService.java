@@ -21,7 +21,7 @@ public interface MeetArticleService {
 //    모임 게시글 등록
     void addMeet(MeetArticleDto meetArticleDto);
 //    모임 게시글 검색
-    List<MeetArticleDto> findByTitle(String title, SearchDto searchDto);
+    List<MeetArticleDto> findByTitle(int categoryId, SearchDto searchDto);
 //    모임 게시글 수정
 //    void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto);
 //    모임 게시글 삭제

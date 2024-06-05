@@ -10,6 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface MeetArticleMapper {
+    List<MeetArticleDto> findByTitle(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
     void createMeetArticle(MeetArticleDto meetArticleDto);
     List<MeetArticleDto> findByAllMeetArticle(@Param("categoryId") int categoryId);
     MeetArticleDto readMeetArticle(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId);
@@ -17,5 +18,4 @@ public interface MeetArticleMapper {
 //    void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto);
 //    void deleteMeetArticle(MeetArticleDto meetArticleDto);
     void hitcount(MeetArticleDto meetArticleDto);
-    List<MeetArticleDto> findByTitle(String title, SearchDto searchDto);
 }
