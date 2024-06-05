@@ -103,8 +103,8 @@
                 </div>
                 <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
 
-                <img class="daily-post-img" src="/img/sample1.jpg"
-                     th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
+                    <img class="daily-post-img" src="/img/sample1.jpg"
+                         th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
                 </a>
                 <div class="daily-like-wrap">
                     <img class="daily-like" src="/img/heart.png">
@@ -114,56 +114,53 @@
                         th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}"
                         th:text="${dailyArticle.title}"></a></p>
             </div>
-
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" th:if="${pagination.showFirst}">
-                        <a class="page-link"
-                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=1, tagName=${parameterForm.tagName})}">
-
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">처음으로</span>
-                        </a>
-                    </li>
-                    <li class="page-item" th:if="${pagination.showPrevious}">
-                        <a class="page-link"
-                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.previousStartPage}, tagName=${parameterForm.tagName})}">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">이전목록</span>
-                        </a>
-                    </li>
-
-                    <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
-
-                        <li class="page-item active" th:if="${i == pagination.params.requestPage}">
-                            <a class="page-link"
-                               th:text="${i}">1</a>
-                        </li>
-                        <li class="page-item" th:if="${i != pagination.params.requestPage}">
-                            <a class="page-link"
-                               th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${i}, tagName=${parameterForm.tagName})}"
-                               th:text="${i}">2</a>
-                        </li>
-                    </th:block>
-
-                    <li class="page-item" th:if="${pagination.showNext}">
-                        <a class="page-link" href="#" aria-label="Next"
-                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.nextStartPage}, tagName=${parameterForm.tagName})}">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">다음목록</span>
-                        </a>
-                    </li>
-                    <li class="page-item" th:if="${pagination.showLast}">
-                        <a class="page-link" href="#" aria-label="Next"
-                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.totalPages}, tagName=${parameterForm.tagName})}">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">끝으로</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
         </div>
+
+        <ul class="pagination">
+            <li class="page-item" th:if="${pagination.showFirst}">
+                <a class="page-link"
+                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=1, tagName=${parameterForm.tagName})}">
+
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only"><<</span>
+                </a>
+            </li>
+            <li class="page-item" th:if="${pagination.showPrevious}">
+                <a class="page-link"
+                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.previousStartPage}, tagName=${parameterForm.tagName})}">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only"><</span>
+                </a>
+            </li>
+
+            <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+
+                <li class="page-item active" th:if="${i == pagination.params.requestPage}">
+                    <a class="page-link"
+                       th:text="${i}">1</a>
+                </li>
+                <li class="page-item" th:if="${i != pagination.params.requestPage}">
+                    <a class="page-link"
+                       th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${i}, tagName=${parameterForm.tagName})}"
+                       th:text="${i}">2</a>
+                </li>
+            </th:block>
+
+            <li class="page-item" th:if="${pagination.showNext}">
+                <a class="page-link" href="#" aria-label="Next"
+                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.nextStartPage}, tagName=${parameterForm.tagName})}">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">></span>
+                </a>
+            </li>
+            <li class="page-item" th:if="${pagination.showLast}">
+                <a class="page-link" href="#" aria-label="Next"
+                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.totalPages}, tagName=${parameterForm.tagName})}">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">>></span>
+                </a>
+            </li>
+        </ul>
     </div>
 
 

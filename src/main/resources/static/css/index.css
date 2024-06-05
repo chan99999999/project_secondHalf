@@ -19,7 +19,34 @@
     font-weight: 700;
     font-style: normal;
 }
+/*----------------------------PAGENATION---------------------------*/
 
+
+.pagination{
+    display: flex;
+    margin: 30px auto;
+    justify-content: center;
+}
+
+.page-item{
+    padding: 0px 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.page-item > a{
+    color: #ff8c18;
+}
+
+.page-item >a:hover{
+    font-weight: bolder;
+    font-size: 30px;
+    color: #ff8c18;
+}
+
+.page-item >a:visited{
+    color: black;
+}
 
 /*-----------------------------------------------------*/
 
