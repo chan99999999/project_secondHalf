@@ -2,19 +2,15 @@ package com.ezen.springmvc.domain.dailyarticle.dto;
 
 import lombok.*;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
-/** 일상 게시글 DTO */
-public class DailyArticleDto {
-    private int dailyArticleId;     /** 일상 게시글 번호 */
+/** 공지사항 게시글 DTO */
+public class NoticeArticleDto {
+    private int noticeArticleId;     /** 일상 게시글 번호 */
     private String title;           /** 일상 게시글 제목 */
     private String content;         /** 일상 게시글 내용 */
     private String regdate;         /** 일상 게시글 등록 일자 */

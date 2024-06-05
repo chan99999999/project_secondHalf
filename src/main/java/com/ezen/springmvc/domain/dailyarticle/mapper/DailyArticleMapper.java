@@ -46,6 +46,10 @@ public interface DailyArticleMapper {
      */
     public List<DailyArticleDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName, @Param("searchDto") SearchDto searchDto);
 
+    public List<DailyArticleDto> findByAllAdminDailyArticles(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
+
+    public List<DailyArticleDto> findByAllAdminTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName, @Param("searchDto") SearchDto searchDto);
+
     /**
      * 일상 게시글 상세 조회
      * @param categoryId     카테고리 번호
@@ -61,6 +65,8 @@ public interface DailyArticleMapper {
      * @return 일상 게시글 개수
      */
     public int findDailyArticleCount(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
+
+    public int findAdminDailyArticleCount(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
 
     /**
      * 일상 게시글 조회수 업데이트

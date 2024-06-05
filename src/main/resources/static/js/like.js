@@ -27,7 +27,7 @@ const getLoginMemberId = async function () {
   return loginMember.memberId
 }
 
-// 이벤트 처리 함수
+// 좋아요 이벤트 처리 함수
 const handleHeart = async function (event) {
   const dailyArticleId = getDailyArticleIdFromURL();
   const memberId = await getLoginMemberId();

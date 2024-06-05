@@ -63,20 +63,9 @@
             <!--                        <p th:text="'#' + ${dailyArticle.tagNames}"></p>-->
             <p id="tagName">
                 <span th:each="tagName : ${#strings.arraySplit(dailyArticle.tagNames, ', ')}">
-                    <th:block th:if="${tagName == '일상'}">
-                    <a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='일상')}" th:text="'#' + ${tagName}"></a>
-                    </th:block>
-
-                    <th:block th:if="${tagName == '건강'}">
-                    <a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#' + ${tagName}"></a>
-                    </th:block>
-
-                    <th:block th:if="${tagName == '명언'}">
-                    <a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName='명언')}" th:text="'#' + ${tagName}"></a>
-                    </th:block>
+                    <a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName=${tagName})}" th:text="'#' + ${tagName}"></a>
                 </span>
             </p>
-
 
             <th:block th:if="${loginMember != null}">
                 <th:block th:if="${loginMember.memberId == dailyArticle.memberId}">

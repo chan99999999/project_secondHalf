@@ -18,6 +18,7 @@ public class DailyArticleServiceImpl implements DailyArticleService {
 
     private static final Logger log = LoggerFactory.getLogger(DailyArticleServiceImpl.class);
     private final DailyArticleMapper dailyArticleMapper;
+    private final NoticeArticleMapper noticeArticleMapper;
     private final ReplyMapper replyMapper;
     private final HeartMapper heartMapper;
     private final FileMapper fileMapper;
@@ -49,6 +50,24 @@ public class DailyArticleServiceImpl implements DailyArticleService {
         return dailyArticleMapper.findByDailyArticleId(dailyArticleDto.getDailyArticleId());
     }
 
+    @Override
+    public NoticeArticleDto writeNoticeArticle(NoticeArticleDto noticeArticleDto, List<FileDto> fileList) {
+        // 게시글 등록
+        noticeArticleMapper.createNoticeArticle(noticeArticleDto);
+
+        // 파일 등록
+        if (fileList != null && !fileList.isEmpty()) { // 파일 목록이 비어있지 않을 경우
+            if (fileList.size() == 1) { // 단일 파일 업로드일 경우
+                fileMapper.createFileDto(fileList.get(0));
+            } else { // 다중 파일 업로드일 경우
+                fileMapper.createFileList(fileList);
+            }
+        }
+
+        // 등록된 게시글 반환
+        return noticeArticleMapper.findByNoticeArticleId(noticeArticleDto.getNoticeArticleId());
+    }
+
     /**
      * 검색 조건에 따른 일상 게시글 목록 반환 구현
      * @param categoryId 카테고리 번호
@@ -58,6 +77,11 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     @Override
     public List<DailyArticleDto> getDailyArticles(int categoryId, SearchDto searchDto) {
         return dailyArticleMapper.findByAllDailyArticle(categoryId, searchDto);
+    }
+
+    @Override
+    public List<NoticeArticleDto> getNoticeArticles(int categoryId) {
+        return noticeArticleMapper.findByAllNoticeArticle(categoryId);
     }
 
     /**
@@ -70,6 +94,21 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     @Override
     public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName, SearchDto searchDto) {
         return dailyArticleMapper.findByAllTagName(categoryId, tagName, searchDto);
+    }
+
+    @Override
+    public List<DailyArticleDto> getAdminDailyArticles(int categoryId, SearchDto searchDto) {
+        return dailyArticleMapper.findByAllAdminDailyArticles(categoryId, searchDto);
+    }
+
+    @Override
+    public List<DailyArticleDto> getAdminDailyArticlesByTagName(int categoryId, String tagName, SearchDto searchDto) {
+        return dailyArticleMapper.findByAllAdminTagName(categoryId, tagName, searchDto);
+    }
+
+    @Override
+    public List<NoticeArticleDto> getNoticeArticlesByTagName(int categoryId, String tagName) {
+        return noticeArticleMapper.findByAllNoticeArticleTagName(categoryId, tagName);
     }
 
     /**
@@ -86,6 +125,13 @@ public class DailyArticleServiceImpl implements DailyArticleService {
         return dailyArticleMapper.readDailyArticle(categoryId, dailyArticleId);
     }
 
+    @Override
+    public NoticeArticleDto getNoticeArticle(int categoryId, int noticeArticleId) {
+        // 조회수 업데이트
+        noticeArticleMapper.updateNoticeArticleHitCount(categoryId, noticeArticleId);
+        return noticeArticleMapper.readNoticeArticle(categoryId, noticeArticleId);
+    }
+
     /**
      * 검색 조건에 따른 일상 게시글 개수 반환 구현
      * @param categoryId 카테고리 번호
@@ -95,6 +141,11 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     @Override
     public int getDailyArticleCount(int categoryId, SearchDto searchDto) {
         return dailyArticleMapper.findDailyArticleCount(categoryId, searchDto);
+    }
+
+    @Override
+    public int getAdminDailyArticleCount(int categoryId, SearchDto searchDto) {
+        return dailyArticleMapper.findAdminDailyArticleCount(categoryId, searchDto);
     }
 
     /**
@@ -107,6 +158,11 @@ public class DailyArticleServiceImpl implements DailyArticleService {
         dailyArticleMapper.updateDailyArticle(dailyArticleId, editedDailyArticleDto);
     }
 
+    @Override
+    public void editNoticeArticle(int noticeArticleId, NoticeArticleDto editedNoticeArticle) {
+        noticeArticleMapper.updateNoticeArticle(noticeArticleId, editedNoticeArticle);
+    }
+
     /**
      * 일상 게시글 삭제 구현
      * @param categoryId     카테고리 번호
@@ -115,6 +171,11 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     @Override
     public void removeDailyArticle(int categoryId, int dailyArticleId) {
         dailyArticleMapper.deleteDailyArticle(categoryId, dailyArticleId);
+    }
+
+    @Override
+    public void removeNoticeArticle(int categoryId, int noticeArticleId) {
+        noticeArticleMapper.deleteNoticeArticle(categoryId, noticeArticleId);
     }
 
     /**
@@ -263,6 +324,8 @@ public class DailyArticleServiceImpl implements DailyArticleService {
         tagMapper.createTag(tagDto);
     }
 
+
+
     /**
      * 태그 게시글 등록 구현
      * @param tagId          태그 번호
@@ -270,8 +333,8 @@ public class DailyArticleServiceImpl implements DailyArticleService {
      */
     @Override
     @Transactional
-    public void getTagArticle(int tagId, int dailyArticleId) {
-        tagArticleMapper.createTagArticle(tagId, dailyArticleId);
+    public void getTagArticle(int tagId, int articleId) {
+        tagArticleMapper.createTagArticle(tagId, articleId);
     }
 
     /**

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.NoticeArticleMapper">
+    <!-- 신규 일상 게시글 생성 -->
+    <insert id="createNoticeArticle" parameterType="NoticeArticleDto">
+        <selectKey keyProperty="noticeArticleId" resultType="int" order="BEFORE">
+            SELECT NOTICE_ARTICLE_ID_SEQ.nextval FROM dual
+        </selectKey>
+
+        INSERT INTO notice_article(notice_article_id, title, content, category_id, member_id)
+        VALUES (#{noticeArticleId}, #{title}, #{content}, #{categoryId}, #{memberId})
+    </insert>
+
+    <!-- 일상 게시글 번호로 게시글 조회 -->
+    <select id="findByNoticeArticleId" parameterType="int" resultType="NoticeArticleDto">
+        SELECT notice_article_id, title, regdate, hitcount, category_id, member_id
+        FROM notice_article
+        WHERE notice_article_id = #{noticeArticleId}
+    </select>
+
+    <select id="findByAllNoticeArticle" resultType="NoticeArticleDto">
+        SELECT noticeArticleId, title, member_id, nickname, file_name, encrypted_name, totalHeartCount
+        FROM (
+        SELECT noticeArticleId, title, member_id, nickname, file_name, encrypted_name, totalHeartCount
+        FROM (
+        SELECT n.notice_article_id noticeArticleId,
+        n.title,
+        n.member_id,
+        m.nickname,
+        f.file_name,
+        f.encrypted_name,
+        COALESCE(SUM(h.heart_count), 0) totalHeartCount
+        FROM notice_article n
+        JOIN (
+        SELECT a.notice_article_id, a.file_name, a.encrypted_name
+        FROM (
+        SELECT n.notice_article_id,
+        f.file_name,
+        f.encrypted_name,
+        ROW_NUMBER() OVER (PARTITION BY n.notice_article_id ORDER BY f.file_id) AS rn
+        FROM notice_article n
+        JOIN attach_file f ON n.notice_article_id = f.notice_article_id
+        WHERE n.category_id = #{categoryId}
+        ) a
+        WHERE a.rn = 1
+        ) f ON n.notice_article_id = f.notice_article_id
+        LEFT JOIN heart h ON n.notice_article_id = h.notice_article_id
+        JOIN member m ON n.member_id = m.member_id
+        GROUP BY n.notice_article_id, n.title, n.member_id, m.nickname, f.file_name, f.encrypted_name
+        ORDER BY n.notice_article_id DESC
+        )
+        )
+    </select>
+
+    <select id="findByAllNoticeArticleTagName" resultType="NoticeArticleDto">
+        SELECT DISTINCT noticeArticleId, title, member_id, file_name, encrypted_name, totalHeartCount
+        FROM (
+        SELECT noticeArticleId,
+        title,
+        member_id,
+        file_name,
+        encrypted_name,
+        totalHeartCount
+        FROM (
+        SELECT n.notice_article_id AS noticeArticleId,
+        n.title,
+        n.member_id,
+        f.file_name,
+        f.encrypted_name,
+        COALESCE(SUM(h.heart_count), 0) AS totalHeartCount
+        FROM notice_article n
+        JOIN (
+        SELECT notice_article_id,
+        file_name,
+        encrypted_name,
+        ROW_NUMBER() OVER (PARTITION BY notice_article_id ORDER BY file_id) AS rn
+        FROM attach_file
+        ) f ON n.notice_article_id = f.notice_article_id AND f.rn = 1
+        LEFT JOIN heart h ON n.notice_article_id = h.notice_article_id
+        JOIN tag_article ta ON n.notice_article_id = ta.notice_article_id
+        JOIN tag t ON ta.tag_id = t.tag_id
+        WHERE n.category_id = #{catrgoryId}
+        AND t.tag_name = #{tagName}
+        GROUP BY n.notice_article_id, n.title, n.member_id, f.file_name, f.encrypted_name
+        ORDER BY n.notice_article_id DESC
+        )
+        )
+        ORDER BY noticeArticleId DESC
+    </select>
+
+    <!-- 일상 게시글 상세 조회 -->
+    <select id="readNoticeArticle" parameterType="int" resultType="NoticeArticleDto">
+        SELECT n.title,
+        n.content,
+        n.member_id,
+        n.hitcount,
+        TO_CHAR(d.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+        NVL(SUM(h.heart_count), 0) AS totalHeartCount,
+        LISTAGG(t.tag_name, ', ') WITHIN GROUP (ORDER BY t.tag_name) AS tag_names
+        FROM notice_article n
+        LEFT JOIN heart h ON n.notice_article_id = h.notice_article_id
+        LEFT JOIN tag_article ta ON n.notice_article_id = ta.notice_article_id
+        LEFT JOIN tag t ON ta.tag_id = t.tag_id
+        WHERE n.category_id = #{categoryId}
+        AND n.notice_article_id = #{dailyArticleId}
+        GROUP BY n.title,
+        n.content,
+        n.member_id,
+        n.hitcount,
+        n.regdate
+    </select>
+
+    <!-- 일상 게시글 조회수 업데이트 -->
+    <update id="updateNoticeArticleHitCount">
+        UPDATE notice_article
+        SET hitcount = hitcount + 1
+        WHERE category_id = #{categoryId}
+        AND notice_article_id = #{noticeArticleId}
+    </update>
+
+    <!-- 일상 게시글 업데이트 -->
+    <update id="updateNoticeArticle">
+        UPDATE notice_article
+        <set>
+            <if test="editedNoticeArticleDto.title != null and !editedNoticeArticleDto.title.isEmpty()">
+                title = #{editedNoticeArticleDto.title},
+            </if>
+            <if test="editedNoticeArticleDto.content != null and !editedNoticeArticleDto.content.isEmpty()">
+                content = #{editedNoticeArticleDto.content}
+            </if>
+        </set>
+        WHERE notice_article_id = #{noticeArticleId}
+    </update>
+
+    <!-- 일상 게시글 행 삭제 -->
+    <delete id="deleteNoticeArticle">
+        DELETE
+        FROM notice_article
+        WHERE category_id = #{categoryId}
+        AND notice_article_id = #{noticeArticleId}
+    </delete>
+</mapper>
+

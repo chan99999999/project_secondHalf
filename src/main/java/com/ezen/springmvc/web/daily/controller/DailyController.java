@@ -16,6 +16,7 @@ import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
 import com.ezen.springmvc.web.common.page.Pagination;
 import com.ezen.springmvc.web.common.page.ParameterForm;
 import com.ezen.springmvc.web.daily.form.DailyArticleForm;
+import com.ezen.springmvc.web.daily.form.NoticeArticleForm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -106,10 +107,26 @@ public class DailyController {
         DailyArticleDto createDailyArticleDto = dailyArticleService.writeDailyArticle(dailyArticleDto, fileList);
 
         // 태그
-        String tags = dailyArticleForm.getTags();
-        if (tags != null && !tags.isEmpty()) {
+        StringBuilder allTags = new StringBuilder();
+
+        String checkedTags = dailyArticleForm.getTags();
+        String inputTags = dailyArticleForm.getInputTags();
+
+        if (checkedTags != null && !checkedTags.isEmpty()) {
+            allTags.append(checkedTags);
+        }
+
+        // 직접 입력한 태그 추가
+        if (inputTags != null && !inputTags.isEmpty()) {
+            if (allTags.length() > 0) {
+                allTags.append(",");
+            }
+            allTags.append(inputTags);
+        }
+
+        if (allTags != null && !allTags.isEmpty()) {
             // 콤마를 기준으로 태그 이름들 파싱
-            List<String> tagNames = Arrays.asList(tags.split(","));
+            List<String> tagNames = Arrays.asList(allTags.toString().split(","));
             for (String tagName : tagNames) {
                 tagName = tagName.trim();
 
@@ -131,8 +148,11 @@ public class DailyController {
     public String dailyList(@PathVariable("categoryId") int categoryId,
                             @ModelAttribute ParameterForm parameterForm,
                             Model model) {
-
+        
+        // 소통공간 목록
         List<DailyArticleDto> dailyArticleList = null;
+        // 노원구 소식 목록
+        List<DailyArticleDto> noticeList = null;
 
         // 검색 조건
         SearchDto searchDto = SearchDto.builder()
@@ -144,8 +164,10 @@ public class DailyController {
         // 태그 이름 파라미터 유무에 따른 게시글 목록 반환
         if (parameterForm.getTagName() != null && !parameterForm.getTagName().isEmpty()) {
             dailyArticleList = dailyArticleService.getDailyArticlesByTagName(categoryId, parameterForm.getTagName(), searchDto);
+            noticeList = dailyArticleService.getAdminDailyArticlesByTagName(categoryId, parameterForm.getTagName(), searchDto);
         } else {
             dailyArticleList = dailyArticleService.getDailyArticles(categoryId, searchDto);
+            noticeList = dailyArticleService.getAdminDailyArticles(categoryId, searchDto);
         }
 
         // 페이징 처리를 위한 테이블 행의 개수 조회
@@ -155,6 +177,7 @@ public class DailyController {
 
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("dailyArticleList", dailyArticleList);
+        model.addAttribute("noticeList", noticeList);
         model.addAttribute("parameterForm", parameterForm);
         model.addAttribute("pagination", pagination);
         return "/daily/dailyList";

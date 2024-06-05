@@ -1,3 +1,4 @@
+// 이벤트 등록 함수
 const eventRegister3 = function () {
   const replyRegisterBtn = document.querySelector('#write-review-btn');
   replyRegisterBtn.addEventListener('click', handleReplyRegister);
@@ -7,9 +8,7 @@ const eventRegister3 = function () {
 const getCategoryIdFromURL = () => {
   const path = window.location.pathname;
   const pathParts = path.split('/');
-
   const categoryIdStr = pathParts[2]; // URL의 두 번째 부분에서 카테고리 번호 추출
-
   const categoryId = parseInt(categoryIdStr, 10);
   if (isNaN(categoryId)) {
     throw new Error('Invalid categoryId');
@@ -25,7 +24,7 @@ const getReplyList = async function () {
   return replyList;
 }
 
-// 이벤트 처리 함수
+// 댓글 등록 이벤트 처리 함수
 const handleReplyRegister = async function (event) {
 
   const replyContentInput = document.querySelector('textarea[name="content"]');
@@ -54,11 +53,10 @@ const handleReplyRegister = async function (event) {
     const response = await fetch(url, options);
 
     if (response.ok) {
-      // 댓글 등록 성공 후 처리
-      replyContentInput.value = ''; // 입력창 비우기
-      console.log('댓글이 성공적으로 등록되었습니다.');
+      // 댓글 등록 성공 시 입력창 비우기
+      replyContentInput.value = '';
 
-      // 댓글 목록 업데이트 
+      // 댓글 목록 DOM 처리
       const replyList = await getReplyList();
       const reviewListElement = document.querySelector('.review-list');
       let reviewHTML = '';
@@ -90,9 +88,11 @@ const handleReplyRegister = async function (event) {
 
       reviewListElement.innerHTML = reviewHTML;
 
+      // 댓글 수 DOM 처리
       const replyCountElement = document.querySelector('#replyToggle');
       replyCountElement.textContent = `댓글(${await getReplyCount()})`;
 
+      // 새로 렌더링 댓글 목록에 수정, 삭제 이벤트 등록해주기
       const replyUpdateBtns = document.querySelectorAll('#reply-update-btn');
       replyUpdateBtns.forEach(replyUpdateBtn => replyUpdateBtn.addEventListener('click', handleReplyEdit));
 
@@ -108,7 +108,6 @@ const handleReplyRegister = async function (event) {
     console.error('댓글 등록 중 오류 발생:', error);
   }
 }
-
 
 function main() {
   eventRegister3();
