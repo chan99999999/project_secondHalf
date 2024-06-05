@@ -97,7 +97,7 @@
             <div id="place-review">
                 <!-- 로그인한 경우 후기 작성 폼 표시 -->
                 <th:block th:if="${session.loginMember != null}">
-                    <form id="reviewForm" name="addReview" th:object="${reviewForm}" action="javascript:addReview();">
+                    <form id="reviewForm" name="addReview" th:object="${reviewForm}" action="javascript:addReview()">
                         <div class="write-review">
                             <div class="review-writer" th:text="|작성자: ${session.loginMember.nickname}|"></div>
                             <div class="review-text">
@@ -149,12 +149,7 @@
         </div>
     </div>
 </div>
-
 <script>
-    const httpRequest = function (url, option) {
-        return fetch(url, option).then(response => response.json());
-    }
-
     // 후기 등록 함수
     const addReview = async function (e) {
         const review = {
@@ -173,7 +168,7 @@
             const reviewListElem = document.querySelector("#review-box");
 
             const writerImg = document.createElement("img");
-            writerImg.src = `[[${session.loginMember.storePicture}]]`
+            writerImg.src = "/img/profile.png"
             writerImg.className = 'profile-img';
 
             const imgBox = document.createElement("div");
@@ -182,7 +177,7 @@
 
             const reviewWriter = document.createElement("li");
             reviewWriter.classList.add("review-writer");
-            reviewWriter.textContent = `[[${session.loginMember.nickname}]]`;
+            reviewWriter.textContent = result.nickname;
 
             const reviewContent = document.createElement("li");
             reviewContent.classList.add("review-content");
@@ -218,6 +213,7 @@
 
         const result = await httpRequest("/map/place/review/add", option);
         console.log(result);
+
         listUpReview(result);
     }
 </script>

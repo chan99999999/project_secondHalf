@@ -82,3 +82,7 @@ window.onload = function () {
             console.error('Fetch error:', error);
         });
 };
+
+const httpRequest = function (url, option) {
+    return fetch(url, option).then(response => response.json());
+}

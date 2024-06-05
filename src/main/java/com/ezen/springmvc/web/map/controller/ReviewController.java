@@ -47,6 +47,7 @@ public class ReviewController {
                 .memberId(loginMember.getMemberId())
                 .build();
 
+        reviewForm.setNickname(loginMember.getNickname());
         reviewService.addNewReview(mapDto, reviewDto);
         return reviewForm;
     }
