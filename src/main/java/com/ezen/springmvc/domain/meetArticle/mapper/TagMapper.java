@@ -13,5 +13,5 @@ public interface TagMapper {
     void deleteTag(TagDto tagDto);
     void readTagName(@Param("tagName") String tagName);
     TagDto findByTagId(int tagId);
-    List<TagDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName, SearchDto searchDto);
+    List<TagDto> findByAllTagName(String tagName);
 }

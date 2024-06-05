@@ -154,4 +154,16 @@
         FROM meet_article
         WHERE category_id = #{categoryId}
     </select>
+    <!-- 참여하기 -->
+    <insert id="participate">
+        INSERT INTO enter (category_id, meet_article_id, member_id)
+        VALUES (#{categoryId}, #{meetArticleId}, #{memberId})
+    </insert>
+    <!-- 참여취소 -->
+    <delete id="cancelParticipation">
+        DELETE FROM enter
+               WHERE category_id = #{categoryId}
+                 AND meet_article_id = #{meetArticleId}
+                 AND member_id = #{memberId}
+    </delete>
 </mapper>

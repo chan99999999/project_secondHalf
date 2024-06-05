@@ -15,7 +15,7 @@ public interface MeetArticleMapper {
     List<MeetArticleDto> findByAllMeetArticle(@Param("categoryId") int categoryId);
     MeetArticleDto readMeetArticle(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId);
     int findByMeetArticleCount(@Param("categoryId") int categoryId, @Param("searchDto") SearchDto searchDto);
-//    void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto);
-//    void deleteMeetArticle(MeetArticleDto meetArticleDto);
     void hitcount(MeetArticleDto meetArticleDto);
+    void participate(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId, @Param("memberId") String memberId);
+    void cancelParticipation(@Param("categoryId") int categoryId, @Param("meetArticleId") int meetArticleId, @Param("memberId") String memberId);
 }

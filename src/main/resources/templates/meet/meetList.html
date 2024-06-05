@@ -33,11 +33,11 @@
                     </div>
                 </form>
                 <div>
-                    <ul class="meet-tag">
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='짝궁')}" th:text="'#짝궁'">#짝궁</a></li>
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#건강'">#짝궁</a></li>
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='취미')}" th:text="'#취미'">#짝궁</a></li>
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='기타')}" th:text="'#기타'">#짝궁</a></li>
+                    <ul class="meet-tag" th:name="tagName">
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='짝궁')}" th:text="'#짝궁'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='취미')}" th:text="'#취미'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#건강'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='기타')}" th:text="'#기타'"></a></li>
                     </ul>
                 </div>
             </div>

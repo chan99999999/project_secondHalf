@@ -5,13 +5,47 @@
 <head>
     <title th:fragment="title"> ::: 동네친구:모임 제목 ::: </title>
     <th:block th:fragment="script">
+        <script th:inline="javascript">
+            const memberId = [[${loginMember}]];
+
+            function participate(categoryId, meetArticleId) {
+                fetch(`/meet/${categoryId}/participate/${meetArticleId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(memberId),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('participate-btn').textContent = '참여중';
+                        document.getElementById('participate-btn').setAttribute('onclick', `cancelParticipation(${categoryId}, ${meetArticleId})`);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            function cancelParticipation(categoryId, meetArticleId) {
+                fetch(`/meet/${categoryId}/cancelParticipation/${meetArticleId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(memberId),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('participate-btn').textContent = '참여하기';
+                        document.getElementById('participate-btn').setAttribute('onclick', `participate(${categoryId}, ${meetArticleId})`);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        </script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/meet.css">
     </th:block>
 </head>
-
 <div class="wrapper" th:fragment="content">
     <div id="meet-read-wrap">
         <div id="meet-read-writer-wrap">
@@ -28,35 +62,12 @@
         </div>
         <div class="register-btn-wrap">
             <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
-            <button type="button" class="register-btn" th:onclick="|location.href='@{/meet/3}'|">참여하기</button>
-<!--            <th:block th:if="${loginMember != null}">-->
-<!--                <th:block th:if="${loginMember.memberId == meetArticleDto.memberId}">-->
-<!--                    <form id="updateForm" method="get"-->
-<!--                          th:action="@{/meet/{categoryId}/update/{meetArticleId}(categoryId=${categoryId}, meetArticleId=${meetArticleId})}">-->
-<!--                        <button type="button" class="btn btn-dark" onclick="updateForm()">수정</button>-->
-<!--                    </form>-->
-<!--                    <form id="deleteForm" method="post" th:action="@{/meet/{categoryId}/delete/{meetArticleId}(meetArticleId=${meetArticleId})}"-->
-<!--                          th:attr="data-categoryId=${categoryId}, data-meetArticleId=${meetArticleId}">-->
-<!--                        <button type="button" class="btn btn-dark" onclick="confirmDelete()">삭제</button>-->
-<!--                    </form>-->
-<!--                </th:block>-->
-<!--            </th:block>-->
-<!--            <script th:inline="javascript">-->
-<!--                function confirmDelete() {-->
-<!--                    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {-->
-<!--                        let form = document.getElementById("deleteForm");-->
-<!--                        let categoryId = form.getAttribute("data-categoryId");-->
-<!--                        let meetArticleId = form.getAttribute("data-meetArticleId");-->
-<!--                        form.setAttribute("action", "/meet/" + categoryId + "/delete/" + meetArticleId);-->
-<!--                        form.submit();-->
-<!--                    }-->
-<!--                }-->
-<!--            </script>-->
-<!--            <script>-->
-<!--                function updateForm() {-->
-<!--                    document.getElementById("updateForm").submit();-->
-<!--                }-->
-<!--            </script>-->
+            <button type="button" id="participate-btn" class="register-btn" th:if="${loginMember.memberId}"
+                    th:onclick="|participate(${categoryId}, ${meetArticleDto.meetArticleId})|">참여하기
+                <button type="button" id="cancel-participation-btn" class="register-btn" th:if="${participate}" style="display: inline-block;"
+                        th:onclick="|cancelParticipation(${categoryId}, ${meetArticleDto.meetArticleId})|">참여 취소
+                </button>
+            </button>
         </div>
         <div class="review-wrap">
             <div id="review-count-wrap">

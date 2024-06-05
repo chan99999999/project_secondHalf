@@ -178,7 +178,7 @@ public class MeetArticleTest {
     @Transactional
     @DisplayName("모임 게시글 태그 조회 테스트")
     void findByTagNameTest(){
-//        List<TagDto> tagDto = tagMapper.findByAllTagName(3, "기타");
-//        log.info("게시글과 태그 조회 : {}", tagDto);
+        List<TagDto> list = tagMapper.findByAllTagName("취미");
+        log.info("게시글과 태그 조회 : {}", list);
     }
 }

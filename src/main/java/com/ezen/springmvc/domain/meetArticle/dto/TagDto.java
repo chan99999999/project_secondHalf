@@ -13,5 +13,12 @@ import java.util.List;
 public class TagDto {
     private int tagId;
     private int tArticleId;
+    private int meetArticleId;
+    private int enter;
+    private String title;
+    private String content;
     private String tagName;
+    private String regdate;
+    private String time;
+
 }

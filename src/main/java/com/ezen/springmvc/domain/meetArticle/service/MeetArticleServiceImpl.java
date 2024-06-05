@@ -51,12 +51,8 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     }
 
     @Override
-    public List<MeetArticleDto> findByAllTagName(int categoryId, String tagName, SearchDto searchDto) {
-        List<TagDto> tags = tagMapper.findByAllTagName(categoryId, tagName, searchDto);
-        return tags.stream().map(tag -> {
-            MeetArticleDto meetArticleDto = new MeetArticleDto();
-            return meetArticleDto;
-        }).collect(Collectors.toList());
+    public List<TagDto> findByAllTagName(String tagName) {
+        return tagMapper.findByAllTagName(tagName);
     }
 
     @Override
@@ -91,52 +87,6 @@ public class MeetArticleServiceImpl implements MeetArticleService {
         meetReplyMapper.createReply(meetReplyDto);
     }
 
-//    @Override
-//    public void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto) {
-//        meetArticleMapper.updateMeetArticle(meetArticleId, meetArticleDto);
-//    }
-
-//    @Override
-//    public void deleteReply(MeetReplyDto meetReplyDto) {
-//        meetReplyMapper.deleteReply(meetReplyDto);
-//    }
-//
-//    @Override
-//    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
-//        meetArticleMapper.deleteMeetArticle(meetArticleDto);
-//    }
-//
-//    @Override
-//    public void deleteTag(TagDto tagDto) {
-//        tagMapper.deleteTag(tagDto);
-//    }
-//
-//    @Override
-//    public void deleteTagArticle(TagArticleDto tagArticleDto) {
-//        tagArticleMapper.deleteTagArticle(tagArticleDto);
-//    }
-
-//    @Override
-//    @Transactional
-//    public void deleteMeetArticle(MeetArticleDto meetArticleDto) {
-//        // 댓글 삭제
-//        MeetReplyDto meetReplyDto = MeetReplyDto.builder()
-//                .meetArticleId(meetArticleDto.getMeetArticleId())
-//                .build();
-//        meetReplyMapper.deleteReply(meetReplyDto);
-//        // 태그 게시글 삭제
-//        TagArticleDto tagArticleDto = TagArticleDto.builder()
-//                .tArticleId(meetArticleDto.getTArticleId())
-//                .build();
-//        // 태그 삭제
-//        TagDto tagDto = TagDto.builder()
-//                .tArticleId(meetArticleDto.getTagId())
-//                .build();
-//        tagMapper.deleteTag(tagDto);
-//        // 게시글 삭제
-//        meetArticleMapper.deleteMeetArticle(meetArticleDto);
-//    }
-
     @Override
     public List<MeetReplyDto> replyList(int meetArticleId) {
         return meetReplyMapper.findByReplyAll(meetArticleId);
@@ -145,5 +95,15 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     @Override
     public int replyCount(int meetArticleId) {
         return meetReplyMapper.replyCount(meetArticleId);
+    }
+
+    @Override
+    public void participate(int categoryId, int meetArticleId, String memberId) {
+        meetArticleMapper.participate(categoryId, meetArticleId, memberId);
+    }
+
+    @Override
+    public void cancelParticipation(int categoryId, int meetArticleId, String memberId) {
+        meetArticleMapper.cancelParticipation(categoryId, meetArticleId, memberId);
     }
 }

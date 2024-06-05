@@ -22,24 +22,19 @@ public interface MeetArticleService {
     void addMeet(MeetArticleDto meetArticleDto);
 //    모임 게시글 검색
     List<MeetArticleDto> findByTitle(int categoryId, SearchDto searchDto);
-//    모임 게시글 수정
-//    void updateMeetArticle(int meetArticleId, MeetArticleDto meetArticleDto);
-//    모임 게시글 삭제
-//    void deleteMeetArticle(MeetArticleDto meetArticleDto);
 //    게시글 조회수
     MeetArticleDto hitcount(MeetArticleDto meetArticleDto);
-//    태그 게시글 삭제
-//    void deleteTagArticle(TagArticleDto tagArticleDto);
 //    태그 이름으로 게시글 목록 반환
-    List<MeetArticleDto> findByAllTagName(@Param("categoryId") int categoryId, @Param("tagName") String tagName, @Param("searchDto") SearchDto searchDto);
-//    태그 삭제
-//    void deleteTag(TagDto tagDto);
+    List<TagDto> findByAllTagName(String tagName);
 //    댓글 등록
     void createReply(MeetReplyDto meetReplyDto);
-//    댓글 삭제
-//    void deleteReply(MeetReplyDto meetReplyDto);
 //    댓글 목록
     List<MeetReplyDto> replyList(int meetArticleId);
 //    댓글 갯수
     int replyCount(int meetArticleId);
+//    참여하기
+    void participate(int categoryId, int meetArticleId, String memberId);
+//    참여취소
+    void cancelParticipation(int categoryId, int meetArticleId, String memberId);
+//    참여하기 증감소
 }
