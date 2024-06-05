@@ -1,9 +1,5 @@
 package com.ezen.springmvc.web.map.form;
-
 import lombok.*;
-
-import java.sql.Timestamp;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

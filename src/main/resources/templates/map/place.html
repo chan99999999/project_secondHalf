@@ -1,14 +1,10 @@
-<!-- place.html -->
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script}, ~{this :: css}, ~{this :: content})}">
-<!-- 위의 줄은 현재 HTML 콘텐츠를 지정된 Thymeleaf 템플릿의 콘텐츠로 대체하는 Thymeleaf 지시어를 포함합니다. -->
 
 <head>
-    <!-- HTML 페이지의 제목 -->
     <title th:fragment="title"> ::: 우리동네 상세정보 ::: </title>
 
-    <!-- JavaScript 가져오기 -->
     <th:block th:fragment="script">
         <!-- 카카오 맵 JavaScript SDK 가져오기 및 앱 키 포함 -->
         <script type="text/javascript"
@@ -21,34 +17,15 @@
                 mapId: [[${mapDto.mapId}]]
             };
         </script>
-        <!-- JavaScript 파일 가져오기 -->
         <!-- 이 스크립트는 지도 세부 정보와 후기를 처리합니다. -->
         <script defer type="text/javascript" th:src="@{/js/place.js}"></script>
-        <!--        <script defer type="text/javascript" th:src="@{/js/review.js}"></script>-->
 
-        <!-- 제출된 후기 내용을 콘솔에 출력하는 스크립트 -->
     </th:block>
 
-    <!-- CSS 가져오기 -->
     <th:block th:fragment="css">
-        <!-- 사용자 정의 CSS 파일 -->
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/map.css">
-        <!-- 인라인 스타일 -->
         <style>
-            /* 상단에 고정된 네비게이션 바 */
-            nav {
-                position: fixed;
-                top: 0;
-                width: 100%;
-                z-index: 10;
-            }
-
-            /* 지도 컨테이너에 대한 스타일링 */
-            #place-map {
-                position: relative;
-                z-index: 1;
-            }
         </style>
     </th:block>
 </head>
@@ -92,7 +69,6 @@
 
         <!-- 후기 영역 -->
         <div class="review-wrap">
-            <!--            [[${reviewList}]]-->
             <h1>업체후기(<span th:text="${reviewList != null ? #lists.size(reviewList) : 0}"></span>)</h1>
             <div id="place-review">
                 <!-- 로그인한 경우 후기 작성 폼 표시 -->
@@ -107,15 +83,17 @@
                                 <input type="hidden" id="y" name="y" th:value="${mapDto.y}">
                                 <input type="hidden" th:id="placeId" name="placeId" th:value="${mapDto.placeId}">
                                 <input type="hidden" id="placeName" name="placeName" th:value="${mapDto.placeName}">
-                                <input type="hidden" th:id="addressName" name="addressName" th:value="${mapDto.addressName}">
+                                <input type="hidden" th:id="addressName" name="addressName"
+                                       th:value="${mapDto.addressName}">
                                 <input type="hidden" id="mapId" name="mapId" th:value="${mapDto.mapId}">
-                                <input type="hidden" th:id="roadAddressName" name="roadAddressName" th:value="${mapDto.roadAddressName}">
+                                <input type="hidden" th:id="roadAddressName" name="roadAddressName"
+                                       th:value="${mapDto.roadAddressName}">
                                 <button type="submit" class="write-review-btn" id="addBtn">등록</button>
                             </div>
                         </div>
                     </form>
                 </th:block>
-<!--                로그인하지 않은 경우 로그인 안내 표시-->
+                <!-- 로그인하지 않은 경우 로그인 안내 표시-->
                 <th:block th:if="${session.loginMember == null}">
                     <div class="write-review">
                         <form action="/member/login">
@@ -127,7 +105,6 @@
                         </form>
                     </div>
                 </th:block>
-
 
                 <!-- 후기 목록 -->
                 <div th:id="review-box">
@@ -201,10 +178,8 @@
             if (reviewListElem.firstChild) {
                 reviewListElem.insertBefore(reviewBox, reviewListElem.firstChild);
             } else {
-                reviewListElem.appendChild(reviewBox); // reviewListElem이 비어있을 경우
+                reviewListElem.appendChild(reviewBox);
             }
-
-
             // 후기 입력란 초기화
             document.querySelector(".review-content").value = "";
         }
@@ -226,4 +201,3 @@
 </script>
 </body>
 </html>
-

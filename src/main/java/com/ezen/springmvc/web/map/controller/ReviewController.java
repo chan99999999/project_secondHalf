@@ -52,42 +52,6 @@ public class ReviewController {
         return reviewForm;
     }
 
-
-
-
-//    @PostMapping("/add")
-//    public String reviewMessage(@RequestParam("x") String x, @RequestParam("y") String y, @RequestParam("placeId") Long placeId,
-//                                @RequestParam("placeName") String placeName, @RequestParam("addressName") String addressName, @RequestParam("roadAddressName") String roadAddressName,
-//                                @RequestParam("content") String content, HttpSession session) {
-//
-//        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-//        MapDto mapDto = MapDto.builder()
-//                .x(x)
-//                .y(y)
-//                .placeId(placeId)
-//                .placeName(placeName)
-//                .addressName(addressName)
-//                .roadAddressName(roadAddressName)
-//                .build();
-//
-//        mapService.addNewPlace(mapDto);
-//
-//        log.info("댓글 내용: {}", mapDto.toString());
-//
-//        ReviewDto reviewDto = ReviewDto.builder()
-//                .review(content)
-//                .placeId(mapDto.getPlaceId())
-//                .memberId(loginMember.getMemberId())
-//                .build();
-//
-//        reviewService.addNewReview(reviewDto);
-////        return "redirect:/map/place?id=" + mapDto.getPlaceId();
-//        return "redirect:/map/place?id=" + mapDto.getPlaceId();
-//
-//    }
-
-
-
     @GetMapping("/list")
     public String getReviewsByPlaceId(@RequestParam("placeId") long placeId, Model model) {
         log.info("Received request for reviews of place with ID: {}", placeId);

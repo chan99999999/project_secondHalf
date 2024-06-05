@@ -1,10 +1,12 @@
 /*-----------------------MAP---------------------*/
 #map_wrap {
-    margin: auto;
+    margin: 70px auto 0 auto;
     width: 1400px;
     min-width: 1400px;
     outline: none;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
 
 .map_wrap,
@@ -15,18 +17,15 @@
     font-size: 20px;
 }
 
-
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active {
     color: #000;
     text-decoration: none;
 }
 
 .map_wrap {
-    position: relative;
-    width: 100%;
+    width: 100vh;
     height: 80vh;
 }
-
 
 .custom_typecontrol {
     position: absolute;
@@ -95,8 +94,6 @@
 }
 
 
-
-
 .custom_zoomcontrol span {
     display: flex;
     justify-content: center;
@@ -108,12 +105,10 @@
     font-size: 20px; /* 글자 크기를 20포인트로 변경 */
     color: white; /* 글씨 색상을 화이트로 변경 */
 }
+
 .custom_zoomcontrol span:first-child {
     border-bottom: 1px solid #bfbfbf;
 }
-
-
-
 
 
 #menu_wrap {
@@ -300,18 +295,18 @@
 }
 
 #menu_wrap::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 140, 24, 0.7); /* 핸들 색상과 50% 투명도 */
+    background-color: rgba(255, 140, 24, 0.7);
     border-radius: 10px;
-    border: 3px solid rgba(255, 255, 255, 0.7); /* 핸들 주위의 여백 색상과 50% 투명도 */
+    border: 3px solid rgba(255, 255, 255, 0.7);
 }
 
 #menu_wrap::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 140, 24, 0.7); /* 마우스를 올렸을 때 핸들 색상과 50% 투명도 */
+    background-color: rgba(255, 140, 24, 0.7);
 }
 
 #search-map-tagbox {
     width: 330px;
-    background-color: #white;
+    background-color: #FFFFFF;
     margin: 10px 0;
     border-radius: 10px;
     padding: 10px;
@@ -328,20 +323,16 @@
     display: inline-block;
     line-height: 40px;
     transition: background-color 0.3s, color 0.3s;
-    border: 1px solid transparent; /* 테두리 초기값 설정 */
+    border: 1px solid transparent;
 }
 
 #search-map-tagbox .map-tag:hover {
-    background-color: rgba(255, 255, 255, 0.5); /* 배경색 반전 및 투명도 추가 */
+    background-color: rgba(255, 255, 255, 0.5);
     color: #ff8c18;
-    border-color: #ff8c18; /* 테두리 색상 변경 */
-    border-width: 1px; /* 테두리 두께 변경 */
+    border-color: #ff8c18;
+    border-width: 1px;
 }
 
-/*#search-map-tagbox .map-tag:hover {*/
-/*    background-color: rgba(255, 255, 255, 0.8); !* 배경색 반전 및 투명도 추가 *!*/
-/*    color: #ff8c18;*/
-/*}*/
 #keyword {
     height: 50px;
     width: 200px;
@@ -356,125 +347,125 @@
 }
 
 /*-------------------PLACE_MAP------------------------*/
-#place-wrap{
+#place-wrap {
     width: 1200px;
     min-width: 1200px;
     margin: 150px auto;
 }
 
-#place-detail-wrap{
+#place-detail-wrap {
     width: 1200px;
     display: flex;
 
 }
 
-#place-map{
+#place-map {
     width: 500px;
     height: 500px;
     background-color: #ff8c18;
+    position: relative;
+    z-index: 1;
 }
 
-#place-map > img{
+#place-map > img {
     width: 500px;
     height: 500px;
 }
 
-#place-info{
+#place-info {
     width: 1000px;
     background-color: rgba(253, 139, 24, 0.19);
     padding: 20px;
 }
 
-.place-info-text{
+.place-info-text {
     display: flex;
     font-size: 30px;
     margin: 20px 0px;
 }
 
-.place-info-title{
+.place-info-title {
     width: 150px;
     font-weight: bolder;
 }
 
-.review-wrap{
+.review-wrap {
     margin: 20px 0px;
     padding: 0px 20px;
 }
 
-#place-review{
+#place-review {
     width: 1160px;
     background-color: rgba(211, 211, 211, 0.57);
     padding: 10px 0px;
     margin: 10px 0px;
 }
 
-.write-review{
+.write-review {
     padding: 10px 10px;
     align-content: center;
 }
 
-#write-review p{
+#write-review p {
     font-size: 20px;
 }
 
 
-.review-writer{
+.review-writer {
     padding-left: 10px;
     font-size: 20px;
 }
 
-.review-text{
+.review-text {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0px 10px;
 }
 
-.review-text textarea{
+.review-text textarea {
     font-size: 25px;
     padding: 10px;
     margin: 5px 0px;
 }
 
-.write-review-btn{
+.write-review-btn {
     height: 80px;
     width: 80px;
     background-color: #ff8c18;
     color: #ffffff;
     font-size: 20px;
-    padding: 0px 10px; /* 좌우 패딩 조정 */
+    padding: 0px 10px;
     border-radius: 10px;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
-    border: 1px solid transparent; /* 테두리 초기값 설정 */
+    border: 1px solid transparent;
 }
 
 #write-review-btn:hover,
-#login-btn:hover{
-    background-color: #e67e00; /* 호버 시 색상 변경 */
+#login-btn:hover {
+    background-color: #e67e00;
     color: #fff;
 }
 
-.review{
+.review {
     display: flex;
     margin: 10px;
     padding: 10px 20px;
     background-color: lightgray;
 }
 
-.review-writer{
+.review-writer {
     font-size: 20px;
     font-weight: bolder;
 }
 
-.review-content{
+.review-content {
     font-size: 25px;
 }
 
-.review img{
+.review img {
     width: 55px;
     height: 55px;
     margin-right: 20px;
 }
-
-

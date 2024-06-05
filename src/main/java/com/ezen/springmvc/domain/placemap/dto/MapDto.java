@@ -1,5 +1,4 @@
 package com.ezen.springmvc.domain.placemap.dto;
-
 import lombok.*;
 
 @NoArgsConstructor

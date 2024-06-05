@@ -1,57 +1,20 @@
-<!--searchForm.html-->
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
-
 <head>
-
     <title th:fragment="title"> ::: 우리동네 검색 ::: </title>
     <th:block th:fragment="script">
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a091d5d3ac1b6ffddf41488f1e545f78&libraries=services"></script>
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a091d5d3ac1b6ffddf41488f1e545f78&libraries=services"></script>
         <script defer type="text/javascript" th:src="@{/js/searchForm.js}"></script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
-        <!-- apiMap.css를 Thymeleaf의 th:href 속성을 사용하여 로드합니다. -->
         <link rel="stylesheet" href="/css/map.css">
     </th:block>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tagBox = document.getElementById('search-map-tagbox');
-            const keywordInput = document.getElementById('keyword');
-
-            tagBox.addEventListener('click', function (event) {
-                if (event.target && event.target.matches('.map-tag')) {
-                    const tagText = event.target.textContent;
-                    keywordInput.value = tagText.replace('#', '');  // #을 제거하고 입력
-                    searchPlaces();  // 검색 실행
-                }
-            });
-        });
-
-        function searchPlaces() {
-            // 검색을 실행하는 기존의 함수 구현
-            console.log('Searching for:', document.getElementById('keyword').value);
-            // 여기에 실제 검색 로직을 추가하세요.
-        }
-    </script>
-
     <style>
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 10;
-        }
-        /* 지도 nav 밑으로넣어야함 확인해야함 */
-        .map_wrap {
-            position: relative;
-            z-index: 1;
-        }
     </style>
 </head>
-
 <body>
 <div class="wrapper" th:fragment="content">
     <div class="map_wrap" id="map_wrap">
@@ -68,7 +31,7 @@
         </div>
 
         <div id="menu_wrap" class="bg_white">
-            <div class="option" >
+            <div class="option">
                 <div>
                     <form onsubmit="searchPlaces(); return false;">
                         <input type="text" value="노원구" id="keyword" size="15">
@@ -89,6 +52,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

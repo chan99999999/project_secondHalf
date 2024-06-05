@@ -1,5 +1,4 @@
 package com.ezen.springmvc.domain.review.dto;
-
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import lombok.*;
 

@@ -1,7 +1,5 @@
 package com.ezen.springmvc.domain.review.dto;
-
 import lombok.*;
-
 import java.sql.Timestamp;
 
 @NoArgsConstructor

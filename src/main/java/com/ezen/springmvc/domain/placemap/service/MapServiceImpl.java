@@ -30,7 +30,6 @@ public class MapServiceImpl implements MapService {
         }
     }
 
-
     // 주어진 mapId를 사용하여 임의의 MapDto 객체를 생성하여 반환
     @Override
     public MapDto getPlaceInfoById(long mapId) {
@@ -44,8 +43,6 @@ public class MapServiceImpl implements MapService {
                 .y("y")
                 .build();
     }
-
-
 
     // PlaceId를 사용하여 데이터베이스에서 장소정보 검색
     @Override
@@ -65,24 +62,4 @@ public class MapServiceImpl implements MapService {
             mapMapper.createPlaceMap(mapDto);
         }
     }
-
-
-
-
-
-    //데이터베이스에 place_id 에 해당하는 정보가 있는지 조회
-
-//
-//    // 데이터베이스에서 place_id가 존재하는지 검색해보는 메서드
-//    @Override
-//    public MapDto searchByPlaceId(Long placeId) {
-//        return null;
-//    }
-//
-//    // place_id 없을시 신규 등록하는 메서드
-//    @Override
-//    public MapDto addNewPlace(Long placeId) {
-//        return null;
-//    }
-
 }

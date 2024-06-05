@@ -1,4 +1,5 @@
 package com.ezen.springmvc.domain.review.service;
+
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.mapper.MapMapper;
 import com.ezen.springmvc.domain.placemap.service.MapService;
@@ -20,26 +21,16 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public void addNewReview(MapDto mapDto, ReviewDto reviewDto){
+    public void addNewReview(MapDto mapDto, ReviewDto reviewDto) {
         // 지도에 신규 장소 등록
         mapService.addNewPlace(mapDto);
         // 신규 장소에 대한 리뷰 등록
         reviewMapper.createReview(reviewDto);
     }
 
-//    @Override
-//    public List<ReviewListForm> getReviewsByPlaceId(Long placeId) {
-//        return reviewMapper.getReviewsByPlaceId(placeId);
-//    }
-
-
-
+    //placeId로 리뷰검색해서 리스트로 반환    
     @Override
     public List<ReviewDto> getReviewsByPlaceId(long placeId) {
         return reviewMapper.getReviewsByPlaceId(placeId);
     }
-
-
-
-
 }

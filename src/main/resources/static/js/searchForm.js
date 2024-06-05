@@ -1,4 +1,22 @@
-// searchForm.js
+// 키워드 검색
+document.addEventListener('DOMContentLoaded', function () {
+    const tagBox = document.getElementById('search-map-tagbox');
+    const keywordInput = document.getElementById('keyword');
+
+    tagBox.addEventListener('click', function (event) {
+        if (event.target && event.target.matches('.map-tag')) {
+            const tagText = event.target.textContent;
+            keywordInput.value = tagText.replace('#', '');
+            searchPlaces();
+        }
+    });
+});
+
+function searchPlaces() {
+    console.log('Searching for:', document.getElementById('keyword').value);
+}
+
+
 
 // 마커를 담을 배열입니다
 var markers = [];
@@ -36,8 +54,6 @@ function zoomIn() {
 function zoomOut() {
     map.setLevel(map.getLevel() + 1);
 }
-
-
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();

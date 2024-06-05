@@ -1,5 +1,4 @@
 package com.ezen.springmvc.web.map.controller;
-
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
@@ -7,16 +6,11 @@ import com.ezen.springmvc.domain.review.service.ReviewService;
 import com.ezen.springmvc.web.map.form.ReviewForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -53,7 +47,6 @@ public class MapController {
         return mapDto;
     }
 
-
     // POST 요청을 처리하여 장소 정보를 모델에 추가하고 뷰를 반환합니다.
     @PostMapping("/place")
     public String getPlaceInfo(
@@ -82,17 +75,10 @@ public class MapController {
                 .y(y)
                 .build();
 
-        // 로그 추가: 생성된 MapDto 객체 출력
-        log.info("생성된 Map Dto: {}", mapDto);
 
         // MapDto 객체를 처리합니다.
         MapDto processedPlaceInfo = mapService.processPlaceInfo(mapDto);
-
-        // 로그 추가: 처리된 정보 출력
-        log.info("처리된 map 정보: {}", processedPlaceInfo);
-
         List<ReviewDto> reviewList = reviewService.getReviewsByPlaceId(mapId);
-
         ReviewForm reviewForm = ReviewForm.builder().build();
 
         // 처리된 정보를 모델에 추가합니다.
@@ -117,8 +103,7 @@ public class MapController {
         return "/map/place";
     }
 
-
-    // 데이터베이스에서 place_id가 존재하는지 검색 (동적)
+    // 데이터베이스에서 place_id가 존재하는지 검색
     @PostMapping("/place/info")
     @ResponseBody
     public ReviewForm findByPlaceId(@RequestBody ReviewForm reviewForm) {
@@ -150,9 +135,6 @@ public class MapController {
                 .x(reviewForm.getX())
                 .y(reviewForm.getY())
                 .build();
-
-        // 리뷰 정보
-
 
         mapService.addNewPlace(mapDto);
         return reviewForm;
