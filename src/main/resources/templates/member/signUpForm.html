@@ -52,14 +52,15 @@
                             <div class="signup-info">
                                 <label for="signup-pw">비밀번호</label>
                                 <input class="signup-input" th:field="*{memberPasswd}" type="password" id="signup-pw"
-                                       placeholder="비밀번호를 입력해주세요." required o>
+                                       placeholder="비밀번호를 입력해주세요." required>
                             </div>
                             <p th:errors="*{memberPasswd}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
                         </li>
                         <li>
                             <div class="signup-info">
                                 <label for="signup-pw-confirm">비밀번호 확인</label>
-                                <input class="signup-input" type="password" id="signup-pw-confirm" th:field="*{rePasswd}"
+                                <input class="signup-input" type="password" id="signup-pw-confirm"
+                                       th:field="*{rePasswd}"
                                        placeholder="비밀번호를 한번 더 입력해주세요.">
                             </div>
                             <p th:errors="*{rePasswd}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
@@ -69,23 +70,29 @@
                             <div class="signup-info">
                                 <label for="signup-address">주소</label>
                                 <div id="signup-address">
-                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-hagye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}"
+                                           id="signup-hagye"
                                            value="하계동">
                                     <label for="signup-hagye">하계동</label>
-                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-junggye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}"
+                                           id="signup-junggye"
                                            value="중계동">
                                     <label for="signup-junggye">중계동</label>
-                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-sanggye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}"
+                                           id="signup-sanggye"
                                            value="상계동">
                                     <label for="signup-sanggye">상계동</label>
-                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-wolgye"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}"
+                                           id="signup-wolgye"
                                            value="월계동">
                                     <label for="signup-wolgye">월계동</label>
-                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}" id="signup-gongneung"
+                                    <input class="signup-radio" type="radio" th:field="*{memberAddress}"
+                                           id="signup-gongneung"
                                            value="공릉동">
                                     <label for="signup-gongneung">공릉동</label>
                                 </div>
                             </div>
+                            <p th:errors="*{memberAddress}" th:class="text-danger">주소 관련 입력 오류 메시지</p>
                         </li>
                         <li>
                             <div class="signup-info">
@@ -99,12 +106,35 @@
                                     <label for="signup-men">남성</label>
                                 </div>
                             </div>
+                            <p th:errors="*{gender}" th:class="text-danger">성별 관련 입력 오류 메시지</p>
                         </li>
                         <li>
                             <div class="signup-info">
                                 <label for="signup-birth">생년월일</label>
-                                <input class="signup-input" id="signup-birth" type="date" th:field="*{birthDate}">
+                                <div id="birth-wrap">
+                                    <select class="signup-birth" id="signup-birth" th:field="*{birthYear}">
+                                        <option value="">출생 연도</option>
+                                        <th:block th:each="num : ${#numbers.sequence(1901, 1975)}">
+                                            <option th:value="|${num}-|" th:text="|${num}년|"></option>
+                                        </th:block>
+                                    </select>
+                                    <select class="signup-birth" th:field="*{birthMonth}">
+                                        <option value="">월</option>
+                                        <th:block th:each="num : ${#numbers.sequence(1, 12)}">
+                                            <option th:value="|${num}-|" th:text="|${num}월|"></option>
+                                        </th:block>
+                                    </select>
+                                    <select class="signup-birth" th:field="*{birthDate}">
+                                        <option value="">일</option>
+                                        <th:block th:each="num : ${#numbers.sequence(1, 31)}">
+                                            <option th:value="|${num}|" th:text="|${num}일|"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
                             </div>
+                                <p th:errors="*{birthYear}" th:class="text-danger-birth">생년월일 관련 입력 오류 메시지</p>
+                                <p th:errors="*{birthMonth}" th:class="text-danger-birth">생년월일 관련 입력 오류 메시지</p>
+                                <p th:errors="*{birthDate}" th:class="text-danger-birth">생년월일 관련 입력 오류 메시지</p>
                         </li>
                         <li>
                             <div class="signup-info">
@@ -112,7 +142,7 @@
                                 <input class="signup-input" th:field="*{email}" type="email" id="signup-email"
                                        placeholder="이메일">
                             </div>
-                            <p th:errors="*{email}" th:class="text-danger">아이디 관련 입력 오류 메시지</p>
+                            <p th:errors="*{email}" th:class="text-danger">이메일 관련 입력 오류 메시지</p>
                         </li>
                     </ul>
                 </div>

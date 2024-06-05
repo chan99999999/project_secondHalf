@@ -31,13 +31,10 @@ public class MapServiceImpl implements MapService {
     }
 
 
-
-
     // 주어진 mapId를 사용하여 임의의 MapDto 객체를 생성하여 반환
     @Override
     public MapDto getPlaceInfoById(long mapId) {
         return MapDto.builder()
-
                 .placeId(mapId)
                 .mapId(mapId)
                 .placeName("placeName")
@@ -47,14 +44,6 @@ public class MapServiceImpl implements MapService {
                 .y("y")
                 .build();
     }
-
-
-
-
-
-
-
-
 
 
 
