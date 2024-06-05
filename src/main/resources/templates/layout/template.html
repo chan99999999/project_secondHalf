@@ -22,6 +22,12 @@
             <a href="/meet">동네친구</a>
             <p>ㅣ</p>
             <a href="/chat">대화하기</a>
+            <th:block th:if="${session.loginMember} != null">
+                <th:block th:if="${session.loginMember.memberId.equals('admin')}">
+                    <p>ㅣ</p>
+                    <a href="http://localhost:3000/admin">관리자 페이지</a>
+                </th:block>
+            </th:block>
         </div>
         <th:block th:if="${session.loginMember == null}">
             <div class="nav-member">

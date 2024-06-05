@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
+
 /** 태그 게시글(매핑) DTO */
 public class TagArticleDto {
     private int dailyArticleId; /** 일상 게시글 번호 */
