@@ -196,7 +196,14 @@
             reviewBox.appendChild(imgBox);
             reviewBox.appendChild(reviewWrap);
 
-            reviewListElem.appendChild(reviewBox);
+            // reviewListElem.appendChild(reviewBox);
+            // reviewListElem의 첫 번째 자식 요소 앞에 reviewBox 삽입
+            if (reviewListElem.firstChild) {
+                reviewListElem.insertBefore(reviewBox, reviewListElem.firstChild);
+            } else {
+                reviewListElem.appendChild(reviewBox); // reviewListElem이 비어있을 경우
+            }
+
 
             // 후기 입력란 초기화
             document.querySelector(".review-content").value = "";

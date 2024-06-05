@@ -39,7 +39,7 @@ public class ChatRoomController {
      * 클라이언트로부터 받은 메시지를 해당 채팅방의 구독자(sub)에게 전달
      * @param message 클라이언트로부터 받은 메시지 객체
      */
-    @MessageMapping("/chat/message")
+    @MessageMapping("/message")
     public void message(MessageDto message) {
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }

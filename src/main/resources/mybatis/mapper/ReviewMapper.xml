@@ -44,6 +44,8 @@
             member ON review.member_id = member.member_id
         WHERE
             review.place_id = #{placeId}
+        ORDER BY
+            review.regdate DESC
     </select>
 
     <resultMap id="reviewWithMemberResultMap" type="com.ezen.springmvc.domain.review.dto.ReviewDto">
