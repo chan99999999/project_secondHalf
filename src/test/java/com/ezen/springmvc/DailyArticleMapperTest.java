@@ -130,19 +130,19 @@ public class DailyArticleMapperTest {
         }
     }
 
-    @Test
-    @DisplayName("좋아요 등록 테스트")
-    @Disabled
-    void clickHeartTest() {
-        HeartDto heartDto = HeartDto.builder()
-                .heartCount(2)
-                .dailyArticleId(20)
-                .memberId("승아")
-                .build();
-
-        dailyArticleServiceImpl.clickHeart(heartDto);
-        log.info("좋아요 등록 완료");
-    }
+//    @Test
+//    @DisplayName("좋아요 등록 테스트")
+//    @Disabled
+//    void clickHeartTest() {
+//        HeartDto heartDto = HeartDto.builder()
+//                .heartCount(2)
+//                .dailyArticleId(20)
+//                .memberId("승아")
+//                .build();
+//
+//        dailyArticleServiceImpl.clickHeart(heartDto);
+//        log.info("좋아요 등록 완료");
+//    }
 
     @Test
     @DisplayName("좋아요 개수 반환 테스트")

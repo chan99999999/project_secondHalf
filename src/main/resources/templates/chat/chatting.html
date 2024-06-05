@@ -48,7 +48,7 @@
                     <div class="chat-cureent-name member-profile" id="member-profile">
                         김순자 최고
                         <ul class="perid">
-                            <li><a href="chat/room/to/싸와디캅망고">1:1 대화하기</a></li>
+                            <li><a href="/chat/room/to/두리안아저씨">1:1 대화하기</a></li>
                             <hr>
                             <li><a href="#">게시글 보기</a></li>
                         </ul>
@@ -143,13 +143,6 @@
                 recvMessage(recv);
 
             });
-
-            // 채팅방에 입장하고 해당 정보를 서버에 전송
-            ws.send("/pub/chat/message", {}, JSON.stringify({
-                type: 'ENTER',
-                roomId: roomId,
-                senderId: sender
-            }));
         }, function (error) {
             alert("error " + error);
         });
