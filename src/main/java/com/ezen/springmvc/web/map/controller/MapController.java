@@ -44,9 +44,10 @@ public class MapController {
 
 
     // 특정 장소의 정보를 JSON 형식으로 반환합니다.
-    @GetMapping("/place/code")
+    @GetMapping("/place/json")
     @ResponseBody
     public MapDto getPlaceInfoJson(@RequestParam("id") long mapId) {
+        log.info("mapId : {}", mapId);
         MapDto mapDto = mapService.getPlaceInfoById(mapId);
         log.info("Fetched MapDto: {}", mapDto);
         return mapDto;

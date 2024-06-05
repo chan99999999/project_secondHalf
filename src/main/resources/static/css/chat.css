@@ -208,9 +208,9 @@
     max-height: 550px;
     min-height: 550px;
     padding: 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 
 .chat-message-list {

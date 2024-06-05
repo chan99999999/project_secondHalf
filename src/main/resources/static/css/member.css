@@ -95,6 +95,19 @@
     padding: 0px 20px;
 }
 
+#birth-wrap{
+    width: 550px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#birth-wrap >select{
+    width: 100%;
+    margin: 0px 5px;
+    font-size: 25px;
+    text-align: center;
+}
+
 #signup-gender{
     display: flex;
     width: 540px;
@@ -541,6 +554,12 @@ hr{
     color: red;
     padding-left: 306px;
     margin: -10px 0px;
+}
+
+.text-danger-birth{
+    font-size: 25px;
+    color: red;
+    padding-left: 306px;
 }
 
 /*체크박스 스타일*/

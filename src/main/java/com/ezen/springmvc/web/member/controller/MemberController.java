@@ -72,6 +72,9 @@ public class MemberController {
             return "/member/signUpForm";
         }
 
+        String birthDate = memberForm.getBirthYear() + memberForm.getBirthMonth() + memberForm.getBirthDate();
+        log.info("생일 테스트 : {}", birthDate);
+
         MemberDto memberDto = MemberDto.builder()
                 .memberId(memberForm.getMemberId())
                 .name(memberForm.getName())
@@ -79,7 +82,7 @@ public class MemberController {
                 .memberPasswd(memberForm.getMemberPasswd())
                 .memberAddress(memberForm.getMemberAddress())
                 .gender(memberForm.getGender())
-                .birthDate(memberForm.getBirthDate())
+                .birthDate(birthDate)
                 .email(memberForm.getEmail())
                 .build();
         memberService.register(memberDto);
