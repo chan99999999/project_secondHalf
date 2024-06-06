@@ -215,6 +215,12 @@ public class DailyController {
             model.addAttribute("loginMember", loginMember);
         }
 
+        for (ReplyDto replyDto : replyList) {
+            MemberDto commenter = memberService.getMember(replyDto.getWriter());
+            replyDto.setPicture(commenter.getStorePicture());
+            replyDto.setNickname(commenter.getNickname());
+        }
+
         MemberDto writer = memberService.getMember(dailyArticleDto.getMemberId());
 
         model.addAttribute("dailyArticle", dailyArticleDto);

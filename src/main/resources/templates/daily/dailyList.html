@@ -52,7 +52,7 @@
                     <div class="daily-post">
                         <div class="daily-writer">
                             <img class="daily-writer-img" src="/img/profile.png">
-                            <p class="daily-writer-name" th:text="${notice.nickName}">김순자 최고</p>
+                            <p class="daily-writer-name" th:text="${notice.nickName}"></p>
                         </div>
                         <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${notice.dailyArticleId}, categoryId=${categoryId})}">
 
@@ -71,41 +71,44 @@
             </th:block>
         </div>
 
-<!--        <div th:replace="~{/fragment/nowongu_news :: nowongu_news}"></div>-->
+        <!--        <div th:replace="~{/fragment/nowongu_news :: nowongu_news}"></div>-->
 
         <th:block th:if="${dailyArticleList.isEmpty()}">
-        <div class="daily-list">
-            <h1 class="daily-list-title">소통 공간</h1>
-            <div th:text="'조회된 게시글이 존재하지 않습니다.'"></div>
-        </div>
+            <div class="daily-list">
+                <h1 class="daily-list-title">소통 공간</h1>
+                <div th:text="'조회된 게시글이 존재하지 않습니다.'"></div>
+            </div>
         </th:block>
 
         <th:block th:if="${!dailyArticleList.isEmpty()}">
-        <div class="daily-list">
-            <h1 class="daily-list-title">소통 공간</h1>
-            <th:block th:each="dailyArticle : ${dailyArticleList}">
-<!--                <div class="daily-post" th:if="${dailyArticle.memberId != 'admin'}">-->
-                <div class="daily-post">
-
-                    <div class="daily-writer">
-                        <img class="daily-writer-img" th:src="@{/member/image/{filename}(filename=${dailyArticle.storePicture})}">
-                        <p class="daily-writer-name" th:text="${dailyArticle.nickName}"></p>
+            <div class="daily-list">
+                <h1 class="daily-list-title">소통 공간</h1>
+                <th:block th:each="dailyArticle : ${dailyArticleList}">
+                    <!--                <div class="daily-post" th:if="${dailyArticle.memberId != 'admin'}">-->
+                    <div class="daily-post">
+                        <div class="daily-writer">
+                            <img class="daily-writer-img"
+                                 th:src="@{/member/image/{filename}(filename=${dailyArticle.storePicture})}"/>
+                            <div class="test">
+                                <div class="daily-writer-name" th:text="${dailyArticle.nickName}"></div>
+                                <div class="toChat"><a th:href="|/chat/room/to/${dailyArticle.nickName}|" th:text="대화하기"></a></div>
+                            </div>
+                        </div>
+                        <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
+                            <img class="daily-post-img" src="/img/sample1.jpg"
+                                 th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
+                        </a>
+                        <div class="daily-like-wrap">
+                            <img class="daily-like" src="/img/heart.png">
+                            <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>
+                        </div>
+                        <p class="daily-post-title">
+                            <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}"
+                               th:text="${dailyArticle.title}"></a>
+                        </p>
                     </div>
-                    <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
-                        <img class="daily-post-img" src="/img/sample1.jpg"
-                             th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
-                    </a>
-                    <div class="daily-like-wrap">
-                        <img class="daily-like" src="/img/heart.png">
-                        <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>
-                    </div>
-                    <p class="daily-post-title">
-                        <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}"
-                           th:text="${dailyArticle.title}"></a>
-                    </p>
-                </div>
-            </th:block>
-        </div>
+                </th:block>
+            </div>
         </th:block>
 
         <div aria-label="Page navigation example">
@@ -159,8 +162,6 @@
     </div>
 </div>
 
-
-</div>
 
 </html>
 

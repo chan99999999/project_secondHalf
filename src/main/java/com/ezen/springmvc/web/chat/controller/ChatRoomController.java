@@ -72,8 +72,12 @@ public class ChatRoomController {
 //        for (MessageDto message : messages) {
 //            log.info("메세지 {}", message.getContent());
 //        }
+        ChatDto chatDto = chatService.getRoom(roomId);
+        MemberDto memberDto = memberService.getMember(chatDto.getReceiverId());
+
         redirectAttributes.addFlashAttribute("messages", messages);
         redirectAttributes.addFlashAttribute("roomId", roomId);
+        redirectAttributes.addFlashAttribute("receiver", memberDto);
         return "redirect:/chat";
     }
 

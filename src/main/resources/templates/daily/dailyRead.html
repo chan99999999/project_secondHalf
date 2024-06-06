@@ -21,12 +21,12 @@
 <div class="wrapper" th:fragment="content">
     <div id="daily-read-wrap">
         <div id="daily-read-writer-wrap">
-            <div class="chat-current-member">
-                <img class="profile-img chat-member-img" th:src="@{/member/image/{fileName}(fileName=${writer.storePicture})}">
-                <div class="chat-current-name member-profile" id="member-profile" th:text="${writer.nickname}">
-                    <ul class="perid">
-                        <li><a th:href="|chat/room/to/${writer.nickname}|">1:1 대화하기</a></li>
-                    </ul>
+            <div class="daily-writer">
+                <img class="daily-writer-img"
+                     th:src="@{/member/image/{filename}(filename=${writer.storePicture})}"/>
+                <div class="test">
+                    <div class="daily-writer-name" th:text="${writer.nickname}"></div>
+                    <div class="toChat"><a th:href="|/chat/room/to/${writer.nickname}|" th:text="대화하기"></a></div>
                 </div>
             </div>
             <div id="daily-read-info">
@@ -121,7 +121,7 @@
             <div class="review-wrap">
                 <!--                <form method="post">-->
                 <div id="write-review">
-                    <p name="writer" th:text="'작성자 : ' + ${loginMember.memberId}">작성자 : 김순자최고</p>
+                    <p th:text="'작성자 : ' + ${loginMember.nickname}"></p>
                     <div id="review-text">
                         <textarea name="content" cols="62" rows="2"></textarea>
                         <!--                            <button type="submit" id="write-review-btn">등록</button>-->
@@ -132,18 +132,21 @@
                 <div class="review-list">
 
                     <div class="review" th:each="reply : ${replyList}" th:data-reply-id="${reply.replyId}">
-                        <div>
-                            <img src="/img/profile.png">
+                        <div class="review-box">
+                            <div>
+                                <img class="commenter" th:src="@{/member/image/{picture}(picture=${reply.picture})}">
+                            </div>
+                            <div>
+                                <ul>
+                                    <li class="review-writer" th:text="${reply.nickname}"></li>
+                                    <li class="review-content" th:text="${reply.content}"></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div>
-                            <ul>
-                                <li class="review-writer" th:text="${reply.writer}">작성자명</li>
-                                <li class="review-content" th:text="${reply.content}">시간이 너무 빨리 지나가는 것 같아요...</li>
-                            </ul>
-                            <th:block th:if="${loginMember != null}">
-                                <th:block th:if="${loginMember.memberId == dailyArticle.memberId}">
 
-
+                        <th:block th:if="${loginMember != null}">
+                            <th:block th:if="${loginMember.memberId} == ${reply.writer}">
+                                <div>
                                     <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
 
                                     <!--                                    <form id="deleteReplyForm" method="post"-->
@@ -153,25 +156,23 @@
 
                                     <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제
                                     </button>
-                                    <!--                                    </form>-->
-                                </th:block>
+                                </div>
+                                <!--                                    </form>-->
                             </th:block>
+                        </th:block>
 
-                            <script th:inline="javascript">
-                                function confirmReplyDelete() {
-                                    if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-                                        let form = document.getElementById("deleteReplyForm");
-                                        let categoryId = form.getAttribute("data-categoryId");
-                                        let dailyArticleId = form.getAttribute("data-dailyArticleId");
-                                        let replyId = form.getAttribute("data-replyId");
-                                        form.setAttribute("action", "/daily/" + categoryId + "/delete-reply/" + dailyArticleId + "/" + replyId);
-                                        form.submit();
-                                    }
+                        <script th:inline="javascript">
+                            function confirmReplyDelete() {
+                                if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+                                    let form = document.getElementById("deleteReplyForm");
+                                    let categoryId = form.getAttribute("data-categoryId");
+                                    let dailyArticleId = form.getAttribute("data-dailyArticleId");
+                                    let replyId = form.getAttribute("data-replyId");
+                                    form.setAttribute("action", "/daily/" + categoryId + "/delete-reply/" + dailyArticleId + "/" + replyId);
+                                    form.submit();
                                 }
-                            </script>
-
-
-                        </div>
+                            }
+                        </script>
                     </div>
                 </div>
 

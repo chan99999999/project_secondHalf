@@ -17,7 +17,7 @@
 
 	<!-- room_id로 채팅방 조회 -->
 	<select id="findChatRoom" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
-		SELECT room_id, created_at, sender_id, receiver_id
+		SELECT room_id, created_at, sender_id, receiver_id, sender_nickname, receiver_nickname
 		FROM chat_room
 		WHERE room_id = #{roomId}
 	</select>

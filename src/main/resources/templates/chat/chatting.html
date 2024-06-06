@@ -44,13 +44,8 @@
         <th:block th:if="${roomId != null}">
             <div class="chat-bar">
                 <div class="chat-current-member">
-                    <img class="profile-img chat-member-img" src="/img/profile.png">
-                    <div class="chat-current-name member-profile" id="member-profile">
-                        김순자 최고
-                        <ul class="perid">
-                            <li><a href="chat/room/to/체리꼭다리">1:1 대화하기</a></li>
-                        </ul>
-                    </div>
+                    <img class="profile-img chat-member-img" th:src="@{/member/image/{picture}(picture=${receiver.storePicture})}">
+                    <div class="chat-current-name member-profile" id="member-profile" th:text="${receiver.nickname}"></div>
                 </div>
                 <div class="chat-history">
                     <ul id="message-list">
