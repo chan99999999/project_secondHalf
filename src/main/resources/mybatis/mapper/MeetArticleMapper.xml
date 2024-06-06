@@ -15,11 +15,10 @@
        ma.place_id AS placeId,
        ta.tag_id AS tagId,
        t.tag_name AS tagName
-        FROM meet_article ma,
-            tag_article ta,
-            tag t
-        WHERE ma.m_article_id = ta.m_article_id
-          AND ta.tag_id = t.tag_id
+        FROM meet_article ma
+            JOIN tag_article ta ON ma.m_article_id = ta.m_article_id
+            JOIN tag t ON ta.tag_id = t.tag_id
+        WHERE ma.category_id = 3
         ORDER BY ma.m_article_id DESC
     </select>
     <!-- 제목으로 게시글 검색-->
@@ -77,7 +76,7 @@
                 SYSDATE,
                 SYSDATE,
                 #{enter},
-                3,
+                1,
                 #{categoryId},
                 #{memberId},
                 #{placeId})

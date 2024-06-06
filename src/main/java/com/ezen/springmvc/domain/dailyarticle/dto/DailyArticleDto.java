@@ -25,4 +25,5 @@ public class DailyArticleDto {
     private int totalHeartCount;    /** 일상 게시글 좋아요 총 개수 */
     private String tagNames;        /** 일상 게시글 태그 이름들 */
     private String nickName;        /** 일상 게시글 작성자 닉네임 */
+    private String storePicture;    /** 일상 게시글 작성자 프로필 사진 */
 }

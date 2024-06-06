@@ -170,7 +170,7 @@ public class MemberController {
             return "/member/loginForm";
         }
 
-        if (loginMember.getGrade().equals("BAN")) {
+        if (loginMember.getGrade().equals("BLACK")) {
             String notice = "정지된 회원입니다. 고객센터에 문의바랍니다.";
             request.setAttribute("notice", notice);
             return "/member/loginForm";

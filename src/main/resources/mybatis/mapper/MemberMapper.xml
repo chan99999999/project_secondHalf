@@ -149,7 +149,7 @@
 <!--    회원 정지-->
     <update id="banMember" parameterType="MemberDto">
         UPDATE member
-        SET grade = 'BAN'
+        SET grade = 'BLACK'
         WHERE member_id = #{value}
     </update>
 

@@ -48,6 +48,60 @@
     color: black;
 }
 
+.divide{
+    margin: 0px 5px;
+}
+
+/*---------------닉네임 채팅-------------*/
+.chat-current-member {
+    height: 70px;
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-current-name {
+    font-size: 25px;
+    padding: 0 10px;
+    font-weight: bolder;
+}
+
+.chat-member-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.chat-current-name:hover ul{
+    display: block;
+    background-color: white;
+    border: 1px solid gray;
+    position: absolute;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.chat-current-name >ul >li{
+    padding: 10px 20px;
+}
+
+.chat-current-name >ul >li:hover{
+    background-color: #eaeaea;
+}
+
+.perid{
+    display: none;
+}
+
+
 /*-----------------------------------------------------*/
 
 *{
@@ -126,30 +180,6 @@ section{
 /*--------------------------CHECK-BOX-------------------------------*/
 
 
-
-/*----------------------------프로필----------------*/
-.member-profile{}
-
-.member-profile:hover ul{
-    display: block;
-    background-color: white;
-    border: 1px solid gray;
-    position: absolute;
-    font-size: 25px;
-    font-weight: normal;
-}
-
-.member-profile >ul >li{
-    padding: 10px 20px;
-}
-
-.member-profile >ul >li:hover{
-    background-color: #eaeaea;
-}
-
-.perid{
-    display: none;
-}
 
 /*-------------------------------NAV--------------------------*/
 

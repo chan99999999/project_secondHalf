@@ -12,6 +12,7 @@ import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleService;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
 import com.ezen.springmvc.domain.member.mapper.MemberMapper;
+import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.member.service.MemberServiceImpl;
 import com.ezen.springmvc.web.common.page.Pagination;
 import com.ezen.springmvc.web.common.page.ParameterForm;
@@ -52,6 +53,7 @@ public class DailyController {
 
     private final DailyArticleService dailyArticleService;
     private final FileService fileService;
+    private final MemberService memberService;
 
     // 일상 게시글 작성 화면 요청 처리
     @GetMapping("{categoryId}/register")
@@ -170,6 +172,12 @@ public class DailyController {
             noticeList = dailyArticleService.getAdminDailyArticles(categoryId, searchDto);
         }
 
+        for (DailyArticleDto dailyArticle : dailyArticleList) {
+            MemberDto writer = memberService.getMember(dailyArticle.getMemberId());
+            dailyArticle.setStorePicture(writer.getStorePicture());
+            dailyArticle.setNickName(writer.getNickname());
+        }
+
         // 페이징 처리를 위한 테이블 행의 개수 조회
         int selectedRowCount = dailyArticleService.getDailyArticleCount(categoryId, searchDto);
         parameterForm.setRowCount(selectedRowCount);
@@ -206,11 +214,15 @@ public class DailyController {
         if (loginMember != null) {
             model.addAttribute("loginMember", loginMember);
         }
+
+        MemberDto writer = memberService.getMember(dailyArticleDto.getMemberId());
+
         model.addAttribute("dailyArticle", dailyArticleDto);
         model.addAttribute("fileList", fileList);
         model.addAttribute("replyList", replyList);
         model.addAttribute("heartCount", heartCount);
         model.addAttribute("replyCount", replyCount);
+        model.addAttribute("writer", writer);
         return "/daily/dailyRead";
     }
 

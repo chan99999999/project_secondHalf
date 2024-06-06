@@ -88,8 +88,8 @@
                 <div class="daily-post">
 
                     <div class="daily-writer">
-                        <img class="daily-writer-img" src="/img/profile.png">
-                        <p class="daily-writer-name" th:text="${dailyArticle.nickName}">김순자 최고</p>
+                        <img class="daily-writer-img" th:src="@{/member/image/{filename}(filename=${dailyArticle.storePicture})}">
+                        <p class="daily-writer-name" th:text="${dailyArticle.nickName}"></p>
                     </div>
                     <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
                         <img class="daily-post-img" src="/img/sample1.jpg"
@@ -108,7 +108,7 @@
         </div>
         </th:block>
 
-        <nav aria-label="Page navigation example">
+        <div aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item" th:if="${pagination.showFirst}">
                     <a class="page-link"
@@ -154,7 +154,7 @@
                     </a>
                 </li>
             </ul>
-        </nav>
+        </div>
 
     </div>
 </div>

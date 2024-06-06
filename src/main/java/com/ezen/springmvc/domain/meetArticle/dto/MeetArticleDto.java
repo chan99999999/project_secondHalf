@@ -10,7 +10,6 @@ import lombok.*;
 @Builder
 public class MeetArticleDto {
     private int meetArticleId;
-    private int tArticleId;
     private int enter;
     private int hitcount;
     private int categoryId;

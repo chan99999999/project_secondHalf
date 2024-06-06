@@ -15,10 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
     // 로그인 체크가 필요 없는 요청 URI 목록
     public static final  List<String> loginNotEssential =
             Arrays.asList(
-                    "/", "/css/**", "/img/**", "/js/**", "/*.ico", "/vendor/**",
+                    "/", "/css/**", "/member/image/**","/img/**", "/js/**", "/*.ico", "/vendor/**",
                     "/member/signup/**", "/member/login", "/member/logout", "/member/result", "/member/idcheck/{inputId}",
                     "/member/nicknameCheck/{inputNickname}",
-                    "/member/searchIdResult", "/member/searchMember", "/member/searchId", "/member/searchPasswd", "/admin/**", "/admin/search",
+                    "/member/searchIdResult", "/member/searchMember", "/member/searchId", "/daily/image/**","/member/searchPasswd", "/admin/**", "/admin/search",
                     "/member/searchPasswdResult", "/meet", "/meet/3","/map/**", "/daily/{categoryId}", "/daily/2", "/daily");
 
     @Override

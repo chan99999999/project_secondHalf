@@ -101,16 +101,14 @@ public class MeetController {
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MeetArticleDto meetArticleDto = MeetArticleDto.builder()
                 .categoryId(categoryId)
-                .meetArticleId(meetArticleForm.getMeetArticleId())
                 .memberId(loginMember.getMemberId())
                 .placeId(1) // 추후 동적 변경 필요
                 .title(meetArticleForm.getTitle())
                 .content(meetArticleForm.getContent())
                 .enter(meetArticleForm.getEnter())
-                .time(meetArticleForm.getTime())
-                .hitcount(meetArticleForm.getHitcount())
                 .tags(meetArticleForm.getTags())
                 .build();
+        log.info("모임등록 게시글 : {}", meetArticleDto.toString());
         meetArticleService.addMeet(meetArticleDto);
         return "redirect:/meet/{categoryId}";
     }

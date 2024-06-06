@@ -35,6 +35,7 @@ public class MeetArticleServiceImpl implements MeetArticleService {
                         .tagName(tagName)
                         .build();
                 // 태그 등록 및 해당 태그의 tag_id 가져오기
+                log.info("태그이름 : {}", meetTagDto);
                 meetTagMapper.createMeetTag(meetTagDto);
 
                 int tagId = meetTagDto.getTagId();
@@ -43,6 +44,7 @@ public class MeetArticleServiceImpl implements MeetArticleService {
                         .tagId(tagId)
                         .meetArticleId(meetArticleDto.getMeetArticleId())
                         .build();
+
                 meetTagArticleMapper.createMeetTagArticle(meetTagArticleDto);
                 // 테그 테이블에 신규 태그 등록
             }

@@ -10,6 +10,23 @@
     justify-content: end;
 }
 
+#meet-tag-wrap >label{
+    margin-right: 10px;
+}
+
+.meet-tag-list{
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid black;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.meet-tag-list:checked{
+    border: 7px solid tomato;
+}
+
 #write-meet{
     width: 200px;
     height: 60px;
