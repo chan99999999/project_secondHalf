@@ -9,5 +9,6 @@ import java.util.List;
 @Mapper
 public interface MeetTagMapper {
     void createMeetTag(MeetTagDto meetTagDto);
+    MeetTagDto findByMeetTagId(int meetTagId);
     List<MeetTagDto> findByAllMeetTagName(String tagName);
 }

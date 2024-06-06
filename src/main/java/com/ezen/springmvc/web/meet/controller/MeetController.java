@@ -41,8 +41,6 @@ public class MeetController {
     public String meetList(@PathVariable("categoryId") int categoryId,
                            @ModelAttribute ParameterForm parameterForm,
                            Model model) {
-        log.info("전달된 파라미터 정보 : {}", parameterForm);
-        log.info("제목 검색 파라미터 정보 : {}", parameterForm.getTitle());
         SearchDto searchDto = SearchDto.builder()
                 .limit(parameterForm.getElementSize())
                 .page(parameterForm.getRequestPage())

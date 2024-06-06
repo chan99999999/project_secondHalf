@@ -76,7 +76,7 @@ public class MeetArticleTest {
 
     @Test
     @DisplayName("모임 게시글 상세보기 테스트")
-//    @Disabled
+    @Disabled
     void readMeetArticleTest(){
         MeetArticleDto meetArticleDto = meetArticleMapper.readMeetArticle(3, 29);
         assertThat(meetArticleDto).isNotNull();
@@ -101,6 +101,7 @@ public class MeetArticleTest {
 
     @Test
     @DisplayName("모임 게시글 조회수 테스트")
+    @Disabled
     void hitcountArticleTest(){
         MeetArticleDto meetArticleId = MeetArticleDto.builder()
                 .meetArticleId(29)
@@ -110,7 +111,7 @@ public class MeetArticleTest {
 //        int originalHitcount = originalArticle.getHitcount();
 //        log.info("증가 전 조회수: {}", originalHitcount);
         // 조회수 증가
-        meetArticleService.hitcount(meetArticleId);
+        meetArticleService.meetHitcount(meetArticleId);
         log.info(meetArticleId.toString());
         // 게시글 조회 후 조회수 확인
 //        MeetArticleDto updatedArticle = meetArticleMapper.findByMeetArticleId(meetArticleId);
@@ -121,7 +122,7 @@ public class MeetArticleTest {
 
     @Test
     @DisplayName("모임 게시글 전체 출력 테스트")
-    @Disabled
+//    @Disabled
     void findByAllMeetArticleTest(){
         List<MeetArticleDto> list = meetArticleMapper.findByAllMeetArticle(3);
         for (MeetArticleDto meetArticleDto : list) {
@@ -135,7 +136,7 @@ public class MeetArticleTest {
 
     @Test
     @DisplayName("모임 게시글 댓글 등록 테스트")
-//    @Disabled
+    @Disabled
     void createReplyTest(){
         MeetReplyDto meetReplyDto = MeetReplyDto
                 .builder()
@@ -144,15 +145,15 @@ public class MeetArticleTest {
                 .content("15151515151515151515")
                 .writer("monday")
                 .build();
-        meetReplyMapper.createReply(meetReplyDto);
+        meetReplyMapper.createMeetReply(meetReplyDto);
         log.info("등록된 댓글 : {}", meetReplyDto);
     }
 
     @Test
     @DisplayName("모임 게시글 댓글 목록 반환 테스트")
-//    @Disabled
+    @Disabled
     void findByReplyAllTest() {
-        List<MeetReplyDto> list = meetReplyMapper.findByReplyAll(29);
+        List<MeetReplyDto> list = meetReplyMapper.findByMeetReplyAll(29);
         for (MeetReplyDto meetReplyDto : list) {
             log.info("조회된 댓글 목록 : {}", meetReplyDto);
         }
@@ -175,7 +176,7 @@ public class MeetArticleTest {
     @Transactional
     @DisplayName("모임 게시글 태그 조회 테스트")
     void findByTagNameTest(){
-        List<MeetTagDto> list = meetTagMapper.findByAllTagName("취미");
+        List<MeetTagDto> list = meetTagMapper.findByAllMeetTagName("취미");
         log.info("게시글과 태그 조회 : {}", list);
     }
 }

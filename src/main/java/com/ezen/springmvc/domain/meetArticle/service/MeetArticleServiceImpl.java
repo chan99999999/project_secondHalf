@@ -27,21 +27,24 @@ public class MeetArticleServiceImpl implements MeetArticleService {
         // 모임게시글 테이블에 신규 게시글 등록 
         meetArticleMapper.createMeetArticle(meetArticleDto);
         // 태그게시글 테이블에 신규 태그게시글 등록
-        MeetTagArticleDto meetTagArticleDto = MeetTagArticleDto.builder()
-                .meetArticleId(meetArticleDto.getMeetArticleId())
-                .build();
-        meetTagArticleMapper.createMeetTagArticle(meetTagArticleDto);
-        // 테그 테이블에 신규 태그 등록
         String[] tags = meetArticleDto.getTags();
         if (tags != null) {
             for (String tagName : tags) {
                 tagName = tagName.trim();
                 MeetTagDto meetTagDto = MeetTagDto.builder()
                         .tagName(tagName)
-                        .tArticleId(meetTagArticleDto.getTArticleId())
                         .build();
                 // 태그 등록 및 해당 태그의 tag_id 가져오기
                 meetTagMapper.createMeetTag(meetTagDto);
+
+                int tagId = meetTagDto.getTagId();
+
+                MeetTagArticleDto meetTagArticleDto = MeetTagArticleDto.builder()
+                        .tagId(tagId)
+                        .meetArticleId(meetArticleDto.getMeetArticleId())
+                        .build();
+                meetTagArticleMapper.createMeetTagArticle(meetTagArticleDto);
+                // 테그 테이블에 신규 태그 등록
             }
         }
     }
@@ -101,6 +104,11 @@ public class MeetArticleServiceImpl implements MeetArticleService {
     @Override
     public void cancelParticipation(int categoryId, int meetArticleId, String memberId) {
         meetArticleMapper.cancelParticipation(categoryId, meetArticleId, memberId);
+    }
+
+    @Override
+    public MeetTagDto searchByMeetTagId(int meetTagId) {
+        return meetTagMapper.findByMeetTagId(meetTagId);
     }
 
 }

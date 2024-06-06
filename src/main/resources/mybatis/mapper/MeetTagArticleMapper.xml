@@ -3,10 +3,7 @@
 <mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.MeetTagArticleMapper">
     <!-- 태그 게시글 등록 -->
     <insert id="createMeetTagArticle" parameterType="MeetTagArticleDto">
-        INSERT INTO tag_article (t_article_id, m_article_id)
-        VALUES (t_article_id_seq.NEXTVAL, #{meetArticleId})
-        <selectKey keyProperty="tArticleId" resultType="int" order="AFTER">
-            SELECT t_article_id_seq.CURRVAL FROM dual
-        </selectKey>
+        INSERT INTO tag_article (m_article_id, tag_id)
+        VALUES (#{meetArticleId}, #{tagId})
     </insert>
 </mapper>

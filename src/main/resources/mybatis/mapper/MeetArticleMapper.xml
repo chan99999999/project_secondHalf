@@ -3,34 +3,24 @@
 <mapper	namespace="com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper">
     <!-- 게시글 전체 조회 -->
     <select id="findByAllMeetArticle" parameterType="int" resultType="MeetArticleDto">
-        SELECT
-            ma.m_article_id AS meetArticleId,
-            ma.category_id AS categoryId,
-            ma.title,
-            ma.content,
-            ma.time,
-            ma.enter,
-            ma.hitcount,
-            ma.member_id,
-            ma.place_id,
-            COALESCE(mt.tags, '') "tagName"
-        FROM
-            meet_article ma
-                LEFT JOIN
-            (
-                SELECT
-                    ta.m_article_id,
-                    LISTAGG(t.tag_name, ',') WITHIN GROUP (ORDER BY t.tag_name) AS tags
-                FROM
-                    tag_article ta
-                    JOIN
-                    tag t ON ta.t_article_id = t.t_article_id
-                GROUP BY
-                    ta.m_article_id
-            ) mt
-            ON ma.m_article_id = mt.m_article_id
-        ORDER BY
-            meetarticleid DESC
+        SELECT ma.m_article_id AS meetArticleId,
+               ma.title,
+               ma.content,
+               TO_CHAR(ma.regdate, 'YYYY-MM-DD') AS regdate,
+               TO_CHAR(ma.time, 'YYYY-MM-DD HH24:MI:SS') AS time,
+       ma.enter,
+       ma.hitcount,
+       ma.category_id AS categoryId,
+       ma.member_id AS memberId,
+       ma.place_id AS placeId,
+       ta.tag_id AS tagId,
+       t.tag_name AS tagName
+        FROM meet_article ma,
+            tag_article ta,
+            tag t
+        WHERE ma.m_article_id = ta.m_article_id
+          AND ta.tag_id = t.tag_id
+        ORDER BY ma.m_article_id DESC
     </select>
     <!-- 제목으로 게시글 검색-->
     <select id="findByMeetTitle" resultType="MeetArticleDto">
@@ -81,13 +71,13 @@
                                   category_id,
                                   member_id,
                                   place_id)
-        VALUES (m_article_id_seq.NEXTVAL,
+        VALUES (M_ARTICLE_ID_SEQ.NEXTVAL,
                 #{title},
                 #{content},
                 SYSDATE,
                 SYSDATE,
                 #{enter},
-                0,
+                3,
                 #{categoryId},
                 #{memberId},
                 #{placeId})

@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
                     "/member/signup/**", "/member/login", "/member/logout", "/member/result", "/member/idcheck/{inputId}",
                     "/member/nicknameCheck/{inputNickname}",
                     "/member/searchIdResult", "/member/searchMember", "/member/searchId", "/member/searchPasswd", "/admin/**", "/admin/search",
-                    "/member/searchPasswdResult", "/meet","/map/**", "/daily/{categoryId}", "/daily/2");
+                    "/member/searchPasswdResult", "/meet", "/meet/3","/map/**", "/daily/{categoryId}", "/daily/2", "/daily");
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

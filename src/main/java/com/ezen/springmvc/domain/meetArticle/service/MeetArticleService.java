@@ -32,4 +32,7 @@ public interface MeetArticleService {
     void participate(int categoryId, int meetArticleId, String memberId);
 //    참여취소
     void cancelParticipation(int categoryId, int meetArticleId, String memberId);
+
+    // 태그게시글 찾기
+    MeetTagDto searchByMeetTagId(int meetArticleId);
 }

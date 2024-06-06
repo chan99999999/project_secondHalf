@@ -10,6 +10,6 @@ import lombok.*;
 @Builder
 public class MeetTagArticleDto {
     private String tagName;
-    private int tArticleId;
+    private int tagId;
     private int meetArticleId;
 }

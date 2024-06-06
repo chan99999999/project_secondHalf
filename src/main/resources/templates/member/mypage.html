@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-<<<<<<< HEAD
-      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
-=======
       th:replace="~{/member/mypageTemplate :: mypageTemplate(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
->>>>>>> 262a8bafb5ee46a312361735c4f630a06d5e1552
+
 
 <head>
     <title th:fragment="title"> ::: 마이페이지 ::: </title>
@@ -15,36 +12,6 @@
         <link rel="stylesheet" href="/css/member.css">
     </th:block>
 </head>
-
-
-<<<<<<< HEAD
-<div class="wrapper" th:fragment="content">
-    <h1 class="title-text">마이 페이지</h1>
-    <div id="mypage-wrap">
-        <div class="mypage-aside-container">
-            <div id="mypage-member">
-                <img id="mypage-member-img" src="/img/profile.png">
-                <div th:text="|[김찬규]님|"></div>
-            </div>
-            <ul class="mypage-menu-list">
-                <li>내 정보</li>
-                <li>회원정보 수정</li>
-                <li>작성 게시글
-                    <ul>
-                        <li>일상공유</li>
-                        <li>동네친구</li>
-                        <li>댓글</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="mypage-container">
-
-        </div>
-    </div>
-</div>
-
-=======
 <div class="mypage-container" th:fragment="content">
     <div class="mypage-info-wrap">
         <div class="mypage-title">내 정보</div>
