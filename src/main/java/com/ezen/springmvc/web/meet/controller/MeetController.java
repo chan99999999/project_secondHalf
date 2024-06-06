@@ -2,10 +2,12 @@ package com.ezen.springmvc.web.meet.controller;
 
 import com.ezen.springmvc.domain.category.dto.CategoryDto;
 import com.ezen.springmvc.domain.common.dto.SearchDto;
+import com.ezen.springmvc.domain.dailyarticle.dto.ReplyDto;
 import com.ezen.springmvc.domain.meetArticle.dto.*;
 import com.ezen.springmvc.domain.category.service.CategoryService;
 import com.ezen.springmvc.domain.meetArticle.service.MeetArticleService;
 import com.ezen.springmvc.domain.member.dto.MemberDto;
+import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.web.common.page.Pagination;
 import com.ezen.springmvc.web.common.page.ParameterForm;
 import com.ezen.springmvc.web.meet.form.MeetArticleForm;
@@ -29,6 +31,7 @@ public class MeetController {
 
     private final MeetArticleService meetArticleService;
     private final CategoryService categoryService;
+    private final MemberService memberService;
 
     @GetMapping("{categoryId}/register")
     public String meetRegister(@PathVariable("categoryId") int categoryId, Model model) {
@@ -122,9 +125,25 @@ public class MeetController {
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
+
+
+        MemberDto writer = memberService.getMember(meetArticleDto.getMemberId());
+
+        meetArticleDto.setNickname(writer.getNickname());
+        meetArticleDto.setProfile(writer.getStorePicture());
+
+        log.info("게시글 상세내용 : {}", meetArticleDto.toString());
+
         meetArticleService.meetHitcount(meetArticleDto);
         List<MeetReplyDto> meetReplyList = meetArticleService.meetReplyList(meetArticleId);
         int meetReplyCount = meetArticleService.meetReplyCount(meetArticleId);
+
+        for (MeetReplyDto meetReplyDto : meetReplyList) {
+            MemberDto commenter = memberService.getMember(meetReplyDto.getWriter());
+            meetReplyDto.setProfile(commenter.getStorePicture());
+            meetReplyDto.setNickname(commenter.getNickname());
+        }
+
         model.addAttribute("meetArticleDto", meetArticleDto);
         model.addAttribute("meetReplyList", meetReplyList);
         model.addAttribute("meetReplyCount", meetReplyCount);
@@ -144,6 +163,7 @@ public class MeetController {
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
+
         model.addAttribute("meetArticleDto", meetArticleDto);
         meetReplyDto.setWriter(loginMember.getMemberId());
         log.info("수신한 댓글 : {}", meetReplyDto);

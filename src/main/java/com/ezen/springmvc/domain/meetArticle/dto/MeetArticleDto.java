@@ -22,4 +22,6 @@ public class MeetArticleDto {
     private String memberId;
     private String[] tags;
     private String tagName;
+    private String nickname;
+    private String profile;
 }

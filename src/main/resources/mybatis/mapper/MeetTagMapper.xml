@@ -17,10 +17,21 @@
     </select>
     <!-- 태그 이름으로 게시글 조회 -->
     <select id="findByAllMeetTagName" parameterType="String" resultType="MeetTagDto">
-        SELECT ma.m_article_id "meetArticleId", ma.title, ma.content, t.tag_name,  ma.regdate, ma.time
-        FROM meet_article ma
-                 INNER JOIN tag_article ta ON ma.m_article_id = ta.t_article_id
-                 INNER JOIN tag t ON ta.t_article_id = t.t_article_id
-        WHERE t.tag_name = #{value}
+            SELECT ma.m_article_id AS meetArticleId,
+                   ma.title,
+                   ma.content,
+                   TO_CHAR(ma.regdate, 'YYYY-MM-DD') AS regdate,
+                   TO_CHAR(ma.time, 'YYYY-MM-DD HH24:MI:SS') AS time,
+           ma.enter,
+           ma.hitcount,
+           ma.category_id AS categoryId,
+           ma.member_id AS memberId,
+           ma.place_id AS placeId
+            FROM meet_article ma
+                JOIN tag_article ta ON ma.m_article_id = ta.m_article_id
+                JOIN tag t ON ta.tag_id = t.tag_id
+            WHERE t.tag_name = #{tagName}
+              AND ma.category_id = 3
+            ORDER BY ma.m_article_id DESC
     </select>
 </mapper>

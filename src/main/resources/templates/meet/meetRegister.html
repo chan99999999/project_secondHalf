@@ -55,4 +55,29 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // radio 버튼 요소들을 가져옴
+        const radioTags = document.querySelectorAll('input[type=radio][name=tags]');
+
+        // 각 radio 버튼에 대해 이벤트 리스너 등록
+        radioTags.forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                // 선택된 태그가 '짝꿍'인 경우
+                if (radio.value === '짝꿍') {
+                    // #meet-count 요소를 가져와서 값 변경
+                    const meetCount = document.querySelector('#meet-count');
+                    if (meetCount) {
+                        meetCount.value = 2;
+                        meetCount.disabled = true;
+                    }
+                } else {
+                    const meetCount = document.querySelector('#meet-count');
+                    meetCount.disabled = false;
+                    meetCount.value = '';
+                }
+            });
+        });
+    });
+</script>
 </html>

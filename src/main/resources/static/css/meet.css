@@ -187,7 +187,7 @@
 #meet-read-writer-name{
     align-content: center;
     padding: 0px 10px;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 #meet-read-date{
@@ -203,7 +203,7 @@
 #meet-read-content-wrap{
     background-color: white;
     padding: 40px;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 #meet-read-title{
@@ -226,7 +226,6 @@
 }
 
 #review-count-wrap{
-    padding: 0px 20px;
     font-size: 25px;
     display: flex;
 }

@@ -19,18 +19,18 @@
 </head>
 
 <div class="wrapper" th:fragment="content">
-    <div id="daily-read-wrap">
-        <div id="daily-read-writer-wrap">
-            <div class="daily-writer">
-                <img class="daily-writer-img"
+    <div class="read-wrap">
+        <div class="read-writer-wrap">
+            <div class="read-writer">
+                <img class="writer-img"
                      th:src="@{/member/image/{filename}(filename=${writer.storePicture})}"/>
-                <div class="test">
-                    <div class="daily-writer-name" th:text="${writer.nickname}"></div>
+                <div class="chat">
+                    <div class="writer-name" th:text="${writer.nickname}"></div>
                     <div class="toChat"><a th:href="|/chat/room/to/${writer.nickname}|" th:text="대화하기"></a></div>
                 </div>
             </div>
-            <div id="daily-read-info">
-                <p id="daily-read-date" th:text="${dailyArticle.regdate}"></p>
+            <div class="read-info">
+                <p class="read-date" th:text="${dailyArticle.regdate}"></p>
                 <p class="divide"> ㅣ </p>
                 <p th:text="|조회수 ${dailyArticle.hitCount}|"></p>
             </div>

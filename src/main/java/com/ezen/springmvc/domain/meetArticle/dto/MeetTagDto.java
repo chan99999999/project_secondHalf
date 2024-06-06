@@ -18,5 +18,4 @@ public class MeetTagDto {
     private String tagName;
     private String regdate;
     private String time;
-
 }

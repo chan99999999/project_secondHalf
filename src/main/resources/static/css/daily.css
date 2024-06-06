@@ -301,42 +301,7 @@
     margin: 5px 0px;
 }
 
-.review{
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: lightgray;
-    display: flex;
-    justify-content: space-between;
-}
 
-.review-box{
-    display: flex;
-}
-
-
-.review-writer{
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-#reply-update-btn, #reply-delete-btn{
-    height: 59px;
-    padding: 10px;
-    align-items: center;
-    text-align: center;
-    font-size: 20px;
-}
-
-.review-content{
-    font-size: 25px;
-    font-weight: normal;
-}
-
-.review img{
-    width: 55px;
-    height: 55px;
-    margin-right: 20px;
-}
 
 .hidden {
     display: none;

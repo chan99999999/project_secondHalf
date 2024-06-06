@@ -84,29 +84,21 @@
             SELECT m_article_id_seq.CURRVAL FROM dual
         </selectKey>
     </insert>
-    <!-- 게시글 번호로 게시글 조회 -->
-    <select id="findByMeetArticleId" parameterType="int" resultType="MeetArticleDto">
-        SELECT m_article_id "meetArticleId",
-               title,
-               regdate,
-               hitcount,
-               category_id,
-               member_id
-        FROM meet_article
-        WHERE m_article_id = #{meetArticleId}
-    </select>
-    <!-- 게시글 상세 보기 -->
+<!--     게시글 번호로 게시글 조회-->
     <select id="readMeetArticle" parameterType="int" resultType="MeetArticleDto">
-        SELECT m_article_id "meetArticleId",
-               title,
-               content,
-               category_id "categoryId",
-               member_id "memberId",
-               place_id "placeId",
-               TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate,
-               TO_CHAR(time, 'YYYY-MM-DD HH24:MI') time
-        FROM meet_article
-        WHERE m_article_id = #{meetArticleId}
+        SELECT ma.m_article_id AS meetArticleId,
+               ma.title,
+               ma.content,
+               ma.category_id AS categoryId,
+               ma.member_id AS memberId,
+               ma.place_id AS placeId,
+               TO_CHAR(ma.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+               TO_CHAR(ma.time, 'YYYY-MM-DD HH24:MI') AS time,
+           t.tag_name AS tagName
+        FROM meet_article ma
+            LEFT JOIN tag_article ta ON ma.m_article_id = ta.m_article_id
+            LEFT JOIN tag t ON ta.tag_id = t.tag_id
+        WHERE ma.m_article_id = #{meetArticleId}
     </select>
     <!-- 조회수 증가-->
     <update id="meetHitcount" parameterType="MeetArticleDto">
