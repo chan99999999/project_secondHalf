@@ -1130,3 +1130,28 @@ INSERT INTO review (review_id, member_id, review, place_id, regdate)
 VALUES (review_id_seq.NEXTVAL, 'thursday', '리뷰5', 12273700, current_timestamp);
 
 select * from user_tables;
+
+-- 카테고리 더미
+insert into category (
+  category_id,
+  category_name
+) values (
+  1,
+  '우리동네'
+);
+
+insert into category (
+  category_id,
+  category_name
+) values (
+  2,
+  '일상공유'
+);
+
+insert into category (
+  category_id,
+  category_name
+) values (
+  3,
+  '동네친구'
+);

@@ -7,7 +7,7 @@
         VALUES (REPLY_ID_SEQ.nextval, #{content}, #{dailyArticleId}, #{writer})
     </insert>
 
-    <!-- 댓글 목록 반환 -->
+    <!-- 댓글 목록 조회 -->
     <select id="findByReplyAll" parameterType="int" resultType="ReplyDto">
         SELECT reply_id, d_article_id "dailyArticleId", writer, content
         FROM reply
@@ -15,22 +15,14 @@
         ORDER BY reply_id DESC
     </select>
 
-    <!-- 댓글 수 반환 -->
+    <!-- 댓글 개수 조회 -->
     <select id="findReplyCount" resultType="int">
         SELECT COUNT(*)
         FROM reply
         WHERE d_article_id = #{dailyArticleId}
     </select>
 
-    <!-- 댓글 삭제 -->
-    <delete id="deleteReply" parameterType="int">
-        DELETE
-        FROM reply
-        WHERE d_article_id = #{dailyArticleId}
-          AND reply_id = #{replyId}
-    </delete>
-
-    <!-- 댓글 수정 -->
+    <!-- 댓글 업데이트 -->
     <update id="updateReply">
         UPDATE reply
         <set>
@@ -39,5 +31,11 @@
         WHERE d_article_id = #{dailyArticleId} AND reply_id = ${replyId}
     </update>
 
+    <!-- 댓글 행 삭제 -->
+    <delete id="deleteReply" parameterType="int">
+        DELETE
+        FROM reply
+        WHERE d_article_id = #{dailyArticleId}
+        AND reply_id = #{replyId}
+    </delete>
 </mapper>
-

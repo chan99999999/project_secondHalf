@@ -12,8 +12,8 @@ import java.util.List;
 @ToString
 @Builder
 /** 신규 일상 게시글 작성 폼에 대응하는 Form 클래스 */
-public class DailyArticleForm {
-    private int dailyArticleId;                 /** 일상 게시글 번호 */
+public class NoticeArticleForm {
+    private int noticeArticleId;                 /** 일상 게시글 번호 */
     private String memberId;                    /** 일상 게시글 작성한 아이디 */
     private String regdate;                     /** 일상 게시글 작성 일자 */
     private String title;                       /** 일상 게시글 제목 */

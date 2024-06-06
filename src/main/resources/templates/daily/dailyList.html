@@ -5,17 +5,13 @@
 <head>
     <title th:fragment="title"> ::: 일상공유 ::: </title>
     <th:block th:fragment="script">
+        <script src="/js/pagination.js" defer></script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/daily.css">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     </th:block>
-    <style>
-        .pagination {
-            display: inline-block;
-        }
-    </style>
 </head>
 
 
@@ -46,121 +42,122 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="daily-list">
-            <h1 class="daily-list-title">노원구 소식</h1>
-            <div class="daily-post">
-                <div class="daily-writer">
-                    <img class="daily-writer-img" src="/img/profile.png">
-                    <p class="daily-writer-name">김순자 최고</p>
-                </div>
-                <img class="daily-post-img" src="/img/sample1.jpg">
-                <div class="daily-like-wrap">
-                    <img class="daily-like" src="/img/heart.png">
-                    <p class="daily-like-amount">3,000</p>
-                </div>
-                <p class="daily-post-title"><a href="/daily/read">게시글 제목이 들어갑네다</a></p>
-            </div>
-            <div class="daily-post">
-                <div class="daily-writer">
-                    <img class="daily-writer-img" src="/img/profile.png">
-                    <p class="daily-writer-name">김순자 최고</p>
-                </div>
-                <img class="daily-post-img" src="/img/sample1.jpg">
-                <div class="daily-like-wrap">
-                    <img class="daily-like" src="/img/heart.png">
-                    <p class="daily-like-amount">3,000</p>
-                </div>
-                <p class="daily-post-title"><a href="/daily/read">게시글 제목이 들어갑네다</a></p>
-            </div>
-            <div class="daily-post">
-                <div class="daily-writer">
-                    <img class="daily-writer-img" src="/img/profile.png">
-                    <p class="daily-writer-name">김순자 최고</p>
-                </div>
-                <img class="daily-post-img" src="/img/sample1.jpg">
-                <div class="daily-like-wrap">
-                    <img class="daily-like" src="/img/heart.png">
-                    <p class="daily-like-amount">3,000</p>
-                </div>
-                <p class="daily-post-title"><a href="/daily/read">게시글 제목이 들어갑네다</a></p>
-            </div>
+
         </div>
 
-        <div class="daily-list" th:if="${dailyArticleList.isEmpty()}">
+        <div class="daily-list" id="nowon-news-section">
+            <h1 class="daily-list-title">노원구 소식</h1>
+            <th:block th:each="notice : ${noticeList}">
+                <th:block th:if="${notice.memberId == 'admin'}">
+                    <div class="daily-post">
+                        <div class="daily-writer">
+                            <img class="daily-writer-img" src="/img/profile.png">
+                            <p class="daily-writer-name" th:text="${notice.nickName}">김순자 최고</p>
+                        </div>
+                        <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${notice.dailyArticleId}, categoryId=${categoryId})}">
+
+                            <img class="daily-post-img" src="/img/sample1.jpg"
+                                 th:src="@{/daily/image/{fileName}(fileName=${notice.encryptedName})}">
+                        </a>
+                        <div class="daily-like-wrap">
+                            <img class="daily-like" src="/img/heart.png">
+                            <p class="daily-like-amount" th:text="${notice.totalHeartCount}">3,000</p>
+                        </div>
+                        <p class="daily-post-title"><a
+                                th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${notice.dailyArticleId}, categoryId=__${categoryId}__)}"
+                                th:text="${notice.title}"></a></p>
+                    </div>
+                </th:block>
+            </th:block>
+        </div>
+
+<!--        <div th:replace="~{/fragment/nowongu_news :: nowongu_news}"></div>-->
+
+        <th:block th:if="${dailyArticleList.isEmpty()}">
+        <div class="daily-list">
             <h1 class="daily-list-title">소통 공간</h1>
             <div th:text="'조회된 게시글이 존재하지 않습니다.'"></div>
         </div>
+        </th:block>
 
-        <div class="daily-list" th:if="${not dailyArticleList.isEmpty()}">
+        <th:block th:if="${!dailyArticleList.isEmpty()}">
+        <div class="daily-list">
             <h1 class="daily-list-title">소통 공간</h1>
+            <th:block th:each="dailyArticle : ${dailyArticleList}">
+<!--                <div class="daily-post" th:if="${dailyArticle.memberId != 'admin'}">-->
+                <div class="daily-post">
 
-            <div class="daily-post" th:each="dailyArticle : ${dailyArticleList}">
-                <div class="daily-writer">
-                    <img class="daily-writer-img" src="/img/profile.png">
-                    <p class="daily-writer-name" th:text="${dailyArticle.memberId}">김순자 최고</p>
+                    <div class="daily-writer">
+                        <img class="daily-writer-img" src="/img/profile.png">
+                        <p class="daily-writer-name" th:text="${dailyArticle.nickName}">김순자 최고</p>
+                    </div>
+                    <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
+                        <img class="daily-post-img" src="/img/sample1.jpg"
+                             th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
+                    </a>
+                    <div class="daily-like-wrap">
+                        <img class="daily-like" src="/img/heart.png">
+                        <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>
+                    </div>
+                    <p class="daily-post-title">
+                        <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}"
+                           th:text="${dailyArticle.title}"></a>
+                    </p>
                 </div>
-                <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
-
-                    <img class="daily-post-img" src="/img/sample1.jpg"
-                         th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
-                </a>
-                <div class="daily-like-wrap">
-                    <img class="daily-like" src="/img/heart.png">
-                    <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>
-                </div>
-                <p class="daily-post-title"><a
-                        th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}"
-                        th:text="${dailyArticle.title}"></a></p>
-            </div>
-        </div>
-
-        <ul class="pagination">
-            <li class="page-item" th:if="${pagination.showFirst}">
-                <a class="page-link"
-                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=1, tagName=${parameterForm.tagName})}">
-
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only"><<</span>
-                </a>
-            </li>
-            <li class="page-item" th:if="${pagination.showPrevious}">
-                <a class="page-link"
-                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.previousStartPage}, tagName=${parameterForm.tagName})}">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only"><</span>
-                </a>
-            </li>
-
-            <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
-
-                <li class="page-item active" th:if="${i == pagination.params.requestPage}">
-                    <a class="page-link"
-                       th:text="${i}">1</a>
-                </li>
-                <li class="page-item" th:if="${i != pagination.params.requestPage}">
-                    <a class="page-link"
-                       th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${i}, tagName=${parameterForm.tagName})}"
-                       th:text="${i}">2</a>
-                </li>
             </th:block>
+        </div>
+        </th:block>
 
-            <li class="page-item" th:if="${pagination.showNext}">
-                <a class="page-link" href="#" aria-label="Next"
-                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.nextStartPage}, tagName=${parameterForm.tagName})}">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">></span>
-                </a>
-            </li>
-            <li class="page-item" th:if="${pagination.showLast}">
-                <a class="page-link" href="#" aria-label="Next"
-                   th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.totalPages}, tagName=${parameterForm.tagName})}">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">>></span>
-                </a>
-            </li>
-        </ul>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:if="${pagination.showFirst}">
+                    <a class="page-link"
+                       th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=1, tagName=${parameterForm.tagName})}">
+
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">처음으로</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${pagination.showPrevious}">
+                    <a class="page-link"
+                       th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.previousStartPage}, tagName=${parameterForm.tagName})}">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">이전목록</span>
+                    </a>
+                </li>
+
+                <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+
+                    <li class="page-item active" th:if="${i == pagination.params.requestPage}">
+                        <a class="page-link"
+                           th:text="${i}">1</a>
+                    </li>
+                    <li class="page-item" th:if="${i != pagination.params.requestPage}">
+                        <a class="page-link"
+                           th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${i}, tagName=${parameterForm.tagName})}"
+                           th:text="${i}">2</a>
+                    </li>
+                </th:block>
+
+                <li class="page-item" th:if="${pagination.showNext}">
+                    <a class="page-link" href="#" aria-label="Next"
+                       th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.nextStartPage}, tagName=${parameterForm.tagName})}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">다음목록</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${pagination.showLast}">
+                    <a class="page-link" href="#" aria-label="Next"
+                       th:href="@{/daily/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.totalPages}, tagName=${parameterForm.tagName})}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">끝으로</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
+</div>
 
 
 </div>
