@@ -3,6 +3,7 @@ package com.ezen.springmvc.domain.meetArticle.service;
 import com.ezen.springmvc.domain.common.dto.SearchDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.MeetRoomDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetTagDto;
 
 import java.util.List;
@@ -35,4 +36,11 @@ public interface MeetArticleService {
 
     // 태그게시글 찾기
     MeetTagDto searchByMeetTagId(int meetArticleId);
+
+    // 모임 참여하기
+    void enterMeetRoom(MeetRoomDto meetRoomDto);
+    // 모임 취소하기
+    void deleteMeetRoom(int meetRoomId, String joinMemberId);
+    // 모임방 출력
+    List<MeetRoomDto> searchByMeetRoomId(int meetArticleId);
 }

@@ -113,4 +113,19 @@ public class MeetArticleServiceImpl implements MeetArticleService {
         return meetTagMapper.findByMeetTagId(meetTagId);
     }
 
+
+    @Override
+    public void enterMeetRoom(MeetRoomDto meetRoomDto){
+        meetArticleMapper.joinMeetRoom(meetRoomDto);
+    }
+
+    @Override
+    public void deleteMeetRoom(int meetRoomId, String joinMemberId){
+        meetArticleMapper.cancelJoin(meetRoomId, joinMemberId);
+    }
+
+    @Override
+    public List<MeetRoomDto> searchByMeetRoomId(int meetArticleId){
+        return meetArticleMapper.findMeetRoom(meetArticleId);
+    }
 }

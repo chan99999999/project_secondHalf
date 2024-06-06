@@ -21,7 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/meet")
@@ -74,6 +76,14 @@ public class MeetController {
         } else {
             meetArticleList = meetArticleService.findByAllMeetArticle(categoryId);
         }
+
+        // 각 게시글에 모임 참여자 수 조회 및 모델에 추가
+        Map<Integer, Integer> meetRoomCounts = new HashMap<>();
+        for (MeetArticleDto meetArticle : meetArticleList) {
+            List<MeetRoomDto> joinMembers = meetArticleService.searchByMeetRoomId(meetArticle.getMeetArticleId());
+            meetRoomCounts.put(meetArticle.getMeetArticleId(), joinMembers.size());
+        }
+
         MeetTagDto tagList = MeetTagDto.builder()
                 .tagName(parameterForm.getTagName())
                 .build();
@@ -91,6 +101,7 @@ public class MeetController {
         model.addAttribute("parameterForm", parameterForm);
         model.addAttribute("pagination", pagination);
         model.addAttribute("tagList", tagList);
+        model.addAttribute("meetRoomCounts", meetRoomCounts);
         return "/meet/meetList";
     }
 
@@ -144,6 +155,16 @@ public class MeetController {
             meetReplyDto.setNickname(commenter.getNickname());
         }
 
+        List<MeetRoomDto> joinMembers = meetArticleService.searchByMeetRoomId(meetArticleId);
+        List<String> joinMemberIds = new ArrayList<>();
+        for (MeetRoomDto meetRoomDto : joinMembers) {
+            MemberDto member = memberService.getMember(meetRoomDto.getJoinMemberId());
+            meetRoomDto.setNickname(member.getNickname());
+            joinMemberIds.add(meetRoomDto.getNickname());
+        }
+
+        model.addAttribute("joinMembers", joinMemberIds);
+
         model.addAttribute("meetArticleDto", meetArticleDto);
         model.addAttribute("meetReplyList", meetReplyList);
         model.addAttribute("meetReplyCount", meetReplyCount);
@@ -163,11 +184,31 @@ public class MeetController {
         HttpSession session = request.getSession();
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MeetArticleDto meetArticleDto = meetArticleService.readMeetArticle(3, meetArticleId);
-
         model.addAttribute("meetArticleDto", meetArticleDto);
         meetReplyDto.setWriter(loginMember.getMemberId());
         log.info("수신한 댓글 : {}", meetReplyDto);
         meetArticleService.createMeetReply(meetReplyDto);
+        return "redirect:/meet/read/{meetArticleId}";
+    }
+
+    @GetMapping("/join/{meetArticleId}")
+    public String joinMeetAction(@PathVariable("meetArticleId") int meetArticleId, HttpSession session, Model model){
+
+        MemberDto memberDto = (MemberDto) session.getAttribute("loginMember");
+        MeetRoomDto meetRoomDto = MeetRoomDto.builder()
+                .meetRoomId(meetArticleId)
+                .joinMemberId(memberDto.getMemberId())
+                .build();
+        meetArticleService.enterMeetRoom(meetRoomDto);
+
+        return "redirect:/meet/read/{meetArticleId}";
+    }
+
+    @GetMapping("/cancelJoin/{meetArticleId}")
+    public String cancelJoinAction(@PathVariable("meetArticleId") int meetArticleId, HttpSession session, Model model){
+
+        MemberDto memberDto = (MemberDto) session.getAttribute("loginMember");
+        meetArticleService.deleteMeetRoom(meetArticleId, memberDto.getMemberId());
         return "redirect:/meet/read/{meetArticleId}";
     }
 

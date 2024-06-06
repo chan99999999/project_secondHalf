@@ -128,4 +128,25 @@
                  AND m_article_id = #{meetArticleId}
                  AND member_id = #{memberId}
     </delete>
+
+<!--    모임 참여하기-->
+    <insert id="joinMeetRoom" parameterType="MeetRoomDto">
+        insert into meet_room(meet_room_id, join_member_id)
+        values (#{meetRoomId}, #{joinMemberId})
+    </insert>
+
+<!--    참여방 출력-->
+    <select id="findMeetRoom" parameterType="int" resultType="MeetRoomDto">
+        select join_member_id
+        FROM meet_room
+        WHERE meet_room_id = #{meetArticleId}
+    </select>
+
+    <!-- 참여취소 -->
+    <delete id="cancelJoin">
+        DELETE FROM meet_room
+        WHERE meet_room_id = #{meetRoomId}
+          AND join_member_id = #{joinMemberId}
+    </delete>
+
 </mapper>

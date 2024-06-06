@@ -35,19 +35,43 @@
             <p class="meet-read-content" th:text="|장소 - ${meetArticleDto.placeId}|"></p>
             <hr>
             <p class="meet-read-content" th:text="${meetArticleDto.content}"></p>
+            <th:block th:if="${!meetArticleDto.tagName.equals('짝꿍')}">
+                <div id="join-member-wrap">
+                    <div id="join-member-title">참여 명단</div>
+                    <div id="join-member-list" th:each="joinMember : ${joinMembers}">
+                        <p id="join-member" th:text="${joinMember}"></p>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:if="${meetArticleDto.tagName.equals('짝꿍')}">
+            </th:block>
         </div>
 
         <th:block th:if="${!meetArticleDto.tagName.equals('짝꿍')}">
-            <div class="register-btn-wrap">
-                <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
-                <button type="button" id="participate-btn" class="register-btn">참여하기</button>
-            </div>
+            <th:block th:if="${joinMembers.contains(loginMember.nickname)}">
+                <div class="register-btn-wrap">
+                    <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
+                    <button type="button" id="cancel-participation-btn" class="register-btn"><a
+                            th:href="@{/meet/cancelJoin/{meetArticleId}(meetArticleId=${meetArticleDto.meetArticleId})}">참여취소</a>
+                    </button>
+                </div>
+            </th:block>
+
+            <th:block th:if="${joinMembers == null} or ${!joinMembers.contains(loginMember.nickname)}">
+                <div class="register-btn-wrap">
+                    <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
+                    <button type="button" id="participate-btn" class="register-btn"><a
+                            th:href="@{/meet/join/{meetArticleId}(meetArticleId=${meetArticleDto.meetArticleId})}">참여하기</a>
+                    </button>
+                </div>
+            </th:block>
         </th:block>
 
         <th:block th:if="${meetArticleDto.tagName.equals('짝꿍')}">
             <div class="register-btn-wrap">
                 <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
-                <button type="button" id="chat-btn" class="register-btn"><a th:href="|/chat/room/to/${meetArticleDto.nickname}|" th:text="대화하기"></a></button>
+                <button type="button" id="chat-btn" class="register-btn"><a
+                        th:href="|/chat/room/to/${meetArticleDto.nickname}|" th:text="대화하기"></a></button>
             </div>
         </th:block>
 

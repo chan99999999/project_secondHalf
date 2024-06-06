@@ -206,16 +206,37 @@
     margin: 20px 0;
 }
 
+#join-member-title{
+    font-size: 30px;
+    font-weight: bolder;
+    margin: 10px;
+}
+
+#join-member-wrap{
+    background-color: #eaeaea;
+    margin: 10px 0px;
+    padding: 10px;
+    font-size: 25px;
+}
+
+#join-member-list{
+    display: flex;
+}
+
+#join-member{
+    margin: 10px;
+}
+
 #meet-read-title{
     font-size: 50px;
     text-align: center;
     font-family: 'Cafe24Ssurround';
-    margin: 20px 0;
+    margin: 40px 0;
 }
 
 .meet-read-content{
     font-size: 30px;
-    margin: 5px 0;
+    margin: 20px 0;
 }
 
 #meet-read-content-wrap >img{

@@ -21,7 +21,8 @@
     <div id="meet-wrap">
         <h1 class="title-text">동네친구</h1>
         <div id="write-meet-wrap">
-            <div id="write-meet"><a href="/meet/register" th:href="@{/meet/{categoryId}/register(categoryId=__${categoryId}__)}">모임 등록하기</a>
+            <div id="write-meet"><a href="/meet/register"
+                                    th:href="@{/meet/{categoryId}/register(categoryId=__${categoryId}__)}">모임 등록하기</a>
             </div>
         </div>
         <div id="meet-list-wrap">
@@ -34,10 +35,14 @@
                 </form>
                 <div>
                     <ul class="meet-tag" th:name="tagName">
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='짝꿍')}" th:text="'#짝꿍'"></a></li>
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='취미')}" th:text="'#취미'"></a></li>
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='건강')}" th:text="'#건강'"></a></li>
-                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='기타')}" th:text="'#기타'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='짝꿍')}"
+                               th:text="'#짝꿍'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='취미')}"
+                               th:text="'#취미'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='건강')}"
+                               th:text="'#건강'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='기타')}"
+                               th:text="'#기타'"></a></li>
                     </ul>
                 </div>
             </div>
@@ -57,12 +62,22 @@
                         </ul>
                     </div>
 
-                    <div class="meet-join">
-                        <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}">
-                            <p>참여하기</p>
-                            <p id="participant-count-${meetArticle.meetArticleId}" th:text="'('+ 1 +'/'+${meetArticle.enter}+')'"></p>
-                        </a>
-                    </div>
+                    <th:block th:if="${!meetArticle.tagName.equals('짝꿍')}">
+                        <div class="meet-join">
+                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}">
+                                <p>참여하기</p>
+                                <p id="participant-count-${meetArticle.meetArticleId}"
+                                   th:text="|${meetRoomCounts.get(meetArticle.meetArticleId)} / ${meetArticle.enter}|"></p>
+                            </a>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${meetArticle.tagName.equals('짝꿍')}">
+                        <div class="meet-join">
+                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}">
+                                <p>참여하기</p>
+                            </a>
+                        </div>
+                    </th:block>
                 </div>
             </div>
 

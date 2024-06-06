@@ -2,6 +2,7 @@ package com.ezen.springmvc;
 
 import com.ezen.springmvc.domain.meetArticle.dto.MeetArticleDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetReplyDto;
+import com.ezen.springmvc.domain.meetArticle.dto.MeetRoomDto;
 import com.ezen.springmvc.domain.meetArticle.dto.MeetTagDto;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper;
 import com.ezen.springmvc.domain.meetArticle.mapper.MeetTagMapper;
@@ -77,6 +78,25 @@ public class MeetArticleServiceTest {
         meetTagMapper.createMeetTag(meetTagDto);
     }
 
+    @Test
+    @DisplayName("모임참여 테스트")
+    @Disabled
+    void joinMeetArticleTest(){
+        MeetRoomDto meetRoomDto = MeetRoomDto
+                .builder()
+                .meetRoomId(50)
+                .joinMemberId("chan999")
+                .build();
+        meetArticleMapper.joinMeetRoom(meetRoomDto);
+    }
+
+    @Test
+    @DisplayName("모임방 확인")
+//    @Disabled
+    void findMeetRoomTest(){
+        List<MeetRoomDto> list = meetArticleMapper.findMeetRoom(50);
+        log.info(list.toString());
+    }
 
 //    @Test
 //    @DisplayName("모임 게시글 수정 테스트")
@@ -106,7 +126,7 @@ public class MeetArticleServiceTest {
 
     @Test
     @DisplayName("모임 게시글 전체 출력 테스트")
-//    @Disabled
+    @Disabled
     void findByAllArticleTest(){
         List<MeetArticleDto> list = meetArticleService.findByAllMeetArticle(3);
         for (MeetArticleDto MeetArticleDto : list) {
