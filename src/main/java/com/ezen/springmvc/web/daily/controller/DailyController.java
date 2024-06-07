@@ -105,6 +105,7 @@ public class DailyController {
         String checkedTags = dailyArticleForm.getTags();
         String inputTags = dailyArticleForm.getInputTags();
 
+        // 체크 박스 태그
         if (checkedTags != null && !checkedTags.isEmpty()) {
             allTags.append(checkedTags);
         }
@@ -185,20 +186,16 @@ public class DailyController {
 
         int heartCount = 0;
 
+        // 로그인하지 않은 사용자는 좋아요를 누르지 않은 것으로 간주
         if (loginMember != null) {
+            model.addAttribute("loginMember", loginMember);
             heartCount = dailyArticleService.getHeartCount(dailyArticleId, loginMember.getMemberId());
-        } else {
-            heartCount = 0; // 로그인하지 않은 사용자는 좋아요를 누르지 않은 것으로 간주
         }
 
         DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
         List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
         List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
         int replyCount = dailyArticleService.getReplyCount(dailyArticleId);
-
-        if (loginMember != null) {
-            model.addAttribute("loginMember", loginMember);
-        }
 
         for (ReplyDto replyDto : replyList) {
             MemberDto commenter = memberService.getMember(replyDto.getWriter());
@@ -215,6 +212,49 @@ public class DailyController {
         model.addAttribute("replyCount", replyCount);
         model.addAttribute("writer", writer);
         return "/daily/dailyRead";
+    }
+
+    // 게시글 수정 화면 요청 처리
+    @GetMapping("{categoryId}/edit/{dailyArticleId}")
+    public String dailyEditForm(@PathVariable("categoryId") int categoryId,
+                                @PathVariable("dailyArticleId") int dailyArticleId,
+                                Model model) {
+
+        List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
+        List<TagDto> tagList = dailyArticleService.getTagBydailyArticleId(dailyArticleId);
+        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
+
+        model.addAttribute("fileList", fileList);
+        model.addAttribute("tagList", tagList);
+        model.addAttribute("dailyArticleDto", dailyArticleDto);
+
+        return "/daily/dailyEdit";
+    }
+
+    // 게시글 수정 요청 처리
+    @PostMapping("{categoryId}/edit/{dailyArticleId}")
+    public String dailyEditAction(@PathVariable("categoryId") int categoryId,
+                                  @PathVariable("dailyArticleId") int dailyArticleId,
+                                  @ModelAttribute DailyArticleForm dailyArticleForm) {
+
+        DailyArticleDto editedDailyArticle = DailyArticleDto.builder()
+                .title(dailyArticleForm.getTitle())
+                .content(dailyArticleForm.getContent())
+                .build();
+
+        dailyArticleService.editDailyArticle(dailyArticleId, editedDailyArticle);
+
+        return "redirect:/daily/{categoryId}";
+    }
+
+    // 게시글 삭제 처리
+    @PostMapping("{categoryId}/delete/{dailyArticleId}")
+    public String dailyDelete(@PathVariable("categoryId") int categoryId,
+                              @PathVariable("dailyArticleId") int dailyArticleId) {
+
+        dailyArticleService.removeDailyArticle(categoryId, dailyArticleId);
+
+        return "redirect:/daily/{categoryId}";
     }
 
     // 댓글 등록 요청 처리(서버 사이드 렌더링)
@@ -247,60 +287,13 @@ public class DailyController {
         return ResponseEntity.ok(replyDto);
     }
 
-    // 좋아요 기능 api
-    @GetMapping("/like")
-    public ResponseEntity<Map<String, Object>> handleHeart(
-            @RequestParam("dailyArticleId") int dailyArticleId,
-            @RequestParam("memberId") String memberId,
-            @RequestParam("checked") boolean checked) {
+    // 댓글 수정 요청 api
+    @PostMapping("/edit-reply")
+    public ResponseEntity<Void> dailyEditReply(@RequestBody ReplyDto replyDto) {
 
-        Map<String, Object> map = new HashMap<>();
+        dailyArticleService.editReply(replyDto.getDailyArticleId(), replyDto.getReplyId(), replyDto.getContent());
 
-        boolean isUpdated = dailyArticleService.insertAndUpdateHeart(dailyArticleId, memberId, checked);
-        int totalHeartCount = dailyArticleService.getTotalHeartCount(dailyArticleId);
-
-        map.put("isUpdated", isUpdated);
-        map.put("totalHeartCount", totalHeartCount);
-
-        return ResponseEntity.ok(map);
-    }
-
-    // 게시글 수정 화면 요청 처리
-    @GetMapping("{categoryId}/edit/{dailyArticleId}")
-    public String dailyEditForm(@PathVariable("categoryId") int categoryId,
-                                @PathVariable("dailyArticleId") int dailyArticleId,
-                                Model model) {
-
-        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
-        model.addAttribute("dailyArticleDto", dailyArticleDto);
-
-        return "/daily/dailyEdit";
-    }
-
-    // 게시글 수정 요청 처리
-    @PostMapping("{categoryId}/edit/{dailyArticleId}")
-    public String dailyEditAction(@PathVariable("categoryId") int categoryId,
-                                  @PathVariable("dailyArticleId") int dailyArticleId,
-                                  @ModelAttribute DailyArticleForm dailyArticleForm) {
-
-        DailyArticleDto editedDailyArticle = DailyArticleDto.builder()
-                .title(dailyArticleForm.getTitle())
-                .content(dailyArticleForm.getContent())
-                .build();
-
-        dailyArticleService.editDailyArticle(dailyArticleId, editedDailyArticle);
-
-        return "redirect:/daily/{categoryId}";
-    }
-
-    // 게시글 삭제 처리
-    @PostMapping("{categoryId}/delete/{dailyArticleId}")
-    public String dailyDelete(@PathVariable("categoryId") int categoryId,
-                              @PathVariable("dailyArticleId") int dailyArticleId) {
-
-        dailyArticleService.removeDailyArticle(categoryId, dailyArticleId);
-
-        return "redirect:/daily/{categoryId}";
+        return ResponseEntity.ok().build();
     }
 
     // 댓글 삭제 요청 처리(서버 사이드 렌더링)
@@ -323,13 +316,22 @@ public class DailyController {
         return ResponseEntity.ok().build();
     }
 
-    // 댓글 수정 요청 api
-    @PostMapping("/edit-reply")
-    public ResponseEntity<Void> dailyEditReply(@RequestBody ReplyDto replyDto) {
+    // 좋아요 기능 api
+    @GetMapping("/like")
+    public ResponseEntity<Map<String, Object>> handleHeart(
+            @RequestParam("dailyArticleId") int dailyArticleId,
+            @RequestParam("memberId") String memberId,
+            @RequestParam("checked") boolean checked) {
 
-        dailyArticleService.editReply(replyDto.getDailyArticleId(), replyDto.getReplyId(), replyDto.getContent());
+        Map<String, Object> map = new HashMap<>();
 
-        return ResponseEntity.ok().build();
+        boolean isUpdated = dailyArticleService.insertAndUpdateHeart(dailyArticleId, memberId, checked);
+        int totalHeartCount = dailyArticleService.getTotalHeartCount(dailyArticleId);
+
+        map.put("isUpdated", isUpdated);
+        map.put("totalHeartCount", totalHeartCount);
+
+        return ResponseEntity.ok(map);
     }
 
     // 세션에 저장된 회원 api
@@ -347,6 +349,12 @@ public class DailyController {
     public ResponseEntity<List<ReplyDto>> getReplyList(@PathVariable("dailyArticleId") int dailyArticleId) {
 
         List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
+
+        for (ReplyDto replyDto : replyList) {
+            MemberDto commenter = memberService.getMember(replyDto.getWriter());
+            replyDto.setPicture(commenter.getStorePicture());
+            replyDto.setNickname(commenter.getNickname());
+        }
 
         return ResponseEntity.ok(replyList);
     }

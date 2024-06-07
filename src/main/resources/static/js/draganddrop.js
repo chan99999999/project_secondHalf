@@ -1,17 +1,17 @@
+// 이벤트 등록 함수
 const eventRegister2 = function () {
   const dragArea = document.querySelector('#daily-register-img-wrap');
 
-  // 드래그 앤 드롭 이벤트 리스너 등록
   dragArea.addEventListener("dragover", handleDragOver);
   dragArea.addEventListener("drop", handleDrop);
 }
 
-// 드래그 이벤트 핸들러
+// 드래그 이벤트 처리 함수
 const handleDragOver = function (event) {
   event.preventDefault();
 }
 
-// 드롭 이벤트 핸들러
+// 드롭 이벤트 처리 함수
 const handleDrop = function (event) {
   event.preventDefault();
 

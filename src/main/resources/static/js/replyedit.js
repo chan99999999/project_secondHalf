@@ -39,7 +39,7 @@ const handleReplyEdit = async function (event) {
 }
 
 // 댓글 수정 완료 이벤트 처리 함수
-const updateReview = async function () {
+const updateReview = async function (event) {
   const replyContentInput = document.querySelector('textarea[name="editedContent"]');
   const replyContent = replyContentInput.value;
   const dailyArticleId = getDailyArticleIdFromURL();
@@ -65,6 +65,9 @@ const updateReview = async function () {
     const response = await fetch(url, options);
 
     if (response.ok) {
+
+      const memberId = await getLoginMemberId();
+
       // 댓글 목록 업데이트 
       const replyList = await getReplyList();
       const reviewListElement = document.querySelector('.review-list');
@@ -75,21 +78,30 @@ const updateReview = async function () {
           const writerHTML = `<li class="review-writer">${reply.writer}</li>`;
           const contentHTML = `<li class="review-content">${reply.content}</li>`;
 
-          const reviewItemHTML = `
-      <div class="review" data-reply-id="${reply.replyId}">
+          // 현재 로그인한 사용자의 댓글일 때만 수정/삭제 버튼을 보이도록 설정
+          const isOwnReply = reply.writer === memberId;
+          const buttonsHTML = isOwnReply ? `
         <div>
-          <img src="/img/profile.png">
-        </div>
-        <div>
-          <ul>
-            ${writerHTML}
-            ${contentHTML}
-          </ul>
           <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
           <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제</button>
+        </div>` : '';
+
+          const reviewItemHTML = `
+    <div class="review" data-reply-id="${reply.replyId}">
+    <div class="review-box">
+        <div>
+        <img class="commenter" src="/member/image/${reply.picture}">
         </div>
-      </div>
-    `;
+        <div>
+            <ul>
+            ${writerHTML}
+            ${contentHTML}
+            </ul>
+        </div>
+    </div>
+            ${buttonsHTML}
+</div>
+      `;
 
           reviewHTML += reviewItemHTML;
         }

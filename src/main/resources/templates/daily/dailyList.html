@@ -5,7 +5,6 @@
 <head>
     <title th:fragment="title"> ::: 일상공유 ::: </title>
     <th:block th:fragment="script">
-        <script src="/js/pagination.js" defer></script>
     </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
@@ -13,7 +12,6 @@
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     </th:block>
 </head>
-
 
 <div class="wrapper" th:fragment="content">
     <div id="daily-wrap">
@@ -42,7 +40,6 @@
                     </ul>
                 </div>
             </div>
-
         </div>
 
         <div class="daily-list" id="nowon-news-section">
@@ -70,8 +67,6 @@
                 </th:block>
             </th:block>
         </div>
-
-        <!--        <div th:replace="~{/fragment/nowongu_news :: nowongu_news}"></div>-->
 
         <th:block th:if="${dailyArticleList.isEmpty()}">
             <div class="daily-list">
@@ -158,20 +153,7 @@
                 </li>
             </ul>
         </div>
-
     </div>
 </div>
 
-
 </html>
-
-
-
-
-
-
-
-
-
-
-

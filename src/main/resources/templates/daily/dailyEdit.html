@@ -12,31 +12,35 @@
     </th:block>
 </head>
 
-
 <div class="wrapper" th:fragment="content">
     <div id="daily-register-wrap">
         <a th:href="@{/daily/{categoryId}(categoryId=${categoryId})}"><h1 class="title-text">일상 공유하기</h1></a>
         <form id="daily-register-form" method="post" enctype="multipart/form-data">
             <fieldset>
-                <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목" th:value="${dailyArticleDto.title}" />
+                <input name="title" id="daily-register-title" type="text" placeholder="게시글 제목"
+                       th:value="${dailyArticleDto.title}"/>
+
                 <div id="daily-tag-wrap">
                     <h3>카테고리</h3>
-                    <input class="daily-tag-list" id="1" type="checkbox" name="tags" th:value="일상">
-                    <label for="1" th:text="일상">일상</label>
-                    <input class="daily-tag-list" id="2" type="checkbox" name="tags" th:value="건강">
-                    <label for="2" th:text="건강">이상</label>
-                    <input class="daily-tag-list" id="3" type="checkbox" name="tags" th:value="명언">
-                    <label for="3" th:text="명언">삼상</label>
+                    <th:block th:each="tag : ${tagList}">
+                        <input class="daily-tag-list" type="checkbox" name="tags" th:value="${tag}">
+                        <label th:text="${tag.tagName}">태그</label>
+                    </th:block>
                 </div>
+
                 <div id="daily-register-img-wrap">
-                    <img class="daily-register-img" src="/img/sample1.jpg">
-                    <img class="daily-register-img" src="/img/sample1.jpg">
+                    <th:block th:if="${fileList != null}">
+                        <th:block th:each="file : ${fileList}">
+                            <img class="daily-read-img" th:src="@{/daily/image/{fileName}(fileName=${file.encryptedName})}">
+                        </th:block>
+                    </th:block>
                     <div id="daily-register-img-upload">
                         <input name="attachImages" type="file" multiple>
                     </div>
                 </div>
                 <div>
-                    <textarea name="content" id="daily-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요." th:text="${dailyArticleDto.content}"></textarea>
+                    <textarea name="content" id="daily-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."
+                              th:text="${dailyArticleDto.content}"></textarea>
                 </div>
                 <div class="register-btn-wrap">
                     <button class="back-btn" type="reset">취소하기</button>
@@ -48,14 +52,3 @@
 </div>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
