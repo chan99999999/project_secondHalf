@@ -17,4 +17,5 @@ public class ReviewDto {
         private Timestamp regdate; // 등록일자
         private String memberId;  // 아이디
         private String nickname; // 닉네임
+        private String profile;
 }

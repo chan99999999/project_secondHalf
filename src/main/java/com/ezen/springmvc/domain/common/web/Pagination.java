@@ -30,6 +30,7 @@ public class Pagination {
 
 	public void setParams(PageParams params) {
 		this.params = params;
+		calculate();
 	}
 
 	public int getTotalPages() {
@@ -89,25 +90,32 @@ public class Pagination {
 
 	/** 페이징 계산 */
 	public void calculate(){
-		// 테이블로부터 검색된 행의 수에 따른 전체페이지수 계산
-		totalPages = (int)Math.ceil((double)params.getRowCount() / params.getElementSize());
-		
-		// 목록별 번호(1~10):0, (11~20):1, (21~30):2, .....
+//		// 테이블로부터 검색된 행의 수에 따른 전체페이지수 계산
+//		totalPages = (int)Math.ceil((double)params.getRowCount() / params.getElementSize());
+//
+//		// 목록별 번호(1~10):0, (11~20):1, (21~30):2, .....
+//		listNo = (params.getRequestPage() - 1) / params.getPageSize();
+//
+//		// 현재 페이지의 시작페이지번호와 마지막페이지번호 계산
+//		startPage = (listNo * params.getPageSize()) + 1;
+//		endPage = (listNo * params.getPageSize()) + params.getPageSize();
+//		if (endPage > totalPages){
+//			endPage = totalPages;
+//		}
+//
+//		// 이전 그룹의 시작페이지 번호 계산
+//		previousStartPage = startPage - params.getPageSize();
+//		// 첫번째 목록인 경우 1페이지로 설정
+//		if (previousStartPage < 0)  previousStartPage = 1;
+//
+//		// 다음 목록의 시작페이지 번호 계산
+//		nextStartPage = startPage + params.getPageSize();
+
+		totalPages = (int) Math.ceil((double) params.getRowCount() / params.getElementSize());
 		listNo = (params.getRequestPage() - 1) / params.getPageSize();
-			
-		// 현재 페이지의 시작페이지번호와 마지막페이지번호 계산
 		startPage = (listNo * params.getPageSize()) + 1;
-		endPage = (listNo * params.getPageSize()) + params.getPageSize();
-		if (endPage > totalPages){
-			endPage = totalPages;
-		}
-		
-		// 이전 그룹의 시작페이지 번호 계산
-		previousStartPage = startPage - params.getPageSize();
-		// 첫번째 목록인 경우 1페이지로 설정
-		if (previousStartPage < 0)  previousStartPage = 1;
-		
-		// 다음 목록의 시작페이지 번호 계산
+		endPage = Math.min(startPage + params.getPageSize() - 1, totalPages);
+		previousStartPage = Math.max(startPage - params.getPageSize(), 1);
 		nextStartPage = startPage + params.getPageSize();
 	}
 	

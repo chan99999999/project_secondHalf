@@ -11,7 +11,7 @@ public class PageParams {
 	private int rowCount;       /** 테이블 목록 갯수 */
 	
 	public PageParams() {
-		this(10, 10, 1, 0);
+		this(5, 10, 1, 0);
 	}
 	
 	public PageParams(int elementSize, int pageSize, int requestPage, int rowCount) {

@@ -1,8 +1,11 @@
 package com.ezen.springmvc.web.map.controller;
 
+import com.ezen.springmvc.domain.member.dto.MemberDto;
+import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
+import com.ezen.springmvc.domain.review.mapper.ReviewMapper;
 import com.ezen.springmvc.domain.review.service.ReviewService;
 import com.ezen.springmvc.web.map.form.ReviewForm;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ public class MapController {
 
     private final MapService mapService;
     private final ReviewService reviewService;
+    private final MemberService memberService;
 
     // 특정 장소의 정보를 JSON 형식으로 반환합니다.
     @GetMapping("/place")
@@ -82,16 +86,16 @@ public class MapController {
                 .y(y)
                 .build();
 
-        // 로그 추가: 생성된 MapDto 객체 출력
-        log.info("생성된 Map Dto: {}", mapDto);
-
         // MapDto 객체를 처리합니다.
         MapDto processedPlaceInfo = mapService.processPlaceInfo(mapDto);
 
-        // 로그 추가: 처리된 정보 출력
-        log.info("처리된 map 정보: {}", processedPlaceInfo);
 
         List<ReviewDto> reviewList = reviewService.getReviewsByPlaceId(mapId);
+
+        for (ReviewDto review : reviewList) {
+            MemberDto memberDto = memberService.getMember(review.getMemberId());
+            review.setProfile(memberDto.getStorePicture());
+        }
 
         ReviewForm reviewForm = ReviewForm.builder().build();
 
@@ -100,15 +104,8 @@ public class MapController {
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("reviewForm", reviewForm);
 
-        // 로그 추가: 모델에 정보가 잘 추가되었는지 확인
-        log.info("모델에 추가된 mapDto: {}", model.containsAttribute("mapDto"));
-        log.info("모델에 추가된 reviewList: {}", model.containsAttribute("reviewList"));
-
         // MapDto 객체를 JSON 문자열로 변환하고 로그를 추가합니다.
         String json = mapService.processPlaceInfoToJson(processedPlaceInfo);
-
-        // 로그 추가: JSON 문자열 출력
-        log.info("JSON String 출력: {}", json);
 
         // 모델에 JSON 문자열을 추가
         model.addAttribute("jsonMapDto", json);
@@ -151,9 +148,7 @@ public class MapController {
                 .y(reviewForm.getY())
                 .build();
 
-        // 리뷰 정보
-
-
+        // DB에 맵 정보가 없을 시, 추가 생성
         mapService.addNewPlace(mapDto);
         return reviewForm;
     }

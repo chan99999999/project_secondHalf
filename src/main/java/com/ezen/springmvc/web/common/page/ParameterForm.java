@@ -18,5 +18,6 @@ public class ParameterForm {
     private int rowCount;            /** 테이블 목록 갯수 */
     private int meetArticleId;       /** 검색값 */
     private String tagName;          /** 검색값 */
+    private String placeId;          /** 검색값 */
     private String title;            /** 검색값 */
 }

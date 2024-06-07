@@ -1,6 +1,7 @@
 package com.ezen.springmvc.web.map.controller;
 
 import com.ezen.springmvc.domain.member.dto.MemberDto;
+import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
@@ -23,6 +24,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
     private final MapService mapService;
+    private final MemberService memberService;
 
     @PostMapping("/add")
     @ResponseBody
@@ -89,13 +91,18 @@ public class ReviewController {
 
 
     @GetMapping("/list")
-    public String getReviewsByPlaceId(@RequestParam("placeId") long placeId, Model model) {
+    public String getReviewsByPlaceId(@RequestParam("placeId") long placeId, HttpSession session, Model model) {
         log.info("Received request for reviews of place with ID: {}", placeId);
         List<ReviewDto> reviews = reviewService.getReviewsByPlaceId(placeId);
 
+        for (ReviewDto review : reviews) {
+            MemberDto memberDto = memberService.getMember(review.getMemberId());
+            review.setProfile(memberDto.getStorePicture());
+        }
+
         // 모델에 후기 목록을 추가합니다.
         model.addAttribute("reviewList", reviews);
-        log.info("Reviews: {}", reviews);
+        log.info("리뷰내용들: {}", reviews);
 
         // 장소 정보를 모델에 추가합니다.
         MapDto mapDto = mapService.getPlaceInfoById(placeId);

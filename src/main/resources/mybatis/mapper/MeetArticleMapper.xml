@@ -8,18 +8,19 @@
                ma.content,
                TO_CHAR(ma.regdate, 'YYYY-MM-DD') AS regdate,
                TO_CHAR(ma.time, 'YYYY-MM-DD HH24:MI:SS') AS time,
-       ma.enter,
-       ma.hitcount,
-       ma.category_id AS categoryId,
-       ma.member_id AS memberId,
-       ma.place_id AS placeId,
-       ta.tag_id AS tagId,
-       t.tag_name AS tagName
-        FROM meet_article ma
-            JOIN tag_article ta ON ma.m_article_id = ta.m_article_id
-            JOIN tag t ON ta.tag_id = t.tag_id
+               ma.enter,
+               ma.place_id,
+               ma.hitcount,
+               ma.category_id AS categoryId,
+               ma.member_id AS memberId,
+               ma.place_id AS placeId,
+               ta.tag_id AS tagId,
+               t.tag_name AS tagName
+               FROM meet_article ma
+                    JOIN tag_article ta ON ma.m_article_id = ta.m_article_id
+                    JOIN tag t ON ta.tag_id = t.tag_id
         WHERE ma.category_id = 3
-        ORDER BY ma.m_article_id DESC
+              ORDER BY ma.m_article_id DESC
     </select>
     <!-- 제목으로 게시글 검색-->
     <select id="findByMeetTitle" resultType="MeetArticleDto">

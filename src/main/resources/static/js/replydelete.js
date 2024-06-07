@@ -1,9 +1,4 @@
-// const eventRegister4 = function () {
-//   const replyDeleteBtns = document.querySelectorAll('#reply-delete-btn');
-//   replyDeleteBtns.forEach(replyDeleteBtn => replyDeleteBtn.addEventListener('click', handleReplyDelete));
-// }
-
-// 이벤트 위임
+// 이벤트 위임 함수
 const eventRegister4 = function () {
   const reviewListElement = document.querySelector('.review-list');
   reviewListElement.addEventListener('click', async function (event) {
@@ -22,6 +17,7 @@ const getReplyCount = async function () {
   return replyCount;
 }
 
+// 댓글 삭제 이벤트 처리 함수
 const handleReplyDelete = async function (event) {
 
   if (!confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
@@ -29,9 +25,7 @@ const handleReplyDelete = async function (event) {
   }
 
   const dailyArticleId = getDailyArticleIdFromURL();
-
   const url = `/daily/delete-reply`;
-
   const reviewElement = event.target.closest('.review');
   const replyId = reviewElement.dataset.replyId;
 
@@ -99,7 +93,6 @@ const handleReplyDelete = async function (event) {
       const replyCountElement = document.querySelector('#replyToggle');
       replyCountElement.textContent = `댓글(${await getReplyCount()})`;
 
-      // eventRegister4();
     } else {
       const errorMessage = await response.text();
       console.error('댓글 삭제 실패:', errorMessage);
