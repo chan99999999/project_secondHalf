@@ -96,6 +96,8 @@ public class MeetController {
         log.info("조회된 행의 수: {} ", selectedRowCount);
         parameterForm.setRowCount(selectedRowCount);
         Pagination pagination = new Pagination(parameterForm);
+        log.info("조회된 페이지네이션 : {}", pagination);
+        log.info("조회된 파라미터폼 : {}", parameterForm);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("meetArticleList", meetArticleList);
         model.addAttribute("parameterForm", parameterForm);
