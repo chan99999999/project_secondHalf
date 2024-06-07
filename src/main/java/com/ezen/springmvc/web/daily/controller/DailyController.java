@@ -153,8 +153,6 @@ public class DailyController {
         
         // 소통공간 목록
         List<DailyArticleDto> dailyArticleList = null;
-        // 노원구 소식 목록
-        List<DailyArticleDto> noticeList = null;
 
         // 검색 조건
         SearchDto searchDto = SearchDto.builder()
@@ -166,10 +164,8 @@ public class DailyController {
         // 태그 이름 파라미터 유무에 따른 게시글 목록 반환
         if (parameterForm.getTagName() != null && !parameterForm.getTagName().isEmpty()) {
             dailyArticleList = dailyArticleService.getDailyArticlesByTagName(categoryId, parameterForm.getTagName(), searchDto);
-            noticeList = dailyArticleService.getAdminDailyArticlesByTagName(categoryId, parameterForm.getTagName(), searchDto);
         } else {
             dailyArticleList = dailyArticleService.getDailyArticles(categoryId, searchDto);
-            noticeList = dailyArticleService.getAdminDailyArticles(categoryId, searchDto);
         }
 
         for (DailyArticleDto dailyArticle : dailyArticleList) {
@@ -185,7 +181,6 @@ public class DailyController {
 
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("dailyArticleList", dailyArticleList);
-        model.addAttribute("noticeList", noticeList);
         model.addAttribute("parameterForm", parameterForm);
         model.addAttribute("pagination", pagination);
         return "/daily/dailyList";

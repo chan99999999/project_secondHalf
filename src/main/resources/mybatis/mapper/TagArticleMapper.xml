@@ -2,25 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.TagArticleMapper">
     <!-- 태그 게시글 생성 -->
-<!--    <insert id="createTagArticle">-->
-<!--        INSERT INTO tag_article (tag_id, d_article_id)-->
-<!--        VALUES (#{tagId}, #{dailyArticleId})-->
-<!--    </insert>-->
-
-    <!-- 태그 게시글 생성 -->
     <insert id="createTagArticle">
-        <choose>
-            <!-- noticeArticleId가 전달된 경우 -->
-            <when test="noticeArticleId != null">
-                INSERT INTO tag_article (tag_id, notice_article_id)
-                VALUES (#{tagId}, #{noticeArticleId})
-            </when>
-            <!-- dailyArticleId가 전달된 경우 -->
-            <otherwise>
-                INSERT INTO tag_article (tag_id, d_article_id)
-                VALUES (#{tagId}, #{dailyArticleId})
-            </otherwise>
-        </choose>
+        INSERT INTO tag_article (tag_id, d_article_id)
+        VALUES (#{tagId}, #{dailyArticleId})
     </insert>
-
 </mapper>
