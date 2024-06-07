@@ -89,7 +89,7 @@
                         <div class="daily-writer">
                             <img class="daily-writer-img"
                                  th:src="@{/member/image/{filename}(filename=${dailyArticle.storePicture})}"/>
-                            <div class="test">
+                            <div class="chat">
                                 <div class="daily-writer-name" th:text="${dailyArticle.nickName}"></div>
                                 <div class="toChat"><a th:href="|/chat/room/to/${dailyArticle.nickName}|" th:text="대화하기"></a></div>
                             </div>

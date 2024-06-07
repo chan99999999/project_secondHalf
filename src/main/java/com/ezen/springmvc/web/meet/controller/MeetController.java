@@ -116,7 +116,7 @@ public class MeetController {
         MeetArticleDto meetArticleDto = MeetArticleDto.builder()
                 .categoryId(categoryId)
                 .memberId(loginMember.getMemberId())
-                .placeId(1) // 추후 동적 변경 필요
+                .placeId(meetArticleForm.getPlaceId()) // 추후 동적 변경 필요
                 .title(meetArticleForm.getTitle())
                 .content(meetArticleForm.getContent())
                 .enter(meetArticleForm.getEnter())

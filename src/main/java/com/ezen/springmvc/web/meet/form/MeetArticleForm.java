@@ -13,7 +13,7 @@ public class MeetArticleForm {
     private int enter;
     private int hitcount;
     private int categoryId;
-    private int placeId;
+    private String placeId;
     private int tagId;
     private String title;
     private String content;
