@@ -34,7 +34,7 @@ public class chatServiceTest {
 
 	@Test
 	@DisplayName("메세지 저장")
-//	@Disabled
+	@Disabled
 	void saveMessageTest(){
 		MessageDto messageDto = MessageDto.builder()
 				.roomId("1")
@@ -42,6 +42,14 @@ public class chatServiceTest {
 				.content("왜그러냐고")
 						.build();
 		chatService.receiveMessage(messageDto);
+	}
+
+	@Test
+	@DisplayName("채팅방 찾기")
+//	@Disabled
+	void findChatRoom(){
+		List<ChatDto> list = chatService.getByNick("찬찬");
+		log.info(list.toString());
 	}
 }
 

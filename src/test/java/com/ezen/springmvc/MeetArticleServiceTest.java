@@ -63,7 +63,7 @@ public class MeetArticleServiceTest {
                 .enter(3)
                 .categoryId(3)
                 .memberId("chan999")
-                .placeId(11)
+                .placeId("김김")
                 .build();
         meetArticleMapper.createMeetArticle(meetArticleDto);
     }

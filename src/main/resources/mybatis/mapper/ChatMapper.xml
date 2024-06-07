@@ -23,12 +23,10 @@
 	</select>
 
 	<!-- 상대방 닉네임에 해당하는 채팅방 검색  -->
-	<select id="findChatRoomsByNickname" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
-		SELECT cr.room_id, cr.sender, cr.receiver, cr.created_at
-		FROM chat_room cr
-				 JOIN member m_sender ON cr.sender = m_sender.member_id
-				 JOIN member m_receiver ON cr.receiver = m_receiver.member_id
-		WHERE m_sender.nickname = #{nickname} OR m_receiver.nickname = #{nickname}
+	<select id="findChatByNick" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
+		SELECT room_id, created_at, sender_id, receiver_id, sender_nickname, receiver_nickname
+		FROM chat_room
+		WHERE sender_nickname = #{nickname} OR receiver_nickname = #{nickname}
 	</select>
 
 	<!-- 같은 receiverId가 있는지 조회 -->

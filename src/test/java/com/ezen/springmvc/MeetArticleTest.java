@@ -60,7 +60,7 @@ public class MeetArticleTest {
                 .enter(4)
                 .categoryId(3)
                 .memberId("monday")
-                .placeId(3)
+                .placeId("김김")
                 .build();
         meetArticleMapper.createMeetArticle(createArticle);
         log.info("등록 완료 : {}", createArticle);
