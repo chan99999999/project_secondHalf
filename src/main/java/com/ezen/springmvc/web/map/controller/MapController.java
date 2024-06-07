@@ -86,14 +86,9 @@ public class MapController {
                 .y(y)
                 .build();
 
-        // 로그 추가: 생성된 MapDto 객체 출력
-        log.info("생성된 Map Dto: {}", mapDto);
-
         // MapDto 객체를 처리합니다.
         MapDto processedPlaceInfo = mapService.processPlaceInfo(mapDto);
 
-        // 로그 추가: 처리된 정보 출력
-        log.info("처리된 map 정보: {}", processedPlaceInfo);
 
         List<ReviewDto> reviewList = reviewService.getReviewsByPlaceId(mapId);
 
@@ -109,15 +104,8 @@ public class MapController {
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("reviewForm", reviewForm);
 
-        // 로그 추가: 모델에 정보가 잘 추가되었는지 확인
-        log.info("모델에 추가된 mapDto: {}", model.containsAttribute("mapDto"));
-        log.info("모델에 추가된 reviewList: {}", model.containsAttribute("reviewList"));
-
         // MapDto 객체를 JSON 문자열로 변환하고 로그를 추가합니다.
         String json = mapService.processPlaceInfoToJson(processedPlaceInfo);
-
-        // 로그 추가: JSON 문자열 출력
-        log.info("JSON String 출력: {}", json);
 
         // 모델에 JSON 문자열을 추가
         model.addAttribute("jsonMapDto", json);
@@ -160,9 +148,7 @@ public class MapController {
                 .y(reviewForm.getY())
                 .build();
 
-        // 리뷰 정보
-
-
+        // DB에 맵 정보가 없을 시, 추가 생성
         mapService.addNewPlace(mapDto);
         return reviewForm;
     }
