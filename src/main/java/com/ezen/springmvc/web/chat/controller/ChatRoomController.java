@@ -51,8 +51,11 @@ public class ChatRoomController {
      * @return 대화방 목록 페이지의 뷰 이름
      */
     @GetMapping
-    public String rooms(Model model) {
-        List<ChatDto> chatList = chatService.getMyChatList();
+    public String rooms(Model model, HttpSession session) {
+
+        MemberDto memberDto = (MemberDto) session.getAttribute("loginMember");
+
+        List<ChatDto> chatList = chatService.getByNick(memberDto.getNickname());
         model.addAttribute("chatList", chatList);
         model.addAttribute("messageForm", new MessageForm());
         return "/chat/chatting";
@@ -72,8 +75,12 @@ public class ChatRoomController {
 //        for (MessageDto message : messages) {
 //            log.info("메세지 {}", message.getContent());
 //        }
+        ChatDto chatDto = chatService.getRoom(roomId);
+        MemberDto memberDto = memberService.getMember(chatDto.getReceiverId());
+
         redirectAttributes.addFlashAttribute("messages", messages);
         redirectAttributes.addFlashAttribute("roomId", roomId);
+        redirectAttributes.addFlashAttribute("receiver", memberDto);
         return "redirect:/chat";
     }
 

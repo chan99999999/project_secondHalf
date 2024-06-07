@@ -12,55 +12,72 @@
     </th:block>
 </head>
 
-
 <div class="wrapper" th:fragment="content">
     <div id="meet-register-wrap">
         <h1 class="title-text">모임 만들기</h1>
-        <form id="meet-register-form">
+        <form id="meet-register-form" th:object="${meetArticleForm}"
+              th:action="@{/meet/{categoryId}/register(categoryId=${categoryId})}" method="post">
             <fieldset>
-                <input id="meet-register-title" type="text" placeholder="모임 제목"/>
+                <input name="title" id="meet-register-title" type="text" placeholder="모임 제목"/>
                 <div id="meet-tag-wrap">
                     <h3>카테고리</h3>
-                    <input class="daily-tag-list" type="radio" name="tag" value="partner"/>짝꿍
-                    <input class="daily-tag-list" type="radio" name="tag" value="hobbit"/>취미
-                    <input class="daily-tag-list" type="radio" name="tag" value="health"/>건강
-                    <input class="daily-tag-list" type="radio" name="tag" value="etc"/>기타
+                    <input class="meet-tag-list" id="friend" type="radio" name="tags" value="짝꿍">
+                    <label for="friend">짝꿍</label>
+                    <input class="meet-tag-list" id="health" type="radio" name="tags" value="건강">
+                    <label for="health">건강</label>
+                    <input class="meet-tag-list" id="hobby" type="radio" name="tags" value="취미">
+                    <label for="hobby">취미</label>
+                    <input class="meet-tag-list" id="else" type="radio" name="tags" value="기타">
+                    <label for="else">기타</label>
                 </div>
                 <div id="meet-info">
                     <div class="meet-info">
                         <label for="meet-date">시간</label>
-                        <input id="meet-date" type="datetime-local">
+                        <input name="time" id="meet-date" type="datetime-local">
                     </div>
                     <div class="meet-info">
                         <label for="meet-place">장소</label>
-                        <input id="meet-place" type="text" placeholder="카카오 맵 API">
+                        <input id="meet-place" type="text" name="placeId" placeholder="카카오 맵 API">
                     </div>
                     <div class="meet-info">
                         <label for="meet-count">인원</label>
-                        <input id="meet-count" type="text" placeholder="최대인원 설정"><span>명</span>
+                        <input name="enter" id="meet-count" type="text" placeholder="최대인원 설정"><span>명</span>
                     </div>
                 </div>
                 <div>
-                    <textarea id="meet-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
+                    <textarea name="content" id="meet-register-textarea" rows="5" cols="66" placeholder="내용을 입력해주세요."></textarea>
                 </div>
                 <div class="register-btn-wrap">
-                    <button class="back-btn" type="reset">취소하기</button>
+                    <button class="back-btn" type="reset" th:onclick="history.back(-1)">취소하기</button>
                     <button class="register-btn" type="submit">등록하기</button>
                 </div>
             </fieldset>
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // radio 버튼 요소들을 가져옴
+        const radioTags = document.querySelectorAll('input[type=radio][name=tags]');
 
+        // 각 radio 버튼에 대해 이벤트 리스너 등록
+        radioTags.forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                // 선택된 태그가 '짝꿍'인 경우
+                if (radio.value === '짝꿍') {
+                    // #meet-count 요소를 가져와서 값 변경
+                    const meetCount = document.querySelector('#meet-count');
+                    if (meetCount) {
+                        meetCount.value = 2;
+                        meetCount.disabled = true;
+                    }
+                } else {
+                    const meetCount = document.querySelector('#meet-count');
+                    meetCount.disabled = false;
+                    meetCount.value = '';
+                }
+            });
+        });
+    });
+</script>
 </html>
-
-
-
-
-
-
-
-
-
-
-

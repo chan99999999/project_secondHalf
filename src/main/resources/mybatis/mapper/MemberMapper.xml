@@ -21,7 +21,7 @@
                interest,
                member_address,
                gender,
-               birth_date,
+               TO_CHAR(birth_date, 'YYYY-MM-DD') "birth_date",
                introduce,
                picture,
                store_picture,
@@ -40,7 +40,7 @@
                interest,
                member_address,
                gender,
-               birth_date,
+               TO_CHAR(birth_date, 'YYYY-MM-DD') "birth_date",
                introduce,
                picture,
                store_picture,
@@ -60,7 +60,7 @@
                interest,
                member_address,
                gender,
-               birth_date,
+               TO_CHAR(birth_date, 'YYYY-MM-DD') "birth_date",
                introduce,
                picture,
                store_picture,
@@ -149,7 +149,7 @@
 <!--    회원 정지-->
     <update id="banMember" parameterType="MemberDto">
         UPDATE member
-        SET grade = 'BAN'
+        SET grade = 'BLACK'
         WHERE member_id = #{value}
     </update>
 

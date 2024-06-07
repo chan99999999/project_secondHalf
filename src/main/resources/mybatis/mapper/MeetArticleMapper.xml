@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.ezen.springmvc.domain.meetArticle.mapper.MeetArticleMapper">
+    <!-- 게시글 전체 조회 -->
+    <select id="findByAllMeetArticle" parameterType="int" resultType="MeetArticleDto">
+        SELECT ma.m_article_id AS meetArticleId,
+               ma.title,
+               ma.content,
+               TO_CHAR(ma.regdate, 'YYYY-MM-DD') AS regdate,
+               TO_CHAR(ma.time, 'YYYY-MM-DD HH24:MI:SS') AS time,
+       ma.enter,
+       ma.hitcount,
+       ma.category_id AS categoryId,
+       ma.member_id AS memberId,
+       ma.place_id AS placeId,
+       ta.tag_id AS tagId,
+       t.tag_name AS tagName
+        FROM meet_article ma
+            JOIN tag_article ta ON ma.m_article_id = ta.m_article_id
+            JOIN tag t ON ta.tag_id = t.tag_id
+        WHERE ma.category_id = 3
+        ORDER BY ma.m_article_id DESC
+    </select>
+    <!-- 제목으로 게시글 검색-->
+    <select id="findByMeetTitle" resultType="MeetArticleDto">
+        SELECT
+               title,
+               enter,
+               category_id,
+               place_id,
+               hitcount,
+               regdate,
+               time,
+               member_id
+        FROM (SELECT CEIL(rownum / #{searchDto.limit})page,
+                      title,
+                      enter,
+                      category_id,
+                      place_id,
+                      hitcount,
+                      TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate,
+                      time,
+                      member_id
+                FROM (SELECT
+                             title,
+                             enter,
+                             category_id,
+                             place_id,
+                             hitcount,
+                             regdate,
+                             time,
+                             member_id
+                            FROM meet_article
+                            <where>
+                                category_id = #{categoryId}
+                                <if test="searchDto.title != null">AND title LIKE '%' || #{searchDto.title} || '%'</if>
+                            </where>
+                            ORDER BY m_article_id DESC))
+        WHERE  page = #{searchDto.page}
+    </select>
+   <!-- 게시글 등록 -->
+    <insert id="createMeetArticle" parameterType="MeetArticleDto">
+        INSERT INTO meet_article (m_article_id,
+                                  title,
+                                  content,
+                                  regdate,
+                                  time,
+                                  enter,
+                                  hitcount,
+                                  category_id,
+                                  member_id,
+                                  place_id)
+        VALUES (M_ARTICLE_ID_SEQ.NEXTVAL,
+                #{title},
+                #{content},
+                SYSDATE,
+                SYSDATE,
+                #{enter},
+                1,
+                #{categoryId},
+                #{memberId},
+                #{placeId})
+        <selectKey keyProperty="meetArticleId" resultType="int" order="AFTER">
+            SELECT m_article_id_seq.CURRVAL FROM dual
+        </selectKey>
+    </insert>
+<!--     게시글 번호로 게시글 조회-->
+    <select id="readMeetArticle" parameterType="int" resultType="MeetArticleDto">
+        SELECT ma.m_article_id AS meetArticleId,
+               ma.title,
+               ma.content,
+               ma.category_id AS categoryId,
+               ma.member_id AS memberId,
+               ma.place_id AS placeId,
+               TO_CHAR(ma.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+               TO_CHAR(ma.time, 'YYYY-MM-DD HH24:MI') AS time,
+           t.tag_name AS tagName
+        FROM meet_article ma
+            LEFT JOIN tag_article ta ON ma.m_article_id = ta.m_article_id
+            LEFT JOIN tag t ON ta.tag_id = t.tag_id
+        WHERE ma.m_article_id = #{meetArticleId}
+    </select>
+    <!-- 조회수 증가-->
+    <update id="meetHitcount" parameterType="MeetArticleDto">
+        UPDATE meet_article
+        SET hitcount = hitcount + 1
+        WHERE m_article_id = #{meetArticleId}
+        <selectKey keyProperty="hitcount" resultType="int" order="AFTER">
+            SELECT hitcount FROM meet_article
+            WHERE m_article_id = #{meetArticleId}
+        </selectKey>
+    </update>
+    <!-- 게시글 갯수 -->
+    <select id="findByMeetArticleCount" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM meet_article
+        WHERE category_id = #{categoryId}
+    </select>
+    <!-- 참여하기 -->
+    <insert id="participate">
+        INSERT INTO enter (category_id, m_article_id, member_id)
+        VALUES (#{categoryId}, #{meetArticleId}, #{memberId})
+    </insert>
+    <!-- 참여취소 -->
+    <delete id="cancelParticipation">
+        DELETE FROM enter
+               WHERE category_id = #{categoryId}
+                 AND m_article_id = #{meetArticleId}
+                 AND member_id = #{memberId}
+    </delete>
+
+<!--    모임 참여하기-->
+    <insert id="joinMeetRoom" parameterType="MeetRoomDto">
+        insert into meet_room(meet_room_id, join_member_id)
+        values (#{meetRoomId}, #{joinMemberId})
+    </insert>
+
+<!--    참여방 출력-->
+    <select id="findMeetRoom" parameterType="int" resultType="MeetRoomDto">
+        select join_member_id
+        FROM meet_room
+        WHERE meet_room_id = #{meetArticleId}
+    </select>
+
+    <!-- 참여취소 -->
+    <delete id="cancelJoin">
+        DELETE FROM meet_room
+        WHERE meet_room_id = #{meetRoomId}
+          AND join_member_id = #{joinMemberId}
+    </delete>
+
+</mapper>

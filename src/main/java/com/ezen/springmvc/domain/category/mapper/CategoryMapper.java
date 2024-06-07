@@ -7,10 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface CategoryMapper {
-
-    /**
-     * 카테고리 목록 반환
-     * @return 카테고리 목록
-     */
-    public List<CategoryDto> findByCategoryAll();
+    List<CategoryDto> findByCategoryAll();
 }

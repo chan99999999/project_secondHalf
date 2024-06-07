@@ -15,4 +15,6 @@ public class ReplyDto {
     private String writer;      /** 댓글 작성한 아이디 */
     private String content;     /** 댓글 내용 */
     private String regdate;     /** 댓글 작성 일자 */
+    private String nickname;    /** 댓글 작성자 닉네임 */
+    private String picture;     /** 댓글 작성자 프로필사진 */
 }

@@ -10,95 +10,125 @@
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/meet.css">
     </th:block>
+    <style>
+        .pagination {
+            display: inline-block;
+        }
+    </style>
 </head>
-
 
 <div class="wrapper" th:fragment="content">
     <div id="meet-wrap">
         <h1 class="title-text">동네친구</h1>
         <div id="write-meet-wrap">
-            <div id="write-meet"><a href="/meet/register">모임 등록하기</a></div>
+            <div id="write-meet"><a href="/meet/register"
+                                    th:href="@{/meet/{categoryId}/register(categoryId=__${categoryId}__)}">모임 등록하기</a>
+            </div>
         </div>
         <div id="meet-list-wrap">
             <div id="meet-search-bar">
+                <form autocomplete="off" th:action="@{/meet/{categoryId}(categoryId=${categoryId})}" th:method="get">
+                    <div>
+                        <input type="text" th:name="title" placeholder="제목으로만 검색가능합니다.">
+                        <button type="submit">검색</button>
+                    </div>
+                </form>
                 <div>
-                    <input type="search">
-                    <button type="submit">검색</button>
-                </div>
-                <div>
-                    <ul class="meet-tag">
-                        <li><a>#건강</a></li>
-                        <li><a>#명언</a></li>
-                        <li><a>#가나다</a></li>
+                    <ul class="meet-tag" th:name="tagName">
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='짝꿍')}"
+                               th:text="'#짝꿍'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='취미')}"
+                               th:text="'#취미'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='건강')}"
+                               th:text="'#건강'"></a></li>
+                        <li><a th:href="@{/meet/{categoryId}(categoryId=${categoryId}, tagName='기타')}"
+                               th:text="'#기타'"></a></li>
                     </ul>
                 </div>
             </div>
+
             <div class="meet-list">
-               <div class="meet-post">
-                   <div>
-                       <h1 class="meet-post-title"><a href="/meet/read">둘레길 같이 가실 분</a></h1>
-                       <p>-장소 : 노원구 수락산 둘레길</p>
-                       <p>-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
-                       <ul class="meet-tag">
-                           <li>건강</li>
-                           <li>취미</li>
-                       </ul>
-                   </div>
-                   <div class="meet-join">
-                       <a href="meet/read">
-                           <p>참여하기</p>
-                           <p>(1/5)</p>
-                       </a>
-                   </div>
-               </div>
-                <div class="meet-post">
+                <div class="meet-post" th:each="meetArticle : ${meetArticleList}">
                     <div>
-                        <h1 class="meet-post-title"><a href="/meet/read">둘레길 같이 가실 분</a></h1>
-                        <p>-장소 : 노원구 수락산 둘레길</p>
-                        <p>-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
+                        <h1 class="meet-post-title">
+                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}"
+                               th:text="${meetArticle.title}"></a></h1>
+                        <p th:text="'장소 '+${meetArticle.placeId}"></p>
+                        <p th:text="'시간 '+${meetArticle.time}"></p>
                         <ul class="meet-tag">
-                            <li>건강</li>
-                            <li>취미</li>
+                            <li th:each="tag : ${#strings.arraySplit(meetArticle.tagName, ',')}">
+                                <span th:text="'#' + ${tag}"></span>
+                            </li>
                         </ul>
                     </div>
-                    <div class="meet-join">
-                        <a href="meet/read">
-                            <p>참여하기</p>
-                            <p>(1/5)</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="meet-post">
-                    <div>
-                        <h1 class="meet-post-title"><a href="/meet/read">둘레길 같이 가실 분</a></h1>
-                        <p>-장소 : 노원구 수락산 둘레길</p>
-                        <p>-시간 : 2024. 05. 13.(월) 13:00~16:00</p>
-                        <ul class="meet-tag">
-                            <li>건강</li>
-                            <li>취미</li>
-                        </ul>
-                    </div>
-                    <div class="meet-join">
-                        <a href="meet/read">
-                            <p>참여하기</p>
-                            <p>(1/5)</p>
-                        </a>
-                    </div>
+
+                    <th:block th:if="${!meetArticle.tagName.equals('짝꿍')}">
+                        <div class="meet-join">
+                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}">
+                                <p>참여하기</p>
+                                <p id="participant-count-${meetArticle.meetArticleId}"
+                                   th:text="|${meetRoomCounts.get(meetArticle.meetArticleId)} / ${meetArticle.enter}|"></p>
+                            </a>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${meetArticle.tagName.equals('짝꿍')}">
+                        <div class="meet-join">
+                            <a th:href="@{/meet/read/{meetArticleId}(meetArticleId=${meetArticle.meetArticleId})}">
+                                <p>참여하기</p>
+                            </a>
+                        </div>
+                    </th:block>
                 </div>
             </div>
+
+
+        </div>
+
+
+        <div aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:if="${pagination.showFirst}">
+                    <a class="page-link"
+                       th:href="@{/meet/{categoryId}(categoryId=${categoryId}, requestPage=1, tagName=${parameterForm.tagName})}">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only"><<</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${pagination.showPrevious}">
+                    <a class="page-link"
+                       th:href="@{/meet/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.previousStartPage}, tagName=${parameterForm.tagName})}">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only"><</span>
+                    </a>
+                </li>
+                <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+
+                    <li class="page-item active" th:if="${i == pagination.params.requestPage}">
+                        <a class="page-link"
+                           th:text="${i}">1</a>
+                    </li>
+                    <li class="page-item" th:if="${i != pagination.params.requestPage}">
+                        <a class="page-link"
+                           th:href="@{/meet/{categoryId}(categoryId=${categoryId}, requestPage=${i}, tagName=${parameterForm.tagName})}"
+                           th:text="${i}">2</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${pagination.showNext}">
+                    <a class="page-link" href="#" aria-label="Next"
+                       th:href="@{/meet/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.nextStartPage}, tagName=${parameterForm.tagName})}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">></span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${pagination.showLast}">
+                    <a class="page-link" href="#" aria-label="Next"
+                       th:href="@{/meet/{categoryId}(categoryId=${categoryId}, requestPage=${pagination.totalPages}, tagName=${parameterForm.tagName})}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">>></span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-

@@ -31,10 +31,9 @@
     <div id="main-banner">
         <img id="main-banner-img" src="/img/index_banner.png">
     </div>
-
     <div id="main-category">
         <div class="category-btn">
-            <a href="/map" >
+            <a href="/map">
                 <div class="category-content">
                     <img src="/img/category_map.png">
                     <div class="category-title">우리동네</div>
@@ -52,7 +51,7 @@
             </a>
         </div>
         <div class="category-btn">
-            <a href="/meet">
+            <a href="/meet" th:href="@{/meet/{categoryId}(categoryId=${categoryList[2].categoryId})}">
                 <div class="category-content">
                     <img src="/img/category_meet.png">
                     <div class="category-title">동네친구</div>
@@ -76,13 +75,3 @@
 
 
 </html>
-
-
-
-
-
-
-
-
-
-

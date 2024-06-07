@@ -20,7 +20,6 @@ public class ReviewMapperTest {
     @Autowired
     private ReviewMapper reviewMapper;
 
-
 //    @Test
 //    @DisplayName("신규 리뷰 등록")
 //    public void createTest() {

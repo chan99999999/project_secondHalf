@@ -10,6 +10,23 @@
     justify-content: end;
 }
 
+#meet-tag-wrap >label{
+    margin-right: 10px;
+}
+
+.meet-tag-list{
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid black;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.meet-tag-list:checked{
+    border: 7px solid tomato;
+}
+
 #write-meet{
     width: 200px;
     height: 60px;
@@ -170,7 +187,7 @@
 #meet-read-writer-name{
     align-content: center;
     padding: 0px 10px;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 #meet-read-date{
@@ -186,19 +203,40 @@
 #meet-read-content-wrap{
     background-color: white;
     padding: 40px;
-    margin: 10px 0;
+    margin: 20px 0;
+}
+
+#join-member-title{
+    font-size: 30px;
+    font-weight: bolder;
+    margin: 10px;
+}
+
+#join-member-wrap{
+    background-color: #eaeaea;
+    margin: 10px 0px;
+    padding: 10px;
+    font-size: 25px;
+}
+
+#join-member-list{
+    display: flex;
+}
+
+#join-member{
+    margin: 10px;
 }
 
 #meet-read-title{
     font-size: 50px;
     text-align: center;
     font-family: 'Cafe24Ssurround';
-    margin: 20px 0;
+    margin: 40px 0;
 }
 
 .meet-read-content{
     font-size: 30px;
-    margin: 5px 0;
+    margin: 20px 0;
 }
 
 #meet-read-content-wrap >img{
@@ -209,7 +247,6 @@
 }
 
 #review-count-wrap{
-    padding: 0px 20px;
     font-size: 25px;
     display: flex;
 }

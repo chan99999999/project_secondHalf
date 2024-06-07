@@ -20,6 +20,7 @@ public class MemberForm {
     @Length(min = 4, max = 10, message = "아이디는 {min}~{max}자 사이의 필수 입력 항목입니다.")
     @Pattern(regexp = "^[a-zA-Z0-9a-zA-Z]{4,10}$", message = "아이디 형식이 유효하지 않습니다.")
     private String memberId;        /**회원 아이디*/
+    @NotBlank(message = "지역구를 선택해주세요.")
     private String memberAddress;   /**회원 주소*/
     @NotBlank(message = "이름은 필수 입력 항목입니다.")
     private String name;            /**회원 이름*/
@@ -28,7 +29,15 @@ public class MemberForm {
     @NotBlank(message = "이메일은 필수 입력 항목입니다.")
     @Email(message = "이메일 형식이 유효하지 않습니다.")
     private String email;           /**회원 이메일 주소*/
+
+    @NotBlank(message = "출생연도를 선택해주세요.")
+    private String birthYear;       /**회원 생년월일*/
+    @NotBlank(message = "출생 월을 선택해주세요.")
+    private String birthMonth;       /**회원 생년월일*/
+    @NotBlank(message = "출생 날짜를 선택해주세요.")
     private String birthDate;       /**회원 생년월일*/
+
+    @NotBlank(message = "성별을 선택해주세요.")
     private String gender;          /**회원 성별*/
     @NotBlank(message = "비밀번호는 필수 입력 항목입니다.")
     private String memberPasswd;    /**회원 비밀번호*/

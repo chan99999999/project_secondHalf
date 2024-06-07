@@ -6,8 +6,6 @@ import com.ezen.springmvc.domain.common.dto.SearchDto;
 import com.ezen.springmvc.domain.dailyarticle.dto.*;
 import com.ezen.springmvc.domain.dailyarticle.mapper.*;
 import com.ezen.springmvc.domain.dailyarticle.service.DailyArticleServiceImpl;
-import com.ezen.springmvc.domain.member.dto.MemberDto;
-import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -130,19 +128,19 @@ public class DailyArticleMapperTest {
         }
     }
 
-    @Test
-    @DisplayName("좋아요 등록 테스트")
-    @Disabled
-    void clickHeartTest() {
-        HeartDto heartDto = HeartDto.builder()
-                .heartCount(2)
-                .dailyArticleId(20)
-                .memberId("승아")
-                .build();
-
-        dailyArticleServiceImpl.clickHeart(heartDto);
-        log.info("좋아요 등록 완료");
-    }
+//    @Test
+//    @DisplayName("좋아요 등록 테스트")
+//    @Disabled
+//    void clickHeartTest() {
+//        HeartDto heartDto = HeartDto.builder()
+//                .heartCount(2)
+//                .dailyArticleId(20)
+//                .memberId("승아")
+//                .build();
+//
+//        dailyArticleServiceImpl.clickHeart(heartDto);
+//        log.info("좋아요 등록 완료");
+//    }
 
     @Test
     @DisplayName("좋아요 개수 반환 테스트")

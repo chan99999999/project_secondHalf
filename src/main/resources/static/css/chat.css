@@ -9,7 +9,8 @@
 
 #chat-member-list {
     width: 470px;
-    background-color: #eaeaea;
+    /*background-color: #eaeaea;*/
+    background-color: rgb(255, 228, 191);
     padding: 20px;
     height: 770px;
     max-height: 770px;
@@ -30,11 +31,12 @@
 }
 
 #chat-search-bar {
-    width: 320px;
+    width: 300px;
     height: 50px;
     font-size: 25px;
     border-radius: 10px;
     border: 3px solid #FFD700;
+    padding : 0 10px;
 }
 
 #chat-search-btn {
@@ -173,10 +175,11 @@
 
 .chat-current-member {
     height: 70px;
-    background-color: #faeadd;
+    background-color: #ffffff;
     display: flex;
     padding: 10px 20px;
     align-items: center;
+    border-bottom: 1px solid #d3d3d3;
 }
 
 .chat-current-name {
@@ -204,13 +207,14 @@
 }
 
 .chat-history {
+    background: #ffffff;
     height: 550px;
     max-height: 550px;
     min-height: 550px;
     padding: 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 
 .chat-message-list {
@@ -268,14 +272,14 @@
     width: 700px;
     max-width: 700px;
     height: 75px;
-    border: 3px solid #E0B0FF;
+    border: 3px solid #fd82d5;
 }
 
 
 .message-send-btn {
     width: 100px;
     height: 100px;
-    background-color: #E0B0FF; /* 라이트 퍼플 */
+    background-color: #fd82d5;
     color: black;
     border: none;
     padding: 10px 10px;
@@ -287,12 +291,12 @@
 }
 
 .message-send-btn:hover {
-    background-color: #BA55D3; /* 미디엄 오키드 */
+    background-color: rgba(253, 130, 213, 0.67); /* 미디엄 오키드 */
 }
 
 .message-send-btn:focus {
     outline: none; /* 포커스 시 테두리 제거 */
-    box-shadow: 0 0 5px rgba(186, 85, 211, 0.5); /* 포커스 시 그림자 효과 */
+    box-shadow: 0 0 5px rgba(188, 85, 211, 0.5); /* 포커스 시 그림자 효과 */
 }
 
 
@@ -322,7 +326,7 @@
 }
 
 .chat-message-list.received .chat-message-text {
-    background-color: #FFFFFF;
+    background-color: #fdf1f1;
     border-radius: 20px 20px 20px 0;
     margin-right: 10px;
     order: 2;
