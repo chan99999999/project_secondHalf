@@ -115,7 +115,7 @@
                         </div>
                     </form>
                 </th:block>
-<!--                로그인하지 않은 경우 로그인 안내 표시-->
+                <!--                로그인하지 않은 경우 로그인 안내 표시-->
                 <th:block th:if="${session.loginMember == null}">
                     <div class="write-review">
                         <form action="/member/login">
@@ -168,12 +168,11 @@
             const reviewListElem = document.querySelector("#review-box");
 
             const writerImg = document.createElement("img");
-            writerImg.src = "/img/profile.png"
-            writerImg.className = 'profile-img';
+            writerImg.src = "/member/image/" + result.profile;
+            writerImg.className = 'commenter';
 
             const imgBox = document.createElement("div");
             imgBox.appendChild(writerImg);
-
 
             const reviewWriter = document.createElement("li");
             reviewWriter.classList.add("review-writer");
@@ -183,24 +182,25 @@
             reviewContent.classList.add("review-content");
             reviewContent.textContent = result.review;
 
-
             const ul = document.createElement("ul");
             ul.appendChild(reviewWriter);
             ul.appendChild(reviewContent);
 
-            const reviewWrap = document.createElement("div");
-            reviewWrap.appendChild(ul);
-
             const reviewBox = document.createElement("div");
-            reviewBox.className = 'review';
+            reviewBox.className = 'review-box';
             reviewBox.appendChild(imgBox);
-            reviewBox.appendChild(reviewWrap);
+            reviewBox.appendChild(ul);
 
-            reviewListElem.appendChild(reviewBox);
+            const reviewContainer = document.createElement("div");
+            reviewContainer.className = 'review';
+            reviewContainer.appendChild(reviewBox);
+
+            // 새로 추가된 리뷰를 맨 위로 추가
+            reviewListElem.prepend(reviewContainer);
 
             // 후기 입력란 초기화
             document.querySelector(".review-content").value = "";
-        }
+        };
 
         const option = {
             method: "POST",
@@ -216,6 +216,14 @@
 
         listUpReview(result);
     }
+
+    // 이미지가 로드될 때까지 기다림
+    const image = new Image();
+    image.src = "/member/image/" + result.profile;
+    image.onload = () => {
+        listUpReview(result);
+    };
+
 </script>
 </body>
 </html>

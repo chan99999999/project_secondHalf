@@ -459,6 +459,7 @@
     margin: 10px;
     padding: 10px 20px;
     background-color: lightgray;
+    align-items: center; /* 추가: 자식 요소를 가운데 정렬 */
 }
 
 .review-writer{
@@ -468,12 +469,14 @@
 
 .review-content{
     font-size: 25px;
+    flex-grow: 1; /* 추가: review-content가 가로 공간을 차지하도록 */
 }
 
 .review img{
     width: 55px;
     height: 55px;
     margin-right: 20px;
+    object-fit: cover; /* 이미지가 부모 요소에 맞게 조정 */
 }
 
 
