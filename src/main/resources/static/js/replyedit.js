@@ -39,7 +39,7 @@ const handleReplyEdit = async function (event) {
 }
 
 // 댓글 수정 완료 이벤트 처리 함수
-const updateReview = async function () {
+const updatet Review = async function () {
   const replyContentInput = document.querySelector('textarea[name="editedContent"]');
   const replyContent = replyContentInput.value;
   const dailyArticleId = getDailyArticleIdFromURL();
