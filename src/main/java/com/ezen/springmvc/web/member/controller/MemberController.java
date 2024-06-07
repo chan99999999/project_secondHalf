@@ -91,6 +91,7 @@ public class MemberController {
         return "redirect:/member/result";
     }
 
+    // 회원 아이디 중복 체크
     @GetMapping("/idcheck/{inputId}")
     public @ResponseBody Map<String, Object> idDupCheckAction(@PathVariable("inputId") String inputId) {
         log.info("요청 아이디 : {}", inputId);
@@ -107,6 +108,7 @@ public class MemberController {
         return map;
     }
 
+    //회원 닉네임 중복 체크
     @GetMapping("/nicknameCheck/{inputNickname}")
     public @ResponseBody Map<String, Object> nickNameDupCheckAction(@PathVariable("inputNickname") String inputNickname) {
 
@@ -127,6 +129,7 @@ public class MemberController {
         return map;
     }
 
+    // 회원 비밀번호 변경 시 일치여부 체크
     @GetMapping("/passwdCheck/{inputPasswd}")
     public @ResponseBody Map<String, Object> passwdDupCheckAction(@PathVariable("inputPasswd") String inputPasswd, HttpSession session) {
 
@@ -143,12 +146,13 @@ public class MemberController {
         return map;
     }
 
+    // 회원가입 결과 화면출력
     @GetMapping("/result")
     public String result() {
         return "/member/result";
     }
 
-    // 회워 로그인 화면
+    // 회원 로그인 화면출력
     @GetMapping("/login")
     public String login(@ModelAttribute LoginForm loginForm, @CookieValue(value = "saveId", required = false) String saveId, Model model) {
         if (saveId != null) {
@@ -215,11 +219,13 @@ public class MemberController {
         return "/member/mypage";
     }
 
+    // 마이페이지 회원정보
     @GetMapping("/editInfo")
     public String editInfo(@ModelAttribute MemberForm memberForm, Model model) {
         return "/member/editInfo";
     }
 
+    // 마이페이지 회원정보 수정 처리
     @PostMapping("editInfo")
     public String editInfoAction(@ModelAttribute EditForm editForm, BindingResult bindingResult,HttpSession session) {
 
@@ -246,17 +252,20 @@ public class MemberController {
         return "redirect:/member/mypage";
     }
 
+    // 마이페이지 회원 프로필 사진변경 화면출력
     @GetMapping("/editPicture")
     public String editPicture(@ModelAttribute EditPictureForm editPictureForm, Model model) {
         return "/member/editPicture";
     }
 
+    // 마이페이지 회원 닉네임 수정 화면출력
     @GetMapping("/editNickname")
     public String editNickname(@ModelAttribute EditNicknameForm editNicknameForm, Model model){
         model.getAttribute("existNickname");
         return "/member/editNickname";
     }
 
+    // 마이페이지 회원 닉네임 수정 처리
     @PostMapping("/editNickname")
     public String editNicknameAction(@ModelAttribute EditNicknameForm editNicknameForm, Model model, HttpSession session){
 
@@ -279,6 +288,7 @@ public class MemberController {
         return "redirect:/member/mypage";
     }
 
+    // 마이페이지 회원 비밀번호 변경 화면출력
     @GetMapping("/editPasswd")
     public String editPasswd(@ModelAttribute EditPasswdForm editPasswdForm, Model model) {
         model.getAttribute("unCorrectPw");
@@ -287,11 +297,12 @@ public class MemberController {
         return "/member/editPasswd";
     }
 
+    
+    // 마이페이지 비밀번호 변경 처리
     @PostMapping("/editPasswd")
     public String editPasswdAction(@ModelAttribute EditPasswdForm editPasswdForm, Model model, HttpSession session) {
 
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
-
         if(!editPasswdForm.getOldPasswd().equals(loginMember.getMemberPasswd())){
             model.addAttribute("unCorrectPw", "현재 비밀번호가 일치하지 않습니다.");
             return "/member/editPasswd";
@@ -318,6 +329,7 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    //회원 프로필 사진변경 처리
     @PostMapping("/editPicture")
     public String editPictureAction(@ModelAttribute EditPictureForm editPictureForm, HttpSession session) {
 
@@ -348,16 +360,19 @@ public class MemberController {
         return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
     }
 
+    // 회원 찾기 처리
     @GetMapping("/searchMember")
     public String searchMember() {
         return "/member/searchMember";
     }
 
+    // 회원 아이디 찾기 화면출력
     @GetMapping("/searchId")
     public String searchId(@ModelAttribute SearchIdForm searchIdForm) {
         return "/member/searchId";
     }
 
+    // 회원 아이디 찾기 처리
     @PostMapping("/searchId")
     public String searchIdAction(@ModelAttribute SearchIdForm searchIdForm, Model model) {
         String searchId = memberService.searchId(searchIdForm.getSearchName(), searchIdForm.getSearchNickname());
@@ -366,19 +381,22 @@ public class MemberController {
         return "/member/searchIdResult";
     }
 
+    // 회원 아이디 찾기 결과 화면출력
     @GetMapping("/searchIdResult")
     public String searchIdResult(Model model) {
         model.getAttribute("searchId");
         return "/member/searchIdResult";
     }
 
+    
+    // 회원 비밀번호 찾기 화면출력
     @GetMapping("/searchPasswd")
     public String searchPasswd(@ModelAttribute SearchPasswdForm searchPasswdForm, Model model) {
         return "/member/searchPasswd";
     }
 
-
-
+    
+    // 회원 비밀번호 찾기 처리
     @PostMapping("/searchPasswd")
     public String searchPasswdAction(@ModelAttribute SearchPasswdForm searchPasswdForm, RedirectAttributes redirectAttributes) throws MessagingException {
         MemberDto memberDto = memberService.searchPasswd(searchPasswdForm.getSearchId(), searchPasswdForm.getSearchName(), searchPasswdForm.getSearchEmail());
@@ -413,6 +431,7 @@ public class MemberController {
         return "redirect:/member/searchPasswdResult";
     }
 
+    // 회원 비밀번호 찾기 결과 화면출력
     @GetMapping("/searchPasswdResult")
     public String searchPasswdResult() {
         return "/member/searchPasswdResult";
