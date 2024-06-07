@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{/member/mypageTemplate :: mypageTemplate(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
 
+
 <head>
     <title th:fragment="title"> ::: 마이페이지 ::: </title>
     <th:block th:fragment="script">
@@ -11,8 +12,6 @@
         <link rel="stylesheet" href="/css/member.css">
     </th:block>
 </head>
-
-
 <div class="mypage-container" th:fragment="content">
     <div class="mypage-info-wrap">
         <div class="mypage-title">내 정보</div>

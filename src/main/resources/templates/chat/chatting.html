@@ -18,200 +18,294 @@
         <div id="chat-member-list">
             <div>
                 <div id="chat-search">
-                    <input id="chat-search-bar" type="text" placeholder="찾기">
-                    <button id="chat-search-btn" type="submit">검색</button>
+                    <input id="chat-search-bar" type="text" placeholder=" 닉네임을 입력하세요" oninput="filterChatList()">
+                    <button id="chat-search-btn" type="submit" onclick="filterChatList()">검 색</button>
                 </div>
                 <div class="chat-list-area">
-                    <ul class="chat-list" id="chatrooms"></ul>
-                </div>
-            </div>
-        </div>
-        <div class="chat-bar">
-            <div class="chat-current-member">
-                <img class="profile-img chat-member-img" src="/img/profile.png">
-                <div class="chat-cureent-name member-profile" id="member-profile">
-                    김순자 최고
-                    <ul class="perid">
-                        <li><a href="#" onclick="createRoom()">1:1 대화하기</a></li>
-                        <hr>
-                        <li><a href="#">게시글 보기</a></li>
+                    <ul class="chat-list" id="chatrooms">
+                        <th:block th:each="chatDto, status:${chatList}">
+                            <li class="chat-member" th:onclick="enterRoom([[${chatDto.roomId}]])">
+                                <a th:href="|/chat/room/enter/${chatDto.roomId}|">
+                                    <img class="profile-img chat-member-img" src="/img/profile.png">
+                                    <div class="chat-list-info">
+                                        <div class="chat-list-name" th:text="${chatDto.receiverNickname}"></div>
+                                        <span class="chat-list-message" th:text="${chatDto.getLatestMessage().content}" th:if="${chatDto.getLatestMessage()} !=null">
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        </th:block>
                     </ul>
                 </div>
             </div>
-            <div class="chat-history">
-                <ul id="message-list">
-                    <!--                    <li class="chat-message-list">-->
-                    <!--                        <div class="message-data">-->
-                    <!--                            <div class="message-data-time">오전 10:10, 오늘</div>-->
-                    <!--                            <div class="message-data-member">김순자 최고</div>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="chat-message-text">-->
-                    <!--                            안녕하세요? 좋은 하루 입니다.-->
-                    <!--                        </div>-->
-                    <!--                    </li>-->
-                </ul>
-            </div>
-
-            <div class="chat-send-box">
-                <input type="text" class="message-to-send" id="message-input" onkeydown="sendMessageOnEnter()" placeholder="메세지 입력"></input>
-                <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전송</button>
-            </div>
         </div>
+
+
+        <th:block th:if="${roomId != null}">
+            <div class="chat-bar">
+                <div class="chat-current-member">
+                    <img class="profile-img chat-member-img" th:src="@{/member/image/{picture}(picture=${receiver.storePicture})}">
+                    <div class="chat-current-name member-profile" id="member-profile" th:text="${receiver.nickname}"></div>
+                </div>
+                <div class="chat-history">
+                    <ul id="message-list">
+                        <th:block th:each="message, status:${messages}">
+                            <th:block th:if="${message.senderId} == ${session.loginMember.nickname}">
+                            <li class="chat-message-list sent">
+                                <div class="message-data">
+                                    <div class="message-data-time" th:text="${#dates.format(message.sentAt, 'a hh:mm')}"></div>
+                                    <div class="message-data-member" th:text="${message.senderId}"></div>
+                                </div>
+                                <div class="message-content">
+                                    <div class="chat-message-text" th:text="${message.content}"></div>
+                                    <img class="profile-img" src="/img/profile_flower.png">
+                                </div>
+                            </li>
+                            </th:block>
+                            <th:block th:if="${message.senderId} != ${session.loginMember.nickname}">
+                                <li class="chat-message-list received">
+                                    <div class="message-data">
+                                        <div class="message-data-time" th:text="${#dates.format(message.sentAt, 'a hh:mm')}"></div>
+                                        <div class="message-data-member" th:text="${message.senderId}"></div>
+                                    </div>
+                                    <div class="message-content">
+                                        <div class="chat-message-text" th:text="${message.content}"></div>
+                                        <img class="profile-img" src="/img/profile_bird.png">
+                                    </div>
+                                </li>
+                            </th:block>
+                        </th:block>
+                    </ul>
+                </div>
+
+                <div class="chat-send-box">
+                        <input type="text" class="message-to-send" id="message-input"
+                               onkeydown="sendMessageOnEnter()" placeholder="메세지를 입력하세요"/>
+                        <button class="message-send-btn" id="send-button" type="submit" onclick="sendMessage()">전 송
+                        </button>
+
+                </div>
+            </div>
+        </th:block>
+        <th:block th:if="${roomId} == null">
+            <div class="chat-bar">
+            </div>
+        </th:block>
+
     </div>
 </div>
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
 <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
 <script>
-    //대화하기 접속 시 대화 리스트 출력
+
+    // 대화하기 페이지가 로드되었을 때 WebSocket 초기화
     document.addEventListener('DOMContentLoaded', function () {
-        findAllRoom();
+        initWebSocket();
     });
 
-    // 대화중인 리스트 목록 전체출력
-    function findAllRoom() {
-        axios.get('/chat/rooms')
-            .then(response => {
-                const chatroomsElement = document.getElementById('chatrooms');
-                chatroomsElement.innerHTML = '';
-                response.data.forEach(room => {
-                    const li = document.createElement('li');
-                    li.className = 'chat-member';
-                    li.innerHTML = `
-                        <img class="profile-img chat-member-img" src="/img/profile.png">
-                        <div class="chat-list-info">
-                            <div class="chat-list-name">김순자 바보</div>
-                            <div class="chat-list-message">안녕하세요. 저는 김순자 최고입니다.</div>
-                        </div>
-                    `;
-                    li.addEventListener('click', function () {
-                        enterRoom(room.roomId);
-                    });
-                    chatroomsElement.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error fetching rooms:', error));
-    }
-
-    // 대화방 생성
-    function createRoom() {
-        axios.post('/chat/room')
-            .then(response => {
-                findAllRoom();
-            })
-            .catch(error => {
-                console.error('Error creating room:', error);
-                alert('대화하기 오류메세지');
-            });
-    }
-
-    //대화방 입장
-    function enterRoom(roomId) {
-        const sender = '세션 로그인멤버 아이디';
-        if (sender) {
-            localStorage.setItem('wschat.sender', sender);
-            localStorage.setItem('wschat.roomId', roomId);
-            location.href = `/chat/room/enter/` + roomId;
-        }
-    }
-
-    //웹소켓, 스톰프 설정
-    const sock = new SockJS("/ws-stomp");
+    // WebSocket 및 STOMP 설정을 초기화
+    const sock = new SockJS("/wss-stomp");
     const ws = Stomp.over(sock);
 
-    initWebSocket();
+    // localStorage에서 roomId와 sender를 설정
+    const roomId = localStorage.getItem('wschat.roomId');
+    const sender = `[[${session.loginMember.nickname}]]`;
+    let room = {};
+    let messages = [];
 
+
+    /**
+     * WebSocket 초기화 후 서버에 연결
+     */
     function initWebSocket() {
         ws.connect({}, function (frame) {
+            // 채팅방의 메시지를 구독하고 메시지를 수신할 때마다 처리
             ws.subscribe("/sub/chat/room/" + roomId, function (message) {
                 const recv = JSON.parse(message.body);
+
+                // 서버로부터 메시지를 저장하고 화면에 표시
+                axios.post('/chat/saveMessage', recv)
+                    .then(response => {
+                        console.log('메세지가 서버로 전송되었습니다.');
+                    })
+                    .catch(error => {
+                        console.log('메세지 전송 중 오류가 발생했습니다.', error);
+                    });
+
                 recvMessage(recv);
+
             });
-            ws.send("/pub/chat/message", {}, JSON.stringify({
-                type: 'ENTER',
-                roomId: roomId,
-                sender: sender
-            }));
+
+            // 채팅방에 입장하고 해당 정보를 서버에 전송
+            // ws.send("/pub/chat/message", {}, JSON.stringify({
+            //     type: 'ENTER',
+            //     roomId: roomId,
+            //     senderId: sender
+            // }));
         }, function (error) {
             alert("error " + error);
         });
     }
 
-    // roomId, sender 설정
-    const roomId = localStorage.getItem('wschat.roomId');
-    const sender = localStorage.getItem('wschat.sender');
-    let room = {};
-    let messages = [];
 
-    // 방 찾기
+    /**
+     * 채팅방 입장
+     * @param roomId
+     */
+    function enterRoom(roomId){
+        localStorage.setItem('wschat.roomId', roomId);
+    }
+
+
+    /**
+     * 채팅방 찾아서 정보 가져오기
+     */
     function findRoom() {
         axios.get('/chat/room/' + roomId).then(response => {
             room = response.data;
         });
     }
 
-    //메세지 수신
+
+    /**
+     * 메세지 수신, 화면에 표시
+     * @param recv
+     */
     function recvMessage(recv) {
         const messagesListElem = document.querySelector("#message-list");
         const messageItem = document.createElement('li');
         messageItem.className = 'chat-message-list';
+
+        const currentUser = `[[${session.loginMember.nickname}]]`
+        if (recv.senderId === currentUser) {
+            messageItem.classList.add('sent');
+        } else {
+            messageItem.classList.add('received');
+        }
 
         const messageData = document.createElement('div');
         messageData.className = 'message-data';
 
         const messageDataTime = document.createElement('div');
         messageDataTime.className = 'message-data-time';
-        messageDataTime.textContent = new Date().toLocaleString()
+
+        const options = {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            timeZone: 'Asia/Seoul'
+        };
+        messageDataTime.textContent = new Date().toLocaleTimeString('ko-KR', options);
 
         const messageDataMember = document.createElement('div');
         messageDataMember.className = 'message-data-member';
-        messageDataMember.textContent = (recv.type === 'ENTER' ? '[알림]' : recv.sender);
+        messageDataMember.textContent = (recv.senderId);
+
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
 
         const chatMessageText = document.createElement('div');
         chatMessageText.className = 'chat-message-text';
-        chatMessageText.textContent = recv.message;
+        chatMessageText.textContent = recv.content;
+
+        const profileImg = document.createElement('img');
+        profileImg.className = 'profile-img';
+        profileImg.src = '/img/profile.png'; // 프로필 이미지 경로
 
         messageData.appendChild(messageDataTime);
         messageData.appendChild(messageDataMember);
 
+        if (recv.senderId === currentUser) {
+            messageContent.appendChild(chatMessageText);
+            messageContent.appendChild(profileImg);
+        } else {
+            messageContent.appendChild(profileImg);
+            messageContent.appendChild(chatMessageText);
+        }
+
         messageItem.appendChild(messageData);
-        messageItem.appendChild(chatMessageText);
+        messageItem.appendChild(messageContent);
 
         messagesListElem.appendChild(messageItem);
+        messagesListElem.scrollTop = messagesListElem.scrollHeight;
     }
 
-    // 메세지 전송
+
+    /**
+     * 메세지 전송
+     */
     function sendMessage() {
         const messageInputElem = document.querySelector("#message-input");
         const message = messageInputElem.value;
+
+        // 공백만 있는 경우 전송하지 않음
+        if (!message.replace(/\s/g, '').length) {
+            return;
+        }
+
+        // 현재 시간 가져오기
+        const sentAt = new Date().valueOf();
+
+        // 서버에 메세지 전송
         ws.send("/pub/chat/message", {}, JSON.stringify({
             type: 'TALK',
             roomId: roomId,
-            sender: sender,
-            message: message
+            senderId: sender,
+            content: message,
+            sentAt: sentAt
         }));
+
+        // 서버로 메시지를 전송한 후, 데이터베이스에 저장
+        axios.post('/chat/message', {
+            roomId: roomId,
+            senderId: sender,
+            content: message,
+            sentAt: sentAt
+        })
+            .then(response => {
+                console.log('메시지가 성공적으로 전송되었습니다.');
+            })
+            .catch(error => {
+                console.error('메시지 전송 중 오류가 발생했습니다:', error);
+            });
         messageInputElem.value = '';
     }
 
-    // 메세지 전송방법, 대화방 연결
+    // Enter 키를 눌렀을 때 메시지를 전송
     function sendMessageOnEnter() {
         const messageInputElem = document.querySelector("#message-input");
-        messageInputElem.onkeydown = function(event) {
+        messageInputElem.onkeydown = function (event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         };
     }
+
+    /**
+     * 채팅방 목록 필터링
+     */
+    function filterChatList() {
+        const searchBar = document.querySelector("#chat-search-bar");
+        const filter = searchBar.value.toLowerCase();
+        const chatList = document.querySelector("#chatrooms");
+        const chatMembers = chatList.querySelectorAll(".chat-member");
+
+        for (let i = 0; i < chatMembers.length; i++) {
+            // 채팅방 이름 요소 선택(닉네임)
+            const chatName = chatMembers[i].querySelector(".chat-list-name");
+            if (chatName) {
+                // 다양한 브라우저 환경을 고려하여 채팅방 이름의 텍스트를 가져오기
+                const txtValue = chatName.textContent || chatName.innerText;
+                // 채팅방 이름 텍스트를 소문자로 변환한 후, 검색어(filter)가 포함되어 있는지 확인
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    // 검색어가 포함되어 있으면 해당 채팅방 항목을 표시, 포함되어 있지 않으면 숨김
+                    chatMembers[i].style.display = "";
+                } else {
+                    chatMembers[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-

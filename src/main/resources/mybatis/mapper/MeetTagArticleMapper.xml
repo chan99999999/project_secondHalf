@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.meetArticle.mapper.MeetTagArticleMapper">
+    <!-- 태그 게시글 등록 -->
+    <insert id="createMeetTagArticle" parameterType="MeetTagArticleDto">
+        INSERT INTO tag_article (m_article_id, tag_id)
+        VALUES (#{meetArticleId}, #{tagId})
+    </insert>
+</mapper>

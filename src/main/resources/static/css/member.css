@@ -4,7 +4,7 @@
     width: 1400px;
     min-width: 1400px;
     outline: none;
-    height: 750px;
+    height: auto;
 }
 
 #login-fieldset{
@@ -52,6 +52,16 @@
     font-weight: bolder;
 }
 
+.login-option:hover{
+    font-weight: bolder;
+}
+
+.notice{
+    color: red;
+    font-size: 25px;
+    margin: 10px 0px;
+}
+
 /*----------------------------SignUp---------------------------------*/
 #signup-wrap{
     margin: 0px auto;
@@ -72,9 +82,6 @@
     width: 1200px;
 }
 
-#signup-list{
-    list-style: none;
-}
 
 .signup-info{
     display: flex;
@@ -86,6 +93,19 @@
     width: 500px;
     font-size: 30px;
     padding: 0px 20px;
+}
+
+#birth-wrap{
+    width: 550px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#birth-wrap >select{
+    width: 100%;
+    margin: 0px 5px;
+    font-size: 25px;
+    text-align: center;
 }
 
 #signup-gender{
@@ -123,7 +143,6 @@
 }
 
 #signup-birth{
-    width: 540px;
     display: flex;
     align-content: center;
     justify-content: space-between;
@@ -134,6 +153,24 @@
     width: 160px;
     font-size: 30px;
     text-align: center;
+}
+
+#dupIdResult, #dupPasswdResult, #dupNicknameResult{
+    font-size: 25px;
+    padding-left: 306px;
+    margin: -10px 0;
+}
+
+#editNicknameDup{
+    font-size: 25px;
+    padding-left: 210px;
+    margin-bottom: 10px;
+}
+
+#editPasswdDup, #confirmPasswdDup{
+    font-size: 25px;
+    padding-left: 280px;
+    margin-bottom: 10px;
 }
 
 /*-------------------------RESULT----------------------*/
@@ -218,6 +255,7 @@
 #mypage-member-img{
     width: 150px;
     height: 150px;
+    border-radius: 50%;
 }
 
 #mypage-member-email{
@@ -383,6 +421,7 @@ hr{
 #edit-profile-picture{
     width: 300px;
     height: 300px;
+    border-radius: 50%;
 }
 
 #edit-picture-wrap{
@@ -405,4 +444,180 @@ hr{
     width: 500px;
     height: 50px;
     padding: 0px 10px;
+}
+
+.blank-hr{
+    margin-bottom: 100px;
+}
+
+/*----------------------SERACH-MEMBER--------------------------*/
+#searchMember-wrap{
+    height: 70vh;
+}
+
+#searchMember-btn-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto;
+    height: auto;
+}
+
+
+.search-member-btn{
+    display: block;
+    width: 450px;
+    height: 350px;
+    text-align: center;
+    align-content: center;
+    font-size: 60px;
+    margin: 0px 20px;
+    background-color: #eaeaea;
+    border-radius: 10px;
+}
+
+.search-member-btn:hover{
+    font-weight: bolder;
+    background-color: #ff8c18;
+    color: white;
+}
+
+.searchMember-fieldset{
+    margin: 80px auto;
+    border: 1px solid lightgray;
+    width: 1200px;
+}
+
+.searchMember-content{
+    margin: 0px auto;
+    width: 600px;
+    font-size: 50px;
+    padding: 30px 0;
+}
+
+.searchMember-content-wrap{
+    margin-bottom: 50px;
+}
+
+.searchMember-li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.searchMember-input{
+    width: 300px;
+    font-size: 30px;
+    padding: 0px 20px;
+    padding: 10px;
+}
+
+.searchId-result-wrap{
+    height: 80vh;
+    align-content: center;
+}
+
+.searchId-result{
+    text-align: center;
+    font-size: 70px;
+    align-items: center;
+    margin: 80px 0;
+}
+
+.searchId-text{
+    color: #ff8c18;
+}
+
+.register-btn-wrap a{
+    height: 70px;
+    align-content: center;
+}
+
+.searchPasswd-result{
+    text-align: center;
+    font-size: 50px;
+    align-items: center;
+}
+
+.searchPasswd-info{
+    text-align: center;
+    font-size: 50px;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/*------------------------date*/
+
+.text-danger{
+    font-size: 25px;
+    color: red;
+    padding-left: 306px;
+    margin: -10px 0px;
+}
+
+.text-danger-birth{
+    font-size: 25px;
+    color: red;
+    padding-left: 306px;
+}
+
+/*체크박스 스타일*/
+.chk_box {
+    display: block;
+    position: relative;
+    padding-left: 45px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    user-select: none;
+}
+
+/* 기본 체크박스 숨기기 */
+.chk_box input[type="checkbox"] {
+    display: none;
+}
+
+/* 체크박스 커스텀 스타일 */
+.chk_box {
+    display: block;
+    position: relative;
+    padding-left: 45px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    user-select: none;
+}
+
+/* 선택되지 않은 체크박스 스타일 꾸미기 */
+.chk_box .on {
+    width: 35px;
+    height: 35px;
+    background: #ddd;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* 선택된 체크박스 스타일 꾸미기 */
+.chk_box input[type="checkbox"]:checked + .on {
+    background: #ff8c18;
+}
+
+.chk_box .on:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.chk_box input[type="checkbox"]:checked + .on:after {
+    display: block;
+    width: 6px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 6px;
+    top: 2px;
 }

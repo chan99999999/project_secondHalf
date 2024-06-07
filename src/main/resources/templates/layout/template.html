@@ -17,11 +17,17 @@
             <p>ㅣ</p>
             <a href="/map">우리동네</a>
             <p>ㅣ</p>
-            <a href="/daily">일상공유</a>
+            <a href="/daily/2" th:href="@{/daily/{categoryId}(categoryId=2)}">일상공유</a>
             <p>ㅣ</p>
-            <a href="/meet">동네친구</a>
+            <a href="/meet/3">동네친구</a>
             <p>ㅣ</p>
             <a href="/chat">대화하기</a>
+            <th:block th:if="${session.loginMember} != null">
+                <th:block th:if="${session.loginMember.memberId.equals('admin')}">
+                    <p>ㅣ</p>
+                    <a href="http://localhost:3000/admin">관리자 페이지</a>
+                </th:block>
+            </th:block>
         </div>
         <th:block th:if="${session.loginMember == null}">
             <div class="nav-member">

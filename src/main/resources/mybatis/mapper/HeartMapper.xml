@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.HeartMapper">
+    <!-- 좋아요 생성 -->
+    <insert id="createHeart">
+        INSERT INTO heart (heart_id, heart_count, d_article_id, member_id)
+        VALUES (HEART_ID_SEQ.nextval, 0, #{dailyArticleId}, #{memberId})
+    </insert>
+
+    <!-- 좋아요 증가 업데이트 -->
+    <update id="plusHeart">
+        UPDATE HEART
+        SET heart_count = heart_count + 1
+        WHERE d_article_id = #{dailyArticleId}
+        AND member_id = #{memberId}
+    </update>
+
+    <!-- 좋아요 감소 업데이트 -->
+    <update id="minusHeart">
+        UPDATE HEART
+        SET heart_count = heart_count - 1
+        WHERE d_article_id = #{dailyArticleId}
+        AND member_id = #{memberId}
+    </update>
+
+    <!-- 회원 아이디별 좋아요 개수 조회 -->
+    <select id="findHeartCount" resultType="int">
+        SELECT COALESCE(SUM(heart_count), 0) AS heart_count
+        FROM heart
+        WHERE d_article_id = #{dailyArticleId}
+        AND member_id = #{memberId}
+    </select>
+
+    <!-- 일상 게시글별 좋아요 총 개수 조회 -->
+    <select id="findTotalHeartCount" resultType="int">
+        SELECT SUM(heart_count)
+        FROM heart
+        WHERE d_article_id = #{dailyArticleId}
+    </select>
+
+    <!-- 좋아요 존재 유무 반환을 위한
+    일상 게시글 번호와 회원 아이디별 좋아요 개수 조회 -->
+    <select id="existHeart" resultType="int">
+        SELECT NVL(COUNT(*), 0)
+        FROM heart
+        WHERE d_article_id = #{dailyArticleId}
+        AND member_id = #{memberId}
+    </select>
+
+<!--    &lt;!&ndash; 좋아요 생성 &ndash;&gt;-->
+<!--    <insert id="createHeart">-->
+<!--        INSERT INTO heart (heart_id, heart_count,-->
+<!--        <choose>-->
+<!--            &lt;!&ndash; 공지사항 게시글인 경우 &ndash;&gt;-->
+<!--            <when test="noticeArticleId != null">-->
+<!--                notice_article_id,-->
+<!--            </when>-->
+<!--            &lt;!&ndash; 일반적인 일상 게시글인 경우 &ndash;&gt;-->
+<!--            <otherwise>-->
+<!--                d_article_id,-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        member_id)-->
+<!--        VALUES (HEART_ID_SEQ.nextval, 0,-->
+<!--        <choose>-->
+<!--            &lt;!&ndash; 공지사항 게시글인 경우 &ndash;&gt;-->
+<!--            <when test="noticeArticleId != null">-->
+<!--                #{noticeArticleId},-->
+<!--            </when>-->
+<!--            &lt;!&ndash; 일반적인 일상 게시글인 경우 &ndash;&gt;-->
+<!--            <otherwise>-->
+<!--                #{dailyArticleId},-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        #{memberId})-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash; 좋아요 증가 업데이트 &ndash;&gt;-->
+<!--    <update id="plusHeart">-->
+<!--        UPDATE HEART-->
+<!--        SET heart_count = heart_count + 1-->
+<!--        WHERE-->
+<!--        <choose>-->
+<!--            &lt;!&ndash; 공지사항 게시글인 경우 &ndash;&gt;-->
+<!--            <when test="noticeArticleId != null">-->
+<!--                notice_article_id = #{noticeArticleId}-->
+<!--            </when>-->
+<!--            &lt;!&ndash; 일반적인 일상 게시글인 경우 &ndash;&gt;-->
+<!--            <otherwise>-->
+<!--                d_article_id = #{dailyArticleId}-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        AND member_id = #{memberId}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 좋아요 감소 업데이트 &ndash;&gt;-->
+<!--    <update id="minusHeart">-->
+<!--        UPDATE HEART-->
+<!--        SET heart_count = heart_count - 1-->
+<!--        WHERE-->
+<!--        <choose>-->
+<!--            &lt;!&ndash; 공지사항 게시글인 경우 &ndash;&gt;-->
+<!--            <when test="noticeArticleId != null">-->
+<!--                notice_article_id = #{noticeArticleId}-->
+<!--            </when>-->
+<!--            &lt;!&ndash; 일반적인 일상 게시글인 경우 &ndash;&gt;-->
+<!--            <otherwise>-->
+<!--                d_article_id = #{dailyArticleId}-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        AND member_id = #{memberId}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 회원 아이디별 좋아요 개수 조회 &ndash;&gt;-->
+<!--    <select id="findHeartCount" resultType="int">-->
+<!--        SELECT COALESCE(SUM(heart_count), 0) AS heart_count-->
+<!--        FROM heart-->
+<!--        WHERE-->
+<!--        <choose>-->
+<!--            &lt;!&ndash; 공지사항 게시글인 경우 &ndash;&gt;-->
+<!--            <when test="noticeArticleId != null">-->
+<!--                notice_article_id = #{noticeArticleId}-->
+<!--            </when>-->
+<!--            &lt;!&ndash; 일반적인 일상 게시글인 경우 &ndash;&gt;-->
+<!--            <otherwise>-->
+<!--                d_article_id = #{dailyArticleId}-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        AND member_id = #{memberId}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 일상 게시글별 좋아요 총 개수 조회 &ndash;&gt;-->
+<!--    <select id="findTotalHeartCount" resultType="int">-->
+<!--        SELECT SUM(heart_count)-->
+<!--        FROM heart-->
+<!--        WHERE-->
+<!--        <choose>-->
+<!--            &lt;!&ndash; 공지사항 게시글인 경우 &ndash;&gt;-->
+<!--            <when test="noticeArticleId != null">-->
+<!--                notice_article_id = #{noticeArticleId}-->
+<!--            </when>-->
+<!--            &lt;!&ndash; 일반적인 일상 게시글인 경우 &ndash;&gt;-->
+<!--            <otherwise>-->
+<!--                d_article_id = #{dailyArticleId}-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 좋아요 존재 유무 반환을 위한 일상 게시글 번호와 회원 아이디별 좋아요 개수 조회 &ndash;&gt;-->
+<!--    <select id="existHeart" resultType="int">-->
+<!--        SELECT NVL(COUNT(*), 0)-->
+<!--        FROM heart-->
+<!--        WHERE-->
+<!--        <choose>-->
+<!--            &lt;!&ndash; 공지사항 게시글인 경우 &ndash;&gt;-->
+<!--            <when test="noticeArticleId != null">-->
+<!--                notice_article_id = #{noticeArticleId}-->
+<!--            </when>-->
+<!--            &lt;!&ndash; 일반적인 일상 게시글인 경우 &ndash;&gt;-->
+<!--            <otherwise>-->
+<!--                d_article_id = #{dailyArticleId}-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        AND member_id = #{memberId}-->
+<!--    </select>-->
+
+</mapper>

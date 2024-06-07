@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.dailyarticle.mapper.FileMapper">
+    <!-- 파일 생성 -->
+    <insert id="createFileDto" parameterType="FileDto">
+        INSERT INTO attach_file (file_id, file_name, encrypted_name, d_article_id)
+        VALUES (FILE_ID_SEQ.nextval, #{fileName}, #{encryptedName}, D_ARTICLE_ID_SEQ.currval)
+    </insert>
+
+    <!-- 다중 파일 생성 -->
+    <insert id="createFileList" parameterType="FileDto">
+        INSERT ALL
+        <foreach collection="list" item="fileDto" separator=" ">
+            INTO attach_file (file_id, file_name, encrypted_name, d_article_id)
+            VALUES (call_file_id, #{fileDto.fileName}, #{fileDto.encryptedName}, D_ARTICLE_ID_SEQ.currval)
+        </foreach>
+        SELECT * FROM dual
+    </insert>
+
+    <!-- 일상 게시글 번호로 파일 조회 -->
+    <select id="findByFileId" parameterType="int" resultType="FileDto">
+        SELECT file_id, file_name, encrypted_name, file_path, D_ARTICLE_ID "dailyArticleId"
+        FROM attach_file
+        WHERE d_article_id = #{dailyArticleId}
+    </select>
+
+    <!-- 파일 목록 조회 -->
+    <select id="findByAllFile" resultType="FileDto">
+        SELECT file_id, file_name, encrypted_name
+        FROM attach_file
+    </select>
+</mapper>

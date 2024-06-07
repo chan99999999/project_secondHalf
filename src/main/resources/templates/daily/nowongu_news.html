@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 필요한 head 섹션 -->
+</head>
+<body>
+<div th:fragment="nowongu_news">
+    <div class="daily-list">
+        <h1 class="daily-list-title">노원구 소식</h1>
+        <th:block th:each="dailyArticle : ${dailyArticleList}">
+            <th:block th:if="${dailyArticle.memberId == 'admin'}">
+                <div class="daily-post">
+                    <!-- 노원구 소식 게시물 렌더링 -->
+                    <div class="daily-writer">
+                        <img class="daily-writer-img" src="/img/profile.png">
+                        <p class="daily-writer-name" th:text="${dailyArticle.nickName}">김순자 최고</p>
+                    </div>
+                    <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
+                        <img class="daily-post-img" src="/img/sample1.jpg" th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
+                    </a>
+                    <div class="daily-like-wrap">
+                        <img class="daily-like" src="/img/heart.png">
+                        <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>
+                    </div>
+                    <p class="daily-post-title">
+                        <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}" th:text="${dailyArticle.title}"></a>
+                    </p>
+                </div>
+            </th:block>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: template(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> :::아이디 찾기 결과::: </title>
+    <th:block th:fragment="script">
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/member.css">
+    </th:block>
+</head>
+
+
+<section id="section" th:fragment="content">
+    <div class="searchId-result-wrap">
+        <h1 class="searchId-result">찾으신 아이디는 [<span class="searchId-text" th:text="${searchId}"></span>]입니다</h1>
+        <div class="register-btn-wrap">
+            <button class="back-btn" type="reset"><a class="home-btn" href="/">홈으로</a></button>
+            <button class="register-btn" type="submit"><a href="/member/searchPasswd">비밀번호 찾기</a></button>
+        </div>
+    </div>
+</section>
+
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -17,9 +17,9 @@
             <p>ㅣ</p>
             <a href="/map">우리동네</a>
             <p>ㅣ</p>
-            <a href="/daily">일상공유</a>
+            <a href="/daily/2">일상공유</a>
             <p>ㅣ</p>
-            <a href="/meet">동네친구</a>
+            <a href="/meet/3">동네친구</a>
             <p>ㅣ</p>
             <a href="/chat">대화하기</a>
         </div>
@@ -42,7 +42,7 @@
     <div id="mypage-wrap">
         <div class="mypage-aside-container">
             <div id="mypage-member">
-                <img id="mypage-member-img" src="/img/profile.png">
+                <img class="member_profile_img" id="mypage-member-img" th:src="@{/member/image/{fileName}(fileName=${session.loginMember.storePicture})}">
                 <div th:text="|[${session.loginMember.nickname}]님|"></div>
                 <div id="mypage-member-email" th:text="${session.loginMember.email}"></div>
             </div>
@@ -52,6 +52,7 @@
                     정보 변경
                     <ul class="mypage-sub-list">
                         <li><a href="/member/editInfo">회원정보 수정</a></li>
+                        <li><a href="/member/editNickname">닉네임 변경</a></li>
                         <li><a href="/member/editPicture">대표사진 변경</a></li>
                         <li><a href="/member/editPasswd">비밀번호 변경</a></li>
                     </ul>

@@ -4,80 +4,180 @@
 
 <head>
     <title th:fragment="title"> ::: 일상공유:게시글 제목 ::: </title>
-    <th:block th:fragment="script">
-    </th:block>
     <th:block th:fragment="css">
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/daily.css">
     </th:block>
+    <th:block th:fragment="script">
+        <script src="/js/like.js" defer></script>
+        <script src="/js/replytoggle.js" defer></script>
+        <script src="/js/replyregister.js" defer></script>
+        <script src="/js/replydelete.js" defer></script>
+        <script src="/js/replyedit.js" defer></script>
+
+    </th:block>
 </head>
 
-
 <div class="wrapper" th:fragment="content">
-    <div id="daily-read-wrap">
-        <div id="daily-read-writer-wrap">
-            <div id="daily-read-writer">
-                <img class="profile-img" src="/img/profile.png" >
-                <p id="daily-read-writer-name">김순자 최고</p>
+    <div class="read-wrap">
+        <div class="read-writer-wrap">
+            <div class="read-writer">
+                <img class="writer-img"
+                     th:src="@{/member/image/{filename}(filename=${writer.storePicture})}"/>
+                <div class="chat">
+                    <div class="writer-name" th:text="${writer.nickname}"></div>
+                    <div class="toChat"><a th:href="|/chat/room/to/${writer.nickname}|" th:text="대화하기"></a></div>
+                </div>
             </div>
-            <p id="daily-read-date">2024. 05. 14.(화) 17:31 작성</p>
+            <div class="read-info">
+                <p class="read-date" th:text="${dailyArticle.regdate}"></p>
+                <p class="divide"> ㅣ </p>
+                <p th:text="|조회수 ${dailyArticle.hitCount}|"></p>
+            </div>
         </div>
         <div id="daily-read-content-wrap">
-            <h1 id="daily-read-title">게시글 제목 들어가유</h1>
-            <p id="daily-read-content">게시글 본문 들어가유</p>
-            <img id="daily-read-img" src="/img/sample1.jpg">
+            <h1 id="daily-read-title" th:text="${dailyArticle.title}"></h1>
+            <div id="daily-read-content" th:utext="${dailyArticle.content}"></div>
+            <th:block th:if="${fileList == null or fileList.isEmpty()}">
+                <img class="daily-read-img" th:src="@{/daily/image/default.jpg}">
+            </th:block>
+            <th:block th:if="${fileList != null}">
+                <th:block th:each="file : ${fileList}">
+                    <img class="daily-read-img" th:src="@{/daily/image/{fileName}(fileName=${file.encryptedName})}">
+                </th:block>
+            </th:block>
+
         </div>
         <div class="register-btn-wrap">
-            <button class="back-btn">돌아가기</button>
+            <button class="back-btn"
+                    th:onclick="|location.href='@{/daily/{categoryId}(categoryId=__${categoryId}__)}'|">돌아가기
+            </button>
         </div>
         <div id="like-wrap">
-            <img src="/img/heart.png" id="like">
+            <th:block th:if="${heartCount == 1}">
+                <img src="/img/heart.png" id="like" class="like">
+            </th:block>
+            <th:block th:if="${heartCount == 0}">
+                <img src="/img/heart2.png" id="like" class="like">
+            </th:block>
+
             <label for="like">좋아요</label>
+            <p id="heartCount" th:text="${dailyArticle.totalHeartCount}"> 0 </p>
             <p> ㅣ </p>
-            <p>댓글(3)</p>
+            <p th:text="'댓글(' + ${replyCount} + ')'" id="replyToggle">댓글(3)</p>
+            <p> ㅣ </p>
+            <!--                        <p th:text="'#' + ${dailyArticle.tagNames}"></p>-->
+            <p id="tagName">
+                <span th:each="tagName : ${#strings.arraySplit(dailyArticle.tagNames, ', ')}">
+                    <a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName=${tagName})}"
+                       th:text="'#' + ${tagName}"></a>
+                </span>
+            </p>
+
+            <th:block th:if="${loginMember != null}">
+                <th:block th:if="${loginMember.memberId == dailyArticle.memberId}">
+
+
+                    <form id="updateForm" method="get"
+                          th:action="@{/daily/{categoryId}/edit/{dailyArticleId}(categoryId=${categoryId}, dailyArticleId=${dailyArticleId})}">
+
+                        <button type="button" class="btn btn-dark" onclick="updateForm()">수정</button>
+                    </form>
+
+                    <form id="deleteForm" method="post" th:action="@{/daily/{categoryId}/delete/{dailyArticleId}}"
+                          th:attr="data-categoryId=${categoryId}, data-dailyArticleId=${dailyArticleId}">
+
+
+                        <button type="button" class="btn btn-dark" onclick="confirmDelete()">삭제</button>
+                    </form>
+                </th:block>
+            </th:block>
+
+
+            <script th:inline="javascript">
+                function confirmDelete() {
+                    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+                        let form = document.getElementById("deleteForm");
+                        let categoryId = form.getAttribute("data-categoryId");
+                        let dailyArticleId = form.getAttribute("data-dailyArticleId");
+                        form.setAttribute("action", "/daily/" + categoryId + "/delete/" + dailyArticleId);
+                        form.submit();
+                    }
+                }
+            </script>
+
+
+            <script>
+                function updateForm() {
+                    document.getElementById("updateForm").submit();
+                }
+            </script>
+
         </div>
-        <div class="review-wrap">
-            <div id="write-review">
-                <p>작성자 : 김순자최고</p>
-                <div id="review-text">
-                    <textarea cols="62" rows="2"></textarea>
-                    <button type="submit" id="write-review-btn">등록</button>
+
+
+        <th:block th:if="${loginMember != null}">
+
+            <div class="review-wrap">
+                <!--                <form method="post">-->
+                <div id="write-review">
+                    <p th:text="'작성자 : ' + ${loginMember.nickname}"></p>
+                    <div id="review-text">
+                        <textarea name="content" cols="62" rows="2"></textarea>
+                        <!--                            <button type="submit" id="write-review-btn">등록</button>-->
+                        <button type="button" id="write-review-btn">등록</button>
+                    </div>
                 </div>
+                <!--                </form>-->
+                <div class="review-list">
+
+                    <div class="review" th:each="reply : ${replyList}" th:data-reply-id="${reply.replyId}">
+                        <div class="review-box">
+                            <div>
+                                <img class="commenter" th:src="@{/member/image/{picture}(picture=${reply.picture})}">
+                            </div>
+                            <div>
+                                <ul>
+                                    <li class="review-writer" th:text="${reply.nickname}"></li>
+                                    <li class="review-content" th:text="${reply.content}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <th:block th:if="${loginMember != null}">
+                            <th:block th:if="${loginMember.memberId} == ${reply.writer}">
+                                <div>
+                                    <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
+
+                                    <!--                                    <form id="deleteReplyForm" method="post"-->
+                                    <!--                                          th:action="@{/daily/{categoryId}/delete-reply/{dailyArticleId}/{replyId}}"-->
+                                    <!--                                          th:attr="data-categoryId=${categoryId}, data-dailyArticleId=${dailyArticleId}, data-replyId=${reply.replyId}">-->
+
+
+                                    <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제
+                                    </button>
+                                </div>
+                                <!--                                    </form>-->
+                            </th:block>
+                        </th:block>
+
+                        <script th:inline="javascript">
+                            function confirmReplyDelete() {
+                                if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+                                    let form = document.getElementById("deleteReplyForm");
+                                    let categoryId = form.getAttribute("data-categoryId");
+                                    let dailyArticleId = form.getAttribute("data-dailyArticleId");
+                                    let replyId = form.getAttribute("data-replyId");
+                                    form.setAttribute("action", "/daily/" + categoryId + "/delete-reply/" + dailyArticleId + "/" + replyId);
+                                    form.submit();
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+
             </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="review">
-                <div>
-                    <img src="/img/profile.png">
-                </div>
-                <div>
-                    <ul>
-                        <li class="review-writer">작성자명</li>
-                        <li class="review-content">시간이 너무 빨리 지나가는 것 같아요...</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        </th:block>
     </div>
 </div>
 

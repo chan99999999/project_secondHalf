@@ -19,6 +19,184 @@
     font-weight: 700;
     font-style: normal;
 }
+/*----------------------------PAGENATION---------------------------*/
+
+
+.pagination{
+    display: flex;
+    margin: 30px auto;
+    justify-content: center;
+}
+
+.page-item{
+    padding: 0px 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.page-item > a{
+    color: #ff8c18;
+}
+
+.page-item >a:hover{
+    font-weight: bolder;
+    font-size: 30px;
+    color: #ff8c18;
+}
+
+.page-item >a:visited{
+    color: black;
+}
+
+.divide{
+    margin: 0px 5px;
+}
+
+/*---------------닉네임 채팅-------------*/
+.chat-current-member {
+    height: 70px;
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-current-name {
+    font-size: 25px;
+    padding: 0 10px;
+    font-weight: bolder;
+}
+
+.chat-member-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.chat:hover .toChat{
+    display: block;
+}
+
+.toChat{
+    display: none;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid gray;
+    position: absolute;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+hr{
+    margin: 5px 0px;
+}
+
+/*-------------------게시글 읽기-----------*/
+.read-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 50px auto;
+    background-color: #eaeaea;
+    padding: 50px;
+}
+
+.commenter{
+    border-radius: 50%;
+}
+
+.read-writer-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+.read-writer{
+    display: flex;
+}
+
+.read-info{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+.read-writer-name{
+    align-content: center;
+    padding: 0px 10px;
+    font-size: 30px;
+}
+
+.read-wrap{
+    width: 1000px;
+    min-width: 1000px;
+    margin: 50px auto;
+    background-color: #eaeaea;
+    padding: 50px;
+}
+
+.read-date{
+    align-content: center;
+    font-size: 20px;
+}
+
+.review{
+    margin: 10px 0px;
+    padding: 10px 20px;
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-box{
+    display: flex;
+}
+
+
+.review-writer{
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+#reply-update-btn, #reply-delete-btn{
+    height: 59px;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+}
+
+.review-content{
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.review img{
+    width: 55px;
+    height: 55px;
+    margin-right: 20px;
+}
+
+.writer-img{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.writer-name{
+    font-size: 25px;
+}
+
+.profile-img{
+    width: 40px;
+    height: 40px;
+}
 
 
 /*-----------------------------------------------------*/
@@ -43,7 +221,7 @@ ul, li{
     font-size: 100px;
     font-family: 'Cafe24Ssurround';
     text-align: center;
-    margin: 50px 0;
+    margin: 70px 0;
 }
 
 form, fieldset{
@@ -54,6 +232,18 @@ form, fieldset{
 #main-banner-img{
     display: flex;
     margin: 0px auto;
+}
+
+textarea{
+    resize: none;
+}
+
+.wrapper{
+    min-height: 80vh;
+}
+
+section{
+    min-height: 80vh;
 }
 
 /*-------------------------BTN---------------------*/
@@ -79,34 +269,14 @@ form, fieldset{
     border: none;
 }
 
+.home-btn{
+    display: block;
+}
+
 
 /*--------------------------CHECK-BOX-------------------------------*/
 
 
-
-/*----------------------------프로필----------------*/
-.member-profile{}
-
-.member-profile:hover ul{
-    display: block;
-    background-color: white;
-    border: 1px solid gray;
-    position: absolute;
-    font-size: 25px;
-    font-weight: normal;
-}
-
-.member-profile >ul >li{
-    padding: 10px 20px;
-}
-
-.member-profile >ul >li:hover{
-    background-color: #eaeaea;
-}
-
-.perid{
-    display: none;
-}
 
 /*-------------------------------NAV--------------------------*/
 
@@ -321,10 +491,13 @@ nav{
     font-size: 20px;
 }
 
+/*---------------------------PROFILE_IMG-----------------------------*/
 
 
 /*-----------------------------FOOTER-------------------------------*/
 footer{
-    height: 250px;
+    position: relative;
+    height: 150px;
+    transform: translateY(0%);
     background-color: #303030;
 }

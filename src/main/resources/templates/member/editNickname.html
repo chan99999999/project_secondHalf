@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/member/mypageTemplate :: mypageTemplate(~{this :: title}, ~{this :: script},  ~{this :: css}, ~{this :: content})}">
+
+<head>
+    <title th:fragment="title"> ::: 마이페이지 ::: </title>
+    <th:block th:fragment="script">
+        <script src="/js/edit_nickname.js" defer></script>
+    </th:block>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/member.css">
+    </th:block>
+</head>
+
+
+<div class="mypage-container" th:fragment="content">
+    <div class="mypage-info-wrap">
+        <div class="mypage-title">닉네임 변경</div>
+        <form class="edit-form" method="post" th:object="${editNicknameForm}">
+            <div class="mypage-edit-wrap">
+                <label for="edit-nickname">닉네임</label>
+                <input id="edit-nickname" th:field="*{newNickname}" class="mypage-edit-text" type="text"
+                       th:placeholder="|현재 닉네임 : ${session.loginMember.nickname}|">
+            </div>
+            <p class="notice" th:text="${existNickname}"></p>
+            <div id="editNicknameDup"></div>
+            <hr>
+            <div class="edit-btn-wrap">
+                <button class="back-btn" type="reset">취소하기</button>
+                <button class="register-btn" type="submit">수정하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+

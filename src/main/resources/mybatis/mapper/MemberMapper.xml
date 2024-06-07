@@ -1,89 +1,171 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper	namespace="com.ezen.springmvc.domain.member.mapper.MemberMapper">
-	<!-- 회원 등록 -->
-	<insert id="create" parameterType="MemberDto" >
-		INSERT INTO member(member_id, name, nickname, member_passwd, member_address, gender, birth_date, email)
-		VALUES(#{memberId}, #{name}, #{nickname}, #{memberPasswd}, #{memberAddress}, #{gender}, #{birthDate}, #{email})
-		<!-- INSERT 후 등록일자 SELECT -->
-		<selectKey keyProperty="regdate" resultType="string" order="AFTER">
-			SELECT TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI')
-			FROM member WHERE member_id = #{memberId}
-		</selectKey>
-	</insert>
+<mapper namespace="com.ezen.springmvc.domain.member.mapper.MemberMapper">
+    <!-- 회원 등록 -->
+    <insert id="create" parameterType="MemberDto">
+        INSERT INTO member(member_id, name, nickname, member_passwd, member_address, gender, birth_date, email)
+        VALUES(#{memberId}, #{name}, #{nickname}, #{memberPasswd}, #{memberAddress}, #{gender}, #{birthDate}, #{email})
+        <!-- INSERT 후 등록일자 SELECT -->
+        <selectKey keyProperty="regdate" resultType="string" order="AFTER">
+            SELECT TO_CHAR(regdate, 'YYYY-MM-DD HH24:MM')
+            FROM member WHERE member_id = #{memberId}
+        </selectKey>
+    </insert>
 
-	<!-- 아이디로 회원 상세 조회 -->
-	<select id="findById" parameterType="string" resultType="MemberDto">
-		SELECT member_id "id", name, email, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') regdate, original_profile, stored_profile
-		FROM member
-		WHERE member_id = #{value}
-	</select>
+    <!-- 아이디로 회원 상세 조회 -->
+    <select id="findById" parameterType="string" resultType="MemberDto">
+        SELECT member_id,
+               name,
+               nickname,
+               hobby,
+               interest,
+               member_address,
+               gender,
+               TO_CHAR(birth_date, 'YYYY-MM-DD') "birth_date",
+               introduce,
+               picture,
+               store_picture,
+               member_passwd,
+               email,
+               TO_CHAR(regdate, 'YYYY-MM-DD') regdate
+        FROM member
+        WHERE member_id = #{value}
+    </select>
 
-	<!-- 회원 정보 수정 -->
-	<update id="update" parameterType="MemberDto">
-		UPDATE member
-		SET email = #{email}, password = #{passwd}
-		WHERE member_id = #{id}
-	</update>
+    <select id="findByNickname" parameterType="string" resultType="MemberDto">
+        SELECT member_id,
+               name,
+               nickname,
+               hobby,
+               interest,
+               member_address,
+               gender,
+               TO_CHAR(birth_date, 'YYYY-MM-DD') "birth_date",
+               introduce,
+               picture,
+               store_picture,
+               member_passwd,
+               email,
+               TO_CHAR(regdate, 'YYYY-MM-DD') regdate
+        FROM member
+        WHERE nickname = #{value}
+    </select>
 
-	<!-- 회원 전체 조회 -->
-	<select id="findByAll" resultType="MemberDto">
-		SELECT member_id "id", name, email, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS DAY') regdate
-		FROM member
-		ORDER BY regdate DESC
-	</select>
+    <!-- 회원 인증 -->
+    <select id="findByIdAndPasswd" resultType="MemberDto">
+        SELECT member_id,
+               name,
+               nickname,
+               hobby,
+               interest,
+               member_address,
+               gender,
+               TO_CHAR(birth_date, 'YYYY-MM-DD') "birth_date",
+               introduce,
+               picture,
+               store_picture,
+               member_passwd,
+               email,
+               grade,
+               TO_CHAR(regdate, 'YYYY-MM-DD') regdate
+        FROM member
+        WHERE member_id = #{memberId}
+          AND member_passwd = #{memberPasswd}
+    </select>
 
-	<!-- 회원 인증 -->
-	<select id="findByIdAndPasswd" resultType="MemberDto">
-		SELECT member_id, name, nickname, hobby, interest, member_address, gender, birth_date, introduce, picture, member_passwd, email, TO_CHAR(regdate, 'YYYY-MM-DD') regdate
-		FROM member
-		WHERE member_id = #{memberId} AND member_passwd = #{memberPasswd}
-	</select>
+    <!-- 회원 정보 수정 -->
+    <update id="updateInfo" parameterType="MemberDto">
+        UPDATE member
+        SET email     = #{email},
+            hobby     = #{hobby},
+            interest  = #{interest},
+            introduce = #{introduce}
+        WHERE member_id = #{memberId}
+    </update>
 
-	<!-- 회원 이름으로 Like 검색 -->
-	<select id="findByNameLike" parameterType="string" resultType="MemberDto">
-		SELECT member_id "id", name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
-		FROM member
-		WHERE name LIKE '%' || #{value} || '%'
-	</select>
+    <!--	회원 닉네임 변경-->
+    <update id="updateNickname" parameterType="MemberDto">
+        UPDATE member
+        SET nickname = #{nickname}
+        WHERE member_id = #{memberId}
+    </update>
 
+    <!-- 회원 비밀번호 변경 -->
+    <update id="updatePasswd" parameterType="MemberDto">
+        UPDATE member
+        SET member_passwd = #{memberPasswd}
+        WHERE member_id = #{memberId}
+    </update>
 
-	<!-- 검색 타입별 회원 검색 -->
-	<select id="findBySearchType" parameterType="string" resultType="MemberDto">
-		SELECT member_id "id", name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
-		FROM member
-		<where>
-			<if test="type != null and type == 'id'">
-				and member_id = #{value}
-			</if>
-			<if test="type != null and type == 'name'">
-				and name LIKE '%' || #{value} || '%'
-			</if>
-		</where>
-	</select>
+    <!-- 회원 대표사진 변경 -->
+    <update id="updatePicture" parameterType="MemberDto">
+        UPDATE member
+        SET picture       = #{picture},
+            store_picture = #{storePicture}
+        WHERE member_id = #{memberId}
+    </update>
 
-	<!-- 회원 아이디 또는 이름 회원 통합 검색 -->
-	<select id="findBySearchAll" parameterType="string"	resultType="MemberDto">
-		SELECT member_id "id", name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
-		FROM member
-		WHERE member_id = #{value} OR name LIKE '%' || #{value} || '%'
-	</select>
+    <!--	회원 아이디 찾기-->
+    <select id="findMemberId" parameterType="string">
+        SELECT member_id
+        FROM member
+        WHERE name = #{name}
+          AND nickname = #{nickname}
+    </select>
 
-	<!-- 옵션 선택별 회원 통합 검색 -->
-	<select id="findBySearchAllOption" parameterType="MemberSearchCondition" resultType="MemberDto">
-		SELECT member_id "id", name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
-		FROM member
-		<where>
-			<if test="memberId != null and memberId != ''">
-				or member_id = #{memberId}
-			</if>
-			<if test="name != null and name != ''">
-				or name LIKE '%' || #{name} || '%'
-			</if>
-			<if test="email != null and email != ''">
-				or email = #{email}
-			</if>
-		</where>
-	</select>
+    <!--	회원 비밀번호 찾기-->
+    <select id="findMemberPasswd" parameterType="string" resultType="MemberDto">
+        SELECT member_id, member_passwd, name, nickname, email
+        FROM member
+        WHERE member_id = #{id}
+          AND name = #{name}
+          AND email = #{email}
+    </select>
+
+    <!--	회원 비밀번호 확인-->
+    <select id="confirmPasswd" parameterType="string">
+        SELECT member_passwd
+        FROM member
+        WHERE member_id = #{memberId}
+    </select>
+
+    <!-- 회원 전체 조회 -->
+    <select id="findByAll" resultType="MemberDto">
+        SELECT member_id, name, email, nickname, grade, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate
+        FROM member
+        ORDER BY regdate DESC
+    </select>
+
+    <!--	회원 리스트 검색-->
+    <select id="findByKeyword" resultType="MemberDto">
+        SELECT member_id, name, nickname, email, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate
+        FROM member
+        WHERE member_id LIKE '%' || #{keyword} || '%'
+           OR name LIKE '%' || #{keyword} || '%'
+           OR nickname LIKE '%' || #{keyword} || '%'
+        ORDER BY regdate DESC
+    </select>
+
+<!--    회원 정지-->
+    <update id="banMember" parameterType="MemberDto">
+        UPDATE member
+        SET grade = 'BLACK'
+        WHERE member_id = #{value}
+    </update>
+
+<!--    회원 정지 해제-->
+    <update id="releaseMember" parameterType="MemberDto">
+        UPDATE member
+        SET grade = 'GENERAL'
+        WHERE member_id = #{value}
+    </update>
+
+<!--    회원 삭제-->
+    <delete id="fireMember" parameterType="MemberDto">
+        DELETE
+        FROM member
+        WHERE member_id = #{value}
+    </delete>
+
 </mapper>
 
