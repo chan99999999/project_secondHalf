@@ -1,9 +1,4 @@
-// const eventRegister4 = function () {
-//   const replyDeleteBtns = document.querySelectorAll('#reply-delete-btn');
-//   replyDeleteBtns.forEach(replyDeleteBtn => replyDeleteBtn.addEventListener('click', handleReplyDelete));
-// }
-
-// 이벤트 위임
+// 이벤트 위임 함수
 const eventRegister4 = function () {
   const reviewListElement = document.querySelector('.review-list');
   reviewListElement.addEventListener('click', async function (event) {
@@ -14,6 +9,7 @@ const eventRegister4 = function () {
   });
 }
 
+// api를 통해서 댓글 개수 얻어오기
 const getReplyCount = async function () {
   const dailyArticleId = getDailyArticleIdFromURL();
   const url = `/daily/reply-count/${dailyArticleId}`;
@@ -21,6 +17,7 @@ const getReplyCount = async function () {
   return replyCount;
 }
 
+// 댓글 삭제 이벤트 처리 함수
 const handleReplyDelete = async function (event) {
 
   if (!confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
@@ -28,13 +25,9 @@ const handleReplyDelete = async function (event) {
   }
 
   const dailyArticleId = getDailyArticleIdFromURL();
-
   const url = `/daily/delete-reply`;
-
   const reviewElement = event.target.closest('.review');
   const replyId = reviewElement.dataset.replyId;
-
-  // console.log(replyId);
 
   const deleteReplyData = {
     dailyArticleId: dailyArticleId,
@@ -53,6 +46,9 @@ const handleReplyDelete = async function (event) {
     const response = await fetch(url, options);
 
     if (response.ok) {
+
+      const memberId = await getLoginMemberId();
+
       // 댓글 목록 업데이트 
       const replyList = await getReplyList();
       const reviewListElement = document.querySelector('.review-list');
@@ -63,20 +59,30 @@ const handleReplyDelete = async function (event) {
           const writerHTML = `<li class="review-writer">${reply.writer}</li>`;
           const contentHTML = `<li class="review-content">${reply.content}</li>`;
 
-          const reviewItemHTML = `
-      <div class="review" data-reply-id="${reply.replyId}">
+          // 현재 로그인한 사용자의 댓글일 때만 수정/삭제 버튼을 보이도록 설정
+          const isOwnReply = reply.writer === memberId;
+          const buttonsHTML = isOwnReply ? `
         <div>
-          <img src="/img/profile.png">
+          <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
+          <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제</button>
+        </div>` : '';
+
+          const reviewItemHTML = `
+    <div class="review" data-reply-id="${reply.replyId}">
+    <div class="review-box">
+        <div>
+        <img class="commenter" src="/member/image/${reply.picture}">
         </div>
         <div>
-          <ul>
+            <ul>
             ${writerHTML}
             ${contentHTML}
-          </ul>
-          <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제</button>
+            </ul>
         </div>
-      </div>
-    `;
+    </div>
+            ${buttonsHTML}
+</div>
+      `;
 
           reviewHTML += reviewItemHTML;
         }
@@ -87,7 +93,6 @@ const handleReplyDelete = async function (event) {
       const replyCountElement = document.querySelector('#replyToggle');
       replyCountElement.textContent = `댓글(${await getReplyCount()})`;
 
-      // eventRegister4();
     } else {
       const errorMessage = await response.text();
       console.error('댓글 삭제 실패:', errorMessage);
@@ -97,7 +102,6 @@ const handleReplyDelete = async function (event) {
     console.error('댓글 삭제 중 오류 발생:', error);
   }
 }
-
 
 function main() {
   eventRegister4();

@@ -56,9 +56,21 @@ const handleReplyRegister = async function (event) {
       // 댓글 등록 성공 시 입력창 비우기
       replyContentInput.value = '';
 
+      const memberId = await getLoginMemberId();
+
       // 댓글 목록 DOM 처리
       const replyList = await getReplyList();
-      const reviewListElement = document.querySelector('.review-list');
+
+
+      let reviewListElement = document.querySelector('.review-list');
+
+      // reviewListElement가 없을 경우 새로 생성하여 추가
+      if (!reviewListElement) {
+        reviewListElement = document.createElement('div');
+        reviewListElement.className = 'review-list';
+        document.body.appendChild(reviewListElement); // 원하는 위치에 추가
+      }
+
       let reviewHTML = '';
 
       replyList.forEach((reply) => {
@@ -66,21 +78,30 @@ const handleReplyRegister = async function (event) {
           const writerHTML = `<li class="review-writer">${reply.writer}</li>`;
           const contentHTML = `<li class="review-content">${reply.content}</li>`;
 
-          const reviewItemHTML = `
-      <div class="review" data-reply-id="${reply.replyId}">
+          // 현재 로그인한 사용자의 댓글일 때만 수정/삭제 버튼을 보이도록 설정
+          const isOwnReply = reply.writer === memberId;
+          const buttonsHTML = isOwnReply ? `
         <div>
-          <img src="/img/profile.png">
-        </div>
-        <div>
-          <ul>
-            ${writerHTML}
-            ${contentHTML}
-          </ul>
           <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
           <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제</button>
+        </div>` : '';
+
+          const reviewItemHTML = `
+    <div class="review" data-reply-id="${reply.replyId}">
+    <div class="review-box">
+        <div>
+            <img class="commenter" src="/member/image/${reply.picture}">
         </div>
-      </div>
-    `;
+        <div>
+            <ul>
+            ${writerHTML}
+            ${contentHTML}
+            </ul>
+        </div>
+    </div>
+    ${buttonsHTML}
+</div>
+      `;
 
           reviewHTML += reviewItemHTML;
         }
