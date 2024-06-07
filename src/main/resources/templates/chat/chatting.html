@@ -28,8 +28,8 @@
                                 <a th:href="|/chat/room/enter/${chatDto.roomId}|">
                                     <img class="profile-img chat-member-img" src="/img/profile.png">
                                     <div class="chat-list-info">
-                                        <div class="chat-list-name" th:text="${chatDto.receiverNickname}"></div>
-                                        <span class="chat-list-message" th:text="${chatDto.getLatestMessage().content}" th:if="${chatDto.getLatestMessage()} !=null">
+                                        <div class="chat-list-name" th:text="${chatDto.receiverNickname == session.loginMember.nickname ? chatDto.senderNickname : chatDto.receiverNickname}"></div>
+                                        <span class="chat-list-message" th:if="${chatDto.getLatestMessage() != null}" th:text="${chatDto.getLatestMessage().content}">
                                         </span>
                                     </div>
                                 </a>
@@ -45,7 +45,8 @@
             <div class="chat-bar">
                 <div class="chat-current-member">
                     <img class="profile-img chat-member-img" th:src="@{/member/image/{picture}(picture=${receiver.storePicture})}">
-                    <div class="chat-current-name member-profile" id="member-profile" th:text="${receiver.nickname}"></div>
+                    <div class="chat-current-name member-profile" id="member-profile"></div>
+<!--                    <div class="chat-current-name member-profile" id="member-profile" th:text="${receiver.nickname}"></div>-->
                 </div>
                 <div class="chat-history">
                     <ul id="message-list">

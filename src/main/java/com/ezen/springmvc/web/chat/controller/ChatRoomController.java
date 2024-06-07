@@ -103,25 +103,50 @@ public class ChatRoomController {
      * @param session HTTP 세션 객체
      * @return 대화방 페이지로의 리다이렉트
      */
+//    @GetMapping("/room/to/{nickname}")
+//    public String createRoom(@PathVariable("nickname") String nickname, HttpSession session) {
+//        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+//        MemberDto receiver = memberService.getNickname(nickname);
+////        log.info("로그인 정보는 {}", loginMember.toString());
+//        String roomId = UUID.randomUUID().toString();
+//
+//        //같은리시버 아이디가 있는지 검색
+//        List<ChatDto> chatList = chatService.getMyChatList();
+//        ChatDto findChatDto = null;
+//        for (ChatDto chatDto : chatList) {
+//            if(chatDto.getReceiverNickname().equalsIgnoreCase(nickname)){
+//                findChatDto = chatDto;
+//                break;
+//            }
+//        }
+//
+//        //없으면 새로생성, 있으면 해당 대화방으로 리다이렉트
+//        if(findChatDto == null) {
+//            ChatDto chatDto = ChatDto.builder()
+//                    .senderId(loginMember.getMemberId())
+//                    .senderNickname(loginMember.getNickname())
+//                    .receiverId(receiver.getMemberId())
+//                    .receiverNickname(nickname)
+//                    .roomId(roomId)
+//                    .build();
+//            chatService.newChat(chatDto);
+//        } else {
+//            return "redirect:/chat/room/enter/" + findChatDto.getRoomId();
+//        }
+//        return "redirect:/chat";
+//    }
+
     @GetMapping("/room/to/{nickname}")
     public String createRoom(@PathVariable("nickname") String nickname, HttpSession session) {
         MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
         MemberDto receiver = memberService.getNickname(nickname);
-//        log.info("로그인 정보는 {}", loginMember.toString());
         String roomId = UUID.randomUUID().toString();
 
-        //같은리시버 아이디가 있는지 검색
-        List<ChatDto> chatList = chatService.getMyChatList();
-        ChatDto findChatDto = null;
-        for (ChatDto chatDto : chatList) {
-            if(chatDto.getReceiverNickname().equalsIgnoreCase(nickname)){
-                findChatDto = chatDto;
-                break;
-            }
-        }
+        // 같은 수신자가 있는지 검색
+        ChatDto existingChat = chatService.findChatRoomBySenderAndReceiver(loginMember.getMemberId(), receiver.getMemberId());
 
-        //없으면 새로생성, 있으면 해당 대화방으로 리다이렉트
-        if(findChatDto == null) {
+        // 없으면 새로 생성, 있으면 해당 대화방으로 리다이렉트
+        if (existingChat == null) {
             ChatDto chatDto = ChatDto.builder()
                     .senderId(loginMember.getMemberId())
                     .senderNickname(loginMember.getNickname())
@@ -130,10 +155,10 @@ public class ChatRoomController {
                     .roomId(roomId)
                     .build();
             chatService.newChat(chatDto);
+            return "redirect:/chat";
         } else {
-            return "redirect:/chat/room/enter/" + findChatDto.getRoomId();
+            return "redirect:/chat/room/enter/" + existingChat.getRoomId();
         }
-        return "redirect:/chat";
     }
 
 
