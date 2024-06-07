@@ -75,12 +75,6 @@ public interface DailyArticleService {
     public List<FileDto> getFiles(int dailyArticleId);
 
     /**
-     * 파일 목록 반환
-     * @return 파일 목록
-     */
-    public List<FileDto> getFiles();
-
-    /**
      * 댓글 등록
      * @param replyDto 댓글
      */
@@ -138,19 +132,11 @@ public interface DailyArticleService {
     public int getTotalHeartCount(int dailyArticleId);
 
     /**
-     * 좋아요 존재 유무 반환을 위한
-     * 일상 게시글 번호와 회원 아이디별 좋아요 개수 반환
-     * @param dailyArticleId 일상 게시글 번호
-     * @param memberId       회원 아이디
-     * @return 좋아요 존재 유무
+     * 태그 이름으로 기존 태그 또는 새로운 태그 반환
+     * @param tagName 태그 이름
+     * @return 태그
      */
-    public int getExistHeart(int dailyArticleId, String memberId);
-
-    /**
-     * 태그 등록
-     * @param tagDto 태그
-     */
-    public void getTag(TagDto tagDto);
+    public TagDto getOrCreateTag(String tagName);
 
     /**
      * 태그 게시글 등록
@@ -160,9 +146,9 @@ public interface DailyArticleService {
     public void getTagArticle(int tagId, int articleId);
 
     /**
-     * 태그 이름으로 기존 태그 또는 새로운 태그 반환
-     * @param tagName 태그 이름
-     * @return 태그
+     * 일상 게시글 번호로 태그 목록 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 태그 목록
      */
-    public TagDto getOrCreateTag(String tagName);
+    public List<TagDto> getTagBydailyArticleId(int dailyArticleId);
 }

@@ -128,15 +128,6 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     }
 
     /**
-     * 파일 목록 반환 구현
-     * @return 파일 목록
-     */
-    @Override
-    public List<FileDto> getFiles() {
-        return fileMapper.findByAllFile();
-    }
-
-    /**
      * 댓글 등록 구현
      * @param replyDto 댓글
      */
@@ -242,41 +233,6 @@ public class DailyArticleServiceImpl implements DailyArticleService {
     }
 
     /**
-     * 좋아요 존재 유무 반환을 위한
-     * 일상 게시글 번호와 회원 아이디별 좋아요 개수 반환 구현
-     * @param dailyArticleId 일상 게시글 번호
-     * @param memberId       회원 아이디
-     * @return 좋아요 존재 유무
-     */
-    @Override
-    public int getExistHeart(int dailyArticleId, String memberId) {
-        return heartMapper.existHeart(dailyArticleId, memberId);
-    }
-
-    /**
-     * 태그 등록 구현
-     * @param tagDto 태그
-     */
-    @Override
-    @Transactional
-    public void getTag(TagDto tagDto) {
-        tagMapper.createTag(tagDto);
-    }
-
-
-
-    /**
-     * 태그 게시글 등록 구현
-     * @param tagId          태그 번호
-     * @param dailyArticleId 일상 게시글 번호
-     */
-    @Override
-    @Transactional
-    public void getTagArticle(int tagId, int dailyArticleId) {
-        tagArticleMapper.createTagArticle(tagId, dailyArticleId);
-    }
-
-    /**
      * 태그 이름으로 기존 태그 또는 새로운 태그 반환 구현
      * @param tagName 태그 이름
      * @return 태그
@@ -299,5 +255,26 @@ public class DailyArticleServiceImpl implements DailyArticleService {
             // 새로 생성된 태그의 아이디를 가져와서 반환
             return tagMapper.findByTagId(newTag.getTagId());
         }
+    }
+
+    /**
+     * 태그 게시글 등록 구현
+     * @param tagId          태그 번호
+     * @param dailyArticleId 일상 게시글 번호
+     */
+    @Override
+    @Transactional
+    public void getTagArticle(int tagId, int dailyArticleId) {
+        tagArticleMapper.createTagArticle(tagId, dailyArticleId);
+    }
+
+    /**
+     * 일상 게시글 번호로 태그 목록 반환
+     * @param dailyArticleId 일상 게시글 번호
+     * @return 태그 목록
+     */
+    @Override
+    public List<TagDto> getTagBydailyArticleId(int dailyArticleId) {
+        return tagMapper.findByDailyArticleId(dailyArticleId);
     }
 }

@@ -66,7 +66,6 @@
             <p> ㅣ </p>
             <p th:text="'댓글(' + ${replyCount} + ')'" id="replyToggle">댓글(3)</p>
             <p> ㅣ </p>
-            <!--                        <p th:text="'#' + ${dailyArticle.tagNames}"></p>-->
             <p id="tagName">
                 <span th:each="tagName : ${#strings.arraySplit(dailyArticle.tagNames, ', ')}">
                     <a th:href="@{/daily/{categoryId}(categoryId=${categoryId}, tagName=${tagName})}"
@@ -77,7 +76,6 @@
             <th:block th:if="${loginMember != null}">
                 <th:block th:if="${loginMember.memberId == dailyArticle.memberId}">
 
-
                     <form id="updateForm" method="get"
                           th:action="@{/daily/{categoryId}/edit/{dailyArticleId}(categoryId=${categoryId}, dailyArticleId=${dailyArticleId})}">
 
@@ -87,12 +85,10 @@
                     <form id="deleteForm" method="post" th:action="@{/daily/{categoryId}/delete/{dailyArticleId}}"
                           th:attr="data-categoryId=${categoryId}, data-dailyArticleId=${dailyArticleId}">
 
-
                         <button type="button" class="btn btn-dark" onclick="confirmDelete()">삭제</button>
                     </form>
                 </th:block>
             </th:block>
-
 
             <script th:inline="javascript">
                 function confirmDelete() {
@@ -106,29 +102,25 @@
                 }
             </script>
 
-
             <script>
                 function updateForm() {
                     document.getElementById("updateForm").submit();
                 }
             </script>
-
         </div>
 
-
         <th:block th:if="${loginMember != null}">
-
             <div class="review-wrap">
-                <!--                <form method="post">-->
+                <!--<form method="post">-->
                 <div id="write-review">
                     <p th:text="'작성자 : ' + ${loginMember.nickname}"></p>
                     <div id="review-text">
                         <textarea name="content" cols="62" rows="2"></textarea>
-                        <!--                            <button type="submit" id="write-review-btn">등록</button>-->
+                        <!--<button type="submit" id="write-review-btn">등록</button>-->
                         <button type="button" id="write-review-btn">등록</button>
                     </div>
                 </div>
-                <!--                </form>-->
+                <!--</form>-->
                 <div class="review-list">
 
                     <div class="review" th:each="reply : ${replyList}" th:data-reply-id="${reply.replyId}">
@@ -149,15 +141,14 @@
                                 <div>
                                     <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
 
-                                    <!--                                    <form id="deleteReplyForm" method="post"-->
-                                    <!--                                          th:action="@{/daily/{categoryId}/delete-reply/{dailyArticleId}/{replyId}}"-->
-                                    <!--                                          th:attr="data-categoryId=${categoryId}, data-dailyArticleId=${dailyArticleId}, data-replyId=${reply.replyId}">-->
-
+                                    <!--<form id="deleteReplyForm" method="post"-->
+                                    <!--th:action="@{/daily/{categoryId}/delete-reply/{dailyArticleId}/{replyId}}"-->
+                                    <!--th:attr="data-categoryId=${categoryId}, data-dailyArticleId=${dailyArticleId}, data-replyId=${reply.replyId}">-->
 
                                     <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제
                                     </button>
                                 </div>
-                                <!--                                    </form>-->
+                                <!--</form>-->
                             </th:block>
                         </th:block>
 
@@ -175,21 +166,9 @@
                         </script>
                     </div>
                 </div>
-
             </div>
         </th:block>
     </div>
 </div>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
