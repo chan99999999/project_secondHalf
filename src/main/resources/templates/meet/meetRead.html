@@ -5,7 +5,7 @@
     <title th:fragment="title"> ::: 동네친구:모임 제목 ::: </title>
     <th:block th:fragment="script">
         <script th:inline="javascript">
-            const memberId = [[${loginMember}]];
+            const memberId = [[${loginMember.memberId}]];
 
             function participate(categoryId, meetArticleId) {
                 fetch(`/meet/${categoryId}/participate/${meetArticleId}`, {
@@ -17,6 +17,7 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        alert(data);
                         document.getElementById('participate-btn').textContent = '참여중';
                         document.getElementById('participate-btn').setAttribute('onclick', `cancelParticipation(${categoryId}, ${meetArticleId})`);
                     })
@@ -62,7 +63,7 @@
         <div class="register-btn-wrap">
             <button type="button" class="back-btn" th:onclick="|location.href='@{/meet/3}'|">돌아가기</button>
             <button type="button" id="participate-btn" class="register-btn" th:if="${loginMember.memberId}"
-                    th:onclick="|participate(${categoryId}, ${meetArticleDto.meetArticleId})|">참여하기
+                    th:onclick="|participate(${meetArticleDto.categoryId}, ${meetArticleDto.meetArticleId})|">참여하기
                 <button type="button" id="cancel-participation-btn" class="register-btn" th:if="${participate}" style="display: inline-block;"
                         th:onclick="|cancelParticipation(${categoryId}, ${meetArticleDto.meetArticleId})|">참여 취소
                 </button>

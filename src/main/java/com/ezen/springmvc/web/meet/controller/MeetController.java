@@ -156,20 +156,21 @@ public class MeetController {
     }
 
 //    // 참여하기
-//    @PostMapping("/{categoryId}/participate/{meetArticleId}")
-//    @ResponseBody
-//    public ResponseEntity<?> participate(@PathVariable int categoryId, @PathVariable int meetArticleId, @RequestBody String memberId) {
-//        meetArticleService.participate(categoryId, meetArticleId, memberId);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    // 참여 취소
-//    @PostMapping("/{categoryId}/cancelParticipation/{meetArticleId}")
-//    @ResponseBody
-//    public ResponseEntity<?> cancelParticipation(@PathVariable int categoryId, @PathVariable int meetArticleId, @RequestBody String memberId) {
-//        meetArticleService.cancelParticipation(categoryId, meetArticleId, memberId);
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("/{categoryId}/participate/{meetArticleId}")
+    @ResponseBody
+    public ResponseEntity<?> participate(@PathVariable("categoryId") int categoryId, @PathVariable("meetArticleId") int meetArticleId, @RequestBody String memberId) {
+        log.info("{}, {}, {}", categoryId, meetArticleId, memberId);
+        meetArticleService.participate(categoryId, meetArticleId, memberId);
+        return ResponseEntity.ok().build();
+    }
+
+    // 참여 취소
+    @PostMapping("/{categoryId}/cancelParticipation/{meetArticleId}")
+    @ResponseBody
+    public ResponseEntity<?> cancelParticipation(@PathVariable int categoryId, @PathVariable int meetArticleId, @RequestBody String memberId) {
+        meetArticleService.cancelParticipation(categoryId, meetArticleId, memberId);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/getLoginMember")
     public ResponseEntity<MemberDto> getLoginMember(HttpServletRequest request) {
