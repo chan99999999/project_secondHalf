@@ -1,3 +1,4 @@
+// http 요청 함수
 const httpRequest = function (url) {
   return fetch(url).then(response => response.json());
 }
@@ -6,7 +7,6 @@ const httpRequest = function (url) {
 const eventRegister = function () {
   const heartImg = document.querySelector('#like');
   heartImg.addEventListener('click', handleHeart);
-
 }
 
 // 상세보기 페이지 url에서 동적으로 일상 게시판 번호 얻어오기

@@ -12,7 +12,7 @@
         INSERT ALL
         <foreach collection="list" item="fileDto" separator=" ">
             INTO attach_file (file_id, file_name, encrypted_name, d_article_id)
-            VALUES (call_file_id, #{fileDto.fileName}, #{fileDto.encryptedName}, D_ARTICLE_ID_SEQ.currval)
+            VALUES (CALL_FILE_ID, #{fileDto.fileName}, #{fileDto.encryptedName}, D_ARTICLE_ID_SEQ.currval)
         </foreach>
         SELECT * FROM dual
     </insert>
