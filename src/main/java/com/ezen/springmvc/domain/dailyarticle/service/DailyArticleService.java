@@ -20,8 +20,6 @@ public interface DailyArticleService {
      */
     public DailyArticleDto writeDailyArticle(DailyArticleDto dailyArticleDto, List<FileDto> fileList);
 
-    public NoticeArticleDto writeNoticeArticle(NoticeArticleDto noticeArticleDto, List<FileDto> fileList);
-
     /**
      * 검색 조건에 따른 일상 게시글 목록 반환
      * @param categoryId 카테고리 번호
@@ -29,8 +27,6 @@ public interface DailyArticleService {
      * @return 일상 게시글 목록
      */
     public List<DailyArticleDto> getDailyArticles(int categoryId, SearchDto searchDto);
-
-    public List<NoticeArticleDto> getNoticeArticles(int categoryId);
 
     /**
      * 태그 이름 및 검색 조건에 따른 일상 게시글 목록 반환
@@ -41,13 +37,6 @@ public interface DailyArticleService {
      */
     public List<DailyArticleDto> getDailyArticlesByTagName(int categoryId, String tagName, SearchDto searchDto);
 
-    public List<DailyArticleDto> getAdminDailyArticles(int categoryId, SearchDto searchDto);
-
-    public List<DailyArticleDto> getAdminDailyArticlesByTagName(int categoryId, String tagName, SearchDto searchDto);
-
-    public List<NoticeArticleDto> getNoticeArticlesByTagName(int categoryId, String tagName);
-
-
     /**
      * 일상 게시글 상세보기
      * @param categoryId     카테고리 번호
@@ -55,8 +44,6 @@ public interface DailyArticleService {
      * @return 일상 게시글
      */
     public DailyArticleDto getDailyArticle(int categoryId, int dailyArticleId);
-
-    public NoticeArticleDto getNoticeArticle(int categoryId, int noticeArticleId);
 
     /**
      * 검색 조건에 따른 일상 게시글 개수 반환
@@ -66,8 +53,6 @@ public interface DailyArticleService {
      */
     public int getDailyArticleCount(int categoryId, SearchDto searchDto);
 
-    public int getAdminDailyArticleCount(int categoryId, SearchDto searchDto);
-
     /**
      * 일상 게시글 수정
      * @param dailyArticleId        일상 게시글 번호
@@ -75,17 +60,12 @@ public interface DailyArticleService {
      */
     public void editDailyArticle(int dailyArticleId, DailyArticleDto editedDailyArticleDto);
 
-    public void editNoticeArticle(int noticeArticleId, NoticeArticleDto editedNoticeArticle);
-
     /**
      * 일상 게시글 삭제
      * @param categoryId     카테고리 번호
      * @param dailyArticleId 일상 게시글 번호
      */
     public void removeDailyArticle(int categoryId, int dailyArticleId);
-
-    public void removeNoticeArticle(int categoryId, int noticeArticleId);
-
 
     /**
      * 일상 게시글 번호로 파일 목록 반환
