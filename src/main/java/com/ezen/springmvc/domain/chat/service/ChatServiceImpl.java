@@ -20,6 +20,7 @@ public class ChatServiceImpl implements ChatService {
 
     /**
      * 채팅방 생성
+     *
      * @param chatDto
      */
     @Override
@@ -30,6 +31,7 @@ public class ChatServiceImpl implements ChatService {
 
     /**
      * 메세지 수신
+     *
      * @param messageDto
      */
     @Override
@@ -41,6 +43,7 @@ public class ChatServiceImpl implements ChatService {
 
     /**
      * 닉네임으로 채팅방 검색
+     *
      * @param nickname
      * @return 닉네임이포함된 채팅방
      */
@@ -52,6 +55,7 @@ public class ChatServiceImpl implements ChatService {
 
     /**
      * 계정별 채팅방리스트 조회
+     *
      * @return 채팅리스트
      */
     @Override
@@ -67,18 +71,20 @@ public class ChatServiceImpl implements ChatService {
 
     /**
      * roomId로 채팅방 구분
+     *
      * @param roomId
      * @return 채팅방
      */
     @Override
     @Transactional
-    public ChatDto getRoom(String roomId){
+    public ChatDto getRoom(String roomId) {
         return chatMapper.findChatRoom(roomId);
     }
 
 
     /**
      * 채팅방 메세지 조회
+     *
      * @param roomId
      * @return 채팅방 메세지
      */
@@ -90,11 +96,21 @@ public class ChatServiceImpl implements ChatService {
 
     /**
      * 동일한 receiverId 가 있는지 조회
+     *
      * @return receiverId
      */
     @Override
     public ChatDto getSameReceiver() {
         return chatMapper.findSameReceiver();
     }
+
+
+    // 새로운 메서드 추가: 특정 송신자와 수신자 쌍의 기존 채팅방 찾기
+
+    @Override
+    public ChatDto findChatRoomBySenderAndReceiver(String senderId, String receiverId) {
+        return chatMapper.findChatRoomBySenderAndReceiver(senderId, receiverId);
+    }
+
 
 }

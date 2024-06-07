@@ -44,4 +44,6 @@ public interface ChatMapper {
      */
     ChatDto findSameReceiver();
 
+    ChatDto findChatRoomBySenderAndReceiver(String senderId, String receiverId);
+
 }

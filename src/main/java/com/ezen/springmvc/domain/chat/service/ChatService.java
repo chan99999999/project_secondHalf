@@ -56,5 +56,8 @@ public interface ChatService {
     public ChatDto getSameReceiver();
 
 
+    // 새로운 메서드 추가: 특정 송신자와 수신자 쌍의 기존 채팅방 찾기
+    public ChatDto findChatRoomBySenderAndReceiver(String senderId, String receiverId);
+
 
 }

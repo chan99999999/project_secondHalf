@@ -25,4 +25,6 @@ public class MessageDto {
     private Timestamp sentAt;
     private String roomId;
     private String senderId;
+
+    
 }
