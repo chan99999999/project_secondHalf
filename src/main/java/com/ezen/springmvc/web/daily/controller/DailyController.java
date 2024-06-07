@@ -223,6 +223,49 @@ public class DailyController {
         return "/daily/dailyRead";
     }
 
+    // 게시글 수정 화면 요청 처리
+    @GetMapping("{categoryId}/edit/{dailyArticleId}")
+    public String dailyEditForm(@PathVariable("categoryId") int categoryId,
+                                @PathVariable("dailyArticleId") int dailyArticleId,
+                                Model model) {
+
+        List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
+        List<TagDto> tagList = dailyArticleService.getTagBydailyArticleId(dailyArticleId);
+        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
+
+        model.addAttribute("fileList", fileList);
+        model.addAttribute("tagList", tagList);
+        model.addAttribute("dailyArticleDto", dailyArticleDto);
+
+        return "/daily/dailyEdit";
+    }
+
+    // 게시글 수정 요청 처리
+    @PostMapping("{categoryId}/edit/{dailyArticleId}")
+    public String dailyEditAction(@PathVariable("categoryId") int categoryId,
+                                  @PathVariable("dailyArticleId") int dailyArticleId,
+                                  @ModelAttribute DailyArticleForm dailyArticleForm) {
+
+        DailyArticleDto editedDailyArticle = DailyArticleDto.builder()
+                .title(dailyArticleForm.getTitle())
+                .content(dailyArticleForm.getContent())
+                .build();
+
+        dailyArticleService.editDailyArticle(dailyArticleId, editedDailyArticle);
+
+        return "redirect:/daily/{categoryId}";
+    }
+
+    // 게시글 삭제 처리
+    @PostMapping("{categoryId}/delete/{dailyArticleId}")
+    public String dailyDelete(@PathVariable("categoryId") int categoryId,
+                              @PathVariable("dailyArticleId") int dailyArticleId) {
+
+        dailyArticleService.removeDailyArticle(categoryId, dailyArticleId);
+
+        return "redirect:/daily/{categoryId}";
+    }
+
     // 댓글 등록 요청 처리(서버 사이드 렌더링)
 //    @PostMapping("{categoryId}/read/{dailyArticleId}")
 //    public String dailyReadReply(@PathVariable("categoryId") int categoryId, @ModelAttribute ReplyDto replyDto, @PathVariable("dailyArticleId") int dailyArticleId, Model model, HttpServletRequest request) {
@@ -298,49 +341,6 @@ public class DailyController {
         map.put("totalHeartCount", totalHeartCount);
 
         return ResponseEntity.ok(map);
-    }
-
-    // 게시글 수정 화면 요청 처리
-    @GetMapping("{categoryId}/edit/{dailyArticleId}")
-    public String dailyEditForm(@PathVariable("categoryId") int categoryId,
-                                @PathVariable("dailyArticleId") int dailyArticleId,
-                                Model model) {
-
-        List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
-        List<TagDto> tagList = dailyArticleService.getTagBydailyArticleId(dailyArticleId);
-        DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
-
-        model.addAttribute("fileList", fileList);
-        model.addAttribute("tagList", tagList);
-        model.addAttribute("dailyArticleDto", dailyArticleDto);
-
-        return "/daily/dailyEdit";
-    }
-
-    // 게시글 수정 요청 처리
-    @PostMapping("{categoryId}/edit/{dailyArticleId}")
-    public String dailyEditAction(@PathVariable("categoryId") int categoryId,
-                                  @PathVariable("dailyArticleId") int dailyArticleId,
-                                  @ModelAttribute DailyArticleForm dailyArticleForm) {
-
-        DailyArticleDto editedDailyArticle = DailyArticleDto.builder()
-                .title(dailyArticleForm.getTitle())
-                .content(dailyArticleForm.getContent())
-                .build();
-
-        dailyArticleService.editDailyArticle(dailyArticleId, editedDailyArticle);
-
-        return "redirect:/daily/{categoryId}";
-    }
-
-    // 게시글 삭제 처리
-    @PostMapping("{categoryId}/delete/{dailyArticleId}")
-    public String dailyDelete(@PathVariable("categoryId") int categoryId,
-                              @PathVariable("dailyArticleId") int dailyArticleId) {
-
-        dailyArticleService.removeDailyArticle(categoryId, dailyArticleId);
-
-        return "redirect:/daily/{categoryId}";
     }
 
     // 세션에 저장된 회원 api

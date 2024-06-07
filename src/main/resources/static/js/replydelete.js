@@ -14,6 +14,7 @@ const eventRegister4 = function () {
   });
 }
 
+// api를 통해서 댓글 개수 얻어오기
 const getReplyCount = async function () {
   const dailyArticleId = getDailyArticleIdFromURL();
   const url = `/daily/reply-count/${dailyArticleId}`;
@@ -33,8 +34,6 @@ const handleReplyDelete = async function (event) {
 
   const reviewElement = event.target.closest('.review');
   const replyId = reviewElement.dataset.replyId;
-
-  // console.log(replyId);
 
   const deleteReplyData = {
     dailyArticleId: dailyArticleId,
@@ -110,7 +109,6 @@ const handleReplyDelete = async function (event) {
     console.error('댓글 삭제 중 오류 발생:', error);
   }
 }
-
 
 function main() {
   eventRegister4();
