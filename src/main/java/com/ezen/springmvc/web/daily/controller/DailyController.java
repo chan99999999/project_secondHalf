@@ -114,11 +114,12 @@ public class DailyController {
         String checkedTags = dailyArticleForm.getTags();
         String inputTags = dailyArticleForm.getInputTags();
 
+        // 체크 박스 태그
         if (checkedTags != null && !checkedTags.isEmpty()) {
             allTags.append(checkedTags);
         }
 
-        // 직접 입력한 태그 추가
+        // 직접 입력한 태그
         if (inputTags != null && !inputTags.isEmpty()) {
             if (allTags.length() > 0) {
                 allTags.append(",");
@@ -151,7 +152,6 @@ public class DailyController {
                             @ModelAttribute ParameterForm parameterForm,
                             Model model) {
         
-        // 소통공간 목록
         List<DailyArticleDto> dailyArticleList = null;
 
         // 검색 조건
@@ -195,20 +195,16 @@ public class DailyController {
 
         int heartCount = 0;
 
+        // 로그인하지 않은 사용자는 좋아요를 누르지 않은 것으로 간주
         if (loginMember != null) {
+            model.addAttribute("loginMember", loginMember);
             heartCount = dailyArticleService.getHeartCount(dailyArticleId, loginMember.getMemberId());
-        } else {
-            heartCount = 0; // 로그인하지 않은 사용자는 좋아요를 누르지 않은 것으로 간주
         }
 
         DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
         List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
         List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
         int replyCount = dailyArticleService.getReplyCount(dailyArticleId);
-
-        if (loginMember != null) {
-            model.addAttribute("loginMember", loginMember);
-        }
 
         for (ReplyDto replyDto : replyList) {
             MemberDto commenter = memberService.getMember(replyDto.getWriter());
@@ -257,6 +253,35 @@ public class DailyController {
         return ResponseEntity.ok(replyDto);
     }
 
+    // 댓글 수정 요청 api
+    @PostMapping("/edit-reply")
+    public ResponseEntity<Void> dailyEditReply(@RequestBody ReplyDto replyDto) {
+
+        dailyArticleService.editReply(replyDto.getDailyArticleId(), replyDto.getReplyId(), replyDto.getContent());
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 댓글 삭제 요청 처리(서버 사이드 렌더링)
+//    @PostMapping("{categoryId}/delete-reply/{dailyArticleId}/{replyId}")
+//    public String dailyReplyDelete(@PathVariable("categoryId") int categoryId,
+//                                   @PathVariable("dailyArticleId") int dailyArticleId,
+//                                   @PathVariable("replyId") int replyId) {
+//
+//        dailyArticleService.removeReply(dailyArticleId, replyId);
+//
+//        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
+//    }
+
+    // 댓글 삭제 요청 api(클라이언트 사이드 렌더링)
+    @PostMapping("/delete-reply")
+    public ResponseEntity<Void> removeReply(@RequestBody ReplyDto replyDto) {
+
+        dailyArticleService.removeReply(replyDto.getDailyArticleId(), replyDto.getReplyId());
+
+        return ResponseEntity.ok().build();
+    }
+
     // 좋아요 기능 api
     @GetMapping("/like")
     public ResponseEntity<Map<String, Object>> handleHeart(
@@ -281,7 +306,12 @@ public class DailyController {
                                 @PathVariable("dailyArticleId") int dailyArticleId,
                                 Model model) {
 
+        List<FileDto> fileList = dailyArticleService.getFiles(dailyArticleId);
+        List<TagDto> tagList = dailyArticleService.getTagBydailyArticleId(dailyArticleId);
         DailyArticleDto dailyArticleDto = dailyArticleService.getDailyArticle(categoryId, dailyArticleId);
+
+        model.addAttribute("fileList", fileList);
+        model.addAttribute("tagList", tagList);
         model.addAttribute("dailyArticleDto", dailyArticleDto);
 
         return "/daily/dailyEdit";
@@ -313,35 +343,6 @@ public class DailyController {
         return "redirect:/daily/{categoryId}";
     }
 
-    // 댓글 삭제 요청 처리(서버 사이드 렌더링)
-//    @PostMapping("{categoryId}/delete-reply/{dailyArticleId}/{replyId}")
-//    public String dailyReplyDelete(@PathVariable("categoryId") int categoryId,
-//                                   @PathVariable("dailyArticleId") int dailyArticleId,
-//                                   @PathVariable("replyId") int replyId) {
-//
-//        dailyArticleService.removeReply(dailyArticleId, replyId);
-//
-//        return "redirect:/daily/{categoryId}/read/{dailyArticleId}";
-//    }
-
-    // 댓글 삭제 요청 api(클라이언트 사이드 렌더링)
-    @PostMapping("/delete-reply")
-    public ResponseEntity<Void> removeReply(@RequestBody ReplyDto replyDto) {
-
-        dailyArticleService.removeReply(replyDto.getDailyArticleId(), replyDto.getReplyId());
-
-        return ResponseEntity.ok().build();
-    }
-
-    // 댓글 수정 요청 api
-    @PostMapping("/edit-reply")
-    public ResponseEntity<Void> dailyEditReply(@RequestBody ReplyDto replyDto) {
-
-        dailyArticleService.editReply(replyDto.getDailyArticleId(), replyDto.getReplyId(), replyDto.getContent());
-
-        return ResponseEntity.ok().build();
-    }
-
     // 세션에 저장된 회원 api
     @GetMapping("/getLoginMember")
     public ResponseEntity<MemberDto> getLoginMember(HttpServletRequest request) {
@@ -357,6 +358,12 @@ public class DailyController {
     public ResponseEntity<List<ReplyDto>> getReplyList(@PathVariable("dailyArticleId") int dailyArticleId) {
 
         List<ReplyDto> replyList = dailyArticleService.getReplyList(dailyArticleId);
+
+        for (ReplyDto replyDto : replyList) {
+            MemberDto commenter = memberService.getMember(replyDto.getWriter());
+            replyDto.setPicture(commenter.getStorePicture());
+            replyDto.setNickname(commenter.getNickname());
+        }
 
         return ResponseEntity.ok(replyList);
     }
