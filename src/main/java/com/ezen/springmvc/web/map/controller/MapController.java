@@ -1,8 +1,11 @@
 package com.ezen.springmvc.web.map.controller;
 
+import com.ezen.springmvc.domain.member.dto.MemberDto;
+import com.ezen.springmvc.domain.member.service.MemberService;
 import com.ezen.springmvc.domain.placemap.dto.MapDto;
 import com.ezen.springmvc.domain.placemap.service.MapService;
 import com.ezen.springmvc.domain.review.dto.ReviewDto;
+import com.ezen.springmvc.domain.review.mapper.ReviewMapper;
 import com.ezen.springmvc.domain.review.service.ReviewService;
 import com.ezen.springmvc.web.map.form.ReviewForm;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ public class MapController {
 
     private final MapService mapService;
     private final ReviewService reviewService;
+    private final MemberService memberService;
 
     // 특정 장소의 정보를 JSON 형식으로 반환합니다.
     @GetMapping("/place")
@@ -92,6 +96,11 @@ public class MapController {
         log.info("처리된 map 정보: {}", processedPlaceInfo);
 
         List<ReviewDto> reviewList = reviewService.getReviewsByPlaceId(mapId);
+
+        for (ReviewDto review : reviewList) {
+            MemberDto memberDto = memberService.getMember(review.getMemberId());
+            review.setProfile(memberDto.getStorePicture());
+        }
 
         ReviewForm reviewForm = ReviewForm.builder().build();
 

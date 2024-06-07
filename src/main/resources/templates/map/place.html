@@ -131,17 +131,17 @@
 
                 <!-- 후기 목록 -->
                 <div th:id="review-box">
-                    <div th:each="review : ${reviewList}" class="review">
-                        <div>
-                            <img class="profile-img" src="/img/profile.png" alt="Profile Image">
-                        </div>
-                        <div>
-                            <ul>
-                                <!-- 닉네임 출력 -->
-                                <li class="review-writer" th:text="${review.nickname}"></li>
-                                <!-- 리뷰 내용 출력 -->
-                                <li class="review-content" th:text="${review.review}"></li>
-                            </ul>
+                    <div class="review" th:each="review : ${reviewList}">
+                        <div class="review-box">
+                            <div>
+                                <img class="commenter" th:src="@{/member/image/{picture}(picture=${review.profile})}">
+                            </div>
+                            <div>
+                                <ul>
+                                    <li class="review-writer" th:text="${review.nickname}"></li>
+                                    <li class="review-content" th:text="${review.review}"></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
