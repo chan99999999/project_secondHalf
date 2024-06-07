@@ -1,9 +1,4 @@
-// const eventRegister5 = function () {
-  // const replyUpdateBtns = document.querySelectorAll('#reply-update-btn');
-  // replyUpdateBtns.forEach(replyUpdateBtn => replyUpdateBtn.addEventListener('click', handleReplyEdit));
-// }
-
-// 이벤트 위임
+// 이벤트 위임 함수
 const eventRegister5 = function () {
   const reviewListElement = document.querySelector('.review-list');
   reviewListElement.addEventListener('click', async function (event) {
@@ -14,10 +9,9 @@ const eventRegister5 = function () {
   });
 }
 
+// 댓글 수정 화면 이벤트 처리 함수
 const handleReplyEdit = async function (event) {
-
-  console.log(event.target && event.target.id === 'reply-update-btn');
-
+  
   if (event.target && event.target.id === 'reply-update-btn') {
     const reviewElement = event.target.closest('.review');
     const reviewContentElement = reviewElement.querySelector('.review-content');
@@ -42,22 +36,16 @@ const handleReplyEdit = async function (event) {
     reviewContentElement.appendChild(textarea);
     event.target.replaceWith(updateButton);
   }
-
-
 }
 
-
+// 댓글 수정 완료 이벤트 처리 함수
 const updateReview = async function () {
   const replyContentInput = document.querySelector('textarea[name="editedContent"]');
   const replyContent = replyContentInput.value;
-
   const dailyArticleId = getDailyArticleIdFromURL();
-
   const url = `/daily/edit-reply`;
-
   const reviewElement = event.target.closest('.review');
   const replyId = reviewElement.dataset.replyId;
-
 
   const updateReplyData = {
     dailyArticleId: dailyArticleId,
@@ -108,7 +96,6 @@ const updateReview = async function () {
       });
 
       reviewListElement.innerHTML = reviewHTML;
-
 
     } else {
       const errorMessage = await response.text();

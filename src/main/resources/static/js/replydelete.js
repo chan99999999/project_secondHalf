@@ -1,9 +1,4 @@
-// const eventRegister4 = function () {
-//   const replyDeleteBtns = document.querySelectorAll('#reply-delete-btn');
-//   replyDeleteBtns.forEach(replyDeleteBtn => replyDeleteBtn.addEventListener('click', handleReplyDelete));
-// }
-
-// 이벤트 위임
+// 이벤트 위임 함수
 const eventRegister4 = function () {
   const reviewListElement = document.querySelector('.review-list');
   reviewListElement.addEventListener('click', async function (event) {
@@ -14,6 +9,7 @@ const eventRegister4 = function () {
   });
 }
 
+// api를 통해서 댓글 개수 얻어오기
 const getReplyCount = async function () {
   const dailyArticleId = getDailyArticleIdFromURL();
   const url = `/daily/reply-count/${dailyArticleId}`;
@@ -21,6 +17,7 @@ const getReplyCount = async function () {
   return replyCount;
 }
 
+// 댓글 삭제 이벤트 처리 함수
 const handleReplyDelete = async function (event) {
 
   if (!confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
@@ -28,13 +25,9 @@ const handleReplyDelete = async function (event) {
   }
 
   const dailyArticleId = getDailyArticleIdFromURL();
-
   const url = `/daily/delete-reply`;
-
   const reviewElement = event.target.closest('.review');
   const replyId = reviewElement.dataset.replyId;
-
-  // console.log(replyId);
 
   const deleteReplyData = {
     dailyArticleId: dailyArticleId,
@@ -87,7 +80,6 @@ const handleReplyDelete = async function (event) {
       const replyCountElement = document.querySelector('#replyToggle');
       replyCountElement.textContent = `댓글(${await getReplyCount()})`;
 
-      // eventRegister4();
     } else {
       const errorMessage = await response.text();
       console.error('댓글 삭제 실패:', errorMessage);
@@ -97,7 +89,6 @@ const handleReplyDelete = async function (event) {
     console.error('댓글 삭제 중 오류 발생:', error);
   }
 }
-
 
 function main() {
   eventRegister4();

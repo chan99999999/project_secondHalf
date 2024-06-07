@@ -118,7 +118,7 @@ public class DailyController {
             allTags.append(checkedTags);
         }
 
-        // 직접 입력한 태그 추가
+        // 직접 입력한 태그
         if (inputTags != null && !inputTags.isEmpty()) {
             if (allTags.length() > 0) {
                 allTags.append(",");
@@ -151,7 +151,6 @@ public class DailyController {
                             @ModelAttribute ParameterForm parameterForm,
                             Model model) {
         
-        // 소통공간 목록
         List<DailyArticleDto> dailyArticleList = null;
 
         // 검색 조건

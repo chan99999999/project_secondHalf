@@ -36,6 +36,14 @@
 		WHERE receiver_id = #{receiverId}
 	</select>
 
+	<!-- 송신자와 수신자에 따른 채팅방 조회 -->
+	<select id="findChatRoomBySenderAndReceiver" resultType="com.ezen.springmvc.domain.chat.dto.ChatDto">
+		SELECT room_id, created_at, sender_id, receiver_id, sender_nickname, receiver_nickname
+		FROM chat_room
+		WHERE (sender_id = #{senderId} AND receiver_id = #{receiverId})
+		   OR (sender_id = #{receiverId} AND receiver_id = #{senderId})
+	</select>
+
 
 </mapper>
 
