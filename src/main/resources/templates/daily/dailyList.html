@@ -47,25 +47,25 @@
 
         <div class="daily-list" id="nowon-news-section">
             <h1 class="daily-list-title">노원구 소식</h1>
-            <th:block th:each="notice : ${noticeList}">
-                <th:block th:if="${notice.memberId == 'admin'}">
+            <th:block th:each="dailyArticle : ${dailyArticleList}">
+                <th:block th:if="${dailyArticle.memberId == 'admin'}">
                     <div class="daily-post">
                         <div class="daily-writer">
                             <img class="daily-writer-img" src="/img/profile.png">
-                            <p class="daily-writer-name" th:text="${notice.nickName}"></p>
+                            <p class="daily-writer-name" th:text="${dailyArticle.nickName}"></p>
                         </div>
-                        <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${notice.dailyArticleId}, categoryId=${categoryId})}">
+                        <a th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=${categoryId})}">
 
                             <img class="daily-post-img" src="/img/sample1.jpg"
-                                 th:src="@{/daily/image/{fileName}(fileName=${notice.encryptedName})}">
+                                 th:src="@{/daily/image/{fileName}(fileName=${dailyArticle.encryptedName})}">
                         </a>
                         <div class="daily-like-wrap">
                             <img class="daily-like" src="/img/heart.png">
-                            <p class="daily-like-amount" th:text="${notice.totalHeartCount}">3,000</p>
+                            <p class="daily-like-amount" th:text="${dailyArticle.totalHeartCount}">3,000</p>
                         </div>
                         <p class="daily-post-title"><a
-                                th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${notice.dailyArticleId}, categoryId=__${categoryId}__)}"
-                                th:text="${notice.title}"></a></p>
+                                th:href="@{/daily/{categoryId}/read/{dailyArticleId}(dailyArticleId=${dailyArticle.dailyArticleId}, categoryId=__${categoryId}__)}"
+                                th:text="${dailyArticle.title}"></a></p>
                     </div>
                 </th:block>
             </th:block>
