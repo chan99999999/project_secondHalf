@@ -67,24 +67,20 @@ const handleReplyRegister = async function (event) {
           const contentHTML = `<li class="review-content">${reply.content}</li>`;
 
           const reviewItemHTML = `
-    <div class="review" data-reply-id="24">
-    <div class="review-box">
+      <div class="review" data-reply-id="${reply.replyId}">
         <div>
-            <img class="commenter" src="/member/image/profile.png">
+          <img src="/img/profile.png">
         </div>
         <div>
-            <ul>
+          <ul>
             ${writerHTML}
             ${contentHTML}
-            </ul>
+          </ul>
+          <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
+          <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제</button>
         </div>
-    </div>
-            <div>
-                <button id="reply-update-btn" type="button" class="btn btn-dark">수정</button>
-                <button id="reply-delete-btn" type="button" class="btn btn-dark">삭제</button>
-            </div>  
-</div>
-      `;
+      </div>
+    `;
 
           reviewHTML += reviewItemHTML;
         }
