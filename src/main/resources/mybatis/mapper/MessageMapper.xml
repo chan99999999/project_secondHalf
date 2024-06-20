@@ -8,12 +8,31 @@
 	</insert>
 
 	<!-- room_id별 채팅 메시지 내용 조회 -->
-		<select id="findMessagesByRoomId" resultType="com.ezen.springmvc.domain.chat.dto.MessageDto">
-			SELECT message_id, content, sent_at, room_id, sender_id
-			FROM message
-			WHERE room_id = #{roomId}
-		</select>
+<!--		<select id="findMessagesByRoomId" resultType="com.ezen.springmvc.domain.chat.dto.MessageDto">-->
+<!--			SELECT message_id, content, sent_at, room_id, sender_id-->
+<!--			FROM message-->
+<!--			WHERE room_id = #{roomId}-->
+<!--		</select>-->
 
+    <!-- 각 채팅방 메세지 화면에 조회 -->
+    <select id="findMessagesByRoomId" resultType="com.ezen.springmvc.domain.chat.dto.MessageDto">
+        SELECT
+            m.message_id AS message_id,
+            m.content AS content,
+            m.sent_at AS sent_at,
+            m.room_id AS room_id,
+            m.sender_id AS sender_id,
+            (SELECT store_picture FROM member WHERE member_id = m.sender_id) AS senderProfileImage
+        FROM message m
+        WHERE m.room_id = #{roomId}
+    </select>
+
+<!--    <select id="findMessagesByRoomId" resultType="com.ezen.springmvc.domain.chat.dto.MessageDto">-->
+<!--        SELECT m.*,-->
+<!--               (SELECT storePicture FROM member WHERE memberId = m.senderId) AS senderProfileImage-->
+<!--        FROM message m-->
+<!--        WHERE roomId = #{roomId}-->
+<!--    </select>-->
 
 </mapper>
 

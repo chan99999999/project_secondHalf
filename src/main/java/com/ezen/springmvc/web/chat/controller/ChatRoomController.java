@@ -168,17 +168,56 @@ public class ChatRoomController {
      * @param session HTTP 세션 객체
      * @return ResponseEntity 객체로 응답반환
      */
+//    @PostMapping("/saveMessage")
+//    public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto, HttpSession session) {
+////        log.info("뭐받았냐 {}", messageDto.toString());
+////        log.info(messageDto.getRoomId());
+//        MessageDto saveMessage = MessageDto.builder()
+//                .roomId(messageDto.getRoomId())
+//                .content(messageDto.getContent())
+//                .sentAt(messageDto.getSentAt())
+//                .senderId(messageDto.getSenderId())
+//                .senderProfileImage(((MemberDto) session.getAttribute("loginMember")).getStorePicture())  // 현재 로그인한 사용자의 프로필 이미지 설정
+//                .build();
+//        chatService.receiveMessage(saveMessage);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
     @PostMapping("/saveMessage")
     public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto, HttpSession session) {
-//        log.info("뭐받았냐 {}", messageDto.toString());
-//        log.info(messageDto.getRoomId());
+        // 세션에서 로그인 멤버 정보를 가져옵니다.
+        MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+        // 로그인을 통해 세션에 저장된 멤버가 있는지 확인합니다.
+        if (loginMember == null) {
+            log.error("로그인 정보가 없습니다.");
+            return new ResponseEntity<>("로그인 정보가 없습니다.", HttpStatus.UNAUTHORIZED);
+        }
+
+        log.info("로그인 멤버: {}", loginMember.toString());
+
+        // 프로필 이미지가 제대로 설정되었는지 확인합니다.
+        String senderProfileImage = loginMember.getStorePicture();
+        if (senderProfileImage == null || senderProfileImage.isEmpty()) {
+            log.error("프로필 이미지가 설정되지 않았습니다.");
+            return new ResponseEntity<>("프로필 이미지가 설정되지 않았습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        log.info("프로필 이미지: {}", senderProfileImage);
+
+        // 메시지 객체를 빌드하여 저장합니다.
         MessageDto saveMessage = MessageDto.builder()
                 .roomId(messageDto.getRoomId())
                 .content(messageDto.getContent())
                 .sentAt(messageDto.getSentAt())
                 .senderId(messageDto.getSenderId())
+                .senderProfileImage(messageDto.getSenderProfileImage())  // 현재 로그인한 사용자의 프로필 이미지 설정
                 .build();
+
+        // 메시지를 저장합니다.
         chatService.receiveMessage(saveMessage);
+
+        // 응답을 반환합니다.
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

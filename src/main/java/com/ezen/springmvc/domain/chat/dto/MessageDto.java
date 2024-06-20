@@ -25,6 +25,6 @@ public class MessageDto {
     private Timestamp sentAt;
     private String roomId;
     private String senderId;
-
+    private String senderProfileImage; // 프로필 이미지 추가
     
 }

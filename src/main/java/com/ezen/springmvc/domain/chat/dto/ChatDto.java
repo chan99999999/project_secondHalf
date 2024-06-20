@@ -29,11 +29,12 @@ public class ChatDto {
      * 각 방의 메세지를 역순으로 정렬 후 가장 최신메세지를 채팅 목록에 출력하기 위한 메소드
      * @return 최신메세지
      */
+
+
     public MessageDto getLatestMessage() {
         if (messages != null && !messages.isEmpty()) {
             return messages.stream()
-                    .sorted(Comparator.comparing(MessageDto::getSentAt).reversed())
-                    .findFirst()
+                    .max(Comparator.comparing(MessageDto::getSentAt))
                     .orElse(null);
         }
         return null;

@@ -29,7 +29,7 @@
                                     <img class="profile-img chat-member-img" src="/img/profile.png">
                                     <div class="chat-list-info">
                                         <div class="chat-list-name" th:text="${chatDto.receiverNickname == session.loginMember.nickname ? chatDto.senderNickname : chatDto.receiverNickname}"></div>
-                                        <span class="chat-list-message" th:if="${chatDto.getLatestMessage() != null}" th:text="${chatDto.getLatestMessage().content}">
+                                        <span class="chat-list-message"  th:text="${chatDto.getLatestMessage().content}" th:if="${chatDto.getLatestMessage() != null}">
                                         </span>
                                     </div>
                                 </a>
@@ -37,6 +37,7 @@
                         </th:block>
                     </ul>
                 </div>
+
             </div>
         </div>
 
@@ -45,8 +46,8 @@
             <div class="chat-bar">
                 <div class="chat-current-member">
                     <img class="profile-img chat-member-img" th:src="@{/member/image/{picture}(picture=${receiver.storePicture})}">
-                    <div class="chat-current-name member-profile" id="member-profile"></div>
-<!--                    <div class="chat-current-name member-profile" id="member-profile" th:text="${receiver.nickname}"></div>-->
+<!--                    <div class="chat-current-name member-profile" id="member-profile"></div>-->
+<!--                    <div class="chat-current-name member-profile" id="member-profile" th:text="${chatDto.receiverNickname == session.loginMember.nickname ? chatDto.senderNickname : chatDto.receiverNickname}"></div>-->
                 </div>
                 <div class="chat-history">
                     <ul id="message-list">
@@ -59,7 +60,7 @@
                                 </div>
                                 <div class="message-content">
                                     <div class="chat-message-text" th:text="${message.content}"></div>
-                                    <img class="profile-img" src="/img/profile_flower.png">
+                                    <img class="profile-img" th:src="@{/member/image/{fileName}(fileName=${session.loginMember.storePicture})}">
                                 </div>
                             </li>
                             </th:block>
@@ -71,7 +72,8 @@
                                     </div>
                                     <div class="message-content">
                                         <div class="chat-message-text" th:text="${message.content}"></div>
-                                        <img class="profile-img" src="/img/profile_bird.png">
+<!--                                        <img class="profile-img" th:src="${message.senderProfileImage}">-->
+                                        <img class="profile-img" th:src="@{/member/image/{picture}(picture=${message.senderProfileImage})}">
                                     </div>
                                 </li>
                             </th:block>
@@ -212,7 +214,7 @@
 
         const profileImg = document.createElement('img');
         profileImg.className = 'profile-img';
-        profileImg.src = '/img/profile.png'; // 프로필 이미지 경로
+        profileImg.src = recv.senderProfileImage ||'/img/profile.png'; // 프로필 이미지 경로
 
         messageData.appendChild(messageDataTime);
         messageData.appendChild(messageDataMember);

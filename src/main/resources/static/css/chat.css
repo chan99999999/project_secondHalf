@@ -146,6 +146,12 @@
     border-radius: 50%;
 }
 
+.chat-member-img-list {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
 .chat-list-info {
     padding: 0 10px;
 }

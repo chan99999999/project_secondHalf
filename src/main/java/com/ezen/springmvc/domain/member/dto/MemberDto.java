@@ -22,6 +22,6 @@ public class MemberDto {
     private String interest;
     private String introduce;
     private String picture;
-    private String storePicture;
+    private String storePicture; //프로필사진
     private String regdate;
 }

@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/chan99999999/project_secondHalf.git
+	fetch = +refs/*:refs/*
+	mirror = true
+	pushurl = https://github.com/beetnalhee/project_secondHalf.git
